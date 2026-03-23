@@ -760,6 +760,73 @@
         z-index: 10;
       }
 
+      /* QUICK START PANEL */
+      .quick-start {
+        background: linear-gradient(135deg, #e8f5e9 0%, #e3f4ff 100%);
+        border: 2px solid var(--accent);
+        border-radius: var(--radius);
+        padding: 1.2rem 1.5rem;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+
+      .quick-start-icon {
+        font-size: 2rem;
+        line-height: 1;
+        flex-shrink: 0;
+      }
+
+      .quick-start h3 {
+        font-size: 1.05rem;
+        color: var(--dark);
+        margin-bottom: 0.4rem;
+      }
+
+      .quick-start ol {
+        margin: 0;
+        padding-left: 1.3em;
+        font-size: 0.92rem;
+        color: #4a5a6a;
+      }
+
+      .quick-start ol li {
+        margin-bottom: 0.2rem;
+      }
+
+      .quick-start a {
+        color: var(--primary);
+        cursor: pointer;
+        text-decoration: underline;
+      }
+
+      /* Highlight card for practical classes */
+      .card.card-highlight {
+        border: 2px solid var(--accent);
+        box-shadow: 0 10px 25px rgba(0,168,120,0.15);
+      }
+
+      .card.card-highlight .card-title {
+        color: var(--accent);
+        font-weight: 700;
+      }
+
+      /* Practical classes section - itinerary */
+      .itinerary-intro {
+        background: #f0f8ff;
+        border-left: 4px solid var(--primary);
+        padding: 1rem 1.2rem;
+        margin-bottom: 1.5rem;
+        border-radius: 0 var(--radius) var(--radius) 0;
+        font-size: 0.93rem;
+        color: #4a5a6a;
+      }
+
+      .itinerary-intro strong {
+        color: var(--dark);
+      }
+
       </style>
   </head>
   <body>
@@ -798,6 +865,19 @@
           <p data-i18n="landing.subtitle">Click on a subject to access the corresponding applications</p>
         </div>
 
+        <!-- QUICK START - Itinerario recomendado -->
+        <div class="quick-start" id="quickStartPanel">
+          <div class="quick-start-icon">🎯</div>
+          <div>
+            <h3 data-i18n="quickstart.title">Start here — Recommended learning path</h3>
+            <ol>
+              <li data-i18n="quickstart.step1">Read the <a onclick="showSection('concepts')">Introduction to Wind Energy concepts</a></li>
+              <li data-i18n="quickstart.step2">Open your first <a onclick="showSection('opcClasesPracticas')">Practical Class notebook</a></li>
+              <li data-i18n="quickstart.step3">Launch the simulator when the exercise requires it</li>
+            </ol>
+          </div>
+        </div>
+
         <div class="grid-6">
           <!-- 1. Introducción a la Energía Eólica -->
           <button class="card" type="button" data-target="concepts" data-keywords="wind energy,turbine concepts,energy generation, mind map">
@@ -805,10 +885,10 @@
             <div class="card-title" data-i18n="card.intro.title">card.intro.title</div>
           </button>
 
-          <!-- 2. Wind Farms -->
-          <button class="card" type="button" data-target="Wind Farm SCADA">
-            <div class="card-image" style="background-image:url('img/ParqueEolico.png');"></div>
-            <div class="card-title" data-i18n="card.grid.title2">card.grid.title2</div>
+          <!-- 2. CLASES PRÁCTICAS (NUEVO - acceso directo) -->
+          <button class="card card-highlight" type="button" data-target="opcClasesPracticas" data-keywords="practical classes,laboratory,exercises,clases practicas,laboratorio,cuaderno">
+            <div class="card-image" style="background-image:url('img/AccesoaTutoriales.png');"></div>
+            <div class="card-title" data-i18n="card.grid.titlePracticas">🔬 Practical Classes (Lab Notebooks)</div>
           </button>
 
           <!-- 3. Aerogeneradores en Parques Eólicos -->
@@ -817,7 +897,25 @@
             <div class="card-title" data-i18n="card.grid.title3">card.grid.title3</div>
           </button>
 
-          <!-- 4. Analysis del Tren de Potencia (hover ayuda) -->
+          <!-- 4. Tutoriales (Manuales de Usuario) -->
+          <button class="card" type="button" data-target="opcTutorials">
+            <div class="card-image" style="background-image:url('img/AccesoaTutoriales.png');"></div>
+            <div class="card-title" data-i18n="card.grid.title7">card.grid.title7</div>
+          </button>
+
+          <!-- 5. Wind Farms -->
+          <button class="card" type="button" data-target="Wind Farm SCADA">
+            <div class="card-image" style="background-image:url('img/ParqueEolico.png');"></div>
+            <div class="card-title" data-i18n="card.grid.title2">card.grid.title2</div>
+          </button>
+
+          <!-- 6. Guias y experimentos -->
+          <button class="card" type="button" data-target="opcionGuias">
+            <div class="card-image" style="background-image:url('img/AccesoaGuias-2.png');"></div>
+            <div class="card-title" data-i18n="guided.learning.title">guided.learning.title</div>
+          </button>
+
+          <!-- 7. Analysis del Tren de Potencia (hover ayuda) -->
           <button class="card help" type="button" data-target="opcOperCurve">
             <div class="card-image" style="background-image:url('img/powervsrpms-reducido.png');"></div>
             <div class="card-title" data-i18n="card.grid.title4">card.grid.title4</div>
@@ -827,7 +925,7 @@
             </div>
           </button>
 
-          <!-- 5. Cálculos sobre Back-to-Back converters (hover ayuda) -->
+          <!-- 8. Cálculos sobre Back-to-Back converters (hover ayuda) -->
           <button class="card help" type="button" data-target="opcDFIGB2B">
             <div class="card-image" style="background-image:url('img/dfigradar.png');"></div>
             <div class="card-title" data-i18n="card.grid.title5">card.grid.title5</div>
@@ -837,29 +935,55 @@
             </div>
           </button>
 
-          <!-- 5.5. Data Processing -->
-          <button class="card" type="button" data-target="opcDataProcessing">
-            <div class="card-image" style="background-image:url('img/Datalog2.png'); background-size: auto 100%; background-repeat: no-repeat;"></div>
-            <div class="card-title" data-i18n="card.grid.titleDP">Data Processing</div>
-          </button>
-
-          <!-- 6. Vídeos interesantes -->
+          <!-- 9. Vídeos interesantes -->
           <button class="card" type="button" data-target="opcVideos">
             <div class="card-image" style="background-image:url('img/CollageImagenesVideos-reducido.png');"></div>
             <div class="card-title" data-i18n="card.grid.title6">card.grid.title6</div>
           </button>
 
-          <!-- 7. Tutoriales -->
-          <button class="card" type="button" data-target="opcTutorials">
-            <div class="card-image" style="background-image:url('img/AccesoaTutoriales.png');"></div>
-            <div class="card-title" data-i18n="card.grid.title7">card.grid.title7</div>
+          <!-- 10. Data Processing -->
+          <button class="card" type="button" data-target="opcDataProcessing">
+            <div class="card-image" style="background-image:url('img/Datalog2.png'); background-size: auto 100%; background-repeat: no-repeat;"></div>
+            <div class="card-title" data-i18n="card.grid.titleDP">Data Processing</div>
           </button>
+        </div>
+      </section>
 
-          <!-- 8. Guias y experimentos -->
-          <button class="card" type="button" data-target="opcionGuias">
-            <div class="card-image" style="background-image:url('img/AccesoaGuias-2.png');"></div>
-            <div class="card-title"   data-i18n="guided.learning.title">guided.learning.title</div>
-          </button>
+      <!-- SECCIÓN: CLASES PRÁCTICAS (CUADERNOS DE LABORATORIO) -->
+      <section id="opcClasesPracticas" data-breadcrumb="opcClasesPracticas">
+        <div class="section-header">
+          <h2 data-i18n="practicas.title">Practical Classes — Virtual Laboratory Notebooks</h2>
+          <p data-i18n="practicas.subtitle">Guided exercises to understand wind turbine behaviour through hands-on interaction with the simulators.</p>
+        </div>
+
+        <div class="itinerary-intro">
+          <strong data-i18n="practicas.itinerary.title">Recommended itinerary:</strong>
+          <span data-i18n="practicas.itinerary.text">Each Lab Notebook contains self-contained exercises. You can read the Tutorial of the corresponding simulator alongside, and launch the simulator directly from here when the exercise requires it.</span>
+        </div>
+
+        <div class="suboptions">
+          <!-- DSAS Practical Classes -->
+          <div class="sub-card">
+            <h3 data-i18n="practicas.dsas.h3">🔬 Lab Notebook: Two-Speed Active Stall Wind Turbine</h3>
+            <p data-i18n="practicas.dsas.p1">Guided exercises covering: cut-in with low wind, generator speed changes, wind direction effects, state machine monitoring, hydraulic brake circuit analysis, grid fault scenarios and strong wind behaviour.</p>
+            <p data-i18n="practicas.dsas.p2">20 practical exercises organized in 14 topics.</p>
+            <div class="btn-row">
+              <button id="btnPracticasDSAS" class="btn btn-primary" type="button" data-i18n="practicas.dsas.button">📖 Open Lab Notebook</button>
+              <button id="btnPracticasDSAS_Tutorial" class="btn btn-secondary" type="button" data-i18n="practicas.dsas.tutorial.button">📘 Simulator Tutorial</button>
+              <button id="btnPracticasDSAS_Sim" class="btn btn-ghost" type="button" data-i18n="practicas.dsas.sim.button">▶ Launch Simulator</button>
+            </div>
+          </div>
+
+          <!-- Placeholder for future families -->
+          <div class="sub-card" style="opacity:0.5; pointer-events:none;">
+            <h3 data-i18n="practicas.rrc.h3">🔬 Lab Notebook: Rotor Resistance Controlled WT</h3>
+            <p data-i18n="practicas.coming">Coming soon</p>
+          </div>
+
+          <div class="sub-card" style="opacity:0.5; pointer-events:none;">
+            <h3 data-i18n="practicas.dfig.h3">🔬 Lab Notebook: DFIG Wind Turbine</h3>
+            <p data-i18n="practicas.coming">Coming soon</p>
+          </div>
         </div>
       </section>
 
@@ -1105,6 +1229,15 @@
             </div>
           </button>
         </div>
+
+        <!-- Cross-link to Practical Classes -->
+        <div class="sub-card" style="margin-top:1.25rem;">
+          <h3 data-i18n="simulators.crosslink.h3">📋 Practical Classes for these Simulators</h3>
+          <p data-i18n="simulators.crosslink.p">Guided lab exercises are available for the Active Stall simulator. Open the Lab Notebooks to follow step-by-step practical exercises.</p>
+          <div class="btn-row">
+            <button class="btn btn-primary" type="button" data-target="opcClasesPracticas" onclick="showSection('opcClasesPracticas')" data-i18n="simulators.crosslink.button">📖 Go to Practical Classes</button>
+          </div>
+        </div>
       </section>
 
       <!-- OPCIÓN 4: ANÁLISIS DEL TREN DE POTENCIA -->
@@ -1193,7 +1326,8 @@
         { "keywords": ["yaw system", "yaw drive", "yaw motor"], "section": "Wind Farm SCADA" },
         { "keywords": ["active stall", "stall control", "pitchless"], "section": "opcion3" },
         { "keywords": ["scada", "wind farm scada", "supervisory control"], "section": "tutorials" },
-        { "keywords": ["gearbox", "planetary stage", "epicyclic"], "section": "opcOperCurve" }
+        { "keywords": ["gearbox", "planetary stage", "epicyclic"], "section": "opcOperCurve" },
+        { "keywords": ["practical classes", "clases practicas", "laboratory", "laboratorio", "cuaderno", "exercises", "ejercicios", "lab notebook"], "section": "opcClasesPracticas" }
       ]
     </script>
 
@@ -1248,7 +1382,29 @@
       "simuladorDFIG.60hz": "dfigr12_60hz.conf",
       "dfig.modal.question": "Which version do you want to run?",
       "dfig.modal.50hz": "50Hz",
-      "dfig.modal.60hz": "60Hz"
+      "dfig.modal.60hz": "60Hz",
+      "breadcrumb.opcClasesPracticas": "Practical Classes",
+      "quickstart.title": "Start here \u2014 Recommended learning path",
+      "quickstart.step1": "Read the <a onclick=\"showSection('concepts')\">Introduction to Wind Energy concepts</a>",
+      "quickstart.step2": "Open your first <a onclick=\"showSection('opcClasesPracticas')\">Practical Class notebook</a>",
+      "quickstart.step3": "Launch the simulator when the exercise requires it",
+      "card.grid.titlePracticas": "\ud83d\udd2c Practical Classes (Lab Notebooks)",
+      "practicas.title": "Practical Classes \u2014 Virtual Laboratory Notebooks",
+      "practicas.subtitle": "Guided exercises to understand wind turbine behaviour through hands-on interaction with the simulators.",
+      "practicas.itinerary.title": "Recommended itinerary:",
+      "practicas.itinerary.text": "Each Lab Notebook contains self-contained exercises. You can read the Tutorial of the corresponding simulator alongside, and launch the simulator directly from here when the exercise requires it.",
+      "practicas.dsas.h3": "\ud83d\udd2c Lab Notebook: Two-Speed Active Stall Wind Turbine",
+      "practicas.dsas.p1": "Guided exercises covering: cut-in with low wind, generator speed changes, wind direction effects, state machine monitoring, hydraulic brake circuit analysis, grid fault scenarios and strong wind behaviour.",
+      "practicas.dsas.p2": "20 practical exercises organized in 14 topics.",
+      "practicas.dsas.button": "\ud83d\udcd6 Open Lab Notebook",
+      "practicas.dsas.tutorial.button": "\ud83d\udcd8 Simulator Tutorial",
+      "practicas.dsas.sim.button": "\u25b6 Launch Simulator",
+      "practicas.rrc.h3": "\ud83d\udd2c Lab Notebook: Rotor Resistance Controlled WT",
+      "practicas.dfig.h3": "\ud83d\udd2c Lab Notebook: DFIG Wind Turbine",
+      "practicas.coming": "Coming soon",
+      "simulators.crosslink.h3": "\ud83d\udccb Practical Classes for these Simulators",
+      "simulators.crosslink.p": "Guided lab exercises are available for the Active Stall simulator. Open the Lab Notebooks to follow step-by-step practical exercises.",
+      "simulators.crosslink.button": "\ud83d\udcd6 Go to Practical Classes"
     }
     </script>
     <script id="i18n-es" type="application/json">
@@ -1302,7 +1458,29 @@
       "simuladorDFIG.60hz": "dfigr12_60hz.conf",
       "dfig.modal.question": "¿Qué versión desea ejecutar?",
       "dfig.modal.50hz": "50Hz",
-      "dfig.modal.60hz": "60Hz"
+      "dfig.modal.60hz": "60Hz",
+      "breadcrumb.opcClasesPracticas": "Clases Prácticas",
+      "quickstart.title": "Empieza aquí — Itinerario de aprendizaje recomendado",
+      "quickstart.step1": "Lee la <a onclick=\"showSection('concepts')\">Introducción a los conceptos de Energía Eólica</a>",
+      "quickstart.step2": "Abre tu primer <a onclick=\"showSection('opcClasesPracticas')\">Cuaderno de Clases Prácticas</a>",
+      "quickstart.step3": "Ejecuta el simulador cuando el ejercicio lo requiera",
+      "card.grid.titlePracticas": "🔬 Clases Prácticas (Cuadernos de Laboratorio)",
+      "practicas.title": "Clases Prácticas — Cuadernos de Laboratorio Virtual",
+      "practicas.subtitle": "Ejercicios guiados para comprender el comportamiento de los aerogeneradores mediante la interacción práctica con los simuladores.",
+      "practicas.itinerary.title": "Itinerario recomendado:",
+      "practicas.itinerary.text": "Cada Cuaderno de Laboratorio contiene ejercicios autocontenidos. Puedes leer el Tutorial del simulador correspondiente en paralelo, y lanzar el simulador directamente desde aquí cuando el ejercicio lo requiera.",
+      "practicas.dsas.h3": "🔬 Cuaderno de Laboratorio: Aerogenerador Active Stall de Dos Velocidades",
+      "practicas.dsas.p1": "Ejercicios guiados que cubren: conectar con viento bajo, cambios de velocidad del generador, efectos de la dirección del viento, seguimiento de máquinas de estado, análisis del circuito hidráulico de frenos, escenarios de fallo de red y comportamiento con vientos fuertes.",
+      "practicas.dsas.p2": "20 ejercicios prácticos organizados en 14 temas.",
+      "practicas.dsas.button": "📖 Abrir Cuaderno de Laboratorio",
+      "practicas.dsas.tutorial.button": "📘 Tutorial del Simulador",
+      "practicas.dsas.sim.button": "▶ Lanzar Simulador",
+      "practicas.rrc.h3": "🔬 Cuaderno de Laboratorio: Aerogenerador RRC",
+      "practicas.dfig.h3": "🔬 Cuaderno de Laboratorio: Aerogenerador DFIG",
+      "practicas.coming": "Próximamente",
+      "simulators.crosslink.h3": "📋 Clases Prácticas para estos Simuladores",
+      "simulators.crosslink.p": "Hay ejercicios de laboratorio guiados disponibles para el simulador Active Stall. Abre los Cuadernos de Laboratorio para seguir los ejercicios paso a paso.",
+      "simulators.crosslink.button": "📖 Ir a Clases Prácticas"
     }
 
     <!-- Embedded videos catalog (Option C: offline, no fetch). Replace the contents with your Videos.txt XML -->
@@ -1545,6 +1723,11 @@ document.addEventListener('DOMContentLoaded', function() {
   setActionButton('btnExercisesDSAS', 'runAwebpage', t('tutorial.dsasexercises.path'));
   setActionButton('btnTutorialRRC', 'runAviewer', t('tutorial.rrcwt.path'));
   setActionButton('btnTutorialDFIG', 'runAviewer', t('tutorial.dfigwt.path'));
+
+  // Botones de la nueva sección de Clases Prácticas
+  setActionButton('btnPracticasDSAS', 'runAwebpage', t('tutorial.dsasexercises.path'));
+  setActionButton('btnPracticasDSAS_Tutorial', 'runAviewer', t('tutorial.dsaswt.path'));
+  setActionButton('btnPracticasDSAS_Sim', 'runAldp', ['dsasr12.conf', 'languagename']);
 
     setActionButton('btnSimuladorDSAS', 'runAldp', ['dsasr12.conf', 'languagename']);
     setActionButton('btnSimuladorRRC', 'runAldp', ['rrcr12.conf', 'languagename']);
