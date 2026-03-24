@@ -1,0 +1,61 @@
+El único cambio necesario está en Enviar404. Ahora tiene el cuerpo HTML hardcodeado; hay que hacer que primero busque 404.html en disco y lo sirva si existe, y solo si no, use el fallback inline.
+
+El patrón exacto para leer y servir el fichero ya está en el servidor (en ServirArchivoEstatico), así que es solo adaptarlo:
+
+
+Private Sub Enviar404(ByVal clientSocket As ChilkatSocket)
+    Dim resp As String
+    Dim notFoundPath As String
+    notFoundPath = mBasePath & "404.html"
+
+    ' --- Servir 404.html personalizado si existe ---
+    If Dir(notFoundPath) <> "" Then
+        Dim adoStream As Object
+        Set adoStream = CreateObject("ADODB.Stream")
+        adoStream.Type = 1  ' adTypeBinary
+        adoStream.Open
+        adoStream.LoadFromFile notFoundPath
+
+        Dim fileSize As Long
+        fileSize = adoStream.Size
+
+        Dim fileData As Variant
+        If fileSize > 0 Then fileData = adoStream.Read
+        adoStream.Close
+        Set adoStream = Nothing
+
+        resp = "HTTP/1.1 404 Not Found" & vbCrLf
+        resp = resp & "Content-Type: text/html; charset=utf-8" & vbCrLf
+        resp = resp & "Content-Length: " & fileSize & vbCrLf
+        resp = resp & "Connection: close" & vbCrLf
+        resp = resp & vbCrLf
+
+        clientSocket.SendString resp
+        If fileSize > 0 Then clientSocket.SendBytes fileData
+
+    Else
+        ' --- Fallback inline si no existe 404.html ---
+        Dim body As String
+        body = "<!DOCTYPE html><html><body><h1>404 - No encontrado</h1></body></html>"
+
+        resp = "HTTP/1.1 404 Not Found" & vbCrLf
+        resp = resp & "Content-Type: text/html; charset=utf-8" & vbCrLf
+        resp = resp & "Content-Length: " & Len(body) & vbCrLf
+        resp = resp & "Connection: close" & vbCrLf
+        resp = resp & vbCrLf
+        resp = resp & body
+
+        clientSocket.SendString resp
+    End If
+
+    clientSocket.Close 1000
+End Sub
+
+'==========================
+Por qué funciona sin tocar nada más:
+
+404.html está en la raíz (mBasePath), exactamente donde el servidor ya tiene WebLauncher.html. 
+No necesita pasar por EsRutaPermitida porque Enviar404 construye la ruta directamente con mBasePath.
+Se usa adoStream.Size como Content-Length (bytes reales del fichero), no Len() de VB6 que cuenta 
+caracteres Unicode —igual que hace ServirArchivoEstatico.
+Si en algún momento borras 404.html, el servidor sigue funcionando con el mensaje inline.

@@ -1369,14 +1369,18 @@
       "concepts.intro.family": "Introducción a las familias de Aerogeneradores y su evolución",
       "concepts.intro.textbutton": "▶ Visualizar el Tutorial",
       "concepts.intro.mindmap.button": "▶ Abre el Mapa Mental",
-      "tutorial.family.path": "Tutorials/WindTurbineFamilies.html",
-      "mindmap.windenergy.path": "Tutorials/WindEnergyMindMap.html",
+      "tutorial.family.path": "C:\\ACMSL\\WindFarmSimulator\\conf\\Training in Industrial aspects of Wind Energy\\WindTurbineFamilies.htmle",
+      "mindmap.windenergy.path": "tutorials/en/wind-energy-mindmap.html",
+      "openapp.toast": "Opening tutorial in Edge...",
       "tutorial.wfscada.path": "C:\\ACMSL\\WindFarmSimulator\\Help\\English\\Wind_Farm_Simulator_SCADA\\Introduction.htmle",
       "tutorial.dsas.path": "Tutorials/DSAS.htmle",
       "tutorial.dsaswt.path": "C:\\ACMSL\\WindFarmSimulator\\Help\\English\\DSASWTSimulator\\Introduction.htmle",
-      "tutorial.dsasexercises.path": "simulators/en/DSASExcersises/toc.htmle",
+      "tutorial.dsasexercises.path": "simulators/en/DSASExcersises/toc.html",
       "tutorial.rrc.path": "Tutorials/RRC.html",
       "tutorial.dfig.path": "Tutorials/DFIG.html",
+      "tutorial.rrcwt.path": "C:\\ACMSL\\WindFarmSimulator\\Help\\English\\RRCWTSimulator\\Introduction.htmle",
+      "tutorial.dfigwt.path": "C:\\ACMSL\\WindFarmSimulator\\Help\\English\\DFIGWTSimulator\\Introduction.htmle",
+      "tutorial.ldpframework.path": "C:\\ACMSL\\WindFarmSimulator\\Help\\English\\LdP_Help\\Introduction.htmle",
       "languagename": "English",
       "simuladorDFIG.50hz": "dfigr12_50hz.conf",
       "simuladorDFIG.60hz": "dfigr12_60hz.conf",
@@ -1404,7 +1408,8 @@
       "practicas.coming": "Coming soon",
       "simulators.crosslink.h3": "\ud83d\udccb Practical Classes for these Simulators",
       "simulators.crosslink.p": "Guided lab exercises are available for the Active Stall simulator. Open the Lab Notebooks to follow step-by-step practical exercises.",
-      "simulators.crosslink.button": "\ud83d\udcd6 Go to Practical Classes"
+      "simulators.crosslink.button": "\ud83d\udcd6 Go to Practical Classes",
+      "concepts.mindmap.button": "\u25b6 Open Mind Map"
     }
     </script>
     <script id="i18n-es" type="application/json">
@@ -1445,14 +1450,18 @@
       "concepts.intro.family": "Introducción a las familias de Aerogeneradores y su evolución",
       "concepts.intro.textbutton": "▶ Visualizar el Tutorial",
       "concepts.intro.mindmap.button": "▶ Abre el Mapa Mental",
-      "tutorial.family.path": "utToriales/FamiliasAerogeneradores.htmle",
-      "mindmap.windenergy.path": "Tutoriales/MapaMentalEnergiaEolica.htmle",
+      "tutorial.family.path": "tutorials/es/familias-aerogeneradores.html",
+      "mindmap.windenergy.path": "tutorials/es/mapa-mental.html",
+      "openapp.toast": "Abriendo tutorial en Edge...",
       "tutorial.wfscada.path": "C:\\ACMSL\\WindFarmSimulator\\Help\\Spanish\\Wind_Farm_Simulator_SCADA\\Introduccion.htmle",
       "tutorial.dsas.path": "Tutoriales/DSAS.htmle",
       "tutorial.dsaswt.path": "C:\\ACMSL\\WindFarmSimulator\\Help\\Spanish\\DSASWTSimulator\\Introduccion.htmle",
       "tutorial.dsasexercises.path": "simulators/es/DSASExcersises/toc.html",
       "tutorial.rrc.path": "Tutoriales/RRC.html",
       "tutorial.dfig.path": "Tutoriales/DFIG.html",
+      "tutorial.rrcwt.path": "C:\\ACMSL\\WindFarmSimulator\\Help\\Spanish\\RRCWTSimulator\\Introduccion.htmle",
+      "tutorial.dfigwt.path": "C:\\ACMSL\\WindFarmSimulator\\Help\\Spanish\\DFIGWTSimulator\\Introduccion.htmle",
+      "tutorial.ldpframework.path": "C:\\ACMSL\\WindFarmSimulator\\Help\\Spanish\\LdP_Help\\Introduccion.htmle",
       "languagename": "Spanish",
       "simuladorDFIG.50hz": "dfigr12_50hz.conf",
       "simuladorDFIG.60hz": "dfigr12_60hz.conf",
@@ -1480,7 +1489,8 @@
       "practicas.coming": "Próximamente",
       "simulators.crosslink.h3": "📋 Clases Prácticas para estos Simuladores",
       "simulators.crosslink.p": "Hay ejercicios de laboratorio guiados disponibles para el simulador Active Stall. Abre los Cuadernos de Laboratorio para seguir los ejercicios paso a paso.",
-      "simulators.crosslink.button": "📖 Ir a Clases Prácticas"
+      "simulators.crosslink.button": "📖 Ir a Clases Prácticas",
+      "concepts.mindmap.button": "▶ Abre el Mapa Mental"
     }
 
     <!-- Embedded videos catalog (Option C: offline, no fetch). Replace the contents with your Videos.txt XML -->
@@ -1694,6 +1704,8 @@ function setActionButton(btnId, fn, i18nPathKeys) {
       runAfile(t(i18nPathKeys));
     } else if (fn === 'runAwebpage') {
       runAwebpage(t(i18nPathKeys));
+    } else if (fn === 'runAwebpageExternal') {
+      runAwebpageExternal(t(i18nPathKeys));
     }
 
 }
@@ -1715,8 +1727,8 @@ document.addEventListener('DOMContentLoaded', function() {
     return dict[key] || key;
   }
 
-  setActionButton('btnTutorialFamily', 'runAfile', t('tutorial.family.path'));
-  setActionButton('btnMindMap', 'runAfile', t('mindmap.windenergy.path'));
+  setActionButton('btnTutorialFamily', 'runAwebpage', 'tutorial.family.path');
+  setActionButton('btnMindMap', 'runAwebpageExternal', 'mindmap.windenergy.path');
 
   setActionButton('btnTutorialWFSCADA', 'runAviewer', t('tutorial.wfscada.path'));
   setActionButton('btnTutorialDSAS', 'runAviewer', t('tutorial.dsaswt.path'));
@@ -1928,12 +1940,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
       });
 
-      function showToast(msg, type = 'info') {
+      function showToast(msg, type = 'info', duration = 3000) {
         const toast = document.getElementById('toast');
         toast.textContent = msg;
         toast.style.background = type === 'error' ? '#c0392b' : type === 'success' ? '#00a878' : '#333';
         toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), 3000);
+        setTimeout(() => toast.classList.remove('show'), duration);
       }
 
       function _acmslEnc(s) { return String(s ?? "").replace(/ /g, "%20"); }
@@ -1986,6 +1998,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
       function runAwebpage(url) {
         window.location.href = url;
+      }
+
+      function runAwebpageExternal(url) {
+        showToast(t('openapp.toast'), 'info', 8000);
+        const absUrl = url.startsWith('http') ? url : window.location.origin + '/' + url;
+        const sep = absUrl.indexOf('?') >= 0 ? '&' : '?';
+        const fullUrl = absUrl + sep + 'from=launcher';
+        const ctrl = new AbortController();
+        setTimeout(function() { ctrl.abort(); }, 300);
+        fetch('/api/openapp?url=' + encodeURIComponent(fullUrl), {signal: ctrl.signal})
+          .then(function(r) { if (!r.ok) window.open(fullUrl, '_blank'); })
+          .catch(function(e) { if (e.name !== 'AbortError') window.open(fullUrl, '_blank'); });
       }
 
       function runAfile(param1) {
