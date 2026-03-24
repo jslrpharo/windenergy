@@ -974,15 +974,24 @@
             </div>
           </div>
 
-          <!-- Placeholder for future families -->
-          <div class="sub-card" style="opacity:0.5; pointer-events:none;">
-            <h3 data-i18n="practicas.rrc.h3">🔬 Lab Notebook: Rotor Resistance Controlled WT</h3>
-            <p data-i18n="practicas.coming">Coming soon</p>
+          <div class="sub-card">
+            <h3 data-i18n="practicas.rrc.h3">🔬 Lab Notebook: Rotor Resistance Controlled Wind Turbine</h3>
+            <p data-i18n="practicas.rrc.p1">Guided exercises on wind gust response, observation of the RPM control mechanism through the rotor, and changes in produced power.</p>
+            <div class="btn-row">
+              <button id="btnPracticasRRC" class="btn btn-primary" type="button" data-i18n="practicas.rrc.button">📖 Open Lab Notebook</button>
+              <button id="btnPracticasRRC_Tutorial" class="btn btn-secondary" type="button" data-i18n="practicas.rrc.tutorial.button">📘 Simulator Tutorial</button>
+              <button id="btnPracticasRRC_Sim" class="btn btn-ghost" type="button" data-i18n="practicas.rrc.sim.button">▶ Launch Simulator</button>
+            </div>
           </div>
 
-          <div class="sub-card" style="opacity:0.5; pointer-events:none;">
-            <h3 data-i18n="practicas.dfig.h3">🔬 Lab Notebook: DFIG Wind Turbine</h3>
-            <p data-i18n="practicas.coming">Coming soon</p>
+          <div class="sub-card">
+            <h3 data-i18n="practicas.dfig.h3">🔬 Lab Notebook: Doubly-Fed Induction Generator Wind Turbine (DFIG)</h3>
+            <p data-i18n="practicas.dfig.p1">Exercises on start-up and shutdown procedures, observation of the generator's electrical and magnetic quantities and their frequency evolution, the Back-to-Back converter, wind gust response, drivetrain inertia influence, response to changes in power setpoint and power factor, and grid fault scenarios.</p>
+            <div class="btn-row">
+              <button id="btnPracticasDFIG" class="btn btn-primary" type="button" data-i18n="practicas.dfig.button">📖 Open Lab Notebook</button>
+              <button id="btnPracticasDFIG_Tutorial" class="btn btn-secondary" type="button" data-i18n="practicas.dfig.tutorial.button">📘 Simulator Tutorial</button>
+              <button id="btnPracticasDFIG_Sim" class="btn btn-ghost" type="button" data-i18n="practicas.dfig.sim.button">▶ Launch Simulator</button>
+            </div>
           </div>
         </div>
       </section>
@@ -991,7 +1000,6 @@
       <section id="concepts">
         <div class="section-header">
           <h2 data-i18n="concepts.title">concepts.title</h2>
-          <p data-i18n="concepts.title.p"></p>
         </div>
 
         <div class="suboptions">
@@ -1154,13 +1162,6 @@
             </div>
           </div>
 
-          <div class="sub-card" data-lang-only="es">
-            <h3 data-i18n="guided.learning.scada.title">Guided learning for the Wind Farm Control Center/SCADA</h3>
-            <div class="card-text">
-              <p data-i18n="guided.learning.scada.p">The items in the next links provide an ordered reading of the Tutorial of the Wind Farm Control Center/SCADA, following</p>
-              <button class="card" type="button" data-target="opcionGuiaWFSSCADA"><span data-i18n="guided.learning.scada.button">📖 Open the Guide</span></button>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -1184,9 +1185,15 @@
             <h3 data-i18n="tutorials.windfarm_scada.h3">Access to the "Wind Farm Control Center/SCADA" Simulator" Tutorial</h3>
             <p data-i18n="tutorials.windfarm_scada.p1">While the Wind Farm Control Center/SCADA Simulator includes built‑in access to its tutorial, this option lets users open the tutorial separately, without launching the simulator itself.</p>
             <div class="btn-row">
-              <button id="btnTutorialWFSCADA"  class="btn btn-primary" type="button" data-i18n="tutorial.wfsscada.button">tutorial.wfsscada.button</button>
-            <!-- button class="btn btn-primary" type="button" onclick="runAviewer('C:\\ACMSL\\WindFarmSimulator\\Help\\English\\Wind_Farm_Simulator_SCADA\\Introduction.html')">📖 Open the "Wind Farm Control Center/SCADA" Simulator's Tutorial</button-->
+              <button id="btnWFSCADA_Tutorial" class="btn btn-primary" type="button" data-i18n="tutorial.wfsscada.button">📖 Open the "Wind Farm Control Center/SCADA" Tutorial</button>
+            </div>
+          </div>
 
+          <div class="sub-card" data-lang-only="es">
+            <h3 data-i18n="guided.learning.scada.title">Acceso guiado al Tutorial del 'Centro de Control/SCADA del Parque Eólico'</h3>
+            <div class="card-text">
+              <p data-i18n="guided.learning.scada.p">The items in the next links provide an ordered reading of the Tutorial of the Wind Farm Control Center/SCADA, following</p>
+              <button class="card" type="button" data-target="opcionGuiaWFSSCADA"><span data-i18n="guided.learning.scada.button">📖 Open the Guide</span></button>
             </div>
           </div>
         </div>
@@ -1445,7 +1452,7 @@
       "card.grid.title6": "Algunos vídeos significativos",
       "card.grid.title7": "Acceso a los Tutoriales",
       "card.grid.title8": "Aprendizaje guiado y experimentos sugeridos",
-      "concepts.title": "Introdución a conceptos de Energía Eólica",
+      "concepts.title": "Introducción a Conceptos Clave en Energía Eólica",
       "concepts.intro.mindmap": "Mapa mental con los conceptos clave en Energia Eólica",
       "concepts.intro.family": "Introducción a las familias de Aerogeneradores y su evolución",
       "concepts.intro.textbutton": "▶ Visualizar el Tutorial",
@@ -1731,15 +1738,36 @@ document.addEventListener('DOMContentLoaded', function() {
   setActionButton('btnMindMap', 'runAwebpageExternal', 'mindmap.windenergy.path');
 
   setActionButton('btnTutorialWFSCADA', 'runAviewer', t('tutorial.wfscada.path'));
+  setActionButton('btnWFSCADA_Tutorial', 'runAviewer', 'tutorial.wfscada.path');
   setActionButton('btnTutorialDSAS', 'runAviewer', t('tutorial.dsaswt.path'));
   setActionButton('btnExercisesDSAS', 'runAwebpage', t('tutorial.dsasexercises.path'));
   setActionButton('btnTutorialRRC', 'runAviewer', t('tutorial.rrcwt.path'));
   setActionButton('btnTutorialDFIG', 'runAviewer', t('tutorial.dfigwt.path'));
 
   // Botones de la nueva sección de Clases Prácticas
-  setActionButton('btnPracticasDSAS', 'runAwebpage', t('tutorial.dsasexercises.path'));
+  setActionButton('btnPracticasDSAS', 'runAviewer', 'practicas.dsas.path');
   setActionButton('btnPracticasDSAS_Tutorial', 'runAviewer', t('tutorial.dsaswt.path'));
   setActionButton('btnPracticasDSAS_Sim', 'runAldp', ['dsasr12.conf', 'languagename']);
+  setActionButton('btnPracticasRRC', 'runAviewer', 'practicas.rrc.path');
+  setActionButton('btnPracticasRRC_Tutorial', 'runAviewer', 'tutorial.rrcwt.path');
+  setActionButton('btnPracticasRRC_Sim', 'runAldp', ['rrcr12.conf', 'languagename']);
+  setActionButton('btnPracticasDFIG', 'runAviewer', 'practicas.dfig.path');
+  setActionButton('btnPracticasDFIG_Tutorial', 'runAviewer', 'tutorial.dfigwt.path');
+  const btnPracticasDFIG_Sim = document.getElementById('btnPracticasDFIG_Sim');
+  if (btnPracticasDFIG_Sim) {
+    btnPracticasDFIG_Sim.onclick = function() {
+      showDFIGModal(function(freq) {
+        const confValue = (freq === '50hz') ? 'dfigr12_50hz.conf' : 'dfigr12_60hz.conf';
+        const langNames = { en: 'English', es: 'Spanish', fr: 'French', it: 'Italian', de: 'German', pt: 'Portuguese' };
+        let lang = (localStorage.getItem('lang') || (navigator.language||'en').split('-')[0] || 'en').toLowerCase();
+        if (!['es','en','fr','it','de','pt'].includes(lang)) lang = 'en';
+        let dict = {};
+        try { const s = document.getElementById('i18n-' + lang); if (s) dict = JSON.parse(s.textContent); } catch(e) {}
+        const idiomaValue = dict['languagename'] || langNames[lang] || lang;
+        runAldp(confValue, idiomaValue);
+      });
+    };
+  }
 
     setActionButton('btnSimuladorDSAS', 'runAldp', ['dsasr12.conf', 'languagename']);
     setActionButton('btnSimuladorRRC', 'runAldp', ['rrcr12.conf', 'languagename']);
@@ -2001,15 +2029,12 @@ document.addEventListener('DOMContentLoaded', function() {
       }
 
       function runAwebpageExternal(url) {
-        showToast(t('openapp.toast'), 'info', 8000);
+        showToast(t('openapp.toast'), 'info', 2500);
         const absUrl = url.startsWith('http') ? url : window.location.origin + '/' + url;
         const sep = absUrl.indexOf('?') >= 0 ? '&' : '?';
         const fullUrl = absUrl + sep + 'from=launcher';
-        const ctrl = new AbortController();
-        setTimeout(function() { ctrl.abort(); }, 300);
-        fetch('/api/openapp?url=' + encodeURIComponent(fullUrl), {signal: ctrl.signal})
-          .then(function(r) { if (!r.ok) window.open(fullUrl, '_blank'); })
-          .catch(function(e) { if (e.name !== 'AbortError') window.open(fullUrl, '_blank'); });
+        var img = new Image();
+        img.src = '/api/openapp?url=' + encodeURIComponent(fullUrl);
       }
 
       function runAfile(param1) {
@@ -2662,6 +2687,12 @@ document.addEventListener('DOMContentLoaded', function() {
           sessionStorage.removeItem('weblauncher_returnSection');
           showSection(returnSection, false);
           showToast('Viewer not available or file not found. Returned to previous section.', 'error');
+        } else {
+          // Navegación directa via ?section=<id>
+          const sectionParam = new URLSearchParams(window.location.search).get('section');
+          if (sectionParam && document.getElementById(sectionParam)) {
+            showSection(sectionParam, false);
+          }
         }
       });
     </script>
