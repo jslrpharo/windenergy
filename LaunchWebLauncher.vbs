@@ -70,6 +70,11 @@ If WScript.Arguments.Count > 0 Then
     Next
 End If
 
+' Si no se ha indicado configuracion, salir sin hacer nada
+If configClient = "" Then
+    WScript.Quit 0
+End If
+
 ' Perfil temporal de Edge para aislar el proceso
 Dim edgeProfileDir
 edgeProfileDir = objShell.ExpandEnvironmentStrings("%TEMP%") & "\" & EDGE_PROFILE_NAME
