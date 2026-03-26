@@ -1249,11 +1249,11 @@
             </div>
           </div>
 
-          <div class="sub-card" data-lang-only="es">
-            <h3 data-i18n="guided.learning.scada.title">Acceso guiado al Tutorial del 'Centro de Control/SCADA del Parque Eólico'</h3>
+          <div class="sub-card">
+            <h3 data-i18n="guided.learning.scada.title">Guided learning for the Wind Farm Control Center/SCADA</h3>
             <div class="card-text">
-              <p data-i18n="guided.learning.scada.p">The items in the next links provide an ordered reading of the Tutorial of the Wind Farm Control Center/SCADA, following</p>
-              <button class="card" type="button" data-target="opcionGuiaWFSSCADA"><span data-i18n="guided.learning.scada.button">📖 Open the Guide</span></button>
+              <p data-i18n="guided.learning.scada.p">The items in the next links provide an ordered reading of the Tutorial of the Wind Farm Control Center/SCADA, following the syllabus.</p>
+              <button class="btn btn-primary" type="button" onclick="openGuiaSCADA()" data-i18n="guided.learning.scada.button">📖 Open the Guide</button>
             </div>
           </div>
         </div>
@@ -1446,7 +1446,7 @@
       "tutorial.dfig.path": "Tutorials/DFIG.html",
       "tutorial.rrcwt.path": "C:\\ACMSL\\WindFarmSimulator\\Help\\English\\RRCWTSimulator\\Introduction.htmle",
       "tutorial.dfigwt.path": "C:\\ACMSL\\WindFarmSimulator\\Help\\English\\DFIGWTSimulator\\Introduction.htmle",
-      "tutorial.ldpframework.path": "C:\\ACMSL\\WindFarmSimulator\\Help\\English\\LdP_Help\\Introduction.htmle",
+      "tutorial.ldpframework.path": "C:\\ACMSL\\WindFarmSimulator\\Help\\English\\LdP_Help\\Introduction.html",
       "languagename": "English",
       "simuladorDFIG.50hz": "dfigr12_50hz.conf",
       "simuladorDFIG.60hz": "dfigr12_60hz.conf",
@@ -1474,6 +1474,9 @@
       "practicas.experimentosdiv.path": "tutorials/data/wind_energy_mindmap-en.mm",
       "practicas.coming": "Coming soon",
       "guided.experimentsdiverse.title": "Lab Notebooks: Diverse Experiments",
+      "guided.learning.scada.title": "Guided learning for the Wind Farm Control Center/SCADA",
+      "guided.learning.scada.p": "The items in the next links provide an ordered reading of the Tutorial of the Wind Farm Control Center/SCADA, following the syllabus.",
+      "guided.learning.scada.button": "\ud83d\udcd6 Open the Guide",
       "simulators.crosslink.h3": "\ud83d\udccb Practical Classes for these Simulators",
       "simulators.crosslink.p": "Hay ejercicios de laboratorio guiados disponibles para el simulador Active Stall. Abre los Cuadernos de Laboratorio para seguir los ejercicios paso a paso.",
       "simulators.crosslink.button": "\ud83d\udcd6 Go to Practical Classes",
@@ -1544,7 +1547,7 @@
       "tutorial.dfig.path": "Tutoriales/DFIG.html",
       "tutorial.rrcwt.path": "C:\\ACMSL\\WindFarmSimulator\\Help\\Spanish\\RRCWTSimulator\\Introduccion.htmle",
       "tutorial.dfigwt.path": "C:\\ACMSL\\WindFarmSimulator\\Help\\Spanish\\DFIGWTSimulator\\Introduccion.htmle",
-      "tutorial.ldpframework.path": "C:\\ACMSL\\WindFarmSimulator\\Help\\Spanish\\LdP_Help\\Introduccion.htmle",
+      "tutorial.ldpframework.path": "C:\\ACMSL\\WindFarmSimulator\\Help\\Spanish\\LdP_Help\\Introduccion.html",
       "languagename": "Spanish",
       "simuladorDFIG.50hz": "dfigr12_50hz.conf",
       "simuladorDFIG.60hz": "dfigr12_60hz.conf",
@@ -1572,6 +1575,9 @@
       "practicas.experimentosdiv.path": "tutorials/data/wind_energy_mindmap-es.mm",
       "practicas.coming": "Próximamente",
       "guided.experimentsdiverse.title": "Cuadernos de Laboratorio: Experimentos diversos",
+      "guided.learning.scada.title": "Acceso guiado al Tutorial del 'Centro de Control/SCADA del Parque Eólico'",
+      "guided.learning.scada.p": "Los elementos de los siguientes enlaces proporcionan una lectura ordenada del Tutorial del Centro de Control SCADA de Parque Eólico, siguiendo el temario.",
+      "guided.learning.scada.button": "📖 Abrir la Guía",
       "simulators.crosslink.h3": "📋 Clases Prácticas para estos Simuladores",
       "simulators.crosslink.p": "Hay ejercicios de laboratorio guiados disponibles para el simulador Active Stall. Abre los Cuadernos de Laboratorio para seguir los ejercicios paso a paso.",
       "simulators.crosslink.button": "📖 Ir a Clases Prácticas",
@@ -2142,11 +2148,24 @@ document.addEventListener('DOMContentLoaded', function() {
         window.location.href = url;
       }
 
+      function openGuiaSCADA() {
+        const langNames = { en: 'English', es: 'Spanish', fr: 'French', it: 'Italian', de: 'German', pt: 'Portuguese' };
+        let lang = (localStorage.getItem('lang') || (navigator.language||'en').split('-')[0] || 'en').toLowerCase();
+        if (!Object.keys(langNames).includes(lang)) lang = 'en';
+        const folder = langNames[lang];
+        runAwebpageExternal('file:///C:/ACMSL/WindFarmSimulator/Help/' + folder + '/Guia_Simulador_WFS_SCADA_Parque_Eolico/index.html');
+      }
+
       function runAwebpageExternal(url) {
         showToast(t('openapp.toast'), 'info', 2500);
-        const absUrl = url.startsWith('http') ? url : window.location.origin + '/' + url;
-        const sep = absUrl.indexOf('?') >= 0 ? '&' : '?';
-        const fullUrl = absUrl + sep + 'from=launcher';
+        let fullUrl;
+        if (url.startsWith('http') || url.startsWith('file://')) {
+          fullUrl = url;
+        } else {
+          const absUrl = window.location.origin + '/' + url;
+          const sep = absUrl.indexOf('?') >= 0 ? '&' : '?';
+          fullUrl = absUrl + sep + 'from=launcher';
+        }
         var img = new Image();
         img.src = '/api/openapp?url=' + encodeURIComponent(fullUrl);
       }
