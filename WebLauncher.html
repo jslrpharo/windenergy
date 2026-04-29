@@ -1363,7 +1363,7 @@
         <p>This application allows users to: a) visualize data sets datalogged during a session with any of the simulators; b) to export them in CSV format; c) to resample them for further processing.</p>
           <img src="img/Datalog1.png" alt="Datalog screenshot" style="max-width:100%; margin-top:1rem;">
           <div class="btn-row" style="justify-content:center;">
-            <button class="btn btn-primary" type="button" onclick="runAfile('ldp_data_processing')" data-i18n="dataprocessing.datalogger.button">▶ Run Datalogger Data Processor</button>
+            <button class="btn btn-primary" type="button" onclick="runAldpdataloggerprocessor()" data-i18n="dataprocessing.datalogger.button">▶ Run Datalogger Data Processor</button>
           </div>
         </div>
 
@@ -2168,6 +2168,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         var img = new Image();
         img.src = '/api/openapp?url=' + encodeURIComponent(fullUrl);
+      }
+
+      function runAldpdataloggerprocessor() {
+        const comando = "acmsl://ldpdataloggerprocessor";
+        window.location.href = comando;
       }
 
       function runAfile(param1) {
