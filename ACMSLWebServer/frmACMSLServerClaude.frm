@@ -83,6 +83,7 @@ Private colVariables As Collection
 Private mBasePath As String  ' Directorio raiz para servir archivos
 Private mPort As Long
 Private mIniPath As String
+Private mLogFilePath As String
 
 ' Directorios permitidos para servir archivos (relativos a basePath)
 Private Const ALLOWED_DIRS = "/img/,/configurations/,/libs/,/tutorials/,/simulators/"
@@ -97,6 +98,11 @@ Private Sub Form_Load()
     If Right(mBasePath, 1) <> "\" Then mBasePath = mBasePath & "\"
     mIniPath = mBasePath & "ACMSLWebServer.ini"
     mPort = LeerPuertoConfiguracion(mIniPath)
+
+    Dim logDir As String
+    logDir = mBasePath & "logs\"
+    If Dir(logDir, vbDirectory) = "" Then MkDir logDir
+    mLogFilePath = logDir & Format(Now, "YYYY-MM-DD_HH-MM-SS") & ".log"
 
     ' Desbloquear Chilkat
     Dim success As Long
@@ -676,7 +682,7 @@ Private Function GenerarRespuestaAPI(ByVal metodo As String, ByVal path As Strin
 '                         " --user-data-dir=""" & tutDir & """" & _
 '                         " --no-first-run --no-default-browser-check", 1, False
 '                ' ----------------------
-                wshell.Run "cscript //nologo """ & vbsPath & """ " & appUrl, 0, False
+                wshell.Run "cscript //nologo """ & vbsPath & """ """ & appUrl & """", 0, False
 
 
                 Set wshell = Nothing
@@ -859,7 +865,32 @@ Private Sub LogMsg(ByVal msg As String)
     Else
         txtLog.Text = txtLog.Text & Format(Now, "hh:nn:ss") & " " & msg & vbCrLf
     End If
+
+    ' Truncar txtLog cuando supere 50 lineas: eliminar las 25 primeras
+    Dim lines() As String
+    lines = Split(txtLog.Text, vbCrLf)
+    If UBound(lines) > 50 Then
+        Dim j As Long
+        Dim newText As String
+        newText = ""
+        For j = 25 To UBound(lines) - 1
+            newText = newText & lines(j) & vbCrLf
+        Next j
+        txtLog.Text = newText
+    End If
+
     txtLog.SelStart = Len(txtLog.Text)
+
+    ' Escribir al fichero de log (se omiten lineas en blanco)
+    If mLogFilePath <> "" And msg <> "" Then
+        On Error Resume Next
+        Dim fNum As Integer
+        fNum = FreeFile
+        Open mLogFilePath For Append As #fNum
+        Print #fNum, Format(Now, "YYYY-MM-DD hh:nn:ss") & " " & msg
+        Close #fNum
+        On Error GoTo 0
+    End If
 End Sub
 
 Private Sub cmdLimpiarLog_Click()

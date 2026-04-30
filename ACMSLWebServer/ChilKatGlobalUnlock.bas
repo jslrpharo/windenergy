@@ -19,11 +19,12 @@ End If
 
 Dim status As Long
 status = glob.UnlockStatus
-'If (status = 2) Then
-'    Debug.Print "Unlocked using purchased unlock code."
-'Else
-'    Debug.Print "Unlocked in trial mode."
-'End If
+If (status = 2) Then
+    Debug.Print "Unlocked using purchased unlock code."
+    CheckGlobalChilKat = True
+Else
+    Debug.Print "Unlocked in trial mode."
+End If
 '
 '' The LastErrorText can be examined in the success case to see if it was unlocked in
 '' trial more, or with a purchased unlock code.
