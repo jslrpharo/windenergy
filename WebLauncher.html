@@ -1,4 +1,4 @@
-v1r12<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
   <head>
     <link rel="icon" type="image/png" href="img/ACM_LOGO.png" />
@@ -1021,6 +1021,7 @@ v1r12<!DOCTYPE html>
       <section id="concepts">
         <div class="section-header">
           <h2 data-i18n="concepts.title">concepts.title</h2>
+          <p data-i18n="concepts.title.p">concepts.title.p</p>
         </div>
 
         <div class="suboptions">
@@ -1360,10 +1361,10 @@ v1r12<!DOCTYPE html>
 
         <div class="sub-card">
           <h3 data-i18n="dataprocessing.datalogger.h3">Application to visualize datalogged signal evolutions, to process them and export to CSV format for further processing</h3>
-        <p>This application allows users to: a) visualize data sets datalogged during a session with any of the simulators; b) to export them in CSV format; c) to resample them for further processing.</p>
+        <p data-i18n="dataprocessing.datalogger.p">This application allows users to: a) visualize data sets datalogged during a session with any of the simulators; b) to export them in CSV format; c) to resample them for further processing.</p>
           <img src="img/Datalog1.png" alt="Datalog screenshot" style="max-width:100%; margin-top:1rem;">
           <div class="btn-row" style="justify-content:center;">
-            <button class="btn btn-primary" type="button" onclick="runAldpdataloggerprocessor()" data-i18n="dataprocessing.datalogger.button">▶ Run Datalogger Data Processor</button>
+            <button class="btn btn-primary" type="button" onclick="runAldpdataloggerviewer()" data-i18n="dataprocessing.datalogger.button">▶ Run Datalogger Data Processor</button>
           </div>
         </div>
 
@@ -1426,11 +1427,13 @@ v1r12<!DOCTYPE html>
       "card.grid.titleDP": "Data Processing",
       "dataprocessing.title": "Data Processing",
       "dataprocessing.datalogger.button": "▶ Run Datalogger Data Processor",
+      "dataprocessing.datalogger.p": "This application allows users to: a) visualize data sets datalogged during a session with any of the simulators; b) to export them in CSV format; c) to resample them for further processing.",
       "dataprocessing.windseries.h3": "Creación de series temporales de velocidad de viento para su uso como evolución del viento en el Simulador",
       "card.grid.title6": "Algunos vídeos significativos",
       "card.grid.title7": "Acceso a los Tutoriales",
       "card.grid.title8": "Aprendizaje guiado y experimentos sugeridos",
-      "concepts.title": "Introdución a conceptos de Energía Eólica",
+      "concepts.title": "Introducción a conceptos de Energía Eólica",
+      "concepts.title.p": "Mind Map with the key concepts in Wind Energy",
       "concepts.intro.mindmap": "Mapa mental con los conceptos clave en Energia Eólica",
       "concepts.intro.family": "Introducción a las familias de Aerogeneradores y su evolución",
       "concepts.intro.textbutton": "▶ Visualizar el Tutorial",
@@ -1527,6 +1530,7 @@ v1r12<!DOCTYPE html>
       "card.grid.titleDP": "Procesamiento de Datos",
       "dataprocessing.title": "Procesamiento de Datos",
       "dataprocessing.datalogger.button": "▶ Ejecutar Datalogger Data Processor",
+      "dataprocessing.datalogger.p": "Esta aplicación permite a los usuarios: a) visualizar conjuntos de datos registrados durante una sesión con cualquiera de los simuladores; b) exportarlos en formato CSV; c) remuestrearlos para su posterior procesamiento.",
       "dataprocessing.windseries.h3": "Creación de series temporales de velocidad de viento para su uso como evolución del viento en el Simulador",
       "card.grid.title6": "Algunos vídeos significativos",
       "card.grid.title7": "Acceso a los Tutoriales",
@@ -1597,7 +1601,8 @@ v1r12<!DOCTYPE html>
       "tutconcepts.simulators.h3": "Simuladores y Tutoriales",
       "tutconcepts.simulators.p": "Cómo acceder y aprovechar los simuladores en tiempo real y sus tutoriales asociados.",
       "tutconcepts.simulators.path": "tutorials/es/simuladores-y-tutoriales.html",
-      "concepts.mindmap.button": "▶ Abre el Mapa Mental"
+      "concepts.mindmap.button": "▶ Abre el Mapa Mental",
+      "concepts.title.p": "Mapa mental con los conceptos clave en Energía Eólica"
     }
 
     <!-- Embedded videos catalog (Option C: offline, no fetch). Replace the contents with your Videos.txt XML -->
@@ -2166,12 +2171,22 @@ document.addEventListener('DOMContentLoaded', function() {
           const sep = absUrl.indexOf('?') >= 0 ? '&' : '?';
           fullUrl = absUrl + sep + 'from=launcher';
         }
-        var img = new Image();
-        img.src = '/api/openapp?url=' + encodeURIComponent(fullUrl);
+        fetch('/api/openapp?url=' + encodeURIComponent(fullUrl))
+          .then(r => r.json())
+          .then(data => {
+            if (data.status !== 'ok') {
+              console.error('[openapp] server error:', data);
+              showToast('Error: ' + (data.error || JSON.stringify(data)), 'error', 4000);
+            }
+          })
+          .catch(err => {
+            console.error('[openapp] fetch error:', err);
+            showToast('No se pudo contactar el servidor local', 'error', 4000);
+          });
       }
 
-      function runAldpdataloggerprocessor() {
-        const comando = "acmsl://ldpdataloggerprocessor";
+      function runAldpdataloggerviewer() {
+        const comando = "acmsl://ldpdataloggerviewer";
         window.location.href = comando;
       }
 
@@ -2718,7 +2733,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
       }
       document.addEventListener('DOMContentLoaded', async ()=>{
-        // Añadir CryptoJS si no está
+        // Añadir CryptoJS si no estás
         if (typeof CryptoJS === 'undefined') {
           const script = document.createElement('script');
           script.src = 'libs/crypto-js.min.js';

@@ -1,8 +1,9 @@
 '===================================================================
 ' OpenTutorial.vbs
 ' Abre una URL de tutorial en Edge --app (sin barra de URL ni pestanas).
-' Convierte http://localhost:PORT/path a file:///BASE/path para evitar
-' depender del servidor HTTP y que Edge cargue el contenido de inmediato.
+' Convierte http://localhost:PORT/path  a  file:///BASE/path#from=launcher
+' para carga directa desde disco (rapida, sin depender del servidor HTTP).
+' El hash #from=launcher activa el modo standalone en tutorial-standalone.js.
 '
 ' USO:
 '   cscript OpenTutorial.vbs <url>
@@ -26,15 +27,25 @@ If Not objFSO.FileExists(firstRunFile) Then
     fFirst.Close : Set fFirst = Nothing
 End If
 
-' --- Convertir http://localhost:PORT/path?query  →  file:///BASE/path?query ---
+' --- Convertir http://localhost:PORT/path  ->  file:///BASE/path#from=launcher ---
+' Se usa file:// para carga instantanea desde disco (sin pasar por el servidor).
+' El hash #from=launcher es detectado por tutorial-standalone.js para ocultar
+' la navegacion interior (el query string ?... no funciona en URLs file://).
 Dim baseDir : baseDir = objFSO.GetParentFolderName(WScript.ScriptFullName)
 Dim targetUrl : targetUrl = url
 If LCase(Left(url, 7)) = "http://" Or LCase(Left(url, 8)) = "https://" Then
-    ' Saltar "http://" (7 chars) y buscar la primera "/" despues del host:puerto
     Dim slashPos : slashPos = InStr(8, url, "/")
     Dim urlPath : urlPath = "/"
-    If slashPos > 0 Then urlPath = Mid(url, slashPos)
-    targetUrl = "file:///" & Replace(baseDir, "\", "/") & urlPath
+    If slashPos > 0 Then
+        ' Tomar solo la ruta, sin query string
+        Dim qPos : qPos = InStr(slashPos, url, "?")
+        If qPos > 0 Then
+            urlPath = Mid(url, slashPos, qPos - slashPos)
+        Else
+            urlPath = Mid(url, slashPos)
+        End If
+    End If
+    targetUrl = "file:///" & Replace(baseDir, "\", "/") & urlPath & "#from=launcher"
 End If
 
 ' LOG de diagnostico
