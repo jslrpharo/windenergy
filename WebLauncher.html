@@ -837,6 +837,31 @@
         color: var(--dark);
       }
 
+      /* Header lang/home row */
+      .header-lang-row { display: flex; align-items: center; gap: 0.5rem; }
+      #langSelect { border-radius: 999px; padding: 0.35rem; }
+
+      /* Card background images */
+      .card-img-mindmap       { background-image: url('img/mindmaprecortado.png'); }
+      .card-img-practicas     { background-image: url('img/AccesoaTutoriales.png'); }
+      .card-img-aerogenerador { background-image: url('img/Aerogenerador_3d_chatgpt-reducida.png'); }
+      .card-img-tutoriales    { background-image: url('img/AccesoaTutoriales.png'); }
+      .card-img-parque        { background-image: url('img/ParqueEolico.png'); }
+      .card-img-guias         { background-image: url('img/AccesoaGuias-2.png'); }
+      .card-img-opercurve     { background-image: url('img/powervsrpms-reducido.png'); }
+      .card-img-dfigb2b       { background-image: url('img/dfigradar.png'); }
+      .card-img-videos        { background-image: url('img/CollageImagenesVideos-reducido.png'); }
+      .card-img-datalog       { background-image: url('img/Datalog2.png'); background-size: auto 100%; background-repeat: no-repeat; }
+      .card-img-dsas          { background-image: url('img/hawt-generico-reducido.png'); }
+      .card-img-rrc           { background-image: url('img/rrc-reducido.png'); }
+      .card-img-dfig          { background-image: url('img/dfigr12.png'); }
+
+      /* Layout utilities */
+      .sub-card--mt      { margin-top: 1.25rem; }
+      .img-full-width-mt { max-width: 100%; margin-top: 1rem; }
+      .btn-row--center   { justify-content: center; }
+      .modal-body--help  { padding: 1rem; background: var(--card-bg); }
+
       </style>
   </head>
   <body>
@@ -854,8 +879,8 @@
         <button id="searchBtn" class="btn btn-secondary" type="button" data-i18n="search.button">search.button</button>
         <div id="searchSuggest" class="suggest" role="listbox" aria-label="Search suggestions"></div>
       </div>
-      <div style="display:flex;align-items:center;gap:0.5rem">
-        <select id="langSelect" aria-label="Language" style="border-radius:999px;padding:0.35rem;">
+      <div class="header-lang-row">
+        <select id="langSelect" aria-label="Language">
           <option value="en">EN</option>
           <option value="es">ES</option>
           <option value="fr">FR</option>
@@ -891,43 +916,43 @@
         <div class="grid-6">
           <!-- 1. Introducción a la Energía Eólica -->
           <button class="card" type="button" data-target="concepts" data-keywords="wind energy,turbine concepts,energy generation, mind map">
-            <div class="card-image" style="background-image:url('img/mindmaprecortado.png');"></div>
+            <div class="card-image card-img-mindmap"></div>
             <div class="card-title" data-i18n="card.intro.title">card.intro.title</div>
           </button>
 
           <!-- 2. CLASES PRÁCTICAS (NUEVO - acceso directo) -->
           <button class="card card-highlight" type="button" data-target="opcClasesPracticas" data-keywords="practical exercises,laboratory,exercises,clases practicas,laboratorio,cuaderno">
-            <div class="card-image" style="background-image:url('img/AccesoaTutoriales.png');"></div>
+            <div class="card-image card-img-practicas"></div>
             <div class="card-title" data-i18n="card.grid.titlePracticas">🔬 Practical Exercises (Lab Notebooks)</div>
           </button>
 
           <!-- 3. Aerogeneradores en Parques Eólicos -->
           <button class="card" type="button" data-target="opcSimulators">
-            <div class="card-image" style="background-image:url('img/Aerogenerador_3d_chatgpt-reducida.png');"></div>
+            <div class="card-image card-img-aerogenerador"></div>
             <div class="card-title" data-i18n="card.grid.title3">card.grid.title3</div>
           </button>
 
           <!-- 4. Tutoriales (Manuales de Usuario) -->
           <button class="card" type="button" data-target="opcTutorials">
-            <div class="card-image" style="background-image:url('img/AccesoaTutoriales.png');"></div>
+            <div class="card-image card-img-tutoriales"></div>
             <div class="card-title" data-i18n="card.grid.title7">card.grid.title7</div>
           </button>
 
           <!-- 5. Wind Farms -->
           <button class="card" type="button" data-target="Wind Farm SCADA">
-            <div class="card-image" style="background-image:url('img/ParqueEolico.png');"></div>
+            <div class="card-image card-img-parque"></div>
             <div class="card-title" data-i18n="card.grid.title2">card.grid.title2</div>
           </button>
 
           <!-- 6. Guias y experimentos -->
           <button class="card" type="button" data-target="opcionGuias">
-            <div class="card-image" style="background-image:url('img/AccesoaGuias-2.png');"></div>
+            <div class="card-image card-img-guias"></div>
             <div class="card-title" data-i18n="guided.learning.title">guided.learning.title</div>
           </button>
 
           <!-- 7. Analysis del Tren de Potencia (hover ayuda) -->
           <button class="card help" type="button" data-target="opcOperCurve">
-            <div class="card-image" style="background-image:url('img/powervsrpms-reducido.png');"></div>
+            <div class="card-image card-img-opercurve"></div>
             <div class="card-title" data-i18n="card.grid.title4">card.grid.title4</div>
             <div class="card-help-popup">
               <img src="img/OperCurveVarSpeedWTs.jpg" alt="Help image" />
@@ -937,7 +962,7 @@
 
           <!-- 8. Cálculos sobre Back-to-Back converters (hover ayuda) -->
           <button class="card help" type="button" data-target="opcDFIGB2B">
-            <div class="card-image" style="background-image:url('img/dfigradar.png');"></div>
+            <div class="card-image card-img-dfigb2b"></div>
             <div class="card-title" data-i18n="card.grid.title5">card.grid.title5</div>
             <div class="card-help-popup">
               <img src="img/dfigb2b.png" alt="Help image" />
@@ -947,13 +972,13 @@
 
           <!-- 9. Vídeos interesantes -->
           <button class="card" type="button" data-target="opcVideos">
-            <div class="card-image" style="background-image:url('img/CollageImagenesVideos-reducido.png');"></div>
+            <div class="card-image card-img-videos"></div>
             <div class="card-title" data-i18n="card.grid.title6">card.grid.title6</div>
           </button>
 
           <!-- 10. Data Processing -->
           <button class="card" type="button" data-target="opcDataProcessing">
-            <div class="card-image" style="background-image:url('img/Datalog2.png'); background-size: auto 100%; background-repeat: no-repeat;"></div>
+            <div class="card-image card-img-datalog"></div>
             <div class="card-title" data-i18n="card.grid.titleDP">Data Processing</div>
           </button>
         </div>
@@ -1270,7 +1295,7 @@
         <div class="row-3">
           <button id="btnSimuladorDSAS" class="card help" type="button" >
           <!--button class="card help" type="button" onclick="runAldp('dsasr12.conf','English')"-->
-            <div class="card-image" style="background-image:url('img/hawt-generico-reducido.png');"></div>
+            <div class="card-image card-img-dsas"></div>
             <div class="card-title" data-i18n="simulator.dsaswt.title">For the Squirrel Cage generator, Active Stall Controlled, Dual Speed family of WTs</div>
             <div class="card-help-popup">
               <img src="img/hawt-generico.png" alt="Help image" />
@@ -1280,7 +1305,7 @@
 
           <!-- button class="card help" type="button" onclick="runAldp('rrcr12.conf','English')"-->
           <button id="btnSimuladorRRC" class="card help" type="button" > <!--onclick="runAldp('rrcr12.conf','English')"-->
-            <div class="card-image" style="background-image:url('img/rrc-reducido.png');"></div>
+            <div class="card-image card-img-rrc"></div>
             <div class="card-title" data-i18n="simulator.rrcwt.title">For the Rotor Resistance Controlled family of WTs</div>
             <div class="card-help-popup">
               <img src="img/rrc.png" alt="Help image" />
@@ -1289,7 +1314,7 @@
           </button>
 
           <button id="btnSimuladorDFIG" class="card help" type="button" > <!--onclick="runAldp('dfigr12.conf','English')"-->
-            <div class="card-image" style="background-image:url('img/dfigr12.png');"></div>
+            <div class="card-image card-img-dfig"></div>
             <div class="card-title" data-i18n="simulator.dfigwt.title">For the Doubly-Fed Induction Generator (DFIG) family of WTs</div>
             <div class="card-help-popup">
               <img src="img/dfigr12-normal.png" alt="Help image" />
@@ -1299,7 +1324,7 @@
         </div>
 
         <!-- Cross-link to Practical Exercises -->
-        <div class="sub-card" style="margin-top:1.25rem;">
+        <div class="sub-card sub-card--mt">
           <h3 data-i18n="simulators.crosslink.h3">📋 Practical Exercises for these Simulators</h3>
           <p data-i18n="simulators.crosslink.p">Guided lab exercises are available for the Active Stall simulator. Open the Lab Notebooks to follow step-by-step practical exercises.</p>
           <div class="btn-row">
@@ -1362,8 +1387,8 @@
         <div class="sub-card">
           <h3 data-i18n="dataprocessing.datalogger.h3">Application to visualize datalogged signal evolutions, to process them and export to CSV format for further processing</h3>
         <p data-i18n="dataprocessing.datalogger.p">This application allows users to: a) visualize data sets datalogged during a session with any of the simulators; b) to export them in CSV format; c) to resample them for further processing.</p>
-          <img src="img/Datalog1.png" alt="Datalog screenshot" style="max-width:100%; margin-top:1rem;">
-          <div class="btn-row" style="justify-content:center;">
+          <img src="img/Datalog1.png" alt="Datalog screenshot" class="img-full-width-mt">
+          <div class="btn-row btn-row--center">
             <button class="btn btn-primary" type="button" onclick="runAldpdataloggerviewer()" data-i18n="dataprocessing.datalogger.button">▶ Run Datalogger Data Processor</button>
           </div>
         </div>
@@ -2870,7 +2895,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <div id="helpModalTitle" class="modal-title">Help</div>
           <button class="modal-close" type="button" onclick="closeHelpModal()">✕ Close</button>
         </div>
-        <div class="modal-body" style="padding:1rem; background: var(--card-bg);">
+        <div class="modal-body modal-body--help">
           <div id="helpModalBody" class="video-help"></div>
         </div>
       </div>
