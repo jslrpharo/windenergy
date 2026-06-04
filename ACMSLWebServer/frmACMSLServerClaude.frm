@@ -57,6 +57,7 @@ Attribute VB_Exposed = False
 '
 ' Endpoints API:
 '   GET  /api/info       - Informacion del servidor
+'   GET  /api/shutdown   - Cerrar el servidor de forma ordenada
 '   GET  /api/variable   - Obtener variable (?name=xxx)
 '   POST /api/variable   - Guardar variable (JSON body)
 '   GET  /api/variables  - Listar todas las variables
@@ -84,6 +85,8 @@ Private mBasePath As String  ' Directorio raiz para servir archivos
 Private mPort As Long
 Private mIniPath As String
 Private mLogFilePath As String
+Private mShutdownRequested As Boolean
+Private mUILanguage As String
 
 ' Directorios permitidos para servir archivos (relativos a basePath)
 Private Const ALLOWED_DIRS = "/img/,/configurations/,/libs/,/tutorials/,/simulators/"
@@ -98,6 +101,7 @@ Private Sub Form_Load()
     If Right(mBasePath, 1) <> "\" Then mBasePath = mBasePath & "\"
     mIniPath = mBasePath & "ACMSLWebServer.ini"
     mPort = LeerPuertoConfiguracion(mIniPath)
+    mUILanguage = GetUILanguage()
 
     Dim logDir As String
     logDir = mBasePath & "logs\"
@@ -114,13 +118,18 @@ Private Sub Form_Load()
         End ' ======================================================Exit Sub
     End If
 
-    ' Iniciar servidor en el primer puerto disponible a partir del configurado
-    If Not IniciarServidorEnPuertoDisponible() Then
-        MsgBox "No se encontro un puerto disponible a partir de " & CStr(mPort) & ": " & objSocket.LastErrorText, vbCritical
+    If mPort = 0 Then
+        MsgBox "No se encontro un valor port= valido en ACMSLWebServer.ini.", vbCritical
         Exit Sub
     End If
 
-    Me.Caption = "ACMSLWebServer - Puerto " & CStr(mPort) & " [" & mBasePath & "]"
+    ' Iniciar servidor en el puerto configurado
+    If Not IniciarServidorEnPuertoConfigurado() Then
+        MsgBox "El puerto configurado " & CStr(mPort) & " no esta disponible: " & objSocket.LastErrorText, vbCritical
+        Exit Sub
+    End If
+
+    Me.Caption = BuildFormCaption()
     LogMsg "Servidor HTTP iniciado en puerto " & CStr(mPort)
     LogMsg "Directorio base: " & mBasePath
     LogMsg "Esperando conexiones..."
@@ -133,53 +142,75 @@ Private Sub Form_Load()
 End Sub
 
 Private Function LeerPuertoConfiguracion(ByVal iniPath As String) As Long
-    Const DEFAULT_PORT As Long = 18080
     Dim buffer As String
     Dim charsRead As Long
     Dim valorLeido As String
     Dim puerto As Long
 
     buffer = Space$(32)
-    charsRead = GetPrivateProfileString("server", "port", CStr(DEFAULT_PORT), buffer, Len(buffer), iniPath)
+    charsRead = GetPrivateProfileString("server", "port", "", buffer, Len(buffer), iniPath)
     valorLeido = Trim$(Left$(buffer, charsRead))
 
     puerto = Val(valorLeido)
     If puerto < 1 Or puerto > 65535 Then
-        puerto = DEFAULT_PORT
+        puerto = 0
     End If
 
     LeerPuertoConfiguracion = puerto
 End Function
 
-Private Function IniciarServidorEnPuertoDisponible() As Boolean
-    Dim puertoInicial As Long
-    Dim puertoActual As Long
+Private Function IniciarServidorEnPuertoConfigurado() As Boolean
     Dim success As Long
 
-    puertoInicial = mPort
-
-    For puertoActual = puertoInicial To 65535
-        success = objSocket.BindAndListen(puertoActual, 25)
-        If success = 1 Then
-            mPort = puertoActual
-
-            If mPort <> puertoInicial Then
-                LogMsg "Puerto " & CStr(puertoInicial) & " no disponible. Se usa el puerto " & CStr(mPort)
-            End If
-
-            GuardarPuertoConfiguracion mIniPath, mPort
-            IniciarServidorEnPuertoDisponible = True
-            Exit Function
-        End If
-    Next puertoActual
-
-    mPort = puertoInicial
-    IniciarServidorEnPuertoDisponible = False
+    success = objSocket.BindAndListen(mPort, 25)
+    IniciarServidorEnPuertoConfigurado = (success = 1)
 End Function
 
-Private Sub GuardarPuertoConfiguracion(ByVal iniPath As String, ByVal puerto As Long)
-    Call WritePrivateProfileString("server", "port", CStr(puerto), iniPath)
-End Sub
+Private Function GetUILanguage() As String
+    Dim cmdText As String
+    Dim pos As Long
+    Dim rawValue As String
+
+    cmdText = Command$
+    pos = InStr(1, cmdText, "lang=", vbTextCompare)
+
+    If pos > 0 Then
+        rawValue = Mid$(cmdText, pos + 5)
+        If InStr(rawValue, " ") > 0 Then
+            rawValue = Left$(rawValue, InStr(rawValue, " ") - 1)
+        End If
+    End If
+
+    GetUILanguage = NormalizeLanguage(rawValue)
+End Function
+
+Private Function NormalizeLanguage(ByVal rawValue As String) As String
+    Dim shortCode As String
+
+    shortCode = LCase$(Left$(Trim$(rawValue), 2))
+
+    Select Case shortCode
+        Case "es", "en", "it", "fr", "de", "pt"
+            NormalizeLanguage = shortCode
+        Case Else
+            NormalizeLanguage = "en"
+    End Select
+End Function
+
+Private Function BuildFormCaption() As String
+    Dim portLabel As String
+
+    Select Case mUILanguage
+        Case "es": portLabel = "Puerto"
+        Case "it": portLabel = "Porta"
+        Case "fr": portLabel = "Port"
+        Case "de": portLabel = "Port"
+        Case "pt": portLabel = "Porta"
+        Case Else: portLabel = "Port"
+    End Select
+
+    BuildFormCaption = "ACMSLWebServer - " & portLabel & " " & CStr(mPort) & " [" & mBasePath & "]"
+End Function
 
 Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
     bRunning = False
@@ -211,6 +242,10 @@ Private Sub Timer1_Timer()
     If Not objClientSocket Is Nothing Then
         ProcesarPeticion objClientSocket
         Set objClientSocket = Nothing
+    End If
+
+    If mShutdownRequested Then
+        Unload Me
     End If
 End Sub
 
@@ -615,6 +650,10 @@ Private Function GenerarRespuestaAPI(ByVal metodo As String, ByVal path As Strin
         strBody = strBody & "  ""variables_count"": " & colVariables.Count & vbCrLf
         strBody = strBody & "}"
 
+    Case "/api/shutdown"
+        mShutdownRequested = True
+        strBody = "{""status"":""ok"",""message"":""Servidor cerrandose""}"
+
     Case "/api/variable"
         If metodo = "GET" Then
             Dim varName As String
@@ -860,26 +899,24 @@ End Function
 '===================================================================
 
 Private Sub LogMsg(ByVal msg As String)
-    If msg = "" Then
-        txtLog.Text = txtLog.Text & vbCrLf
-    Else
+    If IsFormErrorMessage(msg) Then
         txtLog.Text = txtLog.Text & Format(Now, "hh:nn:ss") & " " & msg & vbCrLf
-    End If
 
-    ' Truncar txtLog cuando supere 50 lineas: eliminar las 25 primeras
-    Dim lines() As String
-    lines = Split(txtLog.Text, vbCrLf)
-    If UBound(lines) > 50 Then
-        Dim j As Long
-        Dim newText As String
-        newText = ""
-        For j = 25 To UBound(lines) - 1
-            newText = newText & lines(j) & vbCrLf
-        Next j
-        txtLog.Text = newText
-    End If
+        ' Truncar txtLog cuando supere 50 lineas: eliminar las 25 primeras
+        Dim lines() As String
+        lines = Split(txtLog.Text, vbCrLf)
+        If UBound(lines) > 50 Then
+            Dim j As Long
+            Dim newText As String
+            newText = ""
+            For j = 25 To UBound(lines) - 1
+                newText = newText & lines(j) & vbCrLf
+            Next j
+            txtLog.Text = newText
+        End If
 
-    txtLog.SelStart = Len(txtLog.Text)
+        txtLog.SelStart = Len(txtLog.Text)
+    End If
 
     ' Escribir al fichero de log (se omiten lineas en blanco)
     If mLogFilePath <> "" And msg <> "" Then
@@ -892,6 +929,16 @@ Private Sub LogMsg(ByVal msg As String)
         On Error GoTo 0
     End If
 End Sub
+
+Private Function IsFormErrorMessage(ByVal msg As String) As Boolean
+    Dim normalizedMsg As String
+
+    normalizedMsg = UCase$(Trim$(msg))
+    IsFormErrorMessage = _
+        (Left$(normalizedMsg, 5) = "ERROR") Or _
+        (Left$(normalizedMsg, 4) = "404:") Or _
+        (Left$(normalizedMsg, 9) = "BLOQUEADO")
+End Function
 
 Private Sub cmdLimpiarLog_Click()
     txtLog.Text = ""

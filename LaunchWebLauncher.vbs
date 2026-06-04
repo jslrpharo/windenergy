@@ -9,7 +9,7 @@
 ' 4) Abre Edge en modo --app (sin pestanas, sin barra de URL)
 '    con un user-data-dir propio para poder rastrear el proceso
 ' 5) Monitoriza Edge: cuando el usuario cierra la ventana,
-'    termina automaticamente el servidor
+'    cierra automaticamente el servidor de forma ordenada
 '
 ' USO:
 '   LaunchWebLauncher.vbs [cl=<config>] [lang=<idioma>]
@@ -28,7 +28,7 @@ Const SERVER_EXE       = "ACMSLWebServer.exe"
 Const INI_FILE         = "ACMSLWebServer.ini"
 Const MAX_WAIT_SECONDS = 10
 Const EDGE_PROFILE_NAME = "ACMSLWebLauncher"
-Const POLL_INTERVAL_MS = 2000
+Const POLL_INTERVAL_MS = 500
 
 Dim objShell, objWMI, objFSO
 Set objShell = CreateObject("WScript.Shell")
@@ -42,7 +42,7 @@ scriptDir = Left(WScript.ScriptFullName, InStrRev(WScript.ScriptFullName, "\"))
 ' ===================================================================
 ' PASO 0: Procesar argumentos de linea de comando
 ' ===================================================================
-Dim configClient, language
+Dim configClient, language, uiLanguage
 configClient = ""
 language = ""
 
@@ -67,6 +67,8 @@ If WScript.Arguments.Count > 0 Then
         End If
     Next
 End If
+
+uiLanguage = ResolveRegionLanguage()
 
 ' Si no se ha indicado configuracion, salir sin hacer nada
 If configClient = "" Then
@@ -126,14 +128,6 @@ If configClient <> "" Then
     hasParams = True
 End If
 
-If language <> "" Then
-    If hasParams Then
-        finalURL = finalURL & "&lang=" & language
-    Else
-        finalURL = finalURL & "?lang=" & language
-    End If
-End If
-
 ' ===================================================================
 ' PASO 3: Lanzar el servidor si no esta corriendo
 ' ===================================================================
@@ -147,7 +141,7 @@ If Not serverYaCorria Then
     End If
 
     ' Lanzar minimizado (7 = minimized, False = no esperar)
-    objShell.Run """" & serverPath & """", 7, False
+    objShell.Run """" & serverPath & """ lang=" & uiLanguage, 7, False
 End If
 
 ' ===================================================================
@@ -183,9 +177,7 @@ If edgePath = "" Then
 Else
     ' Comprobar si Edge con nuestro perfil ya esta corriendo
     Dim colEdgeCheck
-    Set colEdgeCheck = objWMI.ExecQuery( _
-        "SELECT ProcessId FROM Win32_Process WHERE Name='msedge.exe'" & _
-        " AND CommandLine LIKE '%" & EDGE_PROFILE_NAME & "%'")
+    Set colEdgeCheck = GetEdgeAppProcesses()
 
     If colEdgeCheck.Count > 0 Then
         Set colEdgeCheck = Nothing
@@ -203,10 +195,7 @@ Else
     End If
 
     ' Lanzar Edge con perfil aislado
-    Dim edgeCmd
-    edgeCmd = """" & edgePath & """ --app=" & finalURL & _
-              " --user-data-dir=""" & edgeProfileDir & """"
-    objShell.Run edgeCmd, 1, False
+    LaunchEdgeApp edgePath, finalURL, edgeProfileDir
 
     ' Esperar a que Edge arranque
     WScript.Sleep 3000
@@ -219,22 +208,25 @@ Else
     Do
         WScript.Sleep POLL_INTERVAL_MS
 
-        Set colEdge = objWMI.ExecQuery( _
-            "SELECT ProcessId FROM Win32_Process WHERE Name='msedge.exe'" & _
-            " AND CommandLine LIKE '%" & EDGE_PROFILE_NAME & "%'")
+        Set colEdge = GetEdgeAppProcesses()
 
-        If colEdge.Count = 0 Then Exit Do
+        If colEdge.Count = 0 Then
+            If ShowTopmostExitConfirmation(uiLanguage) = vbYes Then
+                Exit Do
+            End If
+
+            LaunchEdgeApp edgePath, finalURL, edgeProfileDir
+            WScript.Sleep 1500
+        End If
     Loop
 
-    ' Edge cerrado: terminar el servidor (solo si lo lanzamos nosotros)
+    ' Edge cerrado: cerrar el servidor (solo si lo lanzamos nosotros)
     If Not serverYaCorria Then
-        Dim colServer, proc
-        Set colServer = objWMI.ExecQuery( _
-            "SELECT * FROM Win32_Process WHERE Name='" & SERVER_EXE & "'")
-        For Each proc In colServer
-            proc.Terminate
-        Next
-        Set colServer = Nothing
+        RequestServerShutdown
+        If Not WaitForServerProcessExit(MAX_WAIT_SECONDS) Then
+            ForceTerminateServer
+            Call WaitForServerProcessExit(3)
+        End If
     End If
 End If
 
@@ -248,15 +240,110 @@ Set objShell = Nothing
 WScript.Quit 0
 
 '===================================================================
+' GetEdgeAppProcesses: devuelve solo los procesos raiz de Edge que
+' corresponden a la ventana app lanzada por este script
+'===================================================================
+Function GetEdgeAppProcesses()
+    Set GetEdgeAppProcesses = objWMI.ExecQuery( _
+        "SELECT ProcessId FROM Win32_Process WHERE Name='msedge.exe'" & _
+        " AND CommandLine LIKE '%--app=%'" & _
+        " AND CommandLine LIKE '%" & EDGE_PROFILE_NAME & "%'")
+End Function
+
+'===================================================================
+' ResolveRegionLanguage: usa siempre el idioma de Region de Windows
+'===================================================================
+Function ResolveRegionLanguage()
+    ResolveRegionLanguage = NormalizeLanguage(GetWindowsLocaleName())
+    If ResolveRegionLanguage = "" Then
+        ResolveRegionLanguage = "en"
+    End If
+End Function
+
+'===================================================================
+' GetWindowsLocaleName: lee el locale de Windows desde el registro
+'===================================================================
+Function GetWindowsLocaleName()
+    On Error Resume Next
+    GetWindowsLocaleName = objShell.RegRead("HKCU\Control Panel\International\LocaleName")
+    If Err.Number <> 0 Then
+        Err.Clear
+        GetWindowsLocaleName = objShell.RegRead("HKCU\Control Panel\International\sLanguage")
+    End If
+    If Err.Number <> 0 Then
+        Err.Clear
+        GetWindowsLocaleName = ""
+    End If
+    On Error GoTo 0
+End Function
+
+'===================================================================
+' NormalizeLanguage: normaliza el codigo de idioma soportado
+'===================================================================
+Function NormalizeLanguage(value)
+    Dim shortCode
+    shortCode = LCase(Left(Trim(CStr(value)), 2))
+
+    Select Case shortCode
+        Case "es", "en", "it", "fr", "de", "pt"
+            NormalizeLanguage = shortCode
+        Case Else
+            NormalizeLanguage = ""
+    End Select
+End Function
+
+'===================================================================
+' GetLocalizedText: textos UI del launcher segun idioma
+'===================================================================
+Function GetLocalizedText(langCode, textKey)
+    Select Case textKey
+        Case "exit_confirm_message"
+            Select Case langCode
+                Case "es": GetLocalizedText = "Desea salir realmente de WebLauncher?"
+                Case "it": GetLocalizedText = "Si desidera davvero uscire da WebLauncher?"
+                Case "fr": GetLocalizedText = "Voulez-vous vraiment quitter WebLauncher ?"
+                Case "de": GetLocalizedText = "Mochten Sie WebLauncher wirklich beenden?"
+                Case "pt": GetLocalizedText = "Deseja realmente sair do WebLauncher?"
+                Case Else: GetLocalizedText = "Do you really want to exit WebLauncher?"
+            End Select
+        Case "exit_confirm_title"
+            Select Case langCode
+                Case "es": GetLocalizedText = "Confirmar salida"
+                Case "it": GetLocalizedText = "Conferma uscita"
+                Case "fr": GetLocalizedText = "Confirmer la fermeture"
+                Case "de": GetLocalizedText = "Beenden bestatigen"
+                Case "pt": GetLocalizedText = "Confirmar saida"
+                Case Else: GetLocalizedText = "Confirm exit"
+            End Select
+        Case Else
+            GetLocalizedText = ""
+    End Select
+End Function
+
+'===================================================================
+' ShowTopmostExitConfirmation: muestra la confirmacion en primer plano
+'===================================================================
+Function ShowTopmostExitConfirmation(langCode)
+    Dim popupFlags
+
+    popupFlags = vbQuestion + vbYesNo + vbDefaultButton2 + vbSystemModal + vbMsgBoxSetForeground
+    ShowTopmostExitConfirmation = objShell.Popup( _
+        GetLocalizedText(langCode, "exit_confirm_message"), _
+        0, _
+        GetLocalizedText(langCode, "exit_confirm_title"), _
+        popupFlags)
+End Function
+
+'===================================================================
 ' IsPortAvailable: ejecuta netstat y comprueba si el puerto indicado
 ' esta libre para poder arrancar el servidor
 '===================================================================
 Function IsPortAvailable(port)
-    Dim tmpFile, f, netstatOut
+    Dim tmpFile, f, netstatOut, lines, i, lineText
     tmpFile    = objShell.ExpandEnvironmentStrings("%TEMP%") & "\acmsl_portcheck.tmp"
     netstatOut = ""
 
-    objShell.Run "cmd /c netstat -an > """ & tmpFile & """", 0, True
+    objShell.Run "cmd /c netstat -an -p tcp > """ & tmpFile & """", 0, True
 
     If objFSO.FileExists(tmpFile) Then
         Set f = objFSO.OpenTextFile(tmpFile, 1)
@@ -265,9 +352,28 @@ Function IsPortAvailable(port)
         objFSO.DeleteFile tmpFile, True
     End If
 
-    ' Buscar ":PORT " (con espacio tras el numero) para evitar falsos positivos
-    IsPortAvailable = (InStr(netstatOut, ":" & port & " ") = 0)
+    IsPortAvailable = True
+    lines = Split(netstatOut, vbCrLf)
+
+    For i = 0 To UBound(lines)
+        lineText = Trim(lines(i))
+        If InStr(1, lineText, ":" & port & " ", vbTextCompare) > 0 And _
+           InStr(1, lineText, "LISTENING", vbTextCompare) > 0 Then
+            IsPortAvailable = False
+            Exit Function
+        End If
+    Next
 End Function
+
+'===================================================================
+' LaunchEdgeApp: abre Edge en modo app con el perfil aislado
+'===================================================================
+Sub LaunchEdgeApp(edgePath, finalURL, edgeProfileDir)
+    Dim edgeCmd
+    edgeCmd = """" & edgePath & """ --app=" & finalURL & _
+              " --user-data-dir=""" & edgeProfileDir & """"
+    objShell.Run edgeCmd, 1, False
+End Sub
 
 '===================================================================
 ' ReadPortFromINI: lee el valor port= de la seccion [server]
@@ -360,6 +466,55 @@ Function ServerResponde()
     Set http = Nothing
     On Error GoTo 0
 End Function
+
+'===================================================================
+' RequestServerShutdown: pide al servidor que se cierre por su API
+'===================================================================
+Sub RequestServerShutdown()
+    On Error Resume Next
+    Dim http
+    Set http = CreateObject("MSXML2.ServerXMLHTTP.6.0")
+    http.setTimeouts 1000, 1000, 2000, 2000
+    http.Open "GET", SERVER_URL & "api/shutdown", False
+    http.Send
+    Set http = Nothing
+    On Error GoTo 0
+End Sub
+
+'===================================================================
+' WaitForServerProcessExit: espera a que no quede ningun proceso del
+' servidor vivo durante un maximo de timeoutSeconds segundos
+'===================================================================
+Function WaitForServerProcessExit(timeoutSeconds)
+    Dim elapsed, colServer
+    elapsed = 0
+
+    Do While elapsed < timeoutSeconds
+        Set colServer = objWMI.ExecQuery( _
+            "SELECT ProcessId FROM Win32_Process WHERE Name='" & SERVER_EXE & "'")
+        If colServer.Count = 0 Then
+            WaitForServerProcessExit = True
+            Exit Function
+        End If
+        WScript.Sleep 250
+        elapsed = elapsed + 0.25
+    Loop
+
+    WaitForServerProcessExit = False
+End Function
+
+'===================================================================
+' ForceTerminateServer: ultimo recurso si el cierre ordenado falla
+'===================================================================
+Sub ForceTerminateServer()
+    Dim colServer, proc
+    Set colServer = objWMI.ExecQuery( _
+        "SELECT * FROM Win32_Process WHERE Name='" & SERVER_EXE & "'")
+    For Each proc In colServer
+        proc.Terminate
+    Next
+    Set colServer = Nothing
+End Sub
 
 '===================================================================
 ' FindEdge: localiza msedge.exe
