@@ -2,10 +2,10 @@
 ' LaunchWebLauncher.vbs
 ' Lanzador de ACMSLWebServer + WebLauncher
 '
-' 1) Lee el puerto configurado en ACMSLWebServer.ini
-'    y avisa si no esta disponible
+' 1) Busca un puerto libre a partir de BASE_PORT (18081)
+'    y actualiza ACMSLWebServer.ini si es necesario
 ' 2) Si ACMSLServerClaude.exe no esta corriendo, lo lanza minimizado
-' 3) Espera a que el servidor responda en el puerto configurado
+' 3) Espera a que el servidor responda en el puerto elegido
 ' 4) Abre Edge en modo --app (sin pestanas, sin barra de URL)
 '    con un user-data-dir propio para poder rastrear el proceso
 ' 5) Monitoriza Edge: cuando el usuario cierra la ventana,
@@ -26,6 +26,8 @@ Option Explicit
 
 Const SERVER_EXE       = "ACMSLWebServer.exe"
 Const INI_FILE         = "ACMSLWebServer.ini"
+Const BASE_PORT        = 18081
+Const MAX_PORT         = 18200
 Const MAX_WAIT_SECONDS = 10
 Const EDGE_PROFILE_NAME = "ACMSLWebLauncher"
 Const POLL_INTERVAL_MS = 2000
@@ -88,31 +90,27 @@ Dim serverYaCorria
 serverYaCorria = (colProcesses.Count > 0)
 
 ' ===================================================================
-' PASO 2: Leer el puerto del INI y comprobar si esta disponible
+' PASO 2: Determinar el puerto disponible y actualizar el INI
 ' ===================================================================
 Dim iniPath, serverPort
 iniPath = scriptDir & INI_FILE
 
-serverPort = ReadPortFromINI(iniPath)
-If serverPort = 0 Then
-    MsgBox "No se encontro un valor port= valido en " & INI_FILE & "." & _
-           vbCrLf & vbCrLf & _
-           "Revise el fichero INI antes de iniciar ACMSLWebServer.", _
-           vbExclamation, "ACMSLWebServer"
-    WScript.Quit 1
-End If
-
-If Not serverYaCorria Then
-    If Not IsPortAvailable(serverPort) Then
-        MsgBox "El puerto configurado en " & INI_FILE & " (" & serverPort & ") no esta disponible." & _
-               vbCrLf & vbCrLf & _
-               "Libere ese puerto o cambie manualmente el valor port= en el fichero INI.", _
-               vbExclamation, "ACMSLWebServer"
+If serverYaCorria Then
+    ' Servidor ya en marcha: leer el puerto del INI (fue elegido antes)
+    serverPort = ReadPortFromINI(iniPath)
+    If serverPort = 0 Then serverPort = BASE_PORT
+Else
+    ' Servidor parado: buscar un puerto libre y guardar en el INI
+    serverPort = FindFreePort(BASE_PORT, MAX_PORT)
+    If serverPort = 0 Then
+        MsgBox "No se encontro un puerto TCP libre entre " & BASE_PORT & _
+               " y " & MAX_PORT & ".", vbCritical, "ACMSLWebServer"
         WScript.Quit 1
     End If
+    UpdateINIPort iniPath, serverPort
 End If
 
-' URL base del servidor (dinamica segun el puerto configurado)
+' URL base del servidor (dinamica segun el puerto elegido)
 Dim SERVER_URL
 SERVER_URL = "http://localhost:" & serverPort & "/"
 
@@ -147,7 +145,7 @@ If Not serverYaCorria Then
     End If
 
     ' Lanzar minimizado (7 = minimized, False = no esperar)
-    objShell.Run """" & serverPath & """", 7, False
+    objShell.Run "\"" & serverPath & "\"", 7, False
 End If
 
 ' ===================================================================
@@ -204,8 +202,8 @@ Else
 
     ' Lanzar Edge con perfil aislado
     Dim edgeCmd
-    edgeCmd = """" & edgePath & """ --app=" & finalURL & _
-              " --user-data-dir=""" & edgeProfileDir & """"
+    edgeCmd = "\"" & edgePath & "\" --app=" & finalURL & _
+              " --user-data-dir=\"" & edgeProfileDir & "\""
     objShell.Run edgeCmd, 1, False
 
     ' Esperar a que Edge arranque
@@ -248,15 +246,15 @@ Set objShell = Nothing
 WScript.Quit 0
 
 '===================================================================
-' IsPortAvailable: ejecuta netstat y comprueba si el puerto indicado
-' esta libre para poder arrancar el servidor
+' FindFreePort: ejecuta netstat una sola vez y busca el primer
+' puerto libre en el rango [startPort, maxPort]
 '===================================================================
-Function IsPortAvailable(port)
-    Dim tmpFile, f, netstatOut
+Function FindFreePort(startPort, maxPort)
+    Dim tmpFile, f, netstatOut, port
     tmpFile    = objShell.ExpandEnvironmentStrings("%TEMP%") & "\acmsl_portcheck.tmp"
     netstatOut = ""
 
-    objShell.Run "cmd /c netstat -an > """ & tmpFile & """", 0, True
+    objShell.Run "cmd /c netstat -an > \"" & tmpFile & "\"", 0, True
 
     If objFSO.FileExists(tmpFile) Then
         Set f = objFSO.OpenTextFile(tmpFile, 1)
@@ -265,8 +263,14 @@ Function IsPortAvailable(port)
         objFSO.DeleteFile tmpFile, True
     End If
 
-    ' Buscar ":PORT " (con espacio tras el numero) para evitar falsos positivos
-    IsPortAvailable = (InStr(netstatOut, ":" & port & " ") = 0)
+    FindFreePort = 0
+    For port = startPort To maxPort
+        ' Buscar ":PORT " (con espacio tras el numero) para evitar falsos positivos
+        If InStr(netstatOut, ":" & port & " ") = 0 Then
+            FindFreePort = port
+            Exit Function
+        End If
+    Next
 End Function
 
 '===================================================================
