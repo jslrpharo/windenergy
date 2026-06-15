@@ -1,0 +1,222 @@
+﻿<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Intervalli Operativi di Velocit&agrave; del Vento - ACMSL</title>
+  <link rel="icon" type="image/x-icon" href="../../img/favicon.ico">
+  <link rel="stylesheet" href="../tutorial.css">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-T1XF1Z8ML9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-T1XF1Z8ML9');
+  </script>
+</head>
+<body>
+
+<header class="tut-header">
+  <div class="tut-header-row">
+    <div class="tut-header-left">
+      <img src="../../img/ACM_LOGO.png" alt="ACMSL" class="logo">
+      <a href="https://www.acm-sl.com" class="brand">ACMSL</a>
+    </div>
+    <nav>
+<a href="introduzione.html">Introduzione</a>
+    <a href="turbine-eoliche-industriali.html">Turbine eoliche</a>
+    <a href="famiglie-turbine-eoliche.html">Famiglie</a>
+    <a href="intervalli-operativi-vento.html" class="active">Intervalli di vento</a>
+    <a href="simulatori-e-tutorial.html">Simulatori</a>
+    <a href="mappa-conoscenza-eolica.html">Mappa conoscenza</a>
+    </nav>
+  </div>
+  <div class="tut-header-toolbar">
+    <div class="tut-toolbar-actions">
+      <a href="../../index.html?lang=it">&#127968; Home</a>
+      <a href="https://www.acm-sl.com/en/contact" target="_blank" rel="noopener">&#127760; Contatto</a>
+      <a href="download.html">&#128229; Download</a>
+    </div>
+    <div class="tut-lang-selector">
+      <select onchange="window.location.href = this.value" aria-label="Language">
+        <option value="../en/operational-wind-ranges.html">EN</option>
+        <option value="../es/rangos-operacionales.html">ES</option>
+        <option value="../fr/plages-operationnelles.html">FR</option>
+        <option value="../it/intervalli-operativi-vento.html" selected>IT</option>
+        <option value="../de/betriebliche-windgeschwindigkeiten.html">DE</option>
+        <option value="../pt/faixas-operacionais-vento.html">PT</option>
+      </select>
+    </div>
+  </div>
+<nav class="tut-breadcrumb" aria-label="breadcrumb">
+  <a href="../../index.html?lang=it">Home</a> &rsaquo;
+  <a href="../../index.html?lang=it&section=tutorials">Tutorial</a> &rsaquo;
+  <span class="bc-current">Intervalli Operativi</span>
+</nav>
+</header>
+
+<section class="tut-hero">
+  <h1>Intervalli Operativi di Velocit&agrave; del Vento</h1>
+  <p>Comprendere le soglie del vento che governano il comportamento delle turbine eoliche</p>
+</section>
+
+<main class="tut-content">
+
+  <h2>La curva di produzione</h2>
+  <p>
+    Ogni turbina eolica ha una <strong>curva di produzione</strong> caratteristica (detta anche curva di
+    potenza) che definisce la relazione tra la velocit&agrave; del vento e la potenza elettrica prodotta.
+    Questa curva &egrave; caratterizzata da una serie di <strong>soglie discrete di velocit&agrave; del
+    vento</strong> che attivano diverse modalit&agrave; operative e azioni di controllo.
+  </p>
+
+  <figure class="tut-figure">
+    <img src="img/Wind operational limits.jpg" alt="Limiti operativi di velocit&agrave; del vento della turbina eolica">
+    <figcaption>Soglie operative di velocit&agrave; del vento e il loro effetto sul comportamento della turbina eolica</figcaption>
+  </figure>
+
+  <h2>Soglie di velocit&agrave; del vento</h2>
+
+  <table class="tut-table">
+    <thead>
+      <tr>
+        <th>Parametro</th>
+        <th>Valore tipico</th>
+        <th>Descrizione</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Min. per imbardata</strong></td>
+        <td>~2,5 m/s</td>
+        <td>Sotto questa velocit&agrave;, l'orientamento automatico dell'imbardata non funziona</td>
+      </tr>
+      <tr>
+        <td><strong>Min. per avviamento</strong></td>
+        <td>~5 m/s</td>
+        <td>Sotto questa velocit&agrave;, la turbina non tenter&agrave; di avviare la produzione</td>
+      </tr>
+      <tr>
+        <td><strong>Min. per Grande</strong></td>
+        <td>~6,5 m/s</td>
+        <td>Turbine a doppia velocit&agrave;: commutazione da alta a bassa velocit&agrave; sotto questa soglia</td>
+      </tr>
+      <tr>
+        <td><strong>Max. per Piccolo</strong></td>
+        <td>~7 m/s</td>
+        <td>Turbine a doppia velocit&agrave;: commutazione da bassa ad alta velocit&agrave; sopra questa soglia</td>
+      </tr>
+      <tr>
+        <td><strong>Max. per partenza</strong></td>
+        <td>~20 m/s</td>
+        <td>Se inattiva e il vento supera questo valore, la turbina non tenter&agrave; un avviamento</td>
+      </tr>
+      <tr>
+        <td><strong>Max. per funzionamento</strong></td>
+        <td>~28 m/s</td>
+        <td>Se sostenuto, il controllore avvia una procedura di arresto ordinata</td>
+      </tr>
+      <tr>
+        <td><strong>Max. temporaneo</strong></td>
+        <td>~25 m/s</td>
+        <td>Soglia di emergenza: attiva un arresto pi&ugrave; rapido del massimo normale</td>
+      </tr>
+      <tr>
+        <td><strong>Max. assoluto</strong></td>
+        <td>~30 m/s</td>
+        <td>Massimo assoluto: attiva un arresto di emergenza immediato</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Analisi dettagliata delle soglie</h2>
+
+  <h3>Minimo per imbardata (~2,5 m/s)</h3>
+  <p>
+    Il sistema di imbardata orienta la navicella per affrontare la direzione del vento. Sotto circa
+    2,5 m/s, le misurazioni della direzione del vento diventano inaffidabili e l'energia disponibile
+    &egrave; trascurabile, quindi il sistema di imbardata viene disabilitato.
+  </p>
+
+  <h3>Minimo per avviamento (~5 m/s)</h3>
+  <p>
+    Questa &egrave; la velocit&agrave; del vento alla quale il controllore della turbina decide che c'&egrave;
+    abbastanza energia per giustificare l'avvio del generatore. Sotto questa soglia, la coppia aerodinamica
+    &egrave; insufficiente per superare l'attrito meccanico e le perdite di magnetizzazione del generatore.
+  </p>
+
+  <h3>Soglie a doppia velocit&agrave;: Min. per Grande (~6,5 m/s) e Max. per Piccolo (~7 m/s)</h3>
+  <p>
+    Le turbine eoliche a doppia velocit&agrave; (comuni nelle Famiglie 1 e 2) hanno due avvolgimenti
+    separati del generatore. Il divario tra 6,5 e 7 m/s crea una <strong>banda di isteresi</strong> che
+    impedisce alla turbina di commutare costantemente tra le velocit&agrave;.
+  </p>
+
+  <h3>Massimo per partenza (~20 m/s)</h3>
+  <p>
+    Questa soglia spesso trascurata &egrave; una misura di sicurezza. Se la turbina &egrave; attualmente
+    inattiva e la velocit&agrave; del vento &egrave; gi&agrave; superiore a circa 20 m/s, il controllore
+    <strong>non tenter&agrave; di avviare</strong> la macchina.
+  </p>
+
+  <h3>Massimo per funzionamento (~28 m/s)</h3>
+  <p>
+    Quando la velocit&agrave; media del vento su 10 minuti supera circa 28 m/s, il controllore avvia un
+    <strong>arresto ordinato</strong>. Le pale vengono portate in posizione di bandiera, il generatore
+    viene disconnesso dalla rete e il freno del rotore viene applicato.
+  </p>
+
+  <h3>Massimo temporaneo (~25 m/s)</h3>
+  <p>
+    Questa soglia &egrave; inferiore al massimo operativo e rappresenta una <strong>condizione di emergenza</strong>
+    che richiede una risposta pi&ugrave; rapida. Il controllore esegue una sequenza di arresto pi&ugrave;
+    veloce rispetto alla soglia massima normale.
+  </p>
+
+  <h3>Massimo assoluto (~30 m/s)</h3>
+  <p>
+    La velocit&agrave; massima assoluta del vento attiva un <strong>arresto di emergenza immediato</strong>.
+    Questo &egrave; tipicamente basato su letture istantanee (3 secondi) della velocit&agrave; del vento.
+  </p>
+
+  <div class="tut-card">
+    <h4>Nota importante</h4>
+    <p>
+      I valori esatti di tutte le soglie variano significativamente tra produttori e modelli di turbina.
+      Dipendono dal design strutturale, dal diametro del rotore, dall'altezza della torre e dalla specifica
+      classe di vento (IEC 61400-1) per cui la turbina &egrave; certificata.
+    </p>
+  </div>
+
+  <h2>Implicazioni pratiche per gli operatori</h2>
+  <ul>
+    <li><strong>Prevedere il comportamento della turbina</strong> &mdash; Anticipare quando le turbine si
+    avvieranno, si fermeranno o cambieranno modalit&agrave; operative.</li>
+    <li><strong>Diagnosticare anomalie</strong> &mdash; Riconoscere quando una turbina non risponde
+    correttamente alle condizioni del vento.</li>
+    <li><strong>Ottimizzare la produzione</strong> &mdash; Capire come le impostazioni delle soglie
+    influenzano la produzione energetica annuale.</li>
+    <li><strong>Pianificare le finestre di manutenzione</strong> &mdash; Programmare la manutenzione
+    durante i periodi in cui le condizioni del vento terranno la turbina inattiva.</li>
+  </ul>
+
+  <div class="tut-cta">
+    <h3>Prova i nostri simulatori in tempo reale</h3>
+    <p>Valutazione gratuita di 2 giorni &mdash; osserva queste soglie in azione durante le operazioni simulate</p>
+    <a href="../../index.html?section=downloads&lang=it">Scarica i simulatori</a>
+  </div>
+
+  <div class="tut-nav">
+    <a href="famiglie-turbine-eoliche.html">&larr; Precedente: Le 5 Famiglie</a>
+    <a href="simulatori-e-tutorial.html">Successivo: Simulatori e Tutorial &rarr;</a>
+  </div>
+
+</main>
+
+<footer class="tut-footer">
+  &copy; 2026 <a href="https://www.acm-sl.com">Automated Computing Machinery SL (ACMSL)</a>. Tutti i diritti riservati.
+</footer>
+
+</body>
+</html>

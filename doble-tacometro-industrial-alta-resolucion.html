@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Doble tacómetro industrial de alta resolución | ACM SL</title>
+    <meta
+      id="pageDescription"
+      name="description"
+      content="Doble tacómetro industrial de alta resolución (mejor que 0.1 rpm en 1500 rpm), rango 0.001 a 440.000 rpm, sin latencia, interfaz RS485, montaje en carril DIN. Diseñado para uso industrial y de laboratorio. ACM SL."
+    />
+    <link rel="icon" type="image/png" href="img/ACM_LOGO.png" />
+    <link rel="shortcut icon" type="image/png" href="img/ACM_LOGO.png" />
+    <style>
+      :root {
+        --primary: #006699;
+        --primary-dark: #004d73;
+        --primary-soft: #e3f4ff;
+        --accent: #00a878;
+        --ink: #123047;
+        --muted: #516272;
+        --surface: #ffffff;
+        --bg: #f3f7fb;
+        --border: rgba(18, 48, 71, 0.1);
+        --shadow: 0 18px 45px rgba(18, 48, 71, 0.12);
+        --radius: 18px;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background:
+          radial-gradient(circle at top left, rgba(0, 153, 204, 0.14), transparent 28%),
+          linear-gradient(180deg, #f9fcff 0%, var(--bg) 100%);
+        color: var(--ink);
+        min-height: 100vh;
+      }
+
+      header {
+        background: linear-gradient(135deg, var(--primary), #0099cc);
+        color: #fff;
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.18);
+      }
+
+      .header-wrap {
+        max-width: 1140px;
+        margin: 0 auto;
+        padding: 1.35rem 1.25rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .brand img {
+        width: auto;
+        height: 44px;
+      }
+
+      .brand-copy h1 {
+        font-size: 1.35rem;
+      }
+
+      .brand-copy p {
+        margin-top: 0.2rem;
+        opacity: 0.88;
+      }
+
+      .header-link,
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.8rem 1.2rem;
+        border-radius: 999px;
+        text-decoration: none;
+        font-weight: 700;
+      }
+
+      .header-link {
+        border: 1px solid rgba(255, 255, 255, 0.32);
+        background: rgba(255, 255, 255, 0.14);
+        color: #fff;
+      }
+
+      main {
+        max-width: 1140px;
+        margin: 0 auto;
+        padding: 2rem 1.25rem 3rem;
+      }
+
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 2rem;
+      }
+
+      .layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+        gap: 2rem;
+      }
+
+      .content h2 {
+        font-size: 2rem;
+        margin-bottom: 0.9rem;
+      }
+
+      .content p,
+      .content li {
+        color: var(--muted);
+        line-height: 1.8;
+      }
+
+      .resources {
+        margin-top: 1.2rem;
+        padding-left: 1.1rem;
+      }
+
+      .resources li + li {
+        margin-top: 0.5rem;
+      }
+
+      .resources a {
+        color: var(--primary);
+        font-weight: 600;
+      }
+
+      .gallery {
+        display: grid;
+        gap: 1rem;
+      }
+
+      .gallery figure {
+        border-radius: 16px;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        background: #fff;
+        box-shadow: 0 10px 26px rgba(18, 48, 71, 0.1);
+      }
+
+      .gallery img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      .gallery figcaption {
+        padding: 0.85rem 1rem;
+        color: var(--muted);
+        font-size: 0.92rem;
+        line-height: 1.55;
+      }
+
+      .actions {
+        margin-top: 1.5rem;
+      }
+
+      .btn {
+        background: var(--accent);
+        color: #fff;
+      }
+
+      footer {
+        max-width: 1140px;
+        margin: 0 auto;
+        padding: 0 1.25rem 2rem;
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+
+      @media (max-width: 860px) {
+        .layout {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+    <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-T1XF1Z8ML9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-T1XF1Z8ML9');
+  </script>
+</head>
+  <body>
+    <header>
+      <div class="header-wrap">
+        <a class="brand" href="index.html" title="Ir a Inicio" style="text-decoration:none;color:inherit;cursor:pointer;">
+          <img src="img/ACM_LOGO.png" alt="ACM SL" />
+          <div class="brand-copy">
+            <h1>Automated Computing Machinery SL</h1>
+            <p>ACM SL</p>
+          </div>
+        </a>
+        <a class="header-link" id="backDevelopmentsLink" href="desarrollos.html?lang=es">Volver a Desarrollos</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="card">
+        <div class="layout">
+          <div class="content">
+            <h2 id="pageTitle">Doble tacómetro industrial de alta resolución</h2>
+            <p id="pageDescriptionText">
+              Diseñado para uso industrial y de laboratorio, este instrumento empaqueta
+              dos tacómetros de precisión, con un amplio rango de revoluciones de
+              entrada (440.000 rpm a 0.001 rpm), alta resolución (mejor que 0.1 rpm
+              a 1.500 rpm), sin latencia (una medida por cada pulso de entrada),
+              interfaz de comunicaciones estándar (RS485, half-duplex), con lecturas
+              en formato ASCII a 38400 baudios. Fácil de configurar, cada tacómetro
+              dispone de un filtro de entrada programable. Montaje estándar en rail DIN.
+            </p>
+            <ul class="resources">
+              <li>
+                <a id="leafletLink" href="img/CVR/Folleto%20Tacometro%20CVR%20espa%C3%B1ol.pdf" target="_blank" rel="noopener noreferrer">
+                  Folleto descriptivo
+                </a>
+              </li>
+            </ul>
+            <div class="actions">
+              <a class="btn" id="backDevelopmentsButton" href="desarrollos.html?lang=es">Volver a la página Desarrollos</a>
+            </div>
+          </div>
+          <div class="gallery" id="gallery" aria-label="Imágenes del tacómetro CVR">
+            <figure>
+              <img id="cvrImage" src="img/CVR/CVR.jpg" alt="Doble tacómetro industrial de alta resolución CVR" />
+              <figcaption id="cvrCaption">Doble tacómetro industrial de alta resolución en formato rail DIN.</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p id="footerText">&copy; 2026 Automated Computing Machinery SL (ACM SL).</p>
+    </footer>
+    <script>
+      const supportedLangs = ['es', 'en', 'fr', 'it', 'de', 'pt'];
+      const pageLang = new URLSearchParams(window.location.search).get('lang');
+      const browserLang = (navigator.language || navigator.userLanguage || 'en').split('-')[0].toLowerCase();
+      const lang = supportedLangs.includes(pageLang)
+        ? pageLang
+        : (supportedLangs.includes(browserLang) ? browserLang : 'en');
+
+      const translations = {
+        es: {
+          title: 'Doble tacómetro industrial de alta resolución | ACM SL',
+          description: 'Ficha descriptiva del doble tacómetro industrial de alta resolución de Automated Computing Machinery SL.',
+          backDevelopments: 'Volver a Desarrollos',
+          pageTitle: 'Doble tacómetro industrial de alta resolución',
+          pageDescriptionText: 'Diseñado para uso industrial y de laboratorio, este instrumento empaqueta dos tacómetros de precisión, con un amplio rango de revoluciones de entrada (440.000 rpm a 0.001 rpm), alta resolución (mejor que 0.1 rpm a 1.500 rpm), sin latencia (una medida por cada pulso de entrada), interfaz de comunicaciones estándar (RS485, half-duplex), con lecturas en formato ASCII a 38400 baudios. Fácil de configurar, cada tacómetro dispone de un filtro de entrada programable. Montaje estándar en rail DIN.',
+          leafletLink: 'Folleto descriptivo',
+          backDevelopmentsButton: 'Volver a la página Desarrollos',
+          galleryAria: 'Imágenes del tacómetro CVR',
+          cvrAlt: 'Doble tacómetro industrial de alta resolución CVR',
+          cvrCaption: 'Doble tacómetro industrial de alta resolución en formato rail DIN.',
+          footerText: '&copy; 2026 Automated Computing Machinery SL (ACM SL).'
+        },
+        en: {
+          title: 'High-resolution dual industrial tachometer | ACM SL',
+          description: 'Descriptive page for the high-resolution dual industrial tachometer by Automated Computing Machinery SL.',
+          backDevelopments: 'Back to Developments',
+          pageTitle: 'High-resolution dual industrial tachometer',
+          pageDescriptionText: 'Designed for industrial and laboratory use, this instrument packages two precision tachometers with a wide input speed range (440,000 rpm to 0.001 rpm), high resolution (better than 0.1 rpm at 1,500 rpm), zero latency (one measurement for each input pulse), a standard RS485 half-duplex communications interface, and ASCII readings at 38400 baud. Easy to configure, each tachometer includes a programmable input filter. Standard DIN rail mounting.',
+          leafletLink: 'Descriptive leaflet',
+          backDevelopmentsButton: 'Back to Developments page',
+          galleryAria: 'CVR tachometer images',
+          cvrAlt: 'High-resolution dual industrial tachometer CVR',
+          cvrCaption: 'High-resolution dual industrial tachometer in DIN rail format.',
+          footerText: '&copy; 2026 Automated Computing Machinery SL (ACM SL).'
+        },
+        fr: {
+          title: 'Double tachymètre industriel haute résolution | ACM SL',
+          description: 'Fiche descriptive du double tachymètre industriel haute résolution d’Automated Computing Machinery SL.',
+          backDevelopments: 'Retour aux développements',
+          pageTitle: 'Double tachymètre industriel haute résolution',
+          pageDescriptionText: 'Conçu pour un usage industriel et de laboratoire, cet instrument intègre deux tachymètres de précision avec une large plage de vitesses d’entrée (440 000 tr/min à 0,001 tr/min), une haute résolution (meilleure que 0,1 tr/min à 1 500 tr/min), sans latence (une mesure pour chaque impulsion d’entrée), une interface de communication standard RS485 half-duplex, et des lectures ASCII à 38400 bauds. Facile à configurer, chaque tachymètre dispose d’un filtre d’entrée programmable. Montage standard sur rail DIN.',
+          leafletLink: 'Brochure descriptive',
+          backDevelopmentsButton: 'Retour à la page Développements',
+          galleryAria: 'Images du tachymètre CVR',
+          cvrAlt: 'Double tachymètre industriel haute résolution CVR',
+          cvrCaption: 'Double tachymètre industriel haute résolution au format rail DIN.',
+          footerText: '&copy; 2026 Automated Computing Machinery SL (ACM SL).'
+        },
+        it: {
+          title: 'Doppio tachimetro industriale ad alta risoluzione | ACM SL',
+          description: 'Scheda descrittiva del doppio tachimetro industriale ad alta risoluzione di Automated Computing Machinery SL.',
+          backDevelopments: 'Torna agli Sviluppi',
+          pageTitle: 'Doppio tachimetro industriale ad alta risoluzione',
+          pageDescriptionText: 'Progettato per uso industriale e di laboratorio, questo strumento racchiude due tachimetri di precisione, con un ampio intervallo di velocità in ingresso (da 440.000 rpm a 0,001 rpm), alta risoluzione (migliore di 0,1 rpm a 1.500 rpm), nessuna latenza (una misura per ogni impulso in ingresso), interfaccia di comunicazione standard RS485 half-duplex, con letture in formato ASCII a 38400 baud. Facile da configurare, ogni tachimetro dispone di un filtro di ingresso programmabile. Montaggio standard su guida DIN.',
+          leafletLink: 'Brochure descrittiva',
+          backDevelopmentsButton: 'Torna alla pagina Sviluppi',
+          galleryAria: 'Immagini del tachimetro CVR',
+          cvrAlt: 'Doppio tachimetro industriale ad alta risoluzione CVR',
+          cvrCaption: 'Doppio tachimetro industriale ad alta risoluzione in formato guida DIN.',
+          footerText: '&copy; 2026 Automated Computing Machinery SL (ACM SL).'
+        },
+        de: {
+          title: 'Industrieller Hochauflösungs-Doppeldrehzahlmesser | ACM SL',
+          description: 'Beschreibungsseite für den industriellen Hochauflösungs-Doppeldrehzahlmesser von Automated Computing Machinery SL.',
+          backDevelopments: 'Zurück zu Entwicklungen',
+          pageTitle: 'Industrieller Hochauflösungs-Doppeldrehzahlmesser',
+          pageDescriptionText: 'Dieses für Industrie- und Laboranwendungen ausgelegte Instrument vereint zwei Präzisions-Drehzahlmesser mit einem großen Eingangsdrehzahlbereich (440.000 U/min bis 0,001 U/min), hoher Auflösung (besser als 0,1 U/min bei 1.500 U/min), ohne Latenz (eine Messung pro Eingangspuls), Standardschnittstelle RS485, Half-Duplex, mit ASCII-Ausgabe bei 38400 Baud. Einfach zu konfigurieren, verfügt jeder Drehzahlmesser über einen programmierbaren Eingangsfilter. Standardmontage auf DIN-Schiene.',
+          leafletLink: 'Produktbroschüre',
+          backDevelopmentsButton: 'Zurück zur Seite Entwicklungen',
+          galleryAria: 'CVR-Drehzahlmesserbilder',
+          cvrAlt: 'Industrieller Hochauflösungs-Doppeldrehzahlmesser CVR',
+          cvrCaption: 'Industrieller Hochauflösungs-Doppeldrehzahlmesser im DIN-Schienenformat.',
+          footerText: '&copy; 2026 Automated Computing Machinery SL (ACM SL).'
+        },
+        pt: {
+          title: 'Duplo tacómetro industrial de alta resolução | ACM SL',
+          description: 'Ficha descritiva do duplo tacómetro industrial de alta resolução da Automated Computing Machinery SL.',
+          backDevelopments: 'Voltar a Desenvolvimentos',
+          pageTitle: 'Duplo tacómetro industrial de alta resolução',
+          pageDescriptionText: 'Concebido para uso industrial e laboratorial, este instrumento integra dois tacómetros de precisão, com uma ampla gama de rotações de entrada (440.000 rpm a 0,001 rpm), alta resolução (melhor que 0,1 rpm a 1.500 rpm), sem latência (uma medição por cada impulso de entrada), interface de comunicações padrão RS485 half-duplex, com leituras em formato ASCII a 38400 baud. Fácil de configurar, cada tacómetro dispõe de um filtro de entrada programável. Montagem padrão em calha DIN.',
+          leafletLink: 'Folheto descritivo',
+          backDevelopmentsButton: 'Voltar à página Desenvolvimentos',
+          galleryAria: 'Imagens do tacómetro CVR',
+          cvrAlt: 'Duplo tacómetro industrial de alta resolução CVR',
+          cvrCaption: 'Duplo tacómetro industrial de alta resolução em formato de calha DIN.',
+          footerText: '&copy; 2026 Automated Computing Machinery SL (ACM SL).'
+        }
+      };
+
+      const t = translations[lang];
+      const leafletHref = lang === 'es'
+        ? 'img/CVR/Folleto%20Tacometro%20CVR%20espa%C3%B1ol.pdf'
+        : 'img/CVR/Leaflet-Tachometer-CVR.pdf';
+
+      function setText(id, value) {
+        const element = document.getElementById(id);
+        if (element) {
+          element.textContent = value;
+        }
+      }
+
+      function setHtml(id, value) {
+        const element = document.getElementById(id);
+        if (element) {
+          element.innerHTML = value;
+        }
+      }
+
+      document.documentElement.lang = lang;
+      document.title = t.title;
+      document.getElementById('pageDescription').setAttribute('content', t.description);
+      document.getElementById('backDevelopmentsLink').href = `desarrollos.html?lang=${lang}`;
+      document.getElementById('backDevelopmentsLink').textContent = t.backDevelopments;
+      document.getElementById('backDevelopmentsButton').href = `desarrollos.html?lang=${lang}`;
+      document.getElementById('gallery').setAttribute('aria-label', t.galleryAria);
+      document.getElementById('cvrImage').setAttribute('alt', t.cvrAlt);
+      document.getElementById('leafletLink').href = leafletHref;
+
+      ['pageTitle', 'pageDescriptionText', 'leafletLink', 'backDevelopmentsButton', 'cvrCaption'].forEach((key) => {
+        setText(key, t[key]);
+      });
+
+      setHtml('footerText', t.footerText);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Il Nostro Approccio alla Formazione sulle Turbine Eoliche | ACMSL</title>
+  <meta name="description" content="Scopri come i simulatori in tempo reale di ACMSL offrono una formazione integrata e basata sull'esperienza per il personale O&M delle turbine eoliche — funzionamento normale, condizioni estreme e diagnosi dei guasti." />
+  <link rel="icon" type="image/png" href="img/ACM_LOGO.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary:       #006699;
+      --primary-dark:  #004d73;
+      --primary-light: #e3f4ff;
+      --accent:        #00a878;
+      --accent-dark:   #007d5a;
+      --dark:          #123047;
+      --mid:           #3a5068;
+      --bg:            #f5f7fb;
+      --white:         #ffffff;
+      --radius:        14px;
+      --shadow:        0 10px 32px rgba(0,0,0,0.10);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Open Sans', system-ui, sans-serif; background: var(--bg); color: var(--dark); line-height: 1.7; }
+    header { background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 60%, #0099cc 100%); color: var(--white); padding: 1.1rem 2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; box-shadow: 0 4px 16px rgba(0,0,0,0.22); position: sticky; top: 0; z-index: 100; flex-wrap: wrap; }
+    .header-brand { display: flex; align-items: center; gap: 0.8rem; text-decoration: none; color: inherit; }
+    .header-brand img { height: 34px; width: auto; }
+    .header-brand span { font-family: 'Montserrat', sans-serif; font-size: 1.7rem; font-weight: 800; letter-spacing: 0.05em; }
+    .header-nav { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .header-nav a { color: rgba(255,255,255,0.92); text-decoration: none; font-size: 0.88rem; font-weight: 600; padding: 0.45rem 1rem; border-radius: 999px; background: rgba(255,255,255,0.12); transition: background 0.2s; }
+    .header-nav a:hover { background: rgba(255,255,255,0.25); }
+    .header-nav a.cta { background: var(--accent); color: var(--white); }
+    .header-nav a.cta:hover { background: var(--accent-dark); }
+    .hero { background: linear-gradient(160deg, var(--primary-dark) 0%, var(--primary) 45%, #1a9abf 100%); color: var(--white); padding: 4.5rem 2rem 5rem; text-align: center; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; inset: 0; background: url('img/Aerogenerador_vista_interna_copilot.png') center/cover no-repeat; opacity: 0.10; }
+    .hero-inner { position: relative; max-width: 820px; margin: 0 auto; }
+    .hero-tag { display: inline-block; background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.30); border-radius: 999px; padding: 0.35rem 1.1rem; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 1.2rem; }
+    .hero h1 { font-family: 'Montserrat', sans-serif; font-size: clamp(1.9rem, 4.5vw, 3rem); font-weight: 800; line-height: 1.2; margin-bottom: 1.1rem; }
+    .hero h1 em { font-style: normal; color: #7fdfff; }
+    .hero p { font-size: clamp(1rem, 2vw, 1.18rem); opacity: 0.92; max-width: 680px; margin: 0 auto 2rem; }
+    .hero-cta-group { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.8rem; border-radius: 999px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.95rem; text-decoration: none; transition: transform 0.18s, box-shadow 0.18s, background 0.18s; cursor: pointer; border: none; }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.18); }
+    .btn-primary { background: var(--accent); color: var(--white); }
+    .btn-primary:hover { background: var(--accent-dark); }
+    .btn-outline { background: rgba(255,255,255,0.15); color: var(--white); border: 2px solid rgba(255,255,255,0.55); }
+    .btn-outline:hover { background: rgba(255,255,255,0.28); }
+    main { max-width: 1000px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+    .intro-block { background: var(--white); border-radius: var(--radius); padding: 2.4rem 2.8rem; box-shadow: var(--shadow); margin-bottom: 2.8rem; border-left: 5px solid var(--primary); }
+    .intro-block p { font-size: 1.08rem; color: var(--mid); }
+    .intro-block strong { color: var(--primary-dark); }
+    .intro-block a { color: var(--primary); font-weight: 600; }
+    .section-heading { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.3rem; }
+    .section-heading .icon { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
+    .icon-challenge { background: #fff0f0; }
+    .icon-approach  { background: #e8f9f3; }
+    .section-heading h2 { font-family: 'Montserrat', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--dark); }
+    .challenge-block { background: var(--white); border-radius: var(--radius); padding: 2.4rem 2.8rem; box-shadow: var(--shadow); margin-bottom: 2.8rem; }
+    .challenge-block p { font-size: 1.02rem; color: var(--mid); margin-bottom: 1rem; }
+    .challenge-block p:last-child { margin-bottom: 0; }
+    .highlight-box { background: #fff8e1; border-left: 4px solid #f5a623; border-radius: 8px; padding: 1rem 1.4rem; margin: 1.4rem 0; font-size: 1rem; color: #5c4200; font-style: italic; }
+    .approach-block { background: var(--white); border-radius: var(--radius); padding: 2.4rem 2.8rem; box-shadow: var(--shadow); margin-bottom: 2.8rem; }
+    .approach-block > p { font-size: 1.02rem; color: var(--mid); margin-bottom: 1.8rem; }
+    .pillars { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.2rem; margin-bottom: 1.8rem; }
+    .pillar { border-radius: 12px; padding: 1.5rem 1.6rem; border: 1px solid transparent; }
+    .pillar-normal { background: #edfaf5; border-color: #a8e6d0; }
+    .pillar-extreme { background: #fff4e5; border-color: #ffc97a; }
+    .pillar-fault { background: #fdecea; border-color: #f5b4ae; }
+    .pillar-icon { font-size: 1.9rem; margin-bottom: 0.5rem; }
+    .pillar h3 { font-family: 'Montserrat', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--dark); }
+    .pillar p { font-size: 0.93rem; color: var(--mid); }
+    .controller-note { background: var(--primary-light); border-left: 4px solid var(--primary); border-radius: 8px; padding: 1.1rem 1.4rem; font-size: 0.98rem; color: var(--primary-dark); }
+    .controller-note strong { color: var(--primary-dark); }
+    .benefits-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.2rem; margin-bottom: 2.8rem; }
+    .benefit-card { background: var(--white); border-radius: var(--radius); padding: 1.6rem 1.8rem; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 0.6rem; }
+    .benefit-card .b-icon { font-size: 2rem; }
+    .benefit-card h4 { font-family: 'Montserrat', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--dark); }
+    .benefit-card p { font-size: 0.88rem; color: var(--mid); }
+    .cta-banner { background: linear-gradient(135deg, var(--primary) 0%, #0099cc 100%); border-radius: var(--radius); padding: 3rem 2.8rem; color: var(--white); text-align: center; box-shadow: var(--shadow); }
+    .cta-banner h2 { font-family: 'Montserrat', sans-serif; font-size: 1.75rem; font-weight: 800; margin-bottom: 0.8rem; }
+    .cta-banner p { font-size: 1.05rem; opacity: 0.92; max-width: 600px; margin: 0 auto 1.8rem; }
+    .cta-banner .btn-primary { background: var(--accent); }
+    footer { background: var(--dark); color: rgba(255,255,255,0.7); text-align: center; padding: 1.5rem; font-size: 0.84rem; }
+    footer a { color: #7fdfff; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+    @media (max-width: 600px) {
+      .intro-block, .challenge-block, .approach-block { padding: 1.6rem 1.4rem; }
+      .hero { padding: 3rem 1.2rem 3.5rem; }
+      .cta-banner { padding: 2rem 1.4rem; }
+    }
+  </style>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-T1XF1Z8ML9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-T1XF1Z8ML9');
+  </script>
+</head>
+<body>
+
+  <header>
+    <a class="header-brand" href="https://www.acm-sl.com" target="_blank" rel="noopener">
+      <img src="img/ACM_LOGO.png" alt="ACMSL Logo" />
+      <span>ACMSL</span>
+    </a>
+    <nav class="header-nav">
+      <a href="index.html?lang=it">&#127968; Home</a>
+      <a href="contacto.html" class="cta">&#9993; Contattaci</a>
+      <select onchange="window.location.href=this.value" aria-label="Language" style="background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.4);border-radius:999px;padding:0.4rem 0.8rem;font-size:0.85rem;font-weight:600;cursor:pointer;">
+        <option value="our-training-approach.html" style="background:#123047;color:#fff;">EN</option>
+        <option value="our-training-approach-es.html" style="background:#123047;color:#fff;">ES</option>
+        <option value="our-training-approach-fr.html" style="background:#123047;color:#fff;">FR</option>
+        <option value="our-training-approach-de.html" style="background:#123047;color:#fff;">DE</option>
+        <option value="our-training-approach-it.html" selected style="background:#123047;color:#fff;">IT</option>
+        <option value="our-training-approach-pt.html" style="background:#123047;color:#fff;">PT</option>
+      </select>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-tag">Formazione sull'Energia Eolica</div>
+      <h1>Il Nostro Approccio alla<br><em>Formazione sulle Tecnologie Eoliche</em></h1>
+      <p>Accelerate il percorso dall'aula al piede della turbina con l'esperienza formativa più realistica e integrata sul mercato.</p>
+      <div class="hero-cta-group">
+        <a href="contacto.html" class="btn btn-primary">&#9993;&nbsp; Richiedi una Demo</a>
+        <a href="index.html?lang=it" class="btn btn-outline">&#9654;&nbsp; Scopri i Simulatori</a>
+      </div>
+    </div>
+  </section>
+
+  <main>
+
+    <div class="intro-block">
+      <p>In <a href="https://www.acm-sl.com" target="_blank" rel="noopener"><strong>ACM SL</strong></a>, abbiamo sviluppato una suite di <strong>Simulatori in Tempo Reale</strong> progettati esclusivamente per la formazione tecnica del personale di <strong>Operazione e Manutenzione (O&amp;M)</strong> che lavora con turbine eoliche nei parchi eolici. Progettati per replicare con precisione il comportamento dinamico di ogni sottosistema principale di una turbina eolica industriale, questi simulatori rappresentano una <strong>risorsa formativa unica</strong> — che va ben oltre ciò che i banchi di prova convenzionali o i corsi a livello di componenti possono offrire.</p>
+    </div>
+
+    <div class="challenge-block">
+      <div class="section-heading">
+        <div class="icon icon-challenge">&#9888;&#65039;</div>
+        <h2>La Sfida della Formazione Moderna sulle Turbine Eoliche</h2>
+      </div>
+      <p>Le moderne turbine eoliche sono impianti di generazione di energia completamente autonomi — progettati per funzionare senza sorveglianza, senza personale all'interno. Questo livello di automazione richiede tecnici O&amp;M con una <strong>comprensione globale e integrata</strong> dei sistemi meccanici, elettrici, elettronici, idraulici e di controllo che operano in sinergia.</p>
+      <div class="highlight-box">
+        «I programmi di formazione tradizionali insegnano i componenti in modo isolato. Ma una turbina eolica reale non si guasta in modo isolato — i suoi sottosistemi sono profondamente interconnessi.»
+      </div>
+      <p>I corsi O&amp;M convenzionali — e persino i banchi di formazione specializzati per argomenti come il freno idraulico o il meccanismo di controllo del passo — insegnano i singoli componenti senza mai mostrare come si comporta l'intero sistema insieme. Il risultato: tecnici che comprendono le parti, ma non hanno mai vissuto il <strong>funzionamento coordinato di una turbina reale</strong>.</p>
+    </div>
+
+    <div class="approach-block">
+      <div class="section-heading">
+        <div class="icon icon-approach">&#9989;</div>
+        <h2>Il Nostro Approccio: Formazione Integrata e Realistica</h2>
+      </div>
+      <p>I nostri simulatori sono stati sviluppati con una missione chiara: <strong>ridurre i tempi e i costi della formazione basata sull'esperienza</strong>, offrendo allo stesso tempo ai discenti un accesso diretto e osservabile ai segnali interni di una turbina eolica in tutto lo spettro delle condizioni operative.</p>
+      <div class="pillars">
+        <div class="pillar pillar-normal">
+          <div class="pillar-icon">&#127807;</div>
+          <h3>Funzionamento Normale</h3>
+          <p>Osservate il comportamento della turbina nei range operativi specificati dal produttore — avvio, produzione stazionaria e arresto controllato.</p>
+        </div>
+        <div class="pillar pillar-extreme">
+          <div class="pillar-icon">&#127755;</div>
+          <h3>Condizioni Eccezionali</h3>
+          <p>Allenatevi contro venti di forza uragano, raffiche improvvise, cambi bruschi di direzione e guasti alla rete — in un ambiente sicuro e ripetibile.</p>
+        </div>
+        <div class="pillar pillar-fault">
+          <div class="pillar-icon">&#9889;</div>
+          <h3>Scenari di Guasto</h3>
+          <p>Iniettate guasti specifici in sottosistemi o componenti e imparate a diagnosticarli attraverso gli stessi messaggi di allarme e segnali presenti sulle macchine reali.</p>
+        </div>
+      </div>
+      <div class="controller-note">
+        I nostri simulatori riproducono fedelmente il comportamento del <strong>controllore</strong> centrale della turbina eolica — tipicamente un PLC o un computer industriale rinforzato — generando messaggi di guasto e allarme esattamente come fanno le macchine reali. Questi allarmi simulati sono la <strong>principale fonte di informazioni diagnostiche</strong>, specchio della reale pratica O&amp;M sul campo.
+      </div>
+    </div>
+
+    <div class="benefits-strip">
+      <div class="benefit-card">
+        <div class="b-icon">&#9201;</div>
+        <h4>Acquisizione più Rapida delle Competenze</h4>
+        <p>I discenti raggiungono la prontezza operativa in tempi significativamente più brevi rispetto ai corsi tradizionali basati sui componenti.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="b-icon">&#128200;</div>
+        <h4>Costi di Formazione Ridotti</h4>
+        <p>Sostituite gli scenari costosi in loco con simulazioni ad alta fedeltà — senza tempi di fermo, senza rischi per la sicurezza, senza trasferte.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="b-icon">&#128268;</div>
+        <h4>Copertura Multi-Tecnologica</h4>
+        <p>I simulatori coprono le principali famiglie industriali: DFIG, Stall Attivo e turbine a Resistenza Rotorica.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="b-icon">&#127891;</div>
+        <h4>Riconosciuto dalle Istituzioni</h4>
+        <p>Impiegato in scuole tecniche e università di 8 paesi — dalla Spagna e Canada agli USA e all'Uzbekistan.</p>
+      </div>
+    </div>
+
+    <div class="challenge-block">
+      <div class="section-heading">
+        <div class="icon" style="background:#eef0ff;">&#128218;</div>
+        <h2>Risorse di Apprendimento Interattivo</h2>
+      </div>
+      <p>Ogni simulatore viene fornito con un <strong>Tutorial interattivo</strong> dedicato, sviluppato specificatamente per quel modello di turbina. Erogato come applicazione web, ogni tutorial offre <strong>contenuti riccamente indicizzati</strong> che si adattano a diversi stili di apprendimento — gli studenti possono leggerlo sequenzialmente come un manuale tecnico, o accedere direttamente a qualsiasi argomento tramite ricerca per parole chiave.</p>
+      <p>Oltre alla teoria, i tutorial includono <strong>esperimenti guidati</strong> tratti da scenari operativi reali incontrati in parchi eolici in produzione. Questi esercizi allenano gli studenti a:</p>
+      <ul style="margin: 0.8rem 0 1rem 1.4rem; color: var(--mid); font-size: 1.02rem; line-height: 1.9;">
+        <li>Analizzare eventi e condizioni transitorie mentre si svolgono in tempo reale</li>
+        <li>Interpretare i segnali interni di una turbina eolica in funzionamento normale e anomalo</li>
+        <li>Prendere decisioni operative informate — in un <strong>ambiente di apprendimento completamente sicuro</strong></li>
+      </ul>
+      <p>Il risultato è un'esperienza formativa che rispecchia la pratica reale di manutenzione, senza alcun rischio o costo derivante dal lavoro su una turbina reale.</p>
+    </div>
+
+    <div class="approach-block">
+      <div class="section-heading">
+        <div class="icon" style="background:#f0f4ff;">&#127758;</div>
+        <h2>Una Piattaforma Educativa Completa</h2>
+      </div>
+      <p>Insieme, la suite di simulatori e i relativi tutorial formano una <strong>piattaforma educativa completa</strong> che unisce tre dimensioni in un'unica esperienza di apprendimento coerente:</p>
+      <div class="pillars">
+        <div class="pillar" style="background:#eefaf5; border-color:#a8e6d0;">
+          <div class="pillar-icon">&#9881;&#65039;</div>
+          <h3>Accuratezza Tecnica</h3>
+          <p>Ogni sottosistema — meccanico, elettrico, idraulico e di controllo — si comporta come in una turbina eolica reale.</p>
+        </div>
+        <div class="pillar" style="background:#fff8e5; border-color:#ffd080;">
+          <div class="pillar-icon">&#127982;</div>
+          <h3>Realismo Operativo</h3>
+          <p>Codici di guasto, messaggi di allarme e risposte del controllore corrispondono a quelli trovati su macchine reali sul campo.</p>
+        </div>
+        <div class="pillar" style="background:#f0f4ff; border-color:#a8b8f0;">
+          <div class="pillar-icon">&#127979;</div>
+          <h3>Pedagogia Moderna</h3>
+          <p>Contenuto progressivo e visivamente ricco, progettato per discenti con diversi background tecnici — non è richiesta alcuna esperienza pregressa.</p>
+        </div>
+      </div>
+      <div class="controller-note">
+        I discenti completano il programma con una <strong>comprensione olistica</strong> del funzionamento delle turbine eoliche industriali e un chiaro apprezzamento del ruolo critico svolto dal personale O&amp;M nel mantenere i parchi eolici in funzionamento sicuro ed efficiente.
+      </div>
+    </div>
+
+    <div class="cta-banner">
+      <h2>Preparate i Vostri Studenti alle Carriere Reali nell'Energia Eolica</h2>
+      <p>Integrando i Simulatori in Tempo Reale di ACM SL nel vostro programma di formazione professionale, offrite agli studenti un'esperienza di apprendimento senza pari che <strong>colma il divario tra teoria e pratica</strong> — preparandoli a eccellere nel settore eolico in rapida crescita.</p>
+      <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; margin-top:0.5rem;">
+        <a href="contacto.html" class="btn btn-primary">&#9993;&nbsp; Richiedi una Valutazione Gratuita</a>
+        <a href="index.html?lang=it" class="btn btn-outline">&#8592;&nbsp; Torna alla Home</a>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    &copy; 2026 <a href="https://www.acm-sl.com" target="_blank" rel="noopener">Automated Computing Machinery SL (ACMSL)</a>. Tutti i diritti riservati.
+  </footer>
+
+</body>
+</html>

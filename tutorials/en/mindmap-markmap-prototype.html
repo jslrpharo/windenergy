@@ -1,0 +1,1735 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Knowledge Map (Markmap) - ACMSL</title>
+  <link rel="icon" type="image/x-icon" href="../../img/favicon.ico">
+  <link rel="stylesheet" href="../tutorial.css">
+  <style>
+    /* ── Markmap viewer styles ── */
+
+    .mindmap-container {
+      position: relative;
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin: 0;
+      overflow: hidden;
+    }
+
+    .mindmap-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.7rem 1rem;
+      background: linear-gradient(135deg, #f8fbff, #eef4fa);
+      border-bottom: 1px solid #dde6ef;
+      flex-wrap: wrap;
+    }
+
+    .mindmap-toolbar .toolbar-group {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .mindmap-toolbar .toolbar-label {
+      font-size: 0.78rem;
+      color: #6a8090;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-right: 0.1rem;
+      white-space: nowrap;
+    }
+
+    .mindmap-toolbar button {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.4rem 1rem;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+      box-shadow: 0 2px 6px rgba(0,102,153,0.2);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      white-space: nowrap;
+    }
+
+    .mindmap-toolbar button:hover {
+      background: #005580;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px rgba(0,102,153,0.3);
+    }
+
+    .mindmap-toolbar button:active {
+      transform: translateY(0);
+    }
+
+    .mindmap-toolbar button.secondary {
+      background: rgba(0,102,153,0.1);
+      color: var(--primary);
+      box-shadow: none;
+      border: 1px solid rgba(0,102,153,0.2);
+    }
+
+    .mindmap-toolbar button.secondary:hover {
+      background: rgba(0,102,153,0.18);
+      box-shadow: 0 2px 6px rgba(0,102,153,0.1);
+    }
+
+    .mindmap-toolbar .separator {
+      width: 1px;
+      height: 1.4rem;
+      background: #ccd6df;
+      margin: 0 0.3rem;
+    }
+
+    .mindmap-toolbar .info {
+      font-size: 0.78rem;
+      color: #6a8090;
+      margin-left: auto;
+      white-space: nowrap;
+    }
+
+    /* SVG container */
+    #mindmap-svg {
+      width: 100%;
+      height: calc(100vh - 250px);
+      min-height: 500px;
+      display: block;
+      cursor: grab;
+      background: #fafcff;
+    }
+
+    #mindmap-svg:active {
+      cursor: grabbing;
+    }
+
+    /* Status bar */
+    .mindmap-status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.4rem 1rem;
+      background: #f0f4f8;
+      border-top: 1px solid #e0e6ec;
+      font-size: 0.76rem;
+      color: #6a8090;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .mindmap-status-bar kbd {
+      background: #e0e6ec;
+      border-radius: 3px;
+      padding: 0.1rem 0.35rem;
+      font-size: 0.72rem;
+      font-family: inherit;
+      border: 1px solid #ccd4dc;
+    }
+
+    /* Loading overlay */
+    .mindmap-loading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: calc(100vh - 250px);
+      min-height: 500px;
+      gap: 1rem;
+      color: #6a8090;
+    }
+
+    .mindmap-loading .spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid #dde6ef;
+      border-top: 4px solid var(--primary);
+      border-radius: 50%;
+      animation: mm-spin 0.8s linear infinite;
+    }
+
+    @keyframes mm-spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .mindmap-loading .loading-text {
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    /* Error state */
+    .mindmap-error {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: calc(100vh - 250px);
+      min-height: 500px;
+      text-align: center;
+      padding: 2rem;
+      color: #6a8090;
+    }
+
+    .mindmap-error .icon {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .mindmap-error h3 {
+      color: #cc3333;
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+    }
+
+    .mindmap-error p {
+      max-width: 500px;
+      line-height: 1.6;
+      font-size: 0.9rem;
+    }
+
+    .mindmap-error code {
+      background: #eef2f7;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.85rem;
+    }
+
+    /* Override tut-content max-width for full-width mindmap */
+    .tut-content.full-width {
+      max-width: 100%;
+      padding: 0 1rem;
+    }
+
+    /* ── Markmap node overrides ──
+       markmap renders HTML content inside <foreignObject>,
+       so we can style links within nodes */
+    .markmap-foreign a {
+      color: #0077aa;
+      text-decoration: underline;
+      text-decoration-color: rgba(0,119,170,0.3);
+      text-underline-offset: 2px;
+    }
+
+    .markmap-foreign a:hover {
+      color: #005580;
+      text-decoration-color: #005580;
+    }
+
+    /* Make markmap nodes slightly more readable */
+    .markmap-node text {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      #mindmap-svg {
+        height: calc(100vh - 300px);
+      }
+      .mindmap-toolbar {
+        padding: 0.5rem 0.7rem;
+        gap: 0.4rem;
+      }
+    }
+  </style>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-T1XF1Z8ML9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-T1XF1Z8ML9');
+  </script>
+</head>
+<body>
+
+<header class="tut-header">
+  <div class="tut-header-row">
+    <div class="tut-header-left">
+      <img src="../../img/ACM_LOGO.png" alt="ACMSL" class="logo">
+      <a href="https://www.acm-sl.com" class="brand">ACMSL</a>
+    </div>
+    <nav>
+      <a href="introduction.html">Introduction</a>
+      <a href="industrial-wind-turbines.html">Wind Turbines</a>
+      <a href="wind-turbine-families.html">Families</a>
+      <a href="operational-wind-ranges.html">Wind Ranges</a>
+      <a href="simulators-and-tutorials.html">Simulators</a>
+      <a href="wind-energy-mindmap.html" class="active">Knowledge Map</a>
+    </nav>
+  </div>
+  <div class="tut-header-toolbar">
+    <div class="tut-toolbar-actions">
+      <a href="../../index.html?lang=en">&#127968; Home</a>
+      <a href="https://www.acm-sl.com/en/contact" target="_blank" rel="noopener">&#127760; Contact</a>
+      <a href="downloads.html">&#128229; Downloads</a>
+    </div>
+    <div class="tut-lang-selector">
+      <select onchange="window.location.href = this.value" aria-label="Language">
+        <option value="../en/wind-energy-mindmap.html" selected>EN</option>
+        <option value="../es/mapa-mental.html">ES</option>
+        <option value="../fr/carte-mentale.html">FR</option>
+        <option value="../it/mappa-conoscenza-eolica.html">IT</option>
+        <option value="../de/windenergie-wissenskarte.html">DE</option>
+        <option value="../pt/mapa-conhecimento-eolico.html">PT</option>
+      </select>
+    </div>
+  </div>
+<nav class="tut-breadcrumb" aria-label="breadcrumb">
+  <a href="../../index.html?lang=en">Home</a> &rsaquo;
+  <a href="../../index.html?lang=en&section=tutorials">Tutorials</a> &rsaquo;
+  <span class="bc-current">Mind Map (Markmap)</span>
+</nav>
+</header>
+
+<section class="tut-hero">
+  <h1>Interactive Knowledge Map (Markmap)</h1>
+  <p>Explore the complete wind energy knowledge map as a radial mindmap &mdash; click nodes to expand/collapse, scroll to zoom, drag to pan</p>
+</section>
+
+<main class="tut-content full-width">
+
+  <div class="mindmap-container" id="mindmap-container">
+
+    <!-- Toolbar (hidden until data is loaded) -->
+    <div class="mindmap-toolbar" id="toolbar" style="display: none;">
+      <div class="toolbar-group">
+        <span class="toolbar-label">View</span>
+        <button id="btn-expand-all" title="Expand all nodes">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+          Expand All
+        </button>
+        <button id="btn-collapse-all" title="Collapse to root level only">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14"/></svg>
+          Collapse All
+        </button>
+        <button id="btn-fit" class="secondary" title="Fit entire map into the viewport">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M3 9h18"/></svg>
+          Fit View
+        </button>
+      </div>
+      <div class="separator"></div>
+      <div class="toolbar-group">
+        <span class="toolbar-label">Depth</span>
+        <button id="btn-level-1" class="secondary" title="Show 1 level deep">1</button>
+        <button id="btn-level-2" class="secondary" title="Show 2 levels deep">2</button>
+        <button id="btn-level-3" class="secondary" title="Show 3 levels deep">3</button>
+        <button id="btn-level-4" class="secondary" title="Show 4 levels deep">4</button>
+        <button id="btn-level-5" class="secondary" title="Show 5 levels deep">5</button>
+      </div>
+      <span class="info" id="toolbar-info"></span>
+    </div>
+
+    <!-- Loading state -->
+    <div class="mindmap-loading" id="loading-state">
+      <div class="spinner"></div>
+      <div class="loading-text">Loading knowledge map...</div>
+    </div>
+
+    <!-- SVG for markmap (hidden until loaded) -->
+    <svg id="mindmap-svg" style="display: none;"></svg>
+
+    <!-- Status bar -->
+    <div class="mindmap-status-bar" id="status-bar" style="display: none;">
+      <span id="status-info"></span>
+      <span>
+        <kbd>Scroll</kbd> zoom &nbsp;
+        <kbd>Drag</kbd> pan &nbsp;
+        <kbd>Click</kbd> expand/collapse
+      </span>
+    </div>
+
+  </div>
+
+</main>
+
+<footer class="tut-footer">
+  &copy; 2026 <a href="https://www.acm-sl.com">Automated Computing Machinery SL (ACMSL)</a>. All rights reserved.
+</footer>
+
+<!-- Load dependencies: d3 first, then markmap-view -->
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+<script src="https://cdn.jsdelivr.net/npm/markmap-view@0.17.2/dist/browser/index.js"></script>
+
+<!-- Embedded .mm mindmap data (works with file:// protocol) -->
+<script id="mm-data" type="text/xml">
+<map version="freeplane 1.12.15">
+<!--To view this file, download free mind mapping software Freeplane from https://www.freeplane.org -->
+<bookmarks/>
+<node LOCALIZED_STYLE_REF="defaultstyle.details" FOLDED="false" ID="ID_1723255651" CREATED="1283093380553" MODIFIED="1769892384305" BORDER_WIDTH="5 px"><richcontent TYPE="NODE">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p style="text-align: center">
+      Training in<br/><b>Industrial aspects </b>
+    </p>
+    <p style="text-align: center">
+      <b>of<br/>Wind Energy</b>
+    </p>
+  </body>
+</html>
+</richcontent>
+<hook NAME="MapStyle" zoom="0.56447387">
+    <properties show_tags="UNDER_NODES" fit_to_viewport="false" show_icons="BESIDE_NODES" show_note_icons="true" showTagCategories="false" show_icon_for_attributes="true"/>
+    <tags category_separator="::"/>
+
+<map_styles>
+<stylenode LOCALIZED_TEXT="styles.root_node" STYLE="oval" UNIFORM_SHAPE="true" VGAP_QUANTITY="24 pt">
+<font SIZE="24"/>
+<stylenode LOCALIZED_TEXT="styles.predefined" POSITION="bottom_or_right" STYLE="bubble">
+<stylenode LOCALIZED_TEXT="default" ID="ID_417914922" MAX_WIDTH="600 px" COLOR="#000000" BACKGROUND_COLOR="#ffffff" STYLE="as_parent">
+<arrowlink SHAPE="CUBIC_CURVE" COLOR="#000000" WIDTH="2" TRANSPARENCY="200" DASH="" FONT_SIZE="9" FONT_FAMILY="SansSerif" DESTINATION="ID_417914922" STARTARROW="NONE" ENDARROW="DEFAULT"/>
+<font NAME="SansSerif" SIZE="10" BOLD="false" ITALIC="false"/>
+</stylenode>
+<stylenode LOCALIZED_TEXT="defaultstyle.details"/>
+<stylenode LOCALIZED_TEXT="defaultstyle.tags">
+<font SIZE="10"/>
+</stylenode>
+<stylenode LOCALIZED_TEXT="defaultstyle.attributes">
+<font SIZE="9"/>
+</stylenode>
+<stylenode LOCALIZED_TEXT="defaultstyle.note"/>
+<stylenode LOCALIZED_TEXT="defaultstyle.floating">
+<edge STYLE="hide_edge"/>
+<cloud COLOR="#f0f0f0" SHAPE="ROUND_RECT"/>
+</stylenode>
+<stylenode LOCALIZED_TEXT="defaultstyle.selection" BACKGROUND_COLOR="#4e85f8" BORDER_COLOR_LIKE_EDGE="false" BORDER_COLOR="#4e85f8"/>
+</stylenode>
+<stylenode LOCALIZED_TEXT="styles.user-defined" POSITION="bottom_or_right" STYLE="bubble">
+<stylenode LOCALIZED_TEXT="styles.topic" COLOR="#18898b" STYLE="fork">
+<font NAME="Liberation Sans" SIZE="10" BOLD="true"/>
+</stylenode>
+<stylenode LOCALIZED_TEXT="styles.subtopic" COLOR="#cc3300" STYLE="fork">
+<font NAME="Liberation Sans" SIZE="10" BOLD="true"/>
+</stylenode>
+<stylenode LOCALIZED_TEXT="styles.subsubtopic" COLOR="#669900">
+<font NAME="Liberation Sans" SIZE="10" BOLD="true"/>
+</stylenode>
+<stylenode LOCALIZED_TEXT="styles.important">
+<icon BUILTIN="yes"/>
+</stylenode>
+</stylenode>
+<stylenode LOCALIZED_TEXT="styles.AutomaticLayout" POSITION="bottom_or_right" STYLE="bubble">
+<stylenode LOCALIZED_TEXT="AutomaticLayout.level.root" COLOR="#000000">
+<font SIZE="18"/>
+<edge STYLE="bezier"/>
+</stylenode>
+<stylenode LOCALIZED_TEXT="AutomaticLayout.level,1" COLOR="#0033ff" BACKGROUND_COLOR="#ffffff" STYLE="as_parent">
+<font SIZE="16"/>
+<edge COLOR="#66ff66" WIDTH="thin"/>
+</stylenode>
+<stylenode LOCALIZED_TEXT="AutomaticLayout.level,2" COLOR="#ff6699">
+<font SIZE="14"/>
+</stylenode>
+<stylenode LOCALIZED_TEXT="AutomaticLayout.level,3" COLOR="#990000">
+<font SIZE="12"/>
+<cloud COLOR="#f0f0f0" SHAPE="ROUND_RECT"/>
+</stylenode>
+<stylenode LOCALIZED_TEXT="AutomaticLayout.level,4" COLOR="#000000" STYLE="as_parent">
+<font SIZE="14"/>
+</stylenode>
+</stylenode>
+</stylenode>
+</map_styles>
+</hook>
+<hook NAME="AutomaticEdgeColor" COUNTER="12" RULE="ON_BRANCH_CREATION"/>
+<hook NAME="accessories/plugins/AutomaticLayout.properties" VALUE="ALL"/>
+<edge WIDTH="5"/>
+<node TEXT="Fundamentos y Contexto" LOCALIZED_STYLE_REF="AutomaticLayout.level,1" FOLDED="true" POSITION="top_or_left" ID="ID_FUND_001" CREATED="1403339001000" MODIFIED="1769537533356" COLOR="#000000">
+<edge COLOR="#ff9900" WIDTH="5"/>
+<node TEXT="Historia de la Energía Eólica" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_HIST_001" CREATED="1403339001001" MODIFIED="1769437734457" COLOR="#000000">
+<node TEXT="Molinos tradicionales" ID="ID_HIST_002" CREATED="1403339001002" MODIFIED="1403339001003"/>
+<node TEXT="Primera generación de aerogeneradores" ID="ID_HIST_003" CREATED="1403339001004" MODIFIED="1403339001005"/>
+<node TEXT="Evolución tecnológica" ID="ID_HIST_004" CREATED="1403339001006" MODIFIED="1403339001007"/>
+<node TEXT="Hitos importantes del sector" ID="ID_HIST_005" CREATED="1403339001008" MODIFIED="1403339001009"/>
+</node>
+<node TEXT="Situación Actual del Sector" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_SIT_001" CREATED="1403339001010" MODIFIED="1769437734457" COLOR="#000000">
+<node TEXT="Capacidad instalada mundial" ID="ID_SIT_002" CREATED="1403339001011" MODIFIED="1403339001012"/>
+<node TEXT="Principales mercados" ID="ID_SIT_003" CREATED="1403339001013" MODIFIED="1403339001014"/>
+<node TEXT="Tendencias de crecimiento" ID="ID_SIT_004" CREATED="1403339001015" MODIFIED="1403339001016"/>
+<node TEXT="Principales fabricantes" ID="ID_SIT_005" CREATED="1403339001017" MODIFIED="1403339001018"/>
+</node>
+<node TEXT="Aspectos Ambientales" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_AMB_001" CREATED="1403339001019" MODIFIED="1769437734457" COLOR="#000000">
+<node TEXT="Reducción de emisiones CO2" ID="ID_AMB_002" CREATED="1403339001020" MODIFIED="1403339001021"/>
+<node TEXT="Huella de carbono" ID="ID_AMB_003" CREATED="1403339001022" MODIFIED="1403339001023"/>
+<node TEXT="Análisis de ciclo de vida" ID="ID_AMB_004" CREATED="1403339001024" MODIFIED="1403339001025"/>
+<node TEXT="Reciclaje de componentes" ID="ID_AMB_005" CREATED="1403339001026" MODIFIED="1403339001027"/>
+</node>
+<node TEXT="Comparativa con otras Renovables" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_COMP_001" CREATED="1403339001028" MODIFIED="1769437734457" COLOR="#000000">
+<node TEXT="Solar fotovoltaica" ID="ID_COMP_002" CREATED="1403339001029" MODIFIED="1403339001030"/>
+<node TEXT="Hidroeléctrica" ID="ID_COMP_003" CREATED="1403339001031" MODIFIED="1403339001032"/>
+<node TEXT="Biomasa" ID="ID_COMP_004" CREATED="1403339001033" MODIFIED="1403339001034"/>
+</node>
+<node TEXT="Marco Regulatorio" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_REG_001" CREATED="1403339001035" MODIFIED="1769437734457" COLOR="#000000">
+<node TEXT="Políticas energéticas nacionales" ID="ID_REG_002" CREATED="1403339001036" MODIFIED="1403339001037"/>
+<node TEXT="Objetivos europeos 2030/2050" ID="ID_REG_003" CREATED="1403339001038" MODIFIED="1403339001039"/>
+<node TEXT="Mecanismos de apoyo" ID="ID_REG_004" CREATED="1403339001040" MODIFIED="1403339001041"/>
+<node TEXT="Normativas técnicas" ID="ID_REG_005" CREATED="1403339001042" MODIFIED="1403339001043"/>
+</node>
+</node>
+<node TEXT="Recurso Eólico" LOCALIZED_STYLE_REF="AutomaticLayout.level,1" FOLDED="true" POSITION="top_or_left" ID="ID_REC_001" CREATED="1403339002000" MODIFIED="1769537533356" COLOR="#000000">
+<edge COLOR="#9900ff" WIDTH="5"/>
+<node TEXT="Meteorología Básica" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_MET_001" CREATED="1403339002001" MODIFIED="1769437734457" COLOR="#000000">
+<node TEXT="Formación del viento" ID="ID_MET_002" CREATED="1403339002002" MODIFIED="1403339002003"/>
+<node TEXT="Circulación atmosférica" ID="ID_MET_003" CREATED="1403339002004" MODIFIED="1403339002005"/>
+<node TEXT="Vientos locales" ID="ID_MET_004" CREATED="1403339002006" MODIFIED="1403339002007"/>
+</node>
+<node TEXT="Caracterización del Viento" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_CAR_001" CREATED="1403339002008" MODIFIED="1769437734457" COLOR="#000000">
+<node TEXT="Perfil vertical de velocidades" ID="ID_CAR_002" CREATED="1403339002009" MODIFIED="1403339002010"/>
+<node TEXT="Ley logarítmica y exponencial" ID="ID_CAR_003" CREATED="1403339002011" MODIFIED="1403339002012"/>
+<node TEXT="Rugosidad del terreno" ID="ID_CAR_004" CREATED="1403339002013" MODIFIED="1403339002014"/>
+<node TEXT="Turbulencia" ID="ID_CAR_005" CREATED="1403339002015" MODIFIED="1403339002016"/>
+<node TEXT="Cizalladura del viento" ID="ID_CAR_006" CREATED="1403339002017" MODIFIED="1403339002018"/>
+</node>
+<node TEXT="Distribuciones Estadísticas" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_DIST_001" CREATED="1403339002019" MODIFIED="1769437734457" COLOR="#000000">
+<node TEXT="Distribución de Weibull" ID="ID_DIST_002" CREATED="1403339002020" MODIFIED="1403339002021"/>
+<node TEXT="Rosa de vientos" ID="ID_DIST_003" CREATED="1403339002022" MODIFIED="1403339002023"/>
+<node TEXT="Frecuencia de velocidades" ID="ID_DIST_004" CREATED="1403339002024" MODIFIED="1403339002025"/>
+</node>
+<node TEXT="Medición del Recurso" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_MED_001" CREATED="1403339002026" MODIFIED="1769437734457" COLOR="#000000">
+<node TEXT="Torres meteorológicas" ID="ID_MED_002" CREATED="1403339002027" MODIFIED="1403339002028"/>
+<node TEXT="LIDAR y SODAR" ID="ID_MED_003" CREATED="1403339002029" MODIFIED="1403339002030"/>
+<node TEXT="Duración de campañas" ID="ID_MED_004" CREATED="1403339002031" MODIFIED="1403339002032"/>
+<node TEXT="Incertidumbre de medidas" ID="ID_MED_005" CREATED="1403339002033" MODIFIED="1403339002034"/>
+</node>
+<node TEXT="Software de Evaluación" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_SOFT_001" CREATED="1403339002035" MODIFIED="1769437734457" COLOR="#000000">
+<node TEXT="WAsP" ID="ID_SOFT_002" CREATED="1403339002036" MODIFIED="1403339002037"/>
+<node TEXT="WindPRO" ID="ID_SOFT_003" CREATED="1403339002038" MODIFIED="1403339002039"/>
+<node TEXT="OpenWind" ID="ID_SOFT_004" CREATED="1403339002040" MODIFIED="1403339002041"/>
+<node TEXT="Mapas de viento" ID="ID_SOFT_005" CREATED="1403339002042" MODIFIED="1403339002043"/>
+</node>
+<node TEXT="Micrositing" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_MICRO_001" CREATED="1403339002044" MODIFIED="1769437734457" COLOR="#000000">
+<node TEXT="Optimización de layout" ID="ID_MICRO_002" CREATED="1403339002045" MODIFIED="1403339002046"/>
+<node TEXT="Efecto estela (wake effect)" ID="ID_MICRO_003" CREATED="1403339002047" MODIFIED="1403339002048"/>
+<node TEXT="Distancias entre aerogeneradores" ID="ID_MICRO_004" CREATED="1403339002049" MODIFIED="1403339002050"/>
+</node>
+</node>
+<node LOCALIZED_STYLE_REF="AutomaticLayout.level,1" POSITION="bottom_or_right" ID="ID_323223660" CREATED="1403339036780" MODIFIED="1769537437047" COLOR="#000000"><richcontent TYPE="NODE">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      <font color="#3366ff">Physical principles</font>
+    </p>
+  </body>
+</html>
+</richcontent>
+<edge STYLE="bezier" COLOR="#00007c" WIDTH="5"/>
+<node TEXT="Aerodynamic principles" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" FOLDED="true" ID="ID_1804292542" CREATED="1403339106636" MODIFIED="1769437897612" COLOR="#000000">
+<node TEXT="Límite de Betz" ID="ID_AERO_001" CREATED="1403514974000" MODIFIED="1403514982020"/>
+<node TEXT="Tip Speed Ratio (TSR)" ID="ID_AERO_002" CREATED="1403514974001" MODIFIED="1403514982020"/>
+<node TEXT="Coeficiente de potencia (Cp)" ID="ID_AERO_003" CREATED="1403514974002" MODIFIED="1403514982020"/>
+<node TEXT="Curvas de potencia" ID="ID_AERO_004" CREATED="1403514974003" MODIFIED="1403514982020"/>
+<node TEXT="Teoría del momento del elemento de pala" ID="ID_AERO_005" CREATED="1403514974004" MODIFIED="1403514982020"/>
+<node TEXT="Blades" ID="ID_1290813035" CREATED="1403514974045" MODIFIED="1403514982020">
+<node TEXT="Diseño aerodinámico" ID="ID_BLADE_001" CREATED="1403514974046" MODIFIED="1403514982020"/>
+<node TEXT="Materiales compuestos" ID="ID_BLADE_002" CREATED="1403514974047" MODIFIED="1403514982020"/>
+<node TEXT="Control de ángulo de paso (pitch)" ID="ID_BLADE_003" CREATED="1403514974048" MODIFIED="1403514982020"/>
+</node>
+<node TEXT="Tower" ID="ID_672551256" CREATED="1403514983389" MODIFIED="1403514991435">
+<node TEXT="Efectos de sombra de torre" ID="ID_TOWER_001" CREATED="1403514983390" MODIFIED="1403514991435"/>
+<node TEXT="Cargas aerodinámicas" ID="ID_TOWER_002" CREATED="1403514983391" MODIFIED="1403514991435"/>
+</node>
+</node>
+<node TEXT="Electric principles" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" FOLDED="true" ID="ID_260258659" CREATED="1403339155608" MODIFIED="1769437897659" COLOR="#000000">
+<node TEXT="Electric Generators" ID="ID_81333566" CREATED="1403339852765" MODIFIED="1403339882816">
+<node TEXT="Induction Generators" LOCALIZED_STYLE_REF="AutomaticLayout.level,4" ID="ID_46916702" CREATED="1403339888102" MODIFIED="1403515464499">
+<node TEXT="SCIG (Squirrel Cage)" ID="ID_IND_001" CREATED="1403339888103" MODIFIED="1403515464499"/>
+<node TEXT="DFIG (Doubly Fed)" ID="ID_IND_002" CREATED="1403339888104" MODIFIED="1403515464499"/>
+</node>
+<node TEXT="Synchronous Generators" LOCALIZED_STYLE_REF="AutomaticLayout.level,4" ID="ID_1990262417" CREATED="1403339946694" MODIFIED="1403515464487">
+<node TEXT="PMSG (Permanent Magnet)" ID="ID_SYNC_001" CREATED="1403339946695" MODIFIED="1403515464487"/>
+<node TEXT="EESG (Electrically Excited)" ID="ID_SYNC_002" CREATED="1403339946696" MODIFIED="1403515464487"/>
+</node>
+</node>
+<node TEXT="Power Electronics" ID="ID_363606566" CREATED="1403339903925" MODIFIED="1403339910623">
+<node TEXT="Back to Back Converters" LOCALIZED_STYLE_REF="AutomaticLayout.level,4" ID="ID_1248712516" CREATED="1403341125807" MODIFIED="1403515464503">
+<node TEXT="IGBT technology" ID="ID_B2B_001" CREATED="1403341125808" MODIFIED="1403515464503"/>
+<node TEXT="Control strategies" ID="ID_B2B_002" CREATED="1403341125809" MODIFIED="1403515464503"/>
+</node>
+<node TEXT="Rotor Resistance Control" LOCALIZED_STYLE_REF="AutomaticLayout.level,4" ID="ID_469607798" CREATED="1403515274122" MODIFIED="1403515464506"/>
+<node TEXT="Active filters" ID="ID_PE_001" CREATED="1403515274123" MODIFIED="1403515464506"/>
+</node>
+<node TEXT="Control components" ID="ID_320394795" CREATED="1403339914409" MODIFIED="1403339932535">
+<node TEXT="Soft starter" LOCALIZED_STYLE_REF="AutomaticLayout.level,4" ID="ID_1917083506" CREATED="1403341141651" MODIFIED="1403515464508"/>
+<node TEXT="Circuit breakers" ID="ID_CTRL_001" CREATED="1403341141652" MODIFIED="1403515464508"/>
+<node TEXT="Contactors and relays" ID="ID_CTRL_002" CREATED="1403341141653" MODIFIED="1403515464508"/>
+</node>
+</node>
+</node>
+<node LOCALIZED_STYLE_REF="AutomaticLayout.level,1" FOLDED="true" POSITION="bottom_or_right" ID="ID_1057379267" CREATED="1403339232172" MODIFIED="1769537468613" COLOR="#000000"><richcontent TYPE="NODE">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      <font color="#000000">Electric Power </font>
+    </p>
+    <p>
+      <font color="#000000">Generation and </font>
+    </p>
+    <p>
+      <font color="#000000">Distribution</font>
+    </p>
+  </body>
+</html>
+</richcontent>
+<edge COLOR="#00ff00" WIDTH="5"/>
+<node LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_1872434553" CREATED="1403339734539" MODIFIED="1769437897674" COLOR="#000000"><richcontent TYPE="NODE">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      Main characteristics of
+    </p>
+    <p>
+      <b>Power Grids</b>
+    </p>
+  </body>
+</html>
+</richcontent>
+<node TEXT="Voltage levels" ID="ID_GRID_001" CREATED="1403339734540" MODIFIED="1769437897674"/>
+<node TEXT="Frequency regulation" ID="ID_GRID_002" CREATED="1403339734541" MODIFIED="1769437897674"/>
+<node TEXT="Grid topology" ID="ID_GRID_003" CREATED="1403339734542" MODIFIED="1769437897674"/>
+</node>
+<node TEXT="Influence of Power Grid on Wind Turbines" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_1671913460" CREATED="1403339796963" MODIFIED="1769437897690" COLOR="#000000">
+<node TEXT="Voltage variations" ID="ID_INFGRID_001" CREATED="1403339796964" MODIFIED="1769437897690"/>
+<node TEXT="Frequency deviations" ID="ID_INFGRID_002" CREATED="1403339796965" MODIFIED="1769437897690"/>
+</node>
+<node TEXT="Influence of Wind Turbines in the Power Grid" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_6690789" CREATED="1403339813740" MODIFIED="1769437897706" COLOR="#000000">
+<node TEXT="Droop characteristics of Wind Turbines" ID="ID_1166872696" CREATED="1403341044426" MODIFIED="1403341075759"/>
+<node TEXT="Production inertia" ID="ID_1239825410" CREATED="1403341080358" MODIFIED="1403341089082"/>
+<node TEXT="Backup requirements" ID="ID_54304001" CREATED="1403342084288" MODIFIED="1403342094975"/>
+<node TEXT="Inertial response" ID="ID_980411090" CREATED="1439497631234" MODIFIED="1439498096218"/>
+<node TEXT="Synthetic inertia" ID="ID_INFWT_001" CREATED="1439497631235" MODIFIED="1439498096218"/>
+<node TEXT="Fast frequency response" ID="ID_INFWT_002" CREATED="1439497631236" MODIFIED="1439498096218"/>
+</node>
+<node TEXT="Grid Codes" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_GRIDCODE_001" CREATED="1403340068580" MODIFIED="1769437897706" COLOR="#000000">
+<node TEXT="LVRT (Low Voltage Ride Through)" ID="ID_GRIDCODE_002" CREATED="1403340068581" MODIFIED="1769437897706"/>
+<node TEXT="HVRT (High Voltage Ride Through)" ID="ID_GRIDCODE_003" CREATED="1403340068582" MODIFIED="1769437897706"/>
+<node TEXT="Reactive power control" ID="ID_GRIDCODE_004" CREATED="1403340068583" MODIFIED="1769437897706"/>
+<node TEXT="Frequency support" ID="ID_GRIDCODE_005" CREATED="1403340068584" MODIFIED="1769437897706"/>
+<node TEXT="Black start capability" ID="ID_GRIDCODE_006" CREATED="1403340068585" MODIFIED="1769437897706"/>
+</node>
+<node TEXT="Influence of Power Connection Lines" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_329815560" CREATED="1403340068580" MODIFIED="1769437897706" COLOR="#000000">
+<node TEXT="Transmission losses" ID="ID_LINES_001" CREATED="1403340068586" MODIFIED="1769437897706"/>
+<node TEXT="Cable sizing" ID="ID_LINES_002" CREATED="1403340068587" MODIFIED="1769437897706"/>
+</node>
+<node TEXT="Storage of Electric Energy" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_144373857" CREATED="1403342049651" MODIFIED="1769437897721" COLOR="#000000">
+<node TEXT="Battery systems" ID="ID_STOR_001" CREATED="1403342049652" MODIFIED="1769437897721"/>
+<node TEXT="Pumped hydro" ID="ID_STOR_002" CREATED="1403342049653" MODIFIED="1769437897721"/>
+<node TEXT="Hydrogen" ID="ID_STOR_003" CREATED="1403342049654" MODIFIED="1769437897721"/>
+<node TEXT="Compressed air" ID="ID_STOR_004" CREATED="1403342049655" MODIFIED="1769437897721"/>
+</node>
+<node TEXT="Power Quality Norms" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_1100013151" CREATED="1403508739195" MODIFIED="1769437897721" COLOR="#000000">
+<node TEXT="Harmonics" ID="ID_PQ_001" CREATED="1403508739196" MODIFIED="1769437897721"/>
+<node TEXT="Flicker" ID="ID_PQ_002" CREATED="1403508739197" MODIFIED="1769437897721"/>
+<node TEXT="IEC 61400-21" ID="ID_PQ_003" CREATED="1403508739198" MODIFIED="1769437897721"/>
+</node>
+</node>
+<node TEXT="Industrial Instrumentation and Control" LOCALIZED_STYLE_REF="AutomaticLayout.level,1" FOLDED="true" POSITION="bottom_or_right" ID="ID_563951472" CREATED="1403508505071" MODIFIED="1769537468597" COLOR="#000000">
+<edge COLOR="#ff6666" WIDTH="5"/>
+<node LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_49713744" CREATED="1403508575540" MODIFIED="1403514516403"><richcontent TYPE="NODE">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      <font color="#000000">Sensors</font>
+    </p>
+  </body>
+</html>
+</richcontent>
+<node TEXT="Electric Parameters" ID="ID_558631817" CREATED="1403508699755" MODIFIED="1403508710219">
+<node TEXT="Power, Voltage, Current, Frequency" ID="ID_973300688" CREATED="1403515773015" MODIFIED="1403515829949"/>
+<node TEXT="Power Quality" ID="ID_866028071" CREATED="1403508718971" MODIFIED="1403508729042"/>
+</node>
+<node TEXT="RPMs" ID="ID_1157233209" CREATED="1403508766240" MODIFIED="1403508771051"/>
+<node TEXT="Temperature" ID="ID_943612144" CREATED="1403508775162" MODIFIED="1403508779727">
+<node TEXT="Bearings temperature" ID="ID_TEMP_001" CREATED="1403508775163" MODIFIED="1403508779727"/>
+<node TEXT="Generator windings" ID="ID_TEMP_002" CREATED="1403508775164" MODIFIED="1403508779727"/>
+<node TEXT="Gearbox oil" ID="ID_TEMP_003" CREATED="1403508775165" MODIFIED="1403508779727"/>
+</node>
+<node TEXT="Wind (direction + intensity)" ID="ID_902619078" CREATED="1403508783141" MODIFIED="1403513369242">
+<node TEXT="Anemometers" ID="ID_WIND_001" CREATED="1403508783142" MODIFIED="1403513369242"/>
+<node TEXT="Wind vanes" ID="ID_WIND_002" CREATED="1403508783143" MODIFIED="1403513369242"/>
+</node>
+<node TEXT="Vibrations" ID="ID_294216725" CREATED="1403508815111" MODIFIED="1403508824367">
+<node TEXT="Accelerometers" ID="ID_VIB_001" CREATED="1403508815112" MODIFIED="1403508824367"/>
+<node TEXT="CMS (Condition Monitoring)" ID="ID_VIB_002" CREATED="1403508815113" MODIFIED="1403508824367"/>
+</node>
+<node TEXT="Oil quality" ID="ID_542445279" CREATED="1403508854337" MODIFIED="1403508875194"/>
+<node TEXT="Torque" ID="ID_1819931213" CREATED="1403508878187" MODIFIED="1403508895590"/>
+<node TEXT="Pitch angle" ID="ID_SENS_001" CREATED="1403508878188" MODIFIED="1403508895590"/>
+<node TEXT="Yaw position" ID="ID_SENS_002" CREATED="1403508878189" MODIFIED="1403508895590"/>
+</node>
+<node TEXT="Plant Communications" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_364116083" CREATED="1403508587278" MODIFIED="1403513201024">
+<node TEXT="Configurations" ID="ID_836076012" CREATED="1403508896900" MODIFIED="1403508901610">
+<node TEXT="Star topology" ID="ID_CONF_001" CREATED="1403508896901" MODIFIED="1403508901610"/>
+<node TEXT="Ring topology" ID="ID_CONF_002" CREATED="1403508896902" MODIFIED="1403508901610"/>
+</node>
+<node TEXT="Protocols" ID="ID_168608998" CREATED="1403508904485" MODIFIED="1403508909458">
+<node TEXT="Modbus TCP/IP" ID="ID_PROT_001" CREATED="1403508904486" MODIFIED="1403508909458"/>
+<node TEXT="IEC 61850" ID="ID_PROT_002" CREATED="1403508904487" MODIFIED="1403508909458"/>
+<node TEXT="OPC UA" ID="ID_PROT_003" CREATED="1403508904488" MODIFIED="1403508909458"/>
+<node TEXT="DNP3" ID="ID_PROT_004" CREATED="1403508904489" MODIFIED="1403508909458"/>
+</node>
+<node TEXT="Cybersecurity" ID="ID_COMM_001" CREATED="1403508904490" MODIFIED="1403508909458"/>
+</node>
+<node TEXT="Algorithms" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_1287467094" CREATED="1403508646809" MODIFIED="1403514833452">
+<node TEXT="Control Algorithms" ID="ID_1090354322" CREATED="1403508663651" MODIFIED="1403508669530">
+<node TEXT="Pitch control" ID="ID_ALG_001" CREATED="1403508663652" MODIFIED="1403508669530"/>
+<node TEXT="Torque control" ID="ID_ALG_002" CREATED="1403508663653" MODIFIED="1403508669530"/>
+<node TEXT="Yaw control" ID="ID_ALG_003" CREATED="1403508663654" MODIFIED="1403508669530"/>
+<node TEXT="MPPT (Maximum Power Point Tracking)" ID="ID_ALG_004" CREATED="1403508663655" MODIFIED="1403508669530"/>
+</node>
+<node TEXT="Data treatment and Analysis" ID="ID_515102646" CREATED="1403508676511" MODIFIED="1403508844277">
+<node TEXT="SCADA data analysis" ID="ID_DATA_001" CREATED="1403508676512" MODIFIED="1403508844277"/>
+<node TEXT="Performance indicators (KPIs)" ID="ID_DATA_002" CREATED="1403508676513" MODIFIED="1403508844277"/>
+<node TEXT="Power curve validation" ID="ID_DATA_003" CREATED="1403508676514" MODIFIED="1403508844277"/>
+</node>
+</node>
+<node TEXT="Substation Monitoring and Control" ID="ID_1983507417" CREATED="1403515864024" MODIFIED="1538150870050">
+<node TEXT="RTU (Remote Terminal Unit)" ID="ID_SUB_001" CREATED="1403515864025" MODIFIED="1538150870050"/>
+<node TEXT="Bay controllers" ID="ID_SUB_002" CREATED="1403515864026" MODIFIED="1538150870050"/>
+</node>
+</node>
+<node TEXT="Wind Farms" LOCALIZED_STYLE_REF="AutomaticLayout.level,1" POSITION="top_or_left" ID="ID_158094941" CREATED="1403339203083" MODIFIED="1769537533356" COLOR="#000000">
+<edge COLOR="#0000ff" WIDTH="5"/>
+<node TEXT="Site evaluation" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_436132783" CREATED="1403339289452" MODIFIED="1769536527161" COLOR="#000000">
+<node TEXT="Topography analysis" ID="ID_SITE_001" CREATED="1403339289453" MODIFIED="1769536527161"/>
+<node TEXT="Access roads" ID="ID_SITE_002" CREATED="1403339289454" MODIFIED="1769536527161"/>
+<node TEXT="Grid connection point" ID="ID_SITE_003" CREATED="1403339289455" MODIFIED="1769536527161"/>
+<node TEXT="Environmental constraints" ID="ID_SITE_004" CREATED="1403339289456" MODIFIED="1769536527161"/>
+</node>
+<node TEXT="Project Management" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_1935075169" CREATED="1403339319628" MODIFIED="1769437734457" COLOR="#000000">
+<node TEXT="Permitting and licensing" ID="ID_PROJ_001" CREATED="1403339319629" MODIFIED="1769437734457"/>
+<node TEXT="Timeline and milestones" ID="ID_PROJ_002" CREATED="1403339319630" MODIFIED="1769437734457"/>
+<node TEXT="Risk management" ID="ID_PROJ_003" CREATED="1403339319631" MODIFIED="1769437734457"/>
+</node>
+<node TEXT="Construction" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_956324526" CREATED="1403339342596" MODIFIED="1769437769280" COLOR="#000000">
+<node TEXT="Civil works" ID="ID_CONST_001" CREATED="1403339342597" MODIFIED="1769437769280"/>
+<node TEXT="Foundations" ID="ID_CONST_002" CREATED="1403339342598" MODIFIED="1769437769280"/>
+<node TEXT="Assembly and erection" ID="ID_CONST_003" CREATED="1403339342599" MODIFIED="1769437769280"/>
+<node TEXT="Commissioning" ID="ID_CONST_004" CREATED="1403339342600" MODIFIED="1769437769280"/>
+</node>
+<node TEXT="Production Management" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_1184853172" CREATED="1403339395071" MODIFIED="1769437782828" COLOR="#000000">
+<node TEXT="Contract agreements for delivery of Production" ID="ID_1479118879" CREATED="1403339994923" MODIFIED="1403340014560"/>
+<node TEXT="Wind Forecast" ID="ID_958108085" CREATED="1403340019427" MODIFIED="1403340064385">
+<node TEXT="Short-term forecasting" ID="ID_FORE_001" CREATED="1403340019428" MODIFIED="1403340064385"/>
+<node TEXT="Day-ahead forecasting" ID="ID_FORE_002" CREATED="1403340019429" MODIFIED="1403340064385"/>
+</node>
+<node TEXT="Curtailment management" ID="ID_PROD_001" CREATED="1403339994924" MODIFIED="1403340014560"/>
+<node TEXT="Performance optimization" ID="ID_PROD_002" CREATED="1403339994925" MODIFIED="1403340014560"/>
+</node>
+<node TEXT="Maintenance Management" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_844779317" CREATED="1403339409900" MODIFIED="1769536554217" COLOR="#000000" BACKGROUND_COLOR="#f0f0f0">
+<node TEXT="Statistics analysis of Incidences" ID="ID_567854379" CREATED="1403341896067" MODIFIED="1403342007672"/>
+<node TEXT="Logistics" ID="ID_917730521" CREATED="1403341758196" MODIFIED="1403341766430"/>
+<node TEXT="Activities planning" ID="ID_318037761" CREATED="1403341803299" MODIFIED="1403341861681">
+<node TEXT="Planned Maintenance" ID="ID_919017353" CREATED="1403341249043" MODIFIED="1403341262515"/>
+<node TEXT="Predictive Maintenance" ID="ID_236935387" CREATED="1403341267000" MODIFIED="1403341279120">
+<node TEXT="Condition Monitoring Systems (CMS)" ID="ID_PRED_001" CREATED="1403341267001" MODIFIED="1769932800000">
+<node TEXT="CMS Equipment Manufacturers" ID="ID_CMS_001" CREATED="1769932800001" MODIFIED="1769932800001">
+<node TEXT="Drivetrain Vibration CMS" ID="ID_CMS_002" CREATED="1769932800002" MODIFIED="1769932800002">
+<node TEXT="Br&#xfc;el &amp; Kj&#xe6;r Vibro (HBK)" ID="ID_CMS_003" CREATED="1769932800003" MODIFIED="1769932800003">
+<node TEXT="DDAU3 data acquisition unit" ID="ID_CMS_004" CREATED="1769932800004" MODIFIED="1769932800004"/>
+<node TEXT="VibroSuite software platform" ID="ID_CMS_005" CREATED="1769932800005" MODIFIED="1769932800005"/>
+<node TEXT="20,000+ wind turbine installations" ID="ID_CMS_006" CREATED="1769932800006" MODIFIED="1769932800006"/>
+</node>
+<node TEXT="Bachmann Monitoring" ID="ID_CMS_007" CREATED="1769932800007" MODIFIED="1769932800007">
+<node TEXT="CMScompact (DNV-certified)" ID="ID_CMS_008" CREATED="1769932800008" MODIFIED="1769932800008"/>
+<node TEXT="AIC214 / AIC206 I/O modules" ID="ID_CMS_009" CREATED="1769932800009" MODIFIED="1769932800009"/>
+<node TEXT="HUMS (Health &amp; Usage Monitoring System)" ID="ID_CMS_010" CREATED="1769932800010" MODIFIED="1769932800010"/>
+<node TEXT="Integrated with turbine controller" ID="ID_CMS_011" CREATED="1769932800011" MODIFIED="1769932800011"/>
+</node>
+<node TEXT="SKF" ID="ID_CMS_012" CREATED="1769932800012" MODIFIED="1769932800012">
+<node TEXT="Multilog IMx-W (WindCon)" ID="ID_CMS_013" CREATED="1769932800013" MODIFIED="1769932800013"/>
+<node TEXT="WindCon 3.0 with AI analytics" ID="ID_CMS_014" CREATED="1769932800014" MODIFIED="1769932800014"/>
+<node TEXT="@ptitude Observer software" ID="ID_CMS_015" CREATED="1769932800015" MODIFIED="1769932800015"/>
+<node TEXT="7,000+ wind turbine installations" ID="ID_CMS_016" CREATED="1769932800016" MODIFIED="1769932800016"/>
+</node>
+<node TEXT="Bently Nevada (Baker Hughes)" ID="ID_CMS_017" CREATED="1769932800017" MODIFIED="1769932800017">
+<node TEXT="ADAPT.Wind hardware" ID="ID_CMS_018" CREATED="1769932800018" MODIFIED="1769932800018"/>
+<node TEXT="System 1 Wind software" ID="ID_CMS_019" CREATED="1769932800019" MODIFIED="1769932800019"/>
+<node TEXT="300+ embedded analytical combinations" ID="ID_CMS_020" CREATED="1769932800020" MODIFIED="1769932800020"/>
+</node>
+<node TEXT="KK Wind Solutions" ID="ID_CMS_021" CREATED="1769932800021" MODIFIED="1769932800021">
+<node TEXT="TCM (Turbine Condition Monitoring)" ID="ID_CMS_022" CREATED="1769932800022" MODIFIED="1769932800022"/>
+<node TEXT="Pythia AI diagnostics engine" ID="ID_CMS_023" CREATED="1769932800023" MODIFIED="1769932800023"/>
+<node TEXT="All Vestas offshore turbines since 2017" ID="ID_CMS_024" CREATED="1769932800024" MODIFIED="1769932800024"/>
+</node>
+<node TEXT="Acoem (formerly ONEPROD)" ID="ID_CMS_025" CREATED="1769932800025" MODIFIED="1769932800025">
+<node TEXT="ONEPROD KITE continuous monitoring" ID="ID_CMS_026" CREATED="1769932800026" MODIFIED="1769932800026"/>
+<node TEXT="MV-x Black Edition hardware" ID="ID_CMS_027" CREATED="1769932800027" MODIFIED="1769932800027"/>
+</node>
+<node TEXT="ONYX Insight (Hexagon)" ID="ID_CMS_028" CREATED="1769932800028" MODIFIED="1769932800028">
+<node TEXT="ecoCMS / ecoCMS Flex" ID="ID_CMS_029" CREATED="1769932800029" MODIFIED="1769932800029"/>
+<node TEXT="Cloud-based analytics" ID="ID_CMS_030" CREATED="1769932800030" MODIFIED="1769932800030"/>
+<node TEXT="130+ turbine platforms, 15+ OEMs" ID="ID_CMS_031" CREATED="1769932800031" MODIFIED="1769932800031"/>
+</node>
+<node TEXT="Siemens" ID="ID_CMS_032" CREATED="1769932800032" MODIFIED="1769932800032">
+<node TEXT="SIPLUS CMS1200" ID="ID_CMS_033" CREATED="1769932800033" MODIFIED="1769932800033"/>
+<node TEXT="MindSphere IoT integration" ID="ID_CMS_034" CREATED="1769932800034" MODIFIED="1769932800034"/>
+</node>
+<node TEXT="Schaeffler" ID="ID_CMS_035" CREATED="1769932800035" MODIFIED="1769932800035">
+<node TEXT="FAG SmartCheck" ID="ID_CMS_036" CREATED="1769932800036" MODIFIED="1769932800036"/>
+<node TEXT="OPTIME wireless ecosystem" ID="ID_CMS_037" CREATED="1769932800037" MODIFIED="1769932800037"/>
+<node TEXT="OPTIME E-CM (electrical condition monitoring)" ID="ID_CMS_038" CREATED="1769932800038" MODIFIED="1769932800038"/>
+</node>
+<node TEXT="SkySpecs" ID="ID_CMS_039" CREATED="1769932800039" MODIFIED="1769932800039">
+<node TEXT="Horizon CMS with Kaleidoscope AI" ID="ID_CMS_040" CREATED="1769932800040" MODIFIED="1769932800040"/>
+</node>
+</node>
+<node TEXT="Blade Monitoring Specialists" ID="ID_CMS_041" CREATED="1769932800041" MODIFIED="1769932800041">
+<node TEXT="Weidm&#xfc;ller" ID="ID_CMS_042" CREATED="1769932800042" MODIFIED="1769932800042">
+<node TEXT="BLADEcontrol (accelerometers in blades)" ID="ID_CMS_043" CREATED="1769932800043" MODIFIED="1769932800043"/>
+<node TEXT="Ice detection capability" ID="ID_CMS_044" CREATED="1769932800044" MODIFIED="1769932800044"/>
+<node TEXT="5,900+ turbines equipped" ID="ID_CMS_045" CREATED="1769932800045" MODIFIED="1769932800045"/>
+</node>
+<node TEXT="MISTRAS Group" ID="ID_CMS_046" CREATED="1769932800046" MODIFIED="1769932800046">
+<node TEXT="Sensoria (acoustic emission blade monitoring)" ID="ID_CMS_047" CREATED="1769932800047" MODIFIED="1769932800047"/>
+</node>
+<node TEXT="Insensys" ID="ID_CMS_048" CREATED="1769932800048" MODIFIED="1769932800048">
+<node TEXT="Fiber optic strain sensors in blades" ID="ID_CMS_049" CREATED="1769932800049" MODIFIED="1769932800049"/>
+<node TEXT="Individual pitch control support" ID="ID_CMS_050" CREATED="1769932800050" MODIFIED="1769932800050"/>
+<node TEXT="7,000+ turbines equipped" ID="ID_CMS_051" CREATED="1769932800051" MODIFIED="1769932800051"/>
+</node>
+<node TEXT="eologix-PING" ID="ID_CMS_052" CREATED="1769932800052" MODIFIED="1769932800052">
+<node TEXT="Acoustic blade surface monitoring" ID="ID_CMS_053" CREATED="1769932800053" MODIFIED="1769932800053"/>
+<node TEXT="On-blade sensor system" ID="ID_CMS_054" CREATED="1769932800054" MODIFIED="1769932800054"/>
+</node>
+</node>
+<node TEXT="Oil Condition Monitoring" ID="ID_CMS_055" CREATED="1769932800055" MODIFIED="1769932800055">
+<node TEXT="HYDAC" ID="ID_CMS_056" CREATED="1769932800056" MODIFIED="1769932800056">
+<node TEXT="CS 1000 (particle contamination sensor)" ID="ID_CMS_057" CREATED="1769932800057" MODIFIED="1769932800057"/>
+<node TEXT="MCS 1000 (metallic particle counter)" ID="ID_CMS_058" CREATED="1769932800058" MODIFIED="1769932800058"/>
+</node>
+</node>
+<node TEXT="Structural Health Monitoring (SHM)" ID="ID_CMS_059" CREATED="1769932800059" MODIFIED="1769932800059">
+<node TEXT="W&#xf6;lfel Wind Systems" ID="ID_CMS_060" CREATED="1769932800060" MODIFIED="1769932800060">
+<node TEXT="SHM.Tower / SHM.Foundation / SHM.Blade" ID="ID_CMS_061" CREATED="1769932800061" MODIFIED="1769932800061"/>
+<node TEXT="ISO 10816-21 and VDI 3834 compliance" ID="ID_CMS_062" CREATED="1769932800062" MODIFIED="1769932800062"/>
+</node>
+</node>
+<node TEXT="Electrical Signature Analysis (ESA)" ID="ID_CMS_063" CREATED="1769932800063" MODIFIED="1769932800063">
+<node TEXT="Samotics" ID="ID_CMS_064" CREATED="1769932800064" MODIFIED="1769932800064">
+<node TEXT="SAM4 (sensors in control cabinet, not on rotating parts)" ID="ID_CMS_065" CREATED="1769932800065" MODIFIED="1769932800065"/>
+<node TEXT="AI-powered current/voltage spectrum analysis" ID="ID_CMS_066" CREATED="1769932800066" MODIFIED="1769932800066"/>
+</node>
+</node>
+<node TEXT="SCADA-Based Analytics (Software-Only)" ID="ID_CMS_067" CREATED="1769932800067" MODIFIED="1769932800067">
+<node TEXT="Turbit" ID="ID_CMS_068" CREATED="1769932800068" MODIFIED="1769932800068">
+<node TEXT="AI models per individual turbine" ID="ID_CMS_069" CREATED="1769932800069" MODIFIED="1769932800069"/>
+<node TEXT="Anomaly detection from SCADA data" ID="ID_CMS_070" CREATED="1769932800070" MODIFIED="1769932800070"/>
+</node>
+</node>
+<node TEXT="DAQ Platforms" ID="ID_CMS_071" CREATED="1769932800071" MODIFIED="1769932800071">
+<node TEXT="NI / Emerson" ID="ID_CMS_072" CREATED="1769932800072" MODIFIED="1769932800072">
+<node TEXT="CompactRIO (flexible custom CMS platform)" ID="ID_CMS_073" CREATED="1769932800073" MODIFIED="1769932800073"/>
+</node>
+</node>
+</node>
+<node TEXT="CMS Monitoring Capabilities" ID="ID_CMS_100" CREATED="1769932800100" MODIFIED="1769932800100">
+<node TEXT="Vibration Analysis" ID="ID_CMS_101" CREATED="1769932800101" MODIFIED="1769932800101">
+<node TEXT="Gearbox tooth mesh monitoring" ID="ID_CMS_102" CREATED="1769932800102" MODIFIED="1769932800102"/>
+<node TEXT="Bearing fault detection (BPFO, BPFI, BSF, FTF)" ID="ID_CMS_103" CREATED="1769932800103" MODIFIED="1769932800103"/>
+<node TEXT="Generator vibration monitoring" ID="ID_CMS_104" CREATED="1769932800104" MODIFIED="1769932800104"/>
+<node TEXT="Spectral analysis (FFT, cepstrum)" ID="ID_CMS_105" CREATED="1769932800105" MODIFIED="1769932800105"/>
+<node TEXT="Envelope analysis" ID="ID_CMS_106" CREATED="1769932800106" MODIFIED="1769932800106"/>
+<node TEXT="Order tracking" ID="ID_CMS_107" CREATED="1769932800107" MODIFIED="1769932800107"/>
+<node TEXT="Time waveform analysis" ID="ID_CMS_108" CREATED="1769932800108" MODIFIED="1769932800108"/>
+</node>
+<node TEXT="Oil Condition Analysis" ID="ID_CMS_109" CREATED="1769932800109" MODIFIED="1769932800109">
+<node TEXT="Particle counting (ferrous / non-ferrous)" ID="ID_CMS_110" CREATED="1769932800110" MODIFIED="1769932800110"/>
+<node TEXT="Water content measurement" ID="ID_CMS_111" CREATED="1769932800111" MODIFIED="1769932800111"/>
+<node TEXT="Dielectric constant / conductivity" ID="ID_CMS_112" CREATED="1769932800112" MODIFIED="1769932800112"/>
+<node TEXT="Oil temperature monitoring" ID="ID_CMS_113" CREATED="1769932800113" MODIFIED="1769932800113"/>
+</node>
+<node TEXT="Temperature Monitoring" ID="ID_CMS_114" CREATED="1769932800114" MODIFIED="1769932800114">
+<node TEXT="Bearing temperatures" ID="ID_CMS_115" CREATED="1769932800115" MODIFIED="1769932800115"/>
+<node TEXT="Generator winding temperatures" ID="ID_CMS_116" CREATED="1769932800116" MODIFIED="1769932800116"/>
+<node TEXT="Gearbox oil temperature" ID="ID_CMS_117" CREATED="1769932800117" MODIFIED="1769932800117"/>
+</node>
+<node TEXT="Acoustic Emission (AE)" ID="ID_CMS_118" CREATED="1769932800118" MODIFIED="1769932800118">
+<node TEXT="Blade crack and delamination detection" ID="ID_CMS_119" CREATED="1769932800119" MODIFIED="1769932800119"/>
+<node TEXT="Lightning strike damage detection" ID="ID_CMS_120" CREATED="1769932800120" MODIFIED="1769932800120"/>
+<node TEXT="Early-stage bearing damage detection" ID="ID_CMS_121" CREATED="1769932800121" MODIFIED="1769932800121"/>
+</node>
+<node TEXT="Shaft Displacement / Proximity Probes" ID="ID_CMS_122" CREATED="1769932800122" MODIFIED="1769932800122">
+<node TEXT="Eddy current probes" ID="ID_CMS_123" CREATED="1769932800123" MODIFIED="1769932800123"/>
+<node TEXT="Axial and radial shaft displacement" ID="ID_CMS_124" CREATED="1769932800124" MODIFIED="1769932800124"/>
+<node TEXT="Bearing clearance verification" ID="ID_CMS_125" CREATED="1769932800125" MODIFIED="1769932800125"/>
+</node>
+<node TEXT="Electrical Signature Analysis (ESA / MCSA)" ID="ID_CMS_126" CREATED="1769932800126" MODIFIED="1769932800126">
+<node TEXT="Motor current signature analysis" ID="ID_CMS_127" CREATED="1769932800127" MODIFIED="1769932800127"/>
+<node TEXT="Voltage spectrum analysis" ID="ID_CMS_128" CREATED="1769932800128" MODIFIED="1769932800128"/>
+<node TEXT="Non-invasive (sensors in electrical cabinet)" ID="ID_CMS_129" CREATED="1769932800129" MODIFIED="1769932800129"/>
+<node TEXT="Detects mechanical and electrical faults" ID="ID_CMS_130" CREATED="1769932800130" MODIFIED="1769932800130"/>
+</node>
+<node TEXT="Blade Monitoring" ID="ID_CMS_131" CREATED="1769932800131" MODIFIED="1769932800131">
+<node TEXT="Strain measurement (fiber optic / strain gauges)" ID="ID_CMS_132" CREATED="1769932800132" MODIFIED="1769932800132"/>
+<node TEXT="Ice detection" ID="ID_CMS_133" CREATED="1769932800133" MODIFIED="1769932800133"/>
+<node TEXT="Trailing edge crack detection" ID="ID_CMS_134" CREATED="1769932800134" MODIFIED="1769932800134"/>
+<node TEXT="Web separation and bonding defects" ID="ID_CMS_135" CREATED="1769932800135" MODIFIED="1769932800135"/>
+<node TEXT="Rotor imbalance detection" ID="ID_CMS_136" CREATED="1769932800136" MODIFIED="1769932800136"/>
+</node>
+<node TEXT="Tower and Foundation SHM" ID="ID_CMS_137" CREATED="1769932800137" MODIFIED="1769932800137">
+<node TEXT="Natural frequency tracking" ID="ID_CMS_138" CREATED="1769932800138" MODIFIED="1769932800138"/>
+<node TEXT="Tower sway / acceleration monitoring" ID="ID_CMS_139" CREATED="1769932800139" MODIFIED="1769932800139"/>
+<node TEXT="Foundation scour monitoring (offshore)" ID="ID_CMS_140" CREATED="1769932800140" MODIFIED="1769932800140"/>
+<node TEXT="Fatigue lifetime consumption calculation" ID="ID_CMS_141" CREATED="1769932800141" MODIFIED="1769932800141"/>
+</node>
+</node>
+<node TEXT="Applicable Standards" ID="ID_CMS_150" CREATED="1769932800150" MODIFIED="1769932800150">
+<node TEXT="DNV-SE-0439 (CMS certification for wind turbines)" ID="ID_CMS_151" CREATED="1769932800151" MODIFIED="1769932800151"/>
+<node TEXT="IEC 61400-25 (communications for monitoring and control)" ID="ID_CMS_152" CREATED="1769932800152" MODIFIED="1769932800152"/>
+<node TEXT="ISO 10816-21 (vibration evaluation, wind turbines with gearbox)" ID="ID_CMS_153" CREATED="1769932800153" MODIFIED="1769932800153"/>
+<node TEXT="VDI 3834 (vibration measurement of wind turbines)" ID="ID_CMS_154" CREATED="1769932800154" MODIFIED="1769932800154"/>
+<node TEXT="ISO 13373 (vibration condition monitoring)" ID="ID_CMS_155" CREATED="1769932800155" MODIFIED="1769932800155"/>
+<node TEXT="ISO 13379 (data interpretation and diagnostics)" ID="ID_CMS_156" CREATED="1769932800156" MODIFIED="1769932800156"/>
+<node TEXT="ISO 17359 (condition monitoring general guidelines)" ID="ID_CMS_157" CREATED="1769932800157" MODIFIED="1769932800157"/>
+</node>
+</node>
+<node TEXT="SCADA data analysis" ID="ID_PRED_002" CREATED="1403341267002" MODIFIED="1403341279120"/>
+<node TEXT="Oil analysis" ID="ID_PRED_003" CREATED="1403341267003" MODIFIED="1403341279120"/>
+<node TEXT="Thermography" ID="ID_PRED_004" CREATED="1403341267004" MODIFIED="1403341279120"/>
+<node TEXT="Ultrasonic testing" ID="ID_PRED_005" CREATED="1403341267005" MODIFIED="1403341279120"/>
+<node TEXT="Drone inspections" ID="ID_PRED_006" CREATED="1403341267006" MODIFIED="1403341279120"/>
+</node>
+<node TEXT="Corrective Maintenance" ID="ID_1250011778" CREATED="1403341741660" MODIFIED="1403341748739"/>
+</node>
+<node TEXT="Spare parts management" ID="ID_MAINT_001" CREATED="1403341758197" MODIFIED="1403341766430"/>
+<node TEXT="Warranty management" ID="ID_MAINT_002" CREATED="1403341758198" MODIFIED="1403341766430"/>
+</node>
+<node TEXT="Electrical Substation" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_SUBST_001" CREATED="1769892400000" MODIFIED="1769892400000" COLOR="#000000">
+<node TEXT="Composition and Main Components" ID="ID_SUBST_002" CREATED="1769892400001" MODIFIED="1769892400001">
+<node TEXT="Power Transformers" ID="ID_SUBST_003" CREATED="1769892400002" MODIFIED="1769892400002">
+<node TEXT="Step-up transformer (MV/HV)" ID="ID_SUBST_004" CREATED="1769892400003" MODIFIED="1769892400003"/>
+<node TEXT="Auxiliary services transformer" ID="ID_SUBST_005" CREATED="1769892400004" MODIFIED="1769892400004"/>
+<node TEXT="Cooling systems (ONAN, ONAF, OFAF)" ID="ID_SUBST_006" CREATED="1769892400005" MODIFIED="1769892400005"/>
+<node TEXT="Tap changer (OLTC)" ID="ID_SUBST_007" CREATED="1769892400006" MODIFIED="1769892400006"/>
+</node>
+<node TEXT="Switchgear and Protection" ID="ID_SUBST_008" CREATED="1769892400007" MODIFIED="1769892400007">
+<node TEXT="High voltage circuit breakers (SF6)" ID="ID_SUBST_009" CREATED="1769892400008" MODIFIED="1769892400008"/>
+<node TEXT="Medium voltage switchgear" ID="ID_SUBST_010" CREATED="1769892400009" MODIFIED="1769892400009"/>
+<node TEXT="Disconnect switches (isolators)" ID="ID_SUBST_011" CREATED="1769892400010" MODIFIED="1769892400010"/>
+<node TEXT="Earthing switches" ID="ID_SUBST_012" CREATED="1769892400011" MODIFIED="1769892400011"/>
+<node TEXT="Surge arresters (lightning protection)" ID="ID_SUBST_013" CREATED="1769892400012" MODIFIED="1769892400012"/>
+<node TEXT="Protection relays (overcurrent, differential, distance)" ID="ID_SUBST_014" CREATED="1769892400013" MODIFIED="1769892400013"/>
+</node>
+<node TEXT="Busbars and Connections" ID="ID_SUBST_015" CREATED="1769892400014" MODIFIED="1769892400014">
+<node TEXT="HV busbars" ID="ID_SUBST_016" CREATED="1769892400015" MODIFIED="1769892400015"/>
+<node TEXT="MV busbars" ID="ID_SUBST_017" CREATED="1769892400016" MODIFIED="1769892400016"/>
+<node TEXT="Cable terminations and joints" ID="ID_SUBST_018" CREATED="1769892400017" MODIFIED="1769892400017"/>
+</node>
+<node TEXT="Measurement and Metering" ID="ID_SUBST_019" CREATED="1769892400018" MODIFIED="1769892400018">
+<node TEXT="Current transformers (CT)" ID="ID_SUBST_020" CREATED="1769892400019" MODIFIED="1769892400019"/>
+<node TEXT="Voltage transformers (VT/PT)" ID="ID_SUBST_021" CREATED="1769892400020" MODIFIED="1769892400020"/>
+<node TEXT="Revenue metering equipment" ID="ID_SUBST_022" CREATED="1769892400021" MODIFIED="1769892400021"/>
+</node>
+<node TEXT="Auxiliary Systems" ID="ID_SUBST_023" CREATED="1769892400022" MODIFIED="1769892400022">
+<node TEXT="DC battery bank and charger" ID="ID_SUBST_024" CREATED="1769892400023" MODIFIED="1769892400023"/>
+<node TEXT="Uninterruptible power supply (UPS)" ID="ID_SUBST_025" CREATED="1769892400024" MODIFIED="1769892400024"/>
+<node TEXT="Auxiliary AC supply" ID="ID_SUBST_026" CREATED="1769892400025" MODIFIED="1769892400025"/>
+<node TEXT="Fire detection and suppression" ID="ID_SUBST_027" CREATED="1769892400026" MODIFIED="1769892400026"/>
+</node>
+<node TEXT="Control Building" ID="ID_SUBST_028" CREATED="1769892400027" MODIFIED="1769892400027">
+<node TEXT="SCADA and RTU" ID="ID_SUBST_029" CREATED="1769892400028" MODIFIED="1769892400028"/>
+<node TEXT="Protection and control panels" ID="ID_SUBST_030" CREATED="1769892400029" MODIFIED="1769892400029"/>
+<node TEXT="Telecommunications equipment" ID="ID_SUBST_031" CREATED="1769892400030" MODIFIED="1769892400030"/>
+</node>
+</node>
+<node TEXT="Working Voltage Levels" ID="ID_SUBST_040" CREATED="1769892400031" MODIFIED="1769892400031">
+<node TEXT="Low Voltage (LV) - up to 1 kV" ID="ID_SUBST_041" CREATED="1769892400032" MODIFIED="1769892400032">
+<node TEXT="Auxiliary services and control circuits" ID="ID_SUBST_042" CREATED="1769892400033" MODIFIED="1769892400033"/>
+</node>
+<node TEXT="Medium Voltage (MV) - 20-36 kV" ID="ID_SUBST_043" CREATED="1769892400034" MODIFIED="1769892400034">
+<node TEXT="Internal collector network (inter-turbine)" ID="ID_SUBST_044" CREATED="1769892400035" MODIFIED="1769892400035"/>
+<node TEXT="Typical levels: 20 kV, 30 kV, 33 kV, 36 kV" ID="ID_SUBST_045" CREATED="1769892400036" MODIFIED="1769892400036"/>
+</node>
+<node TEXT="High Voltage (HV) - 66-400 kV" ID="ID_SUBST_046" CREATED="1769892400037" MODIFIED="1769892400037">
+<node TEXT="Grid connection: 66 kV, 110 kV, 132 kV, 220 kV, 400 kV" ID="ID_SUBST_047" CREATED="1769892400038" MODIFIED="1769892400038"/>
+<node TEXT="Depends on grid operator and farm capacity" ID="ID_SUBST_048" CREATED="1769892400039" MODIFIED="1769892400039"/>
+</node>
+<node TEXT="Insulation coordination (BIL levels)" ID="ID_SUBST_049" CREATED="1769892400040" MODIFIED="1769892400040"/>
+</node>
+<node TEXT="Reactive Power Management" ID="ID_SUBST_060" CREATED="1769892400041" MODIFIED="1769892400041">
+<node TEXT="Static VAR Compensator (SVC)" ID="ID_SUBST_061" CREATED="1769892400042" MODIFIED="1769892400042">
+<node TEXT="Thyristor-Controlled Reactor (TCR)" ID="ID_SUBST_062" CREATED="1769892400043" MODIFIED="1769892400043"/>
+<node TEXT="Thyristor-Switched Capacitor (TSC)" ID="ID_SUBST_063" CREATED="1769892400044" MODIFIED="1769892400044"/>
+</node>
+<node TEXT="STATCOM (Static Synchronous Compensator)" ID="ID_SUBST_064" CREATED="1769892400045" MODIFIED="1769892400045">
+<node TEXT="IGBT-based voltage source converter" ID="ID_SUBST_065" CREATED="1769892400046" MODIFIED="1769892400046"/>
+<node TEXT="Fast dynamic response" ID="ID_SUBST_066" CREATED="1769892400047" MODIFIED="1769892400047"/>
+</node>
+<node TEXT="Capacitor Banks" ID="ID_SUBST_067" CREATED="1769892400048" MODIFIED="1769892400048">
+<node TEXT="Fixed capacitor banks" ID="ID_SUBST_068" CREATED="1769892400049" MODIFIED="1769892400049"/>
+<node TEXT="Switched capacitor banks (automatic)" ID="ID_SUBST_069" CREATED="1769892400050" MODIFIED="1769892400050"/>
+</node>
+<node TEXT="Reactor Banks (shunt reactors)" ID="ID_SUBST_070" CREATED="1769892400051" MODIFIED="1769892400051"/>
+<node TEXT="Power factor correction requirements" ID="ID_SUBST_071" CREATED="1769892400052" MODIFIED="1769892400052"/>
+<node TEXT="Voltage regulation at PCC" ID="ID_SUBST_072" CREATED="1769892400053" MODIFIED="1769892400053"/>
+<node TEXT="Grid code reactive power compliance" ID="ID_SUBST_073" CREATED="1769892400054" MODIFIED="1769892400054"/>
+</node>
+<node TEXT="Electrical Inertia Enhancement" ID="ID_SUBST_080" CREATED="1769892400055" MODIFIED="1769892400055">
+<node TEXT="Battery Energy Storage Systems (BESS)" ID="ID_SUBST_081" CREATED="1769892400056" MODIFIED="1769892400056">
+<node TEXT="Lithium-ion (Li-ion) technology" ID="ID_SUBST_082" CREATED="1769892400057" MODIFIED="1769892400057"/>
+<node TEXT="LFP (Lithium Iron Phosphate)" ID="ID_SUBST_083" CREATED="1769892400058" MODIFIED="1769892400058"/>
+<node TEXT="NMC (Nickel Manganese Cobalt)" ID="ID_SUBST_084" CREATED="1769892400059" MODIFIED="1769892400059"/>
+<node TEXT="Power conversion system (PCS)" ID="ID_SUBST_085" CREATED="1769892400060" MODIFIED="1769892400060"/>
+<node TEXT="Battery management system (BMS)" ID="ID_SUBST_086" CREATED="1769892400061" MODIFIED="1769892400061"/>
+<node TEXT="Thermal management (HVAC, liquid cooling)" ID="ID_SUBST_087" CREATED="1769892400062" MODIFIED="1769892400062"/>
+<node TEXT="Containerized solutions" ID="ID_SUBST_088" CREATED="1769892400063" MODIFIED="1769892400063"/>
+</node>
+<node TEXT="Grid-Forming Inverters" ID="ID_SUBST_089" CREATED="1769892400064" MODIFIED="1769892400064">
+<node TEXT="Virtual synchronous machine (VSM)" ID="ID_SUBST_090" CREATED="1769892400065" MODIFIED="1769892400065"/>
+<node TEXT="Droop-based voltage and frequency control" ID="ID_SUBST_091" CREATED="1769892400066" MODIFIED="1769892400066"/>
+</node>
+<node TEXT="Synchronous Condensers" ID="ID_SUBST_092" CREATED="1769892400067" MODIFIED="1769892400067">
+<node TEXT="Rotating mass for real inertia" ID="ID_SUBST_093" CREATED="1769892400068" MODIFIED="1769892400068"/>
+<node TEXT="Short-circuit current contribution" ID="ID_SUBST_094" CREATED="1769892400069" MODIFIED="1769892400069"/>
+</node>
+<node TEXT="Supercapacitors (ultracapacitors)" ID="ID_SUBST_095" CREATED="1769892400070" MODIFIED="1769892400070">
+<node TEXT="Fast power injection for frequency support" ID="ID_SUBST_096" CREATED="1769892400071" MODIFIED="1769892400071"/>
+</node>
+<node TEXT="Flywheel Energy Storage" ID="ID_SUBST_097" CREATED="1769892400072" MODIFIED="1769892400072">
+<node TEXT="High-speed rotating mass" ID="ID_SUBST_098" CREATED="1769892400073" MODIFIED="1769892400073"/>
+<node TEXT="Fast response for frequency regulation" ID="ID_SUBST_099" CREATED="1769892400074" MODIFIED="1769892400074"/>
+</node>
+<node TEXT="Hybrid storage systems (BESS + supercapacitors)" ID="ID_SUBST_100" CREATED="1769892400075" MODIFIED="1769892400075"/>
+</node>
+</node>
+</node>
+<node TEXT="Wind Turbines" LOCALIZED_STYLE_REF="AutomaticLayout.level,1" POSITION="top_or_left" ID="ID_1879732168" CREATED="1403339441747" MODIFIED="1769537533356" COLOR="#000000">
+<edge COLOR="#ff00ff" WIDTH="5"/>
+<node TEXT="Design Evolution" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_1480711894" CREATED="1403339452276" MODIFIED="1769437809068" COLOR="#000000">
+<node TEXT="Danish concept" ID="ID_DES_001" CREATED="1403339452277" MODIFIED="1769437809068"/>
+<node TEXT="Multi-MW turbines" ID="ID_DES_002" CREATED="1403339452278" MODIFIED="1769437809068"/>
+<node TEXT="Offshore evolution" ID="ID_DES_003" CREATED="1403339452279" MODIFIED="1769437809068"/>
+</node>
+<node TEXT="Families" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_159496869" CREATED="1403339471252" MODIFIED="1769437820995" COLOR="#000000">
+<node TEXT="Onshore turbines" ID="ID_FAM_001" CREATED="1403339471253" MODIFIED="1769437820995"/>
+<node TEXT="Offshore turbines" ID="ID_FAM_002" CREATED="1403339471254" MODIFIED="1769437820995">
+<node TEXT="Bottom-fixed" ID="ID_OFF_001" CREATED="1403339471255" MODIFIED="1769437820995"/>
+<node TEXT="Floating platforms" ID="ID_OFF_002" CREATED="1403339471256" MODIFIED="1769437820995"/>
+</node>
+</node>
+<node TEXT="Classification" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_1374540326" CREATED="1403339484903" MODIFIED="1769437828324" COLOR="#000000">
+<node TEXT="By power regulation" ID="ID_CLASS_001" CREATED="1403339484904" MODIFIED="1769437828324">
+<node TEXT="Stall regulated" ID="ID_CLASS_002" CREATED="1403339484905" MODIFIED="1769437828324"/>
+<node TEXT="Pitch regulated" ID="ID_CLASS_003" CREATED="1403339484906" MODIFIED="1769437828324"/>
+<node TEXT="Active stall" ID="ID_CLASS_004" CREATED="1403339484907" MODIFIED="1769437828324"/>
+</node>
+<node TEXT="By rotor orientation" ID="ID_CLASS_005" CREATED="1403339484908" MODIFIED="1769437828324">
+<node TEXT="Upwind" ID="ID_CLASS_006" CREATED="1403339484909" MODIFIED="1769437828324"/>
+<node TEXT="Downwind" ID="ID_CLASS_007" CREATED="1403339484910" MODIFIED="1769437828324"/>
+</node>
+<node TEXT="By generator type" ID="ID_CLASS_008" CREATED="1403339484911" MODIFIED="1769437828324"/>
+<node TEXT="By number of blades" ID="ID_CLASS_009" CREATED="1403339484912" MODIFIED="1769437828324"/>
+</node>
+<node TEXT="Components and Subassemblies" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_279462942" CREATED="1403339505562" MODIFIED="1769437844941" COLOR="#000000">
+<node TEXT="Pole or Tower" ID="ID_152863914" CREATED="1403339521226" MODIFIED="1403339530832">
+<node TEXT="Tubular steel towers" ID="ID_POL_001" CREATED="1403339521227" MODIFIED="1403339530832"/>
+<node TEXT="Concrete towers" ID="ID_POL_002" CREATED="1403339521228" MODIFIED="1403339530832"/>
+<node TEXT="Hybrid towers" ID="ID_POL_003" CREATED="1403339521229" MODIFIED="1403339530832"/>
+</node>
+<node TEXT="Blades" ID="ID_434040287" CREATED="1403339534490" MODIFIED="1403339538311">
+<node TEXT="Materials (fiberglass, carbon fiber)" ID="ID_BLA_001" CREATED="1403339534491" MODIFIED="1403339538311"/>
+<node TEXT="Leading edge erosion" ID="ID_BLA_002" CREATED="1403339534492" MODIFIED="1403339538311"/>
+<node TEXT="Lightning protection" ID="ID_BLA_003" CREATED="1403339534493" MODIFIED="1403339538311"/>
+</node>
+<node TEXT="Nacelle" ID="ID_234410849" CREATED="1403339541930" MODIFIED="1403339558233">
+<node TEXT="Drive Train" ID="ID_920071775" CREATED="1403339564139" MODIFIED="1403339571632">
+<node TEXT="Hubs" LOCALIZED_STYLE_REF="AutomaticLayout.level,4" ID="ID_500739092" CREATED="1403516075597" MODIFIED="1403516122858"/>
+<node TEXT="Bearings" LOCALIZED_STYLE_REF="AutomaticLayout.level,4" ID="ID_1704515367" CREATED="1403516098221" MODIFIED="1403516122855">
+<node TEXT="Main bearing" ID="ID_BEAR_001" CREATED="1403516098222" MODIFIED="1403516122855"/>
+<node TEXT="Gearbox bearings" ID="ID_BEAR_002" CREATED="1403516098223" MODIFIED="1403516122855"/>
+</node>
+<node TEXT="Gearboxes" LOCALIZED_STYLE_REF="AutomaticLayout.level,4" ID="ID_192875248" CREATED="1403516108305" MODIFIED="1403516122848">
+<node TEXT="Planetary stages" ID="ID_GEAR_001" CREATED="1403516108306" MODIFIED="1403516122848"/>
+<node TEXT="Helical stages" ID="ID_GEAR_002" CREATED="1403516108307" MODIFIED="1403516122848"/>
+<node TEXT="Direct drive alternatives" ID="ID_GEAR_003" CREATED="1403516108308" MODIFIED="1403516122848">
+<node TEXT="Enercon (Germany) - EESG" ID="ID_DD_001" CREATED="1769892600001" MODIFIED="1769892600001">
+<node TEXT="Electrically Excited Synchronous Generator (no rare earths)" ID="ID_DD_002" CREATED="1769892600002" MODIFIED="1769892600002"/>
+<node TEXT="Outer-rotor design, split generator" ID="ID_DD_003" CREATED="1769892600003" MODIFIED="1769892600003"/>
+<node TEXT="E-175 EP5 E2 (7.0 MW, 175 m rotor)" ID="ID_DD_004" CREATED="1769892600004" MODIFIED="1769892600004" LINK="https://www.enercon.de/en/turbines/e-175-ep5"/>
+<node TEXT="E-138 EP3 E2 (4.2 MW)" ID="ID_DD_005" CREATED="1769892600005" MODIFIED="1769892600005" LINK="https://www.enercon.de/en/turbines/e-138-ep3"/>
+<node TEXT="E-160 EP5 (5.56 MW)" ID="ID_DD_006" CREATED="1769892600006" MODIFIED="1769892600006" LINK="https://www.enercon.de/en/turbines/e-160-ep5"/>
+<node TEXT="Pioneer in gearless concept since 1990s" ID="ID_DD_007" CREATED="1769892600007" MODIFIED="1769892600007"/>
+<node TEXT="60+ GW installed, 32,000+ turbines worldwide" ID="ID_DD_008" CREATED="1769892600008" MODIFIED="1769892600008"/>
+</node>
+<node TEXT="Siemens Gamesa (Germany/Spain) - PMSG" ID="ID_DD_010" CREATED="1769892600010" MODIFIED="1769892600010">
+<node TEXT="Permanent Magnet Synchronous Generator" ID="ID_DD_011" CREATED="1769892600011" MODIFIED="1769892600011"/>
+<node TEXT="SG 14-222 DD (14 MW, 222 m rotor)" ID="ID_DD_012" CREATED="1769892600012" MODIFIED="1769892600012" LINK="https://www.siemensgamesa.com/global/en/home/products-and-services/offshore/wind-turbine-sg-14-222-dd.html"/>
+<node TEXT="SG 14-236 DD (14 MW, 236 m rotor)" ID="ID_DD_013" CREATED="1769892600013" MODIFIED="1769892600013" LINK="https://www.siemensgamesa.com/global/en/home/products-and-services/offshore/wind-turbine-sg-14-236-dd.html"/>
+<node TEXT="SG 15-236 DD (15 MW Power Boost, 236 m rotor)" ID="ID_DD_014" CREATED="1769892600014" MODIFIED="1769892600014" LINK="https://www.siemensgamesa.com/global/en/home/explore/sg-15-236-offshore-wind-turbine.html"/>
+<node TEXT="SG 21 MW DD (in development)" ID="ID_DD_015" CREATED="1769892600015" MODIFIED="1769892600015"/>
+<node TEXT="Focused on large offshore direct drive" ID="ID_DD_016" CREATED="1769892600016" MODIFIED="1769892600016"/>
+</node>
+<node TEXT="GE Vernova (USA) - PMSG" ID="ID_DD_020" CREATED="1769892600020" MODIFIED="1769892600020">
+<node TEXT="Permanent Magnet Synchronous Generator" ID="ID_DD_021" CREATED="1769892600021" MODIFIED="1769892600021"/>
+<node TEXT="Haliade-X 13 MW (220 m rotor)" ID="ID_DD_022" CREATED="1769892600022" MODIFIED="1769892600022"/>
+<node TEXT="Haliade-X 14.7 MW (DNV type-certified)" ID="ID_DD_023" CREATED="1769892600023" MODIFIED="1769892600023" LINK="https://www.gevernova.com/news/press-releases/ge-haliade-x-14-7mw-220-turbine-obtains-full-dnv-type-certificate"/>
+<node TEXT="Haliade-X 17-18 MW (in development)" ID="ID_DD_024" CREATED="1769892600024" MODIFIED="1769892600024"/>
+<node TEXT="63% gross capacity factor (record)" ID="ID_DD_025" CREATED="1769892600025" MODIFIED="1769892600025"/>
+<node TEXT="Offshore-focused platform" ID="ID_DD_026" CREATED="1769892600026" MODIFIED="1769892600026"/>
+</node>
+<node TEXT="Goldwind (China) - PMSG" ID="ID_DD_030" CREATED="1769892600030" MODIFIED="1769892600030">
+<node TEXT="Permanent Magnet Direct Drive (PMDD)" ID="ID_DD_031" CREATED="1769892600031" MODIFIED="1769892600031"/>
+<node TEXT="GW 5S Smart (5 MW, 165 m rotor)" ID="ID_DD_032" CREATED="1769892600032" MODIFIED="1769892600032" LINK="https://www.goldwindamericas.com/gw5s"/>
+<node TEXT="GWH 252-16.0 MW (offshore)" ID="ID_DD_033" CREATED="1769892600033" MODIFIED="1769892600033" LINK="https://www.offshorewind.biz/2023/11/23/goldwind-installs-its-16-mw-offshore-wind-turbine-in-record-breaking-24-hours/"/>
+<node TEXT="3S/6S MW PMDD series (onshore)" ID="ID_DD_034" CREATED="1769892600034" MODIFIED="1769892600034"/>
+<node TEXT="50+ GW installed in 20+ countries" ID="ID_DD_035" CREATED="1769892600035" MODIFIED="1769892600035"/>
+<node TEXT="Global leader in PMDD market share" ID="ID_DD_036" CREATED="1769892600036" MODIFIED="1769892600036"/>
+</node>
+<node TEXT="Nordex SE (Germany) - selected PMSG models" ID="ID_DD_040" CREATED="1769892600040" MODIFIED="1769892600040"/>
+<node TEXT="Leitwind (Italy) - PMSG specialist" ID="ID_DD_041" CREATED="1769892600041" MODIFIED="1769892600041"/>
+<node TEXT="Market share: ~78% PMSG vs ~22% EESG (Enercon)" ID="ID_DD_050" CREATED="1769892600050" MODIFIED="1769892600050"/>
+</node>
+</node>
+<node TEXT="Couplings" ID="ID_DT_001" CREATED="1403339564140" MODIFIED="1403339571632"/>
+</node>
+<node TEXT="Electric Subsystem" ID="ID_91058062" CREATED="1403339577322" MODIFIED="1769892500000">
+<node TEXT="Type 1 - Fixed Speed (SCIG)" ID="ID_ESUB_001" CREATED="1769892500001" MODIFIED="1769892500001">
+<node TEXT="Squirrel Cage Induction Generator (SCIG)" ID="ID_ESUB_002" CREATED="1769892500002" MODIFIED="1769892500002"/>
+<node TEXT="Soft-starter" ID="ID_ESUB_003" CREATED="1769892500003" MODIFIED="1769892500003">
+<node TEXT="Thyristor-based (back-to-back SCRs)" ID="ID_ESUB_004" CREATED="1769892500004" MODIFIED="1769892500004"/>
+<node TEXT="Inrush current limitation during connection" ID="ID_ESUB_005" CREATED="1769892500005" MODIFIED="1769892500005"/>
+<node TEXT="Bypass contactor after ramp-up" ID="ID_ESUB_006" CREATED="1769892500006" MODIFIED="1769892500006"/>
+</node>
+<node TEXT="Capacitor bank for reactive power compensation" ID="ID_ESUB_007" CREATED="1769892500007" MODIFIED="1769892500007"/>
+<node TEXT="Direct grid connection (no converter)" ID="ID_ESUB_008" CREATED="1769892500008" MODIFIED="1769892500008"/>
+<node TEXT="Examples: Vestas V27, Bonus, early NEG Micon" ID="ID_ESUB_009" CREATED="1769892500009" MODIFIED="1769892500009"/>
+</node>
+<node TEXT="Type 1b - Fixed Speed Active Stall" ID="ID_ESUB_100" CREATED="1769892700001" MODIFIED="1769892700001">
+<node TEXT="Squirrel Cage Induction Generator (SCIG)" ID="ID_ESUB_101" CREATED="1769892700002" MODIFIED="1769892700002"/>
+<node TEXT="Variable pitch blades with stall regulation" ID="ID_ESUB_102" CREATED="1769892700003" MODIFIED="1769892700003">
+<node TEXT="Blades pitched towards stall (negative pitch)" ID="ID_ESUB_103" CREATED="1769892700004" MODIFIED="1769892700004"/>
+<node TEXT="Controlled aerodynamic stall at high wind speeds" ID="ID_ESUB_104" CREATED="1769892700005" MODIFIED="1769892700005"/>
+<node TEXT="Combines advantages of pitch and stall concepts" ID="ID_ESUB_105" CREATED="1769892700006" MODIFIED="1769892700006"/>
+</node>
+<node TEXT="Pitch system (hydraulic or electric)" ID="ID_ESUB_106" CREATED="1769892700007" MODIFIED="1769892700007">
+<node TEXT="Individual blade pitch actuators" ID="ID_ESUB_107" CREATED="1769892700008" MODIFIED="1769892700008"/>
+<node TEXT="Pitch towards stall (opposite to pitch-to-feather)" ID="ID_ESUB_108" CREATED="1769892700009" MODIFIED="1769892700009"/>
+<node TEXT="Fine power regulation above rated wind speed" ID="ID_ESUB_109" CREATED="1769892700010" MODIFIED="1769892700010"/>
+</node>
+<node TEXT="Fixed speed, direct grid connection" ID="ID_ESUB_110" CREATED="1769892700011" MODIFIED="1769892700011">
+<node TEXT="One or two fixed speeds (pole switching)" ID="ID_ESUB_111" CREATED="1769892700012" MODIFIED="1769892700012"/>
+</node>
+<node TEXT="Soft-starter for grid connection" ID="ID_ESUB_112" CREATED="1769892700013" MODIFIED="1769892700013"/>
+<node TEXT="Capacitor bank for reactive power compensation" ID="ID_ESUB_113" CREATED="1769892700014" MODIFIED="1769892700014"/>
+<node TEXT="No power converter in main power path" ID="ID_ESUB_114" CREATED="1769892700015" MODIFIED="1769892700015"/>
+<node TEXT="Smoother power output than passive stall" ID="ID_ESUB_115" CREATED="1769892700016" MODIFIED="1769892700016"/>
+<node TEXT="Examples: Vestas V66/V80 (early versions), Bonus/Siemens 1.3-2.3 MW, NEG Micon NM72/82" ID="ID_ESUB_116" CREATED="1769892700017" MODIFIED="1769892700017"/>
+</node>
+<node TEXT="Type 2 - Limited Variable Speed (Wound Rotor IG)" ID="ID_ESUB_010" CREATED="1769892500010" MODIFIED="1769892500010">
+<node TEXT="Wound Rotor Induction Generator (WRIG)" ID="ID_ESUB_011" CREATED="1769892500011" MODIFIED="1769892500011"/>
+<node TEXT="Variable rotor resistance (external)" ID="ID_ESUB_012" CREATED="1769892500012" MODIFIED="1769892500012">
+<node TEXT="Speed range ~10% above synchronous" ID="ID_ESUB_013" CREATED="1769892500013" MODIFIED="1769892500013"/>
+<node TEXT="Energy dissipated as heat in resistors" ID="ID_ESUB_014" CREATED="1769892500014" MODIFIED="1769892500014"/>
+</node>
+<node TEXT="Soft-starter for grid connection" ID="ID_ESUB_015" CREATED="1769892500015" MODIFIED="1769892500015"/>
+<node TEXT="Capacitor bank for reactive compensation" ID="ID_ESUB_016" CREATED="1769892500016" MODIFIED="1769892500016"/>
+<node TEXT="OptiSlip (Vestas patent)" ID="ID_ESUB_017" CREATED="1769892500017" MODIFIED="1769892500017"/>
+<node TEXT="Examples: Vestas V47, V66, V80" ID="ID_ESUB_018" CREATED="1769892500018" MODIFIED="1769892500018"/>
+</node>
+<node TEXT="Type 3 - DFIG (Doubly-Fed Induction Generator)" ID="ID_ESUB_020" CREATED="1769892500020" MODIFIED="1769892500020">
+<node TEXT="Wound Rotor Induction Generator" ID="ID_ESUB_021" CREATED="1769892500021" MODIFIED="1769892500021"/>
+<node TEXT="Partial-scale back-to-back converter (~30% rated power)" ID="ID_ESUB_022" CREATED="1769892500022" MODIFIED="1769892500022">
+<node TEXT="Rotor-Side Converter (RSC)" ID="ID_ESUB_023" CREATED="1769892500023" MODIFIED="1769892500023">
+<node TEXT="Controls rotor currents" ID="ID_ESUB_024" CREATED="1769892500024" MODIFIED="1769892500024"/>
+<node TEXT="Active and reactive power control" ID="ID_ESUB_025" CREATED="1769892500025" MODIFIED="1769892500025"/>
+</node>
+<node TEXT="Grid-Side Converter (GSC)" ID="ID_ESUB_026" CREATED="1769892500026" MODIFIED="1769892500026">
+<node TEXT="DC-link voltage regulation" ID="ID_ESUB_027" CREATED="1769892500027" MODIFIED="1769892500027"/>
+<node TEXT="Unity power factor at grid side" ID="ID_ESUB_028" CREATED="1769892500028" MODIFIED="1769892500028"/>
+</node>
+<node TEXT="DC-link (capacitor bank)" ID="ID_ESUB_029" CREATED="1769892500029" MODIFIED="1769892500029"/>
+<node TEXT="IGBT-based PWM inverters" ID="ID_ESUB_030" CREATED="1769892500030" MODIFIED="1769892500030"/>
+</node>
+<node TEXT="Crowbar protection circuit" ID="ID_ESUB_031" CREATED="1769892500031" MODIFIED="1769892500031">
+<node TEXT="Rotor short-circuit during grid faults" ID="ID_ESUB_032" CREATED="1769892500032" MODIFIED="1769892500032"/>
+<node TEXT="Active crowbar (IGBT-based)" ID="ID_ESUB_033" CREATED="1769892500033" MODIFIED="1769892500033"/>
+</node>
+<node TEXT="Chopper resistor (DC-link protection)" ID="ID_ESUB_034" CREATED="1769892500034" MODIFIED="1769892500034"/>
+<node TEXT="Slip rings and brushes (rotor connection)" ID="ID_ESUB_035" CREATED="1769892500035" MODIFIED="1769892500035"/>
+<node TEXT="Speed range: ~+/-30% of synchronous speed" ID="ID_ESUB_036" CREATED="1769892500036" MODIFIED="1769892500036"/>
+<node TEXT="Stator directly connected to grid" ID="ID_ESUB_037" CREATED="1769892500037" MODIFIED="1769892500037"/>
+<node TEXT="Examples: Vestas V90/V110, GE 1.5/2.x, Gamesa G8x/G9x" ID="ID_ESUB_038" CREATED="1769892500038" MODIFIED="1769892500038"/>
+</node>
+<node TEXT="Type 4 - Full Converter (FC)" ID="ID_ESUB_040" CREATED="1769892500040" MODIFIED="1769892500040">
+<node TEXT="Generator Types" ID="ID_ESUB_041" CREATED="1769892500041" MODIFIED="1769892500041">
+<node TEXT="PMSG (Permanent Magnet Synchronous Generator)" ID="ID_ESUB_042" CREATED="1769892500042" MODIFIED="1769892500042">
+<node TEXT="No excitation losses" ID="ID_ESUB_043" CREATED="1769892500043" MODIFIED="1769892500043"/>
+<node TEXT="High efficiency at partial load" ID="ID_ESUB_044" CREATED="1769892500044" MODIFIED="1769892500044"/>
+<node TEXT="Rare earth magnets (NdFeB)" ID="ID_ESUB_045" CREATED="1769892500045" MODIFIED="1769892500045"/>
+</node>
+<node TEXT="EESG (Electrically Excited Synchronous Generator)" ID="ID_ESUB_046" CREATED="1769892500046" MODIFIED="1769892500046">
+<node TEXT="Field winding excitation" ID="ID_ESUB_047" CREATED="1769892500047" MODIFIED="1769892500047"/>
+<node TEXT="Controllable reactive power from generator" ID="ID_ESUB_048" CREATED="1769892500048" MODIFIED="1769892500048"/>
+</node>
+<node TEXT="SCIG with full converter" ID="ID_ESUB_049" CREATED="1769892500049" MODIFIED="1769892500049"/>
+</node>
+<node TEXT="Full-scale back-to-back converter (100% rated power)" ID="ID_ESUB_050" CREATED="1769892500050" MODIFIED="1769892500050">
+<node TEXT="Generator-Side Converter (machine-side rectifier)" ID="ID_ESUB_051" CREATED="1769892500051" MODIFIED="1769892500051">
+<node TEXT="Active rectifier (IGBT) or diode rectifier + boost" ID="ID_ESUB_052" CREATED="1769892500052" MODIFIED="1769892500052"/>
+<node TEXT="Speed and torque control" ID="ID_ESUB_053" CREATED="1769892500053" MODIFIED="1769892500053"/>
+</node>
+<node TEXT="Grid-Side Inverter" ID="ID_ESUB_054" CREATED="1769892500054" MODIFIED="1769892500054">
+<node TEXT="IGBT-based PWM inverter" ID="ID_ESUB_055" CREATED="1769892500055" MODIFIED="1769892500055"/>
+<node TEXT="Grid synchronization (PLL)" ID="ID_ESUB_056" CREATED="1769892500056" MODIFIED="1769892500056"/>
+<node TEXT="Active and reactive power control" ID="ID_ESUB_057" CREATED="1769892500057" MODIFIED="1769892500057"/>
+<node TEXT="Grid-forming capability" ID="ID_ESUB_058" CREATED="1769892500058" MODIFIED="1769892500058"/>
+</node>
+<node TEXT="DC-link (capacitor bank)" ID="ID_ESUB_059" CREATED="1769892500059" MODIFIED="1769892500059"/>
+<node TEXT="Chopper / braking resistor" ID="ID_ESUB_060" CREATED="1769892500060" MODIFIED="1769892500060"/>
+</node>
+<node TEXT="Full grid decoupling (generator isolated from grid)" ID="ID_ESUB_061" CREATED="1769892500061" MODIFIED="1769892500061"/>
+<node TEXT="Full speed range (0-100%)" ID="ID_ESUB_062" CREATED="1769892500062" MODIFIED="1769892500062"/>
+<node TEXT="Superior LVRT/HVRT performance" ID="ID_ESUB_063" CREATED="1769892500063" MODIFIED="1769892500063"/>
+<node TEXT="Direct drive configurations (no gearbox)" ID="ID_ESUB_064" CREATED="1769892500064" MODIFIED="1769892500064">
+<node TEXT="Low-speed, high-torque, multi-pole generator" ID="ID_ESUB_065" CREATED="1769892500065" MODIFIED="1769892500065"/>
+<node TEXT="Examples: Enercon E-series, Siemens SWT-DD" ID="ID_ESUB_066" CREATED="1769892500066" MODIFIED="1769892500066"/>
+</node>
+<node TEXT="Medium-speed (hybrid) configurations" ID="ID_ESUB_067" CREATED="1769892500067" MODIFIED="1769892500067">
+<node TEXT="Single-stage gearbox + medium-speed PMSG" ID="ID_ESUB_068" CREATED="1769892500068" MODIFIED="1769892500068"/>
+<node TEXT="Examples: Vestas V164 (EnVentus), Areva M5000" ID="ID_ESUB_069" CREATED="1769892500069" MODIFIED="1769892500069"/>
+</node>
+<node TEXT="Examples: Siemens Gamesa SG 14-236, Vestas EnVentus, Enercon E-138" ID="ID_ESUB_070" CREATED="1769892500070" MODIFIED="1769892500070"/>
+</node>
+<node TEXT="Common Electrical Components" ID="ID_ESUB_080" CREATED="1769892500080" MODIFIED="1769892500080">
+<node TEXT="MV transformer (in nacelle or tower base)" ID="ID_ESUB_081" CREATED="1769892500081" MODIFIED="1769892500081"/>
+<node TEXT="MV switchgear (circuit breaker, contactor)" ID="ID_ESUB_082" CREATED="1769892500082" MODIFIED="1769892500082"/>
+<node TEXT="LV switchgear and protection" ID="ID_ESUB_083" CREATED="1769892500083" MODIFIED="1769892500083"/>
+<node TEXT="Harmonic filters (LCL, dv/dt filters)" ID="ID_ESUB_084" CREATED="1769892500084" MODIFIED="1769892500084"/>
+<node TEXT="Generator cooling system" ID="ID_ESUB_085" CREATED="1769892500085" MODIFIED="1769892500085">
+<node TEXT="Air-cooled" ID="ID_ESUB_086" CREATED="1769892500086" MODIFIED="1769892500086"/>
+<node TEXT="Water/glycol cooled" ID="ID_ESUB_087" CREATED="1769892500087" MODIFIED="1769892500087"/>
+</node>
+<node TEXT="Converter cooling system" ID="ID_ESUB_088" CREATED="1769892500088" MODIFIED="1769892500088"/>
+<node TEXT="Power cables (tower internal routing)" ID="ID_ESUB_089" CREATED="1769892500089" MODIFIED="1769892500089"/>
+<node TEXT="Earthing and lightning protection system" ID="ID_ESUB_090" CREATED="1769892500090" MODIFIED="1769892500090"/>
+<node TEXT="UPS and backup batteries" ID="ID_ESUB_091" CREATED="1769892500091" MODIFIED="1769892500091"/>
+</node>
+</node>
+<node TEXT="Meteorological sensors" ID="ID_929558436" CREATED="1403339602589" MODIFIED="1403339614111"/>
+<node TEXT="Yawing mechanism" ID="ID_1940143551" CREATED="1403515997035" MODIFIED="1403516011146">
+<node TEXT="Yaw motors" ID="ID_YAW_001" CREATED="1403515997036" MODIFIED="1403516011146"/>
+<node TEXT="Yaw brake" ID="ID_YAW_002" CREATED="1403515997037" MODIFIED="1403516011146"/>
+</node>
+<node TEXT="Hydraulic systems" ID="ID_NAC_001" CREATED="1403339541931" MODIFIED="1403339558233"/>
+<node TEXT="Cooling systems" ID="ID_NAC_002" CREATED="1403339541932" MODIFIED="1403339558233"/>
+</node>
+<node TEXT="Foundation" ID="ID_292079992" CREATED="1403339505563" MODIFIED="1769437844941">
+<node TEXT="Gravity foundations" ID="ID_FOUND_001" CREATED="1403339505564" MODIFIED="1769437844941"/>
+<node TEXT="Piled foundations" ID="ID_FOUND_002" CREATED="1403339505565" MODIFIED="1769437844941"/>
+<node TEXT="Offshore foundations" ID="ID_FOUND_003" CREATED="1403339505566" MODIFIED="1769437844941">
+<node TEXT="Monopiles" ID="ID_FOUND_004" CREATED="1403339505567" MODIFIED="1769437844941"/>
+<node TEXT="Jackets" ID="ID_FOUND_005" CREATED="1403339505568" MODIFIED="1769437844941"/>
+<node TEXT="Floating (spar, semi-sub, TLP)" ID="ID_FOUND_006" CREATED="1403339505569" MODIFIED="1769437844941"/>
+</node>
+</node>
+</node>
+<node TEXT="Advanced Control Systems" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_ADV_001" CREATED="1403339452280" MODIFIED="1769437809068" COLOR="#000000">
+<node TEXT="LIDAR-assisted control" ID="ID_ADV_002" CREATED="1403339452281" MODIFIED="1769437809068"/>
+<node TEXT="Individual pitch control (IPC)" ID="ID_ADV_003" CREATED="1403339452282" MODIFIED="1769437809068"/>
+<node TEXT="Load reduction strategies" ID="ID_ADV_004" CREATED="1403339452283" MODIFIED="1769437809068"/>
+</node>
+</node>
+<node TEXT="Weather forecasting" LOCALIZED_STYLE_REF="AutomaticLayout.level,1" FOLDED="true" POSITION="bottom_or_right" ID="ID_332445787" CREATED="1403508117771" MODIFIED="1769537468613" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
+<edge COLOR="#00ffff" WIDTH="5"/>
+<node TEXT="Numerical Weather Prediction (NWP)" ID="ID_WEATH_001" CREATED="1403508117772" MODIFIED="1769537468613"/>
+<node TEXT="Mesoscale models" ID="ID_WEATH_002" CREATED="1403508117773" MODIFIED="1769537468613"/>
+<node TEXT="Statistical post-processing" ID="ID_WEATH_003" CREATED="1403508117774" MODIFIED="1769537468613"/>
+<node TEXT="Ensemble forecasting" ID="ID_WEATH_004" CREATED="1403508117775" MODIFIED="1769537468613"/>
+</node>
+<node TEXT="Economía y Financiación" LOCALIZED_STYLE_REF="AutomaticLayout.level,1" POSITION="bottom_or_right" ID="ID_ECON_001" CREATED="1403339003000" MODIFIED="1769537533356" COLOR="#000000">
+<edge COLOR="#cc6600" WIDTH="5"/>
+<node TEXT="Costes de Inversión (CAPEX)" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_CAPEX_001" CREATED="1403339003001" MODIFIED="1769437734457" COLOR="#000000">
+<node TEXT="Aerogeneradores" ID="ID_CAPEX_002" CREATED="1403339003002" MODIFIED="1403339003003"/>
+<node TEXT="Obra civil y cimentaciones" ID="ID_CAPEX_003" CREATED="1403339003004" MODIFIED="1403339003005"/>
+<node TEXT="Infraestructura eléctrica" ID="ID_CAPEX_004" CREATED="1403339003006" MODIFIED="1403339003007"/>
+<node TEXT="Conexión a red" ID="ID_CAPEX_005" CREATED="1403339003008" MODIFIED="1403339003009"/>
+<node TEXT="Costes de desarrollo" ID="ID_CAPEX_006" CREATED="1403339003010" MODIFIED="1403339003011"/>
+</node>
+<node TEXT="Costes Operativos (OPEX)" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_OPEX_001" CREATED="1403339003012" MODIFIED="1769437734457" COLOR="#000000">
+<node TEXT="Mantenimiento" ID="ID_OPEX_002" CREATED="1403339003013" MODIFIED="1403339003014"/>
+<node TEXT="Seguros" ID="ID_OPEX_003" CREATED="1403339003015" MODIFIED="1403339003016"/>
+<node TEXT="Gestión y administración" ID="ID_OPEX_004" CREATED="1403339003017" MODIFIED="1403339003018"/>
+<node TEXT="Arrendamiento de terrenos" ID="ID_OPEX_005" CREATED="1403339003019" MODIFIED="1403339003020"/>
+</node>
+<node TEXT="Análisis de Viabilidad" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_VIA_001" CREATED="1403339003021" MODIFIED="1769437734457" COLOR="#000000">
+<node TEXT="LCOE (Levelized Cost of Energy)" ID="ID_VIA_002" CREATED="1403339003022" MODIFIED="1403339003023"/>
+<node TEXT="TIR (Tasa Interna de Retorno)" ID="ID_VIA_003" CREATED="1403339003024" MODIFIED="1403339003025"/>
+<node TEXT="VAN (Valor Actual Neto)" ID="ID_VIA_004" CREATED="1403339003026" MODIFIED="1403339003027"/>
+<node TEXT="Periodo de retorno" ID="ID_VIA_005" CREATED="1403339003028" MODIFIED="1403339003029"/>
+</node>
+<node TEXT="Modelos de Negocio" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_BUS_001" CREATED="1403339003030" MODIFIED="1769437734457" COLOR="#000000">
+<node TEXT="Venta a mercado" ID="ID_BUS_002" CREATED="1403339003031" MODIFIED="1403339003032"/>
+<node TEXT="PPAs (Power Purchase Agreements)" ID="ID_BUS_003" CREATED="1403339003033" MODIFIED="1403339003034"/>
+<node TEXT="FiT (Feed-in Tariff)" ID="ID_BUS_004" CREATED="1403339003035" MODIFIED="1403339003036"/>
+<node TEXT="Subastas" ID="ID_BUS_005" CREATED="1403339003037" MODIFIED="1403339003038"/>
+</node>
+<node TEXT="Financiación" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_FIN_001" CREATED="1403339003039" MODIFIED="1769437734457" COLOR="#000000">
+<node TEXT="Project Finance" ID="ID_FIN_002" CREATED="1403339003040" MODIFIED="1403339003041"/>
+<node TEXT="Green bonds" ID="ID_FIN_003" CREATED="1403339003042" MODIFIED="1403339003043"/>
+<node TEXT="Incentivos fiscales" ID="ID_FIN_004" CREATED="1403339003044" MODIFIED="1403339003045"/>
+</node>
+</node>
+<node TEXT="Aspectos Medioambientales&#xa;y Sociales" LOCALIZED_STYLE_REF="AutomaticLayout.level,1" FOLDED="true" POSITION="bottom_or_right" ID="ID_ENV_001" CREATED="1403339004000" MODIFIED="1769537533356" COLOR="#000000">
+<edge COLOR="#009900" WIDTH="5"/>
+<node TEXT="Impacto sobre Fauna" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_FAUNA_001" CREATED="1403339004001" MODIFIED="1769437734457" COLOR="#000000">
+<node TEXT="Colisión de aves" ID="ID_FAUNA_002" CREATED="1403339004002" MODIFIED="1403339004003"/>
+<node TEXT="Quirópteros (murciélagos)" ID="ID_FAUNA_003" CREATED="1403339004004" MODIFIED="1403339004005"/>
+<node TEXT="Sistemas de detección y parada" ID="ID_FAUNA_004" CREATED="1403339004006" MODIFIED="1403339004007"/>
+<node TEXT="Estudios de avifauna" ID="ID_FAUNA_005" CREATED="1403339004008" MODIFIED="1403339004009"/>
+</node>
+<node TEXT="Impacto Visual y Paisajístico" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_VISUAL_001" CREATED="1403339004010" MODIFIED="1769437734457" COLOR="#000000">
+<node TEXT="Cuenca visual" ID="ID_VISUAL_002" CREATED="1403339004011" MODIFIED="1403339004012"/>
+<node TEXT="Distancia a núcleos urbanos" ID="ID_VISUAL_003" CREATED="1403339004013" MODIFIED="1403339004014"/>
+<node TEXT="Señalización luminosa" ID="ID_VISUAL_004" CREATED="1403339004015" MODIFIED="1403339004016"/>
+</node>
+<node TEXT="Ruido" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_NOISE_001" CREATED="1403339004017" MODIFIED="1769437734457" COLOR="#000000">
+<node TEXT="Ruido aerodinámico" ID="ID_NOISE_002" CREATED="1403339004018" MODIFIED="1403339004019"/>
+<node TEXT="Ruido mecánico" ID="ID_NOISE_003" CREATED="1403339004020" MODIFIED="1403339004021"/>
+<node TEXT="Normativa de emisiones acústicas" ID="ID_NOISE_004" CREATED="1403339004022" MODIFIED="1403339004023"/>
+</node>
+<node TEXT="Estudios de Impacto Ambiental" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_EIA_001" CREATED="1403339004024" MODIFIED="1769437734457" COLOR="#000000">
+<node TEXT="Metodología" ID="ID_EIA_002" CREATED="1403339004025" MODIFIED="1403339004026"/>
+<node TEXT="Medidas correctoras" ID="ID_EIA_003" CREATED="1403339004027" MODIFIED="1403339004028"/>
+<node TEXT="Planes de vigilancia ambiental" ID="ID_EIA_004" CREATED="1403339004029" MODIFIED="1403339004030"/>
+</node>
+<node TEXT="Aceptación Social" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_SOC_001" CREATED="1403339004031" MODIFIED="1769437734457" COLOR="#000000">
+<node TEXT="Participación pública" ID="ID_SOC_002" CREATED="1403339004032" MODIFIED="1403339004033"/>
+<node TEXT="Comunicación con comunidades locales" ID="ID_SOC_003" CREATED="1403339004034" MODIFIED="1403339004035"/>
+<node TEXT="Beneficios para la comunidad" ID="ID_SOC_004" CREATED="1403339004036" MODIFIED="1403339004037"/>
+<node TEXT="Empleo local" ID="ID_SOC_005" CREATED="1403339004038" MODIFIED="1403339004039"/>
+</node>
+</node>
+<node TEXT="Seguridad y Salud" LOCALIZED_STYLE_REF="AutomaticLayout.level,1" FOLDED="true" POSITION="top_or_left" ID="ID_SAFE_001" CREATED="1403339005000" MODIFIED="1769537533356" COLOR="#000000">
+<edge COLOR="#cc0000" WIDTH="5"/>
+<node TEXT="Normativas de Seguridad" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_NORM_001" CREATED="1403339005001" MODIFIED="1769437734457" COLOR="#000000">
+<node TEXT="ISO 45001" ID="ID_NORM_002" CREATED="1403339005002" MODIFIED="1403339005003"/>
+<node TEXT="Normativa nacional de PRL" ID="ID_NORM_003" CREATED="1403339005004" MODIFIED="1403339005005"/>
+</node>
+<node TEXT="Trabajo en Altura" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_HEIGHT_001" CREATED="1403339005006" MODIFIED="1769437734457" COLOR="#000000">
+<node TEXT="Sistemas anticaídas" ID="ID_HEIGHT_002" CREATED="1403339005007" MODIFIED="1403339005008"/>
+<node TEXT="Técnicas de rescate" ID="ID_HEIGHT_003" CREATED="1403339005009" MODIFIED="1403339005010"/>
+<node TEXT="Elevadores y plataformas" ID="ID_HEIGHT_004" CREATED="1403339005011" MODIFIED="1403339005012"/>
+</node>
+<node TEXT="Certificación GWO" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_GWO_001" CREATED="1403339005013" MODIFIED="1769437734457" COLOR="#000000">
+<node TEXT="BTT (Basic Technical Training)" ID="ID_GWO_002" CREATED="1403339005014" MODIFIED="1403339005015"/>
+<node TEXT="BST (Basic Safety Training)" ID="ID_GWO_003" CREATED="1403339005016" MODIFIED="1403339005017">
+<node TEXT="Working at Heights" ID="ID_GWO_004" CREATED="1403339005018" MODIFIED="1403339005019"/>
+<node TEXT="First Aid" ID="ID_GWO_005" CREATED="1403339005020" MODIFIED="1403339005021"/>
+<node TEXT="Fire Awareness" ID="ID_GWO_006" CREATED="1403339005022" MODIFIED="1403339005023"/>
+<node TEXT="Manual Handling" ID="ID_GWO_007" CREATED="1403339005024" MODIFIED="1403339005025"/>
+<node TEXT="Sea Survival (offshore)" ID="ID_GWO_008" CREATED="1403339005026" MODIFIED="1403339005027"/>
+</node>
+<node TEXT="Advanced modules" ID="ID_GWO_009" CREATED="1403339005028" MODIFIED="1403339005029"/>
+</node>
+<node TEXT="Equipos de Protección Individual" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_PPE_001" CREATED="1403339005030" MODIFIED="1769437734457" COLOR="#000000">
+<node TEXT="Arnés y líneas de vida" ID="ID_PPE_002" CREATED="1403339005031" MODIFIED="1403339005032"/>
+<node TEXT="Casco y protección ocular" ID="ID_PPE_003" CREATED="1403339005033" MODIFIED="1403339005034"/>
+<node TEXT="Calzado de seguridad" ID="ID_PPE_004" CREATED="1403339005035" MODIFIED="1403339005036"/>
+<node TEXT="Protección auditiva" ID="ID_PPE_005" CREATED="1403339005037" MODIFIED="1403339005038"/>
+</node>
+<node TEXT="Procedimientos de Emergencia" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_EMER_001" CREATED="1403339005039" MODIFIED="1769437734457" COLOR="#000000">
+<node TEXT="Evacuación" ID="ID_EMER_002" CREATED="1403339005040" MODIFIED="1403339005041"/>
+<node TEXT="Lucha contra incendios" ID="ID_EMER_003" CREATED="1403339005042" MODIFIED="1403339005043"/>
+<node TEXT="Rescate en altura" ID="ID_EMER_004" CREATED="1403339005044" MODIFIED="1403339005045"/>
+</node>
+<node TEXT="Riesgos Específicos" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_RISK_001" CREATED="1403339005046" MODIFIED="1769437734457" COLOR="#000000">
+<node TEXT="Arco eléctrico" ID="ID_RISK_002" CREATED="1403339005047" MODIFIED="1403339005048"/>
+<node TEXT="Espacios confinados" ID="ID_RISK_003" CREATED="1403339005049" MODIFIED="1403339005050"/>
+<node TEXT="Condiciones meteorológicas adversas" ID="ID_RISK_004" CREATED="1403339005051" MODIFIED="1403339005052"/>
+<node TEXT="Offshore: transferencia a plataformas" ID="ID_RISK_005" CREATED="1403339005053" MODIFIED="1403339005054"/>
+</node>
+</node>
+</node>
+</map>
+
+</script>
+
+<script>
+(function () {
+  "use strict";
+
+  // ───────────────────────────────────────────────
+  //  Configuration
+  // ───────────────────────────────────────────────
+  var INITIAL_EXPAND_LEVEL = 2;
+
+  // Branch color palette (one color per top-level branch)
+  var BRANCH_COLORS = [
+    "#2196F3", "#4CAF50", "#FF9800", "#9C27B0",
+    "#F44336", "#00BCD4", "#795548", "#607D8B",
+    "#E91E63", "#3F51B5", "#009688", "#FFC107",
+    "#FF5722", "#673AB7", "#8BC34A", "#CDDC39"
+  ];
+
+  // ───────────────────────────────────────────────
+  //  DOM references
+  // ───────────────────────────────────────────────
+  var loadingEl   = document.getElementById("loading-state");
+  var svgEl       = document.getElementById("mindmap-svg");
+  var toolbarEl   = document.getElementById("toolbar");
+  var statusBar   = document.getElementById("status-bar");
+  var statusInfo  = document.getElementById("status-info");
+  var toolbarInfo = document.getElementById("toolbar-info");
+
+  // ───────────────────────────────────────────────
+  //  Utility: safe HTML escaping
+  // ───────────────────────────────────────────────
+  function escapeHtml(text) {
+    var el = document.createElement("span");
+    el.textContent = text;
+    return el.innerHTML;
+  }
+
+  // ───────────────────────────────────────────────
+  //  .mm XML Parser  -->  markmap INode tree
+  // ───────────────────────────────────────────────
+  //
+  //  Freeplane .mm format:
+  //    <map>
+  //      <node TEXT="Root" FOLDED="true" LINK="http://...">
+  //        <node TEXT="Child 1"> ... </node>
+  //        <richcontent TYPE="NODE"><html><body>...</body></html></richcontent>
+  //        <hook ... />   (ignored)
+  //      </node>
+  //    </map>
+  //
+  //  Markmap INode format:
+  //    { content: "html string", children: [...], payload: { fold: 0|1 } }
+  //
+
+  var stats = { nodes: 0, links: 0 };
+
+  /**
+   * Extract display text from a <node> element.
+   * Prefers the TEXT attribute; falls back to richcontent TYPE="NODE".
+   */
+  function extractNodeText(nodeEl) {
+    var textAttr = nodeEl.getAttribute("TEXT");
+    if (textAttr !== null && textAttr !== "") {
+      return textAttr.trim();
+    }
+
+    // Look for richcontent TYPE="NODE" among direct children
+    var children = nodeEl.children;
+    for (var i = 0; i < children.length; i++) {
+      var child = children[i];
+      if (child.tagName === "richcontent" && child.getAttribute("TYPE") === "NODE") {
+        // Extract text content only (strip embedded HTML tags)
+        var text = child.textContent || "";
+        return text.trim().replace(/\s+/g, " ");
+      }
+    }
+
+    return "(unnamed)";
+  }
+
+  /**
+   * Get direct child <node> elements only (skip hooks, edges, richcontent, etc.)
+   */
+  function getChildNodeElements(parentEl) {
+    var result = [];
+    var children = parentEl.children;
+    for (var i = 0; i < children.length; i++) {
+      if (children[i].tagName === "node") {
+        result.push(children[i]);
+      }
+    }
+    return result;
+  }
+
+  /**
+   * Recursively parse a <node> element into a markmap INode object.
+   */
+  function parseNode(nodeEl) {
+    stats.nodes++;
+
+    var text = extractNodeText(nodeEl);
+    var link = nodeEl.getAttribute("LINK") || "";
+    var folded = nodeEl.getAttribute("FOLDED") === "true";
+
+    // Build the content string (may include an <a> tag for linked nodes)
+    var safeText = escapeHtml(text);
+    var content;
+    if (link) {
+      stats.links++;
+      content = '<a href="' + escapeHtml(link) + '" target="_blank" rel="noopener" title="' + escapeHtml(link) + '">' + safeText + '</a>';
+    } else {
+      content = safeText;
+    }
+
+    // Recurse into child <node> elements
+    var childEls = getChildNodeElements(nodeEl);
+    var children = [];
+    for (var i = 0; i < childEls.length; i++) {
+      children.push(parseNode(childEls[i]));
+    }
+
+    // Build the INode
+    var inode = { content: content };
+
+    if (children.length > 0) {
+      inode.children = children;
+    }
+
+    // Track original fold state from the .mm file
+    if (folded && children.length > 0) {
+      inode.payload = { fold: 1 };
+    }
+
+    return inode;
+  }
+
+  /**
+   * Parse the full .mm XML document and return the markmap tree root + statistics.
+   */
+  function parseMMDocument(xmlText) {
+    var parser = new DOMParser();
+    var doc = parser.parseFromString(xmlText, "application/xml");
+
+    // Check for XML parse errors
+    var parseErr = doc.querySelector("parsererror");
+    if (parseErr) {
+      throw new Error("XML parse error: " + (parseErr.textContent || "").substring(0, 300));
+    }
+
+    var mapEl = doc.getElementsByTagName("map")[0];
+    if (!mapEl) {
+      throw new Error("No <map> element found in .mm file");
+    }
+
+    // Find the root <node> (first direct child of <map>)
+    var rootEl = null;
+    var mapChildren = mapEl.children;
+    for (var i = 0; i < mapChildren.length; i++) {
+      if (mapChildren[i].tagName === "node") {
+        rootEl = mapChildren[i];
+        break;
+      }
+    }
+    if (!rootEl) {
+      throw new Error("No root <node> found inside <map>");
+    }
+
+    stats = { nodes: 0, links: 0 };
+    var tree = parseNode(rootEl);
+
+    return {
+      tree: tree,
+      nodeCount: stats.nodes,
+      linkCount: stats.links
+    };
+  }
+
+  // ───────────────────────────────────────────────
+  //  Tree fold/expand utilities
+  // ───────────────────────────────────────────────
+
+  /**
+   * Recursively set fold state on all nodes.
+   * foldValue: 0 = expanded, 1 = collapsed
+   */
+  function setFoldAll(node, foldValue) {
+    if (node.children && node.children.length > 0) {
+      if (!node.payload) node.payload = {};
+      node.payload.fold = foldValue;
+      for (var i = 0; i < node.children.length; i++) {
+        setFoldAll(node.children[i], foldValue);
+      }
+    }
+  }
+
+  /**
+   * Expand nodes up to `maxLevel` depth, collapse everything deeper.
+   * The root is at level 0.
+   */
+  function setFoldToLevel(node, maxLevel, currentLevel) {
+    if (currentLevel === undefined) currentLevel = 0;
+    if (node.children && node.children.length > 0) {
+      if (!node.payload) node.payload = {};
+      node.payload.fold = (currentLevel >= maxLevel) ? 1 : 0;
+      for (var i = 0; i < node.children.length; i++) {
+        setFoldToLevel(node.children[i], maxLevel, currentLevel + 1);
+      }
+    }
+  }
+
+  // ───────────────────────────────────────────────
+  //  Color helper: assign branch colors
+  // ───────────────────────────────────────────────
+
+  /**
+   * Build a d3 color function that assigns each top-level branch
+   * a consistent color from BRANCH_COLORS.
+   * The markmap color callback receives an internal node with a
+   * `state.path` string like "0", "0.0", "0.1.2", etc.
+   */
+  function createColorFunction() {
+    var colorScale = d3.scaleOrdinal(BRANCH_COLORS);
+    return function (node) {
+      try {
+        // node.state.path is a dot-delimited string; the second
+        // segment identifies the top-level branch
+        var path = (node.state && node.state.path) ? node.state.path : "0";
+        var segments = path.split(".");
+        // Use the first branch-level index (segment[1]) if available
+        var branchKey = segments.length > 1 ? segments[1] : "0";
+        return colorScale(branchKey);
+      } catch (e) {
+        return "#006699";
+      }
+    };
+  }
+
+  // ───────────────────────────────────────────────
+  //  Show error state
+  // ───────────────────────────────────────────────
+  function showError(message) {
+    loadingEl.className = "mindmap-error";
+    loadingEl.innerHTML =
+      '<div class="icon">&#9888;&#65039;</div>' +
+      "<h3>Could not load the knowledge map</h3>" +
+      "<p>" + escapeHtml(message) + "</p>";
+  }
+
+  // ───────────────────────────────────────────────
+  //  MAIN: Read embedded data, parse, render
+  // ───────────────────────────────────────────────
+  function init() {
+    try {
+      // 1. Read the embedded .mm XML data
+      loadingEl.querySelector(".loading-text").textContent = "Loading mindmap data...";
+
+      var mmDataEl = document.getElementById("mm-data");
+      if (!mmDataEl) {
+        throw new Error("Embedded mindmap data not found (missing #mm-data element)");
+      }
+      var xmlText = mmDataEl.textContent;
+
+      // 2. Parse .mm XML into markmap tree
+      loadingEl.querySelector(".loading-text").textContent = "Parsing mindmap structure...";
+
+      var result = parseMMDocument(xmlText);
+      var tree = result.tree;
+
+      // 3. Set initial fold state: expand to INITIAL_EXPAND_LEVEL
+      setFoldToLevel(tree, INITIAL_EXPAND_LEVEL);
+
+      // 4. Verify markmap is loaded
+      if (!window.markmap || !window.markmap.Markmap) {
+        throw new Error(
+          "Markmap library failed to load. " +
+          "Check your internet connection or CDN availability."
+        );
+      }
+
+      // 5. Show the UI
+      loadingEl.style.display = "none";
+      svgEl.style.display = "block";
+      toolbarEl.style.display = "flex";
+      statusBar.style.display = "flex";
+
+      // Update info displays
+      var infoText = result.nodeCount + " nodes";
+      if (result.linkCount > 0) {
+        infoText += " \u00B7 " + result.linkCount + " links";
+      }
+      toolbarInfo.textContent = infoText;
+      statusInfo.textContent = infoText;
+
+      // 6. Create the markmap instance
+      var Markmap = window.markmap.Markmap;
+
+      var mm = Markmap.create(svgEl, {
+        autoFit: true,
+        duration: 500,
+        maxWidth: 300,
+        zoom: true,
+        pan: true,
+        spacingHorizontal: 80,
+        spacingVertical: 5,
+        paddingX: 16,
+        color: createColorFunction(),
+        initialExpandLevel: -1  // we handle fold state ourselves
+      }, tree);
+
+      // Fit the view after initial render
+      setTimeout(function () { mm.fit(); }, 400);
+
+      // ─────────────────────────────────────
+      //  Toolbar: wire up button handlers
+      // ─────────────────────────────────────
+
+      document.getElementById("btn-expand-all").addEventListener("click", function () {
+        setFoldAll(tree, 0);
+        mm.setData(tree);
+        setTimeout(function () { mm.fit(); }, 200);
+      });
+
+      document.getElementById("btn-collapse-all").addEventListener("click", function () {
+        setFoldAll(tree, 1);
+        // Keep root expanded
+        if (!tree.payload) tree.payload = {};
+        tree.payload.fold = 0;
+        mm.setData(tree);
+        setTimeout(function () { mm.fit(); }, 200);
+      });
+
+      document.getElementById("btn-fit").addEventListener("click", function () {
+        mm.fit();
+      });
+
+      // Depth-level buttons (1 through 5)
+      for (var level = 1; level <= 5; level++) {
+        (function (lvl) {
+          document.getElementById("btn-level-" + lvl).addEventListener("click", function () {
+            setFoldToLevel(tree, lvl);
+            mm.setData(tree);
+            setTimeout(function () { mm.fit(); }, 200);
+          });
+        })(level);
+      }
+
+    } catch (err) {
+      console.error("Mindmap initialization error:", err);
+      showError(err.message || String(err));
+    }
+  }
+
+  // Start when DOM is ready
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+
+})();
+</script>
+
+</body>
+</html>

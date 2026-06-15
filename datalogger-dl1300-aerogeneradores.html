@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Datalogger DL1300 para Aerogeneradores | ACM SL</title>
+    <meta
+      id="pageDescription"
+      name="description"
+      content="DL1300: Datalogger industrial para aerogeneradores con conexiones RS232 y RS485. Sin programación, configuración XML, resolución temporal menor a 1 ms, tolerante a fallos de comunicación. Solución para adquisición de datos en campo. ACM SL."
+    />
+    <link rel="icon" type="image/png" href="img/ACM_LOGO.png" />
+    <link rel="shortcut icon" type="image/png" href="img/ACM_LOGO.png" />
+    <style>
+      :root {
+        --primary: #006699;
+        --primary-dark: #004d73;
+        --primary-soft: #e3f4ff;
+        --accent: #00a878;
+        --ink: #123047;
+        --muted: #516272;
+        --surface: #ffffff;
+        --bg: #f3f7fb;
+        --border: rgba(18, 48, 71, 0.1);
+        --shadow: 0 18px 45px rgba(18, 48, 71, 0.12);
+        --radius: 18px;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background:
+          radial-gradient(circle at top left, rgba(0, 153, 204, 0.14), transparent 28%),
+          linear-gradient(180deg, #f9fcff 0%, var(--bg) 100%);
+        color: var(--ink);
+        min-height: 100vh;
+      }
+
+      header {
+        background: linear-gradient(135deg, var(--primary), #0099cc);
+        color: #fff;
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.18);
+      }
+
+      .header-wrap {
+        max-width: 1140px;
+        margin: 0 auto;
+        padding: 1.35rem 1.25rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .brand img {
+        width: auto;
+        height: 44px;
+      }
+
+      .brand-copy h1 {
+        font-size: 1.35rem;
+      }
+
+      .brand-copy p {
+        margin-top: 0.2rem;
+        opacity: 0.88;
+      }
+
+      .header-link,
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.8rem 1.2rem;
+        border-radius: 999px;
+        text-decoration: none;
+        font-weight: 700;
+      }
+
+      .header-link {
+        border: 1px solid rgba(255, 255, 255, 0.32);
+        background: rgba(255, 255, 255, 0.14);
+        color: #fff;
+      }
+
+      main {
+        max-width: 1140px;
+        margin: 0 auto;
+        padding: 2rem 1.25rem 3rem;
+      }
+
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 2rem;
+      }
+
+      .layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.02fr) minmax(340px, 0.98fr);
+        gap: 2rem;
+      }
+
+      .content h2 {
+        font-size: 2rem;
+        margin-bottom: 0.9rem;
+      }
+
+      .content p,
+      .content li {
+        color: var(--muted);
+        line-height: 1.8;
+      }
+
+      .resources {
+        margin-top: 1.2rem;
+        padding-left: 1.1rem;
+      }
+
+      .resources li + li {
+        margin-top: 0.5rem;
+      }
+
+      .resources a {
+        color: var(--primary);
+        font-weight: 600;
+      }
+
+      .gallery {
+        display: grid;
+        gap: 1rem;
+      }
+
+      .gallery figure {
+        border-radius: 16px;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        background: #fff;
+        box-shadow: 0 10px 26px rgba(18, 48, 71, 0.1);
+      }
+
+      .gallery img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      .gallery figcaption {
+        padding: 0.85rem 1rem;
+        color: var(--muted);
+        font-size: 0.92rem;
+        line-height: 1.55;
+      }
+
+      .actions {
+        margin-top: 1.5rem;
+      }
+
+      .btn {
+        background: var(--accent);
+        color: #fff;
+      }
+
+      footer {
+        max-width: 1140px;
+        margin: 0 auto;
+        padding: 0 1.25rem 2rem;
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+
+      @media (max-width: 860px) {
+        .layout {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+    <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-T1XF1Z8ML9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-T1XF1Z8ML9');
+  </script>
+</head>
+  <body>
+    <header>
+      <div class="header-wrap">
+        <a class="brand" href="index.html" title="Ir a Inicio" style="text-decoration:none;color:inherit;cursor:pointer;">
+          <img src="img/ACM_LOGO.png" alt="ACM SL" />
+          <div class="brand-copy">
+            <h1>Automated Computing Machinery SL</h1>
+            <p>ACM SL</p>
+          </div>
+        </a>
+        <a class="header-link" id="backDevelopmentsLink" href="desarrollos.html?lang=es">Volver a Desarrollos</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="card">
+        <div class="layout">
+          <div class="content">
+            <h2 id="pageTitle">Datalogger DL1300 para Aerogeneradores</h2>
+            <p id="pageDescriptionText">
+              El DL1300 es una solución para el problema de adquisición de datos en
+              cualquier instalación industrial, utilizando instrumentación estándar con
+              conexiones RS232 y RS485. No requiere programación: basta definir un fichero
+              de configuración XML con conexiones, dispositivos, canales, equivalencias de
+              señales y periodos de muestreo. Aplica tratamiento específico por clase de
+              señal para minimizar el tamaño de los ficheros, asegurar suficientes muestras
+              analógicas y recoger todos los cambios de señales digitales. Registra el
+              instante efectivo de cada muestra con resolución mejor que un milisegundo,
+              manteniendo la referencia completa Año-Mes-Día Hora:Minutos:Segundos.
+              milisegundos. Es tolerante a fallos habituales de campo como roturas de cables
+              o pérdidas de alimentación, continuando el plan de muestreo en las líneas
+              disponibles y retomando automáticamente la línea recuperada. El DL1300 está
+              pensado teniendo en cuenta las dificultades que típicamente se encuentra en el
+              campo.
+            </p>
+            <ul class="resources">
+              <li>
+                <a id="bookletLink" href="img/DL1300/Folleto%20data%20logger%20DL1300.pdf" target="_blank" rel="noopener noreferrer">
+                  Folleto datalogger DL1300
+                </a>
+              </li>
+            </ul>
+            <div class="actions">
+              <a class="btn" id="backDevelopmentsButton" href="desarrollos.html?lang=es">Volver a la página Desarrollos</a>
+            </div>
+          </div>
+          <div class="gallery" id="gallery" aria-label="Imágenes del DL1300">
+            <figure>
+              <img id="blockDiagramImage" src="img/DL1300/BlockDiagram.jpg" alt="Diagrama de bloques del DL1300" />
+              <figcaption id="blockDiagramCaption">Diagrama de bloques del Datalogger DL1300.</figcaption>
+            </figure>
+            <figure>
+              <img id="appControlImage" src="img/DL1300/AppControlDL1300.jpg" alt="Aplicación de control del DL1300" />
+              <figcaption id="appControlCaption">Aplicación de control y configuración del DL1300.</figcaption>
+            </figure>
+            <figure>
+              <img id="monthImage" src="img/DL1300/UnMes.png" alt="Vista mensual de datos del DL1300" />
+              <figcaption id="monthCaption">Vista general de un mes de adquisición de datos.</figcaption>
+            </figure>
+            <figure>
+              <img id="thirteenHoursImage" src="img/DL1300/TreceHoras_enUnMes.png" alt="Detalle de trece horas en un mes registrado por el DL1300" />
+              <figcaption id="thirteenHoursCaption">Detalle de trece horas dentro de un mes registrado por el DL1300.</figcaption>
+            </figure>
+            <figure>
+              <img id="elevenMinutesImage" src="img/DL1300/11Minutos_enUnMes.png" alt="Detalle de once minutos en un mes registrado por el DL1300" />
+              <figcaption id="elevenMinutesCaption">Detalle de once minutos dentro de un mes registrado por el DL1300.</figcaption>
+            </figure>
+            <figure>
+              <img id="thirtySecondsImage" src="img/DL1300/30Segundos_enUnMes.png" alt="Detalle de treinta segundos en un mes registrado por el DL1300" />
+              <figcaption id="thirtySecondsCaption">Detalle de treinta segundos dentro de un mes registrado por el DL1300.</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p id="footerText">&copy; 2026 Automated Computing Machinery SL (ACM SL).</p>
+    </footer>
+    <script>
+      const supportedLangs = ['es', 'en', 'fr', 'it', 'de', 'pt'];
+      const pageLang = new URLSearchParams(window.location.search).get('lang');
+      const browserLang = (navigator.language || navigator.userLanguage || 'en').split('-')[0].toLowerCase();
+      const lang = supportedLangs.includes(pageLang)
+        ? pageLang
+        : (supportedLangs.includes(browserLang) ? browserLang : 'en');
+
+      const translations = {
+        es: {
+          title: 'Datalogger DL1300 para Aerogeneradores | ACM SL',
+          description: 'Ficha descriptiva del Datalogger DL1300 para Aerogeneradores de Automated Computing Machinery SL.',
+          backDevelopments: 'Volver a Desarrollos',
+          pageTitle: 'Datalogger DL1300 para Aerogeneradores',
+          pageDescriptionText: 'El DL1300 es una solución para el problema de adquisición de datos en cualquier instalación industrial, utilizando instrumentación estándar con conexiones RS232 y RS485. No requiere programación: basta definir un fichero de configuración XML con conexiones, dispositivos, canales, equivalencias de señales y periodos de muestreo. Aplica tratamiento específico por clase de señal para minimizar el tamaño de los ficheros, asegurar suficientes muestras analógicas y recoger todos los cambios de señales digitales. Registra el instante efectivo de cada muestra con resolución mejor que un milisegundo, manteniendo la referencia completa Año-Mes-Día Hora:Minutos:Segundos.milisegundos. Es tolerante a fallos habituales de campo como roturas de cables o pérdidas de alimentación, continuando el plan de muestreo en las líneas disponibles y retomando automáticamente la línea recuperada. El DL1300 está pensado teniendo en cuenta las dificultades que típicamente se encuentra en el campo.',
+          bookletLink: 'Folleto datalogger DL1300',
+          backDevelopmentsButton: 'Volver a la página Desarrollos',
+          galleryAria: 'Imágenes del DL1300',
+          blockDiagramAlt: 'Diagrama de bloques del DL1300',
+          blockDiagramCaption: 'Diagrama de bloques del Datalogger DL1300.',
+          appControlAlt: 'Aplicación de control del DL1300',
+          appControlCaption: 'Aplicación de control y configuración del DL1300.',
+          monthAlt: 'Vista mensual de datos del DL1300',
+          monthCaption: 'Vista general de un mes de adquisición de datos.',
+          thirteenHoursAlt: 'Detalle de trece horas en un mes registrado por el DL1300',
+          thirteenHoursCaption: 'Detalle de trece horas dentro de un mes registrado por el DL1300.',
+          elevenMinutesAlt: 'Detalle de once minutos en un mes registrado por el DL1300',
+          elevenMinutesCaption: 'Detalle de once minutos dentro de un mes registrado por el DL1300.',
+          thirtySecondsAlt: 'Detalle de treinta segundos en un mes registrado por el DL1300',
+          thirtySecondsCaption: 'Detalle de treinta segundos dentro de un mes registrado por el DL1300.',
+          footerText: '&copy; 2026 Automated Computing Machinery SL (ACM SL).'
+        },
+        en: {
+          title: 'DL1300 Datalogger for Wind Turbines | ACM SL',
+          description: 'Descriptive page for the DL1300 Datalogger for Wind Turbines by Automated Computing Machinery SL.',
+          backDevelopments: 'Back to Developments',
+          pageTitle: 'DL1300 Datalogger for Wind Turbines',
+          pageDescriptionText: 'DL1300 is a solution for solving the problem of gathering data from an industrial installation using off-the-shelf RS232 and RS485 instrumentation, with a number of important features. It requires no programming: only an XML configuration file to set all details about connections, communication lines, mapping physical channels to signal names, setting sampling period, and similar parameters. It applies specific treatment to every class of signals to minimize the size of collected files, collect enough samples for analog signals, and capture all changes of digital signals. It records the effective time of each sample with better-than-millisecond resolution, keeping full date description year-month-day hours:minutes:seconds.milliseconds. It is tolerant to crashes in the connections: the logger detects when a communication line is broken, but this does not stop logging through remaining lines, and it automatically continues logging when the line is up again. The software was built thinking on the difficulties typically found in the field.',
+          bookletLink: 'Booklet DL1300 Datalogger',
+          backDevelopmentsButton: 'Back to Developments page',
+          galleryAria: 'DL1300 images',
+          blockDiagramAlt: 'DL1300 block diagram',
+          blockDiagramCaption: 'Block diagram of the DL1300 Datalogger.',
+          appControlAlt: 'DL1300 control application',
+          appControlCaption: 'Control and configuration application for the DL1300.',
+          monthAlt: 'Monthly DL1300 data view',
+          monthCaption: 'General view of one month of data acquisition.',
+          thirteenHoursAlt: 'Detail of thirteen hours within a month recorded by the DL1300',
+          thirteenHoursCaption: 'Detail of thirteen hours within a month recorded by the DL1300.',
+          elevenMinutesAlt: 'Detail of eleven minutes within a month recorded by the DL1300',
+          elevenMinutesCaption: 'Detail of eleven minutes within a month recorded by the DL1300.',
+          thirtySecondsAlt: 'Detail of thirty seconds within a month recorded by the DL1300',
+          thirtySecondsCaption: 'Detail of thirty seconds within a month recorded by the DL1300.',
+          footerText: '&copy; 2026 Automated Computing Machinery SL (ACM SL).'
+        }
+      };
+
+      const t = lang === 'es' ? translations.es : translations.en;
+      const bookletHref = lang === 'es'
+        ? 'img/DL1300/Folleto%20data%20logger%20DL1300.pdf'
+        : 'img/DL1300/Booklet%20DL1300%20Datalogger.pdf';
+
+      function setText(id, value) {
+        const element = document.getElementById(id);
+        if (element) {
+          element.textContent = value;
+        }
+      }
+
+      function setHtml(id, value) {
+        const element = document.getElementById(id);
+        if (element) {
+          element.innerHTML = value;
+        }
+      }
+
+      document.documentElement.lang = lang;
+      document.title = t.title;
+      document.getElementById('pageDescription').setAttribute('content', t.description);
+      document.getElementById('backDevelopmentsLink').href = `desarrollos.html?lang=${lang}`;
+      document.getElementById('backDevelopmentsLink').textContent = t.backDevelopments;
+      document.getElementById('backDevelopmentsButton').href = `desarrollos.html?lang=${lang}`;
+      document.getElementById('gallery').setAttribute('aria-label', t.galleryAria);
+      document.getElementById('blockDiagramImage').setAttribute('alt', t.blockDiagramAlt);
+      document.getElementById('appControlImage').setAttribute('alt', t.appControlAlt);
+      document.getElementById('monthImage').setAttribute('alt', t.monthAlt);
+      document.getElementById('thirteenHoursImage').setAttribute('alt', t.thirteenHoursAlt);
+      document.getElementById('elevenMinutesImage').setAttribute('alt', t.elevenMinutesAlt);
+      document.getElementById('thirtySecondsImage').setAttribute('alt', t.thirtySecondsAlt);
+      document.getElementById('bookletLink').href = bookletHref;
+
+      [
+        'pageTitle',
+        'pageDescriptionText',
+        'bookletLink',
+        'backDevelopmentsButton',
+        'blockDiagramCaption',
+        'appControlCaption',
+        'monthCaption',
+        'thirteenHoursCaption',
+        'elevenMinutesCaption',
+        'thirtySecondsCaption'
+      ].forEach((key) => {
+        setText(key, t[key]);
+      });
+
+      setHtml('footerText', t.footerText);
+    </script>
+  </body>
+</html>

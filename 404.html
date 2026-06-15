@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404 – File not found · ACMSLWebServer</title>
+  <link rel="icon" type="image/png" href="img/ACM_LOGO.png" />
+  <style>
+    :root {
+      --primary:       #006699;
+      --primary-dark:  #004d73;
+      --primary-light: #e3f4ff;
+      --dark:          #123047;
+      --bg:            #f5f7fb;
+      --card-bg:       #ffffff;
+      --accent:        #00a878;
+      --accent-dark:   #008f66;
+      --danger:        #c0392b;
+      --muted:         #4a5a6a;
+      --radius:        12px;
+      --shadow:        0 10px 25px rgba(0,0,0,0.08);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--dark);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Header (matches WebLauncher) ────────────────────────── */
+    header {
+      background: linear-gradient(135deg, var(--primary), #0099cc);
+      color: white;
+      padding: 1.25rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    .logo-acm {
+      height: 37px;
+      width: auto;
+    }
+
+    .acmsl-text {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #fff;
+      text-decoration: none;
+      letter-spacing: 0.06em;
+    }
+
+    .header-subtitle {
+      font-size: 0.88rem;
+      opacity: 0.85;
+      margin-left: auto;
+    }
+
+    /* ── Main content ─────────────────────────────────────────── */
+    main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 1rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      max-width: 560px;
+      width: 100%;
+      overflow: hidden;
+      animation: slideUp 0.3s ease-out;
+      will-change: opacity, transform;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Coloured top bar */
+    .card-accent {
+      height: 6px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+    }
+
+    .card-body {
+      padding: 2.5rem 2.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 1rem;
+    }
+
+    /* ── SVG illustration ─────────────────────────────────────── */
+    .illustration {
+      width: 110px;
+      height: 110px;
+      background: var(--primary-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .illustration svg {
+      width: 60px;
+      height: 60px;
+    }
+
+    /* ── Text ─────────────────────────────────────────────────── */
+    .badge-404 {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--danger);
+      background: #fdecea;
+      padding: 0.25rem 0.8rem;
+      border-radius: 999px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: var(--dark);
+      line-height: 1.25;
+    }
+
+    .description {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.65;
+      max-width: 400px;
+    }
+
+    /* ── Buttons ──────────────────────────────────────────────── */
+    .btn-row {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 0.5rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.65rem 1.5rem;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      text-decoration: none;
+      transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
+    }
+
+    .btn:active { transform: translateY(1px); }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(0,168,120,0.3);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-dark);
+      box-shadow: 0 6px 16px rgba(0,168,120,0.35);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    .btn-secondary:hover {
+      background: #d0ebfa;
+      transform: translateY(-1px);
+    }
+
+    /* ── Countdown bar ────────────────────────────────────────── */
+    .countdown-wrap {
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+
+    .countdown-label {
+      font-size: 0.78rem;
+      color: #999;
+      margin-bottom: 0.4rem;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 4px;
+      background: #e8ecf0;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      border-radius: 999px;
+      width: 100%;
+      transform-origin: left;
+      animation: drain 8s linear forwards;
+      will-change: transform;
+    }
+
+    @keyframes drain {
+      from { transform: scaleX(1); }
+      to   { transform: scaleX(0); }
+    }
+
+    /* ── Divider ──────────────────────────────────────────────── */
+    .divider {
+      width: 100%;
+      border: none;
+      border-top: 1px solid #edf0f4;
+      margin: 0.25rem 0;
+    }
+
+    /* ── Footer ───────────────────────────────────────────────── */
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.78rem;
+      color: #aaa;
+    }
+  </style>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-T1XF1Z8ML9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-T1XF1Z8ML9');
+  </script>
+</head>
+<body>
+
+  <header>
+    <img class="logo-acm" src="img/ACM_LOGO.png" alt="ACMSL" onerror="this.style.display='none'" />
+    <span class="acmsl-text">ACMSL</span>
+    <span class="header-subtitle">Wind Turbine Real-Time Simulators &amp; Engineering Tools</span>
+  </header>
+
+  <main>
+    <div class="card">
+      <div class="card-accent"></div>
+      <div class="card-body">
+
+        <!-- Illustration: broken document -->
+        <div class="illustration">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Document outline -->
+            <path d="M14 8h24l12 12v36H14V8z" fill="#e3f4ff" stroke="#006699" stroke-width="2.2" stroke-linejoin="round"/>
+            <!-- Folded corner -->
+            <path d="M38 8v12h12" fill="none" stroke="#006699" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <!-- Lines (normal) -->
+            <line x1="21" y1="28" x2="43" y2="28" stroke="#006699" stroke-width="2" stroke-linecap="round"/>
+            <!-- Broken / missing line -->
+            <line x1="21" y1="35" x2="29" y2="35" stroke="#006699" stroke-width="2" stroke-linecap="round"/>
+            <line x1="34" y1="35" x2="43" y2="35" stroke="#006699" stroke-width="2" stroke-linecap="round" stroke-dasharray="3 3"/>
+            <line x1="21" y1="42" x2="36" y2="42" stroke="#006699" stroke-width="2" stroke-linecap="round"/>
+            <!-- Warning badge -->
+            <circle cx="49" cy="49" r="11" fill="#fdecea" stroke="#c0392b" stroke-width="2"/>
+            <line x1="49" y1="44" x2="49" y2="50" stroke="#c0392b" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="49" cy="54" r="1.4" fill="#c0392b"/>
+          </svg>
+        </div>
+
+        <span class="badge-404">Error 404</span>
+
+        <h1>File not found</h1>
+
+        <p class="description">
+          The requested resource could not be located on the server.
+          It may not be installed, or the full product installation may be required to access it.
+        </p>
+
+        <hr class="divider" />
+
+        <div class="btn-row">
+          <button type="button" class="btn btn-primary" onclick="goBack()">
+            <!-- left arrow -->
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Go back
+          </button>
+          <a class="btn btn-secondary" href="WebLauncher.html">
+            <!-- home -->
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 7l6-5 6 5v7H10v-4H6v4H2V7z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg>
+            Home
+          </a>
+        </div>
+
+        <div class="countdown-wrap">
+          <p class="countdown-label" id="cdLabel">Returning automatically in 8 s…</p>
+          <div class="progress-track">
+            <div class="progress-bar" id="progressBar"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <footer>ACMSLWebServer &nbsp;·&nbsp; Wind Turbine Real-Time Simulators</footer>
+
+  <script>
+    function goBack() {
+      if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        window.location.href = 'WebLauncher.html';
+      }
+    }
+
+    // Countdown
+    let secs = 8;
+    const label = document.getElementById('cdLabel');
+    (function tick() {
+      label.textContent = 'Returning automatically in ' + secs + ' s\u2026';
+      if (secs-- <= 0) { goBack(); return; }
+      setTimeout(tick, 1000);
+    })();
+  </script>
+
+</body>
+</html>

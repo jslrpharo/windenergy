@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Generador Programable de Red Trifásica | ACM SL</title>
+    <meta
+      id="pageDescription"
+      name="description"
+      content="GPTR: Generador Programable de Red Trifásica y emulador de carga de 4 cuadrantes. Genera tensiones, corrientes y frecuencia programables para pruebas en laboratorio de equipos de control industrial. ACM SL."
+    />
+    <link rel="icon" type="image/png" href="img/ACM_LOGO.png" />
+    <link rel="shortcut icon" type="image/png" href="img/ACM_LOGO.png" />
+    <style>
+      :root {
+        --primary: #006699;
+        --primary-dark: #004d73;
+        --primary-soft: #e3f4ff;
+        --accent: #00a878;
+        --ink: #123047;
+        --muted: #516272;
+        --surface: #ffffff;
+        --bg: #f3f7fb;
+        --border: rgba(18, 48, 71, 0.1);
+        --shadow: 0 18px 45px rgba(18, 48, 71, 0.12);
+        --radius: 18px;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background:
+          radial-gradient(circle at top left, rgba(0, 153, 204, 0.14), transparent 28%),
+          linear-gradient(180deg, #f9fcff 0%, var(--bg) 100%);
+        color: var(--ink);
+        min-height: 100vh;
+      }
+
+      header {
+        background: linear-gradient(135deg, var(--primary), #0099cc);
+        color: #fff;
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.18);
+      }
+
+      .header-wrap {
+        max-width: 1140px;
+        margin: 0 auto;
+        padding: 1.35rem 1.25rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .brand img {
+        width: auto;
+        height: 44px;
+      }
+
+      .brand-copy h1 {
+        font-size: 1.35rem;
+      }
+
+      .brand-copy p {
+        margin-top: 0.2rem;
+        opacity: 0.88;
+      }
+
+      .header-link,
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.8rem 1.2rem;
+        border-radius: 999px;
+        text-decoration: none;
+        font-weight: 700;
+      }
+
+      .header-link {
+        border: 1px solid rgba(255, 255, 255, 0.32);
+        background: rgba(255, 255, 255, 0.14);
+        color: #fff;
+      }
+
+      main {
+        max-width: 1140px;
+        margin: 0 auto;
+        padding: 2rem 1.25rem 3rem;
+      }
+
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 2rem;
+      }
+
+      .layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+        gap: 2rem;
+      }
+
+      .content h2 {
+        font-size: 2rem;
+        margin-bottom: 0.9rem;
+      }
+
+      .content p,
+      .content li {
+        color: var(--muted);
+        line-height: 1.8;
+      }
+
+      .resources {
+        margin-top: 1.2rem;
+        padding-left: 1.1rem;
+      }
+
+      .resources li + li {
+        margin-top: 0.55rem;
+      }
+
+      .resources a {
+        color: var(--primary);
+        font-weight: 600;
+      }
+
+      .gallery {
+        display: grid;
+        gap: 1rem;
+      }
+
+      .gallery figure {
+        border-radius: 16px;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        background: #fff;
+        box-shadow: 0 10px 26px rgba(18, 48, 71, 0.1);
+      }
+
+      .gallery img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      .gallery figcaption {
+        padding: 0.85rem 1rem;
+        color: var(--muted);
+        font-size: 0.92rem;
+        line-height: 1.55;
+      }
+
+      .actions {
+        margin-top: 1.5rem;
+      }
+
+      .btn {
+        background: var(--accent);
+        color: #fff;
+      }
+
+      footer {
+        max-width: 1140px;
+        margin: 0 auto;
+        padding: 0 1.25rem 2rem;
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+
+      @media (max-width: 860px) {
+        .layout {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+    <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-T1XF1Z8ML9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-T1XF1Z8ML9');
+  </script>
+</head>
+  <body>
+    <header>
+      <div class="header-wrap">
+        <a class="brand" href="index.html" title="Ir a Inicio" style="text-decoration:none;color:inherit;cursor:pointer;">
+          <img src="img/ACM_LOGO.png" alt="ACM SL" />
+          <div class="brand-copy">
+            <h1>Automated Computing Machinery SL</h1>
+            <p>ACM SL</p>
+          </div>
+        </a>
+        <a class="header-link" id="backDevelopmentsLink" href="desarrollos.html?lang=es">Volver a Desarrollos</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="card">
+        <div class="layout">
+          <div class="content">
+            <h2 id="pageTitle">Generador Programable de Red Trifásica</h2>
+            <p id="pageDescriptionText">
+              GPTR: Este equipo genera una Red Trifásica completamente programable y
+              corrientes generadas por los transformadores de medida de cualquier Panel
+              Eléctrico de control de cualquier instalación eléctrica que contenga tanto
+              cargas como generadores (4 cuadrantes). Diseñado para facilitar las pruebas
+              reales en Laboratorio de equipos de Control Industrial.
+            </p>
+            <ul class="resources">
+              <li>
+                <a id="leafletLink" href="img/GPTR/Folleto%20GPTR%20espanol%20v2.pdf" target="_blank" rel="noopener noreferrer">
+                  Folleto descriptivo
+                </a>
+              </li>
+              <li>
+                <a id="applicationsLink" href="img/GPTR/Aplicaciones%20del%20GPTR.pdf" target="_blank" rel="noopener noreferrer">
+                  Aplicaciones para pruebas en Laboratorio de equipos de Control Industrial
+                </a>
+              </li>
+              <li>
+                <a id="examplesLink" href="img/GPTR/Excel-GPTR_Command-v1-red.pdf" target="_blank" rel="noopener noreferrer">
+                  Ejemplos de uso del GPTR integrado en Bancos de Pruebas
+                </a>
+              </li>
+            </ul>
+            <div class="actions">
+              <a class="btn" id="backDevelopmentsButton" href="desarrollos.html?lang=es">Volver a la página Desarrollos</a>
+            </div>
+          </div>
+          <div class="gallery" id="gallery" aria-label="Imágenes del GPTR">
+            <figure>
+              <img id="gptrImage" src="img/GPTR/GPTR%204_700pix.jpg" alt="Vista general del Generador Programable de Red Trifásica" />
+              <figcaption id="gptrCaption">Vista general del Generador Programable de Red Trifásica.</figcaption>
+            </figure>
+            <figure>
+              <img id="signalsImage" src="img/GPTR/Imagen%20Se%C3%B1ales.PNG" alt="Señales generadas por el GPTR" />
+              <figcaption id="signalsCaption">Ejemplo de señales generadas por el GPTR.</figcaption>
+            </figure>
+            <figure>
+              <img id="dipImage" src="img/GPTR/Hueco%20de%20tension.PNG" alt="Ejemplo de hueco de tensión con el GPTR" />
+              <figcaption id="dipCaption">Ejemplo de hueco de tensión programado con el GPTR.</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p id="footerText">&copy; 2026 Automated Computing Machinery SL (ACM SL).</p>
+    </footer>
+    <script>
+      const supportedLangs = ['es', 'en', 'fr', 'it', 'de', 'pt'];
+      const pageLang = new URLSearchParams(window.location.search).get('lang');
+      const browserLang = (navigator.language || navigator.userLanguage || 'en').split('-')[0].toLowerCase();
+      const lang = supportedLangs.includes(pageLang)
+        ? pageLang
+        : (supportedLangs.includes(browserLang) ? browserLang : 'en');
+
+      const translations = {
+        es: {
+          title: 'Generador Programable de Red Trifásica | ACM SL',
+          description: 'Ficha descriptiva del Generador Programable de Red Trifásica de Automated Computing Machinery SL.',
+          backDevelopments: 'Volver a Desarrollos',
+          pageTitle: 'Generador Programable de Red Trifásica',
+          pageDescriptionText: 'GPTR: Este equipo genera una Red Trifásica completamente programable y corrientes generadas por los transformadores de medida de cualquier Panel Eléctrico de control de cualquier instalación eléctrica que contenga tanto cargas como generadores (4 cuadrantes). Diseñado para facilitar las pruebas reales en Laboratorio de equipos de Control Industrial.',
+          leafletLink: 'Folleto descriptivo',
+          applicationsLink: 'Aplicaciones para pruebas en Laboratorio de equipos de Control Industrial',
+          examplesLink: 'Ejemplos de uso del GPTR integrado en Bancos de Pruebas',
+          backDevelopmentsButton: 'Volver a la página Desarrollos',
+          galleryAria: 'Imágenes del GPTR',
+          gptrAlt: 'Vista general del Generador Programable de Red Trifásica',
+          gptrCaption: 'Vista general del Generador Programable de Red Trifásica.',
+          signalsAlt: 'Señales generadas por el GPTR',
+          signalsCaption: 'Ejemplo de señales generadas por el GPTR.',
+          dipAlt: 'Ejemplo de hueco de tensión con el GPTR',
+          dipCaption: 'Ejemplo de hueco de tensión programado con el GPTR.',
+          footerText: '&copy; 2026 Automated Computing Machinery SL (ACM SL).'
+        },
+        en: {
+          title: 'Programmable Three-Phase Grid Generator | ACM SL',
+          description: 'Descriptive page for the Programmable Three-Phase Grid Generator by Automated Computing Machinery SL.',
+          backDevelopments: 'Back to Developments',
+          pageTitle: 'Programmable Three-Phase Grid Generator',
+          pageDescriptionText: 'GPTR: This equipment generates a fully programmable three-phase grid and currents generated by the measurement transformers of any electrical control panel in any electrical installation containing both loads and generators (four quadrants). It is designed to facilitate real laboratory testing of industrial control equipment.',
+          leafletLink: 'Descriptive leaflet',
+          applicationsLink: 'Applications for laboratory testing of industrial control equipment',
+          examplesLink: 'Examples of GPTR use integrated into test benches',
+          backDevelopmentsButton: 'Back to Developments page',
+          galleryAria: 'GPTR images',
+          gptrAlt: 'Overview of the Programmable Three-Phase Grid Generator',
+          gptrCaption: 'Overview of the Programmable Three-Phase Grid Generator.',
+          signalsAlt: 'Signals generated by the GPTR',
+          signalsCaption: 'Example of signals generated by the GPTR.',
+          dipAlt: 'Example of a programmed voltage dip with the GPTR',
+          dipCaption: 'Example of a programmed voltage dip with the GPTR.',
+          footerText: '&copy; 2026 Automated Computing Machinery SL (ACM SL).'
+        },
+        fr: {
+          title: 'Générateur programmable de réseau triphasé | ACM SL',
+          description: 'Fiche descriptive du Générateur programmable de réseau triphasé d’Automated Computing Machinery SL.',
+          backDevelopments: 'Retour aux développements',
+          pageTitle: 'Générateur programmable de réseau triphasé',
+          pageDescriptionText: 'GPTR : cet équipement génère un réseau triphasé entièrement programmable ainsi que les courants produits par les transformateurs de mesure de tout tableau électrique de contrôle, dans toute installation électrique contenant à la fois des charges et des générateurs (quatre quadrants). Il est conçu pour faciliter les essais réels en laboratoire des équipements de contrôle industriel.',
+          leafletLink: 'Brochure descriptive',
+          applicationsLink: 'Applications pour les essais en laboratoire des équipements de contrôle industriel',
+          examplesLink: 'Exemples d’utilisation du GPTR intégré dans des bancs d’essai',
+          backDevelopmentsButton: 'Retour à la page Développements',
+          galleryAria: 'Images du GPTR',
+          gptrAlt: 'Vue générale du Générateur programmable de réseau triphasé',
+          gptrCaption: 'Vue générale du Générateur programmable de réseau triphasé.',
+          signalsAlt: 'Signaux générés par le GPTR',
+          signalsCaption: 'Exemple de signaux générés par le GPTR.',
+          dipAlt: 'Exemple de creux de tension avec le GPTR',
+          dipCaption: 'Exemple de creux de tension programmé avec le GPTR.',
+          footerText: '&copy; 2026 Automated Computing Machinery SL (ACM SL).'
+        },
+        it: {
+          title: 'Generatore programmabile di rete trifase | ACM SL',
+          description: 'Scheda descrittiva del Generatore programmabile di rete trifase di Automated Computing Machinery SL.',
+          backDevelopments: 'Torna agli Sviluppi',
+          pageTitle: 'Generatore programmabile di rete trifase',
+          pageDescriptionText: 'GPTR: questa apparecchiatura genera una rete trifase completamente programmabile e le correnti generate dai trasformatori di misura di qualsiasi quadro elettrico di controllo in qualsiasi impianto elettrico che contenga sia carichi sia generatori (quattro quadranti). È progettata per facilitare le prove reali in laboratorio di apparecchiature di controllo industriale.',
+          leafletLink: 'Brochure descrittiva',
+          applicationsLink: 'Applicazioni per prove di laboratorio di apparecchiature di controllo industriale',
+          examplesLink: 'Esempi d’uso del GPTR integrato in banchi prova',
+          backDevelopmentsButton: 'Torna alla pagina Sviluppi',
+          galleryAria: 'Immagini del GPTR',
+          gptrAlt: 'Vista generale del Generatore programmabile di rete trifase',
+          gptrCaption: 'Vista generale del Generatore programmabile di rete trifase.',
+          signalsAlt: 'Segnali generati dal GPTR',
+          signalsCaption: 'Esempio di segnali generati dal GPTR.',
+          dipAlt: 'Esempio di buco di tensione con il GPTR',
+          dipCaption: 'Esempio di buco di tensione programmato con il GPTR.',
+          footerText: '&copy; 2026 Automated Computing Machinery SL (ACM SL).'
+        },
+        de: {
+          title: 'Programmierbarer Dreiphasen-Netzgenerator | ACM SL',
+          description: 'Beschreibungsseite für den programmierbaren Dreiphasen-Netzgenerator von Automated Computing Machinery SL.',
+          backDevelopments: 'Zurück zu Entwicklungen',
+          pageTitle: 'Programmierbarer Dreiphasen-Netzgenerator',
+          pageDescriptionText: 'GPTR: Dieses Gerät erzeugt ein vollständig programmierbares Dreiphasennetz sowie Ströme, die von Messwandlern beliebiger elektrischer Steuertafeln in jeder elektrischen Anlage mit Lasten und Generatoren erzeugt werden (vier Quadranten). Es wurde entwickelt, um reale Labortests von industriellen Steuergeräten zu erleichtern.',
+          leafletLink: 'Produktbroschüre',
+          applicationsLink: 'Anwendungen für Labortests von industriellen Steuergeräten',
+          examplesLink: 'Beispiele für den Einsatz des GPTR in Prüfständen',
+          backDevelopmentsButton: 'Zurück zur Seite Entwicklungen',
+          galleryAria: 'GPTR-Bilder',
+          gptrAlt: 'Gesamtansicht des programmierbaren Dreiphasen-Netzgenerators',
+          gptrCaption: 'Gesamtansicht des programmierbaren Dreiphasen-Netzgenerators.',
+          signalsAlt: 'Vom GPTR erzeugte Signale',
+          signalsCaption: 'Beispiel für vom GPTR erzeugte Signale.',
+          dipAlt: 'Beispiel eines Spannungseinbruchs mit dem GPTR',
+          dipCaption: 'Beispiel eines programmierten Spannungseinbruchs mit dem GPTR.',
+          footerText: '&copy; 2026 Automated Computing Machinery SL (ACM SL).'
+        },
+        pt: {
+          title: 'Gerador Programável de Rede Trifásica | ACM SL',
+          description: 'Ficha descritiva do Gerador Programável de Rede Trifásica da Automated Computing Machinery SL.',
+          backDevelopments: 'Voltar a Desenvolvimentos',
+          pageTitle: 'Gerador Programável de Rede Trifásica',
+          pageDescriptionText: 'GPTR: este equipamento gera uma rede trifásica totalmente programável e correntes geradas pelos transformadores de medida de qualquer painel elétrico de controlo de qualquer instalação elétrica que contenha tanto cargas como geradores (quatro quadrantes). Foi concebido para facilitar ensaios reais em laboratório de equipamentos de controlo industrial.',
+          leafletLink: 'Folheto descritivo',
+          applicationsLink: 'Aplicações para ensaios em laboratório de equipamentos de controlo industrial',
+          examplesLink: 'Exemplos de uso do GPTR integrado em bancos de ensaio',
+          backDevelopmentsButton: 'Voltar à página Desenvolvimentos',
+          galleryAria: 'Imagens do GPTR',
+          gptrAlt: 'Vista geral do Gerador Programável de Rede Trifásica',
+          gptrCaption: 'Vista geral do Gerador Programável de Rede Trifásica.',
+          signalsAlt: 'Sinais gerados pelo GPTR',
+          signalsCaption: 'Exemplo de sinais gerados pelo GPTR.',
+          dipAlt: 'Exemplo de cava de tensão com o GPTR',
+          dipCaption: 'Exemplo de cava de tensão programada com o GPTR.',
+          footerText: '&copy; 2026 Automated Computing Machinery SL (ACM SL).'
+        }
+      };
+
+      const t = translations[lang];
+      const leafletHref = lang === 'es'
+        ? 'img/GPTR/Folleto%20GPTR%20espanol%20v2.pdf'
+        : 'img/GPTR/Leaflet%20GPTR%20%20v2.pdf';
+      const applicationsHref = lang === 'es'
+        ? 'img/GPTR/Aplicaciones%20del%20GPTR.pdf'
+        : 'img/GPTR/Applications%20of%20the%20GPTR.pdf';
+
+      function setText(id, value) {
+        const element = document.getElementById(id);
+        if (element) {
+          element.textContent = value;
+        }
+      }
+
+      function setHtml(id, value) {
+        const element = document.getElementById(id);
+        if (element) {
+          element.innerHTML = value;
+        }
+      }
+
+      document.documentElement.lang = lang;
+      document.title = t.title;
+      document.getElementById('pageDescription').setAttribute('content', t.description);
+      document.getElementById('backDevelopmentsLink').href = `desarrollos.html?lang=${lang}`;
+      document.getElementById('backDevelopmentsLink').textContent = t.backDevelopments;
+      document.getElementById('backDevelopmentsButton').href = `desarrollos.html?lang=${lang}`;
+      document.getElementById('gallery').setAttribute('aria-label', t.galleryAria);
+      document.getElementById('gptrImage').setAttribute('alt', t.gptrAlt);
+      document.getElementById('signalsImage').setAttribute('alt', t.signalsAlt);
+      document.getElementById('dipImage').setAttribute('alt', t.dipAlt);
+      document.getElementById('leafletLink').href = leafletHref;
+      document.getElementById('applicationsLink').href = applicationsHref;
+
+      [
+        'pageTitle',
+        'pageDescriptionText',
+        'leafletLink',
+        'applicationsLink',
+        'examplesLink',
+        'backDevelopmentsButton',
+        'gptrCaption',
+        'signalsCaption',
+        'dipCaption'
+      ].forEach((key) => {
+        setText(key, t[key]);
+      });
+
+      setHtml('footerText', t.footerText);
+    </script>
+  </body>
+</html>

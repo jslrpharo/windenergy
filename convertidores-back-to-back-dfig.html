@@ -1,0 +1,259 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DFIG Back-to-Back Power Electronics Converters – Analysis Tool | ACMSL</title>
+  <meta name="description" content="Engineering tool for computing all magnetic and electric variables in DFIG wind turbine asynchronous machines and Back-to-Back converter demand. Ideal for post-mortem analysis and converter design." />
+  <meta name="keywords" content="DFIG back-to-back converter, power electronics wind turbine, DFIG analysis tool, rotor side converter, grid side converter, induction machine variables, wind turbine converter" />
+  <meta property="og:title" content="DFIG Back-to-Back Power Electronics Converters | ACMSL" />
+  <meta property="og:description" content="Engineering tool for DFIG Back-to-Back converter analysis. Compute magnetic and electric variables in DFIG wind turbines." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://www.acm-sl.com/convertidores-back-to-back-dfig.html" />
+  <link rel="canonical" href="https://www.acm-sl.com/convertidores-back-to-back-dfig.html" />
+  <link rel="icon" type="image/png" href="img/ACM_LOGO.png" />
+  <link rel="alternate" hreflang="en" href="https://www.acm-sl.com/convertidores-back-to-back-dfig.html?lang=en" />
+  <link rel="alternate" hreflang="es" href="https://www.acm-sl.com/convertidores-back-to-back-dfig.html?lang=es" />
+  <link rel="alternate" hreflang="x-default" href="https://www.acm-sl.com/convertidores-back-to-back-dfig.html" />
+  <link rel="stylesheet" href="seo-topics.css" />
+  <script src="seo-i18n.js"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-T1XF1Z8ML9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-T1XF1Z8ML9');
+  </script>
+</head>
+<body>
+
+<header>
+  <div class="header-wrap">
+    <a class="brand" href="index.html">
+      <img src="img/ACM_LOGO.png" alt="ACM SL Logo" />
+      <div class="brand-copy">
+        <h1>Automated Computing Machinery SL</h1>
+        <p data-i18n="header.subtitle">ACM SL — Wind Turbine Training &amp; Engineering Tools</p>
+      </div>
+    </a>
+    <div class="header-actions">
+      <a href="index.html?section=b2b" class="btn-app" data-i18n="btn.app">Open Interactive App</a>
+      <a href="contacto.html" class="btn-outline" data-i18n="btn.contact">Contact</a>
+      <select class="lang-select" aria-label="Language">
+        <option value="en">EN</option>
+        <option value="es">ES</option>
+        <option value="fr">FR</option>
+        <option value="de">DE</option>
+        <option value="it">IT</option>
+        <option value="pt">PT</option>
+      </select>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="container">
+
+    <nav class="breadcrumb">
+      <a href="index.html" data-i18n="breadcrumb.home">Home</a><span>›</span>
+      <strong data-i18n="breadcrumb.current">DFIG Back-to-Back Converters</strong>
+    </nav>
+
+    <nav class="topic-nav" aria-label="All topics">
+      <a href="conceptos-energia-eolica.html" data-i18n="nav.1">1. Wind Energy Concepts</a>
+      <a href="parques-eolicos-red-electrica.html" data-i18n="nav.2">2. Wind Farms &amp; Grid</a>
+      <a href="simuladores-aerogeneradores-tiempo-real.html" data-i18n="nav.3">3. Simulators</a>
+      <a href="analisis-tren-potencia-aerogeneradores.html" data-i18n="nav.4">4. Drive Train</a>
+      <a href="convertidores-back-to-back-dfig.html" class="active" data-i18n="nav.5">5. B2B Converters</a>
+      <a href="visualizacion-datos-aerogeneradores.html" data-i18n="nav.6">6. Data Visualisation</a>
+      <a href="tutoriales-aerogeneradores.html" data-i18n="nav.7">7. Tutorials</a>
+      <a href="mantenimiento-aerogeneradores.html" data-i18n="nav.8">8. Maintenance</a>
+      <a href="desarrollos.html" data-i18n="nav.9">9. Developments</a>
+      <a href="articulos-referencias-tecnicas.html" data-i18n="nav.10">10. Articles</a>
+      <a href="descargas-simuladores-aerogeneradores.html" data-i18n="nav.11">11. Downloads</a>
+      <a href="clientes-formacion-aerogeneradores.html" data-i18n="nav.12">12. Clients</a>
+    </nav>
+
+    <h1 class="page-title" data-i18n="h1">Power Electronics Back-to-Back Converters in DFIG Wind Turbines</h1>
+    <p class="lead" data-i18n="lead">The Back-to-Back (B2B) converter is the heart of DFIG wind turbines: it enables wide-range variable-speed operation by controlling the rotor winding currents. ACMSL provides a dedicated engineering tool for computing all electrical and magnetic variables in the DFIG machine and the demand placed on the B2B converter.</p>
+
+    <!-- 5-1 -->
+    <div class="topic-section">
+      <h2 data-i18n="s51_h2">5-1 &nbsp;The DFIG B2B Application</h2>
+      <p data-i18n-html="s51_p1">
+        The <strong>DFIG B2B Converter Analyser</strong> computes all the magnetic and electric
+        variables in the asynchronous induction machine of DFIG wind turbines, and derives the
+        current, voltage and power demand on the Back-to-Back converter for any operating point.
+      </p>
+      <p data-i18n="s51_p2">Key capabilities:</p>
+      <ul data-i18n-html="s51_ul">
+        <li>Computation of stator and rotor flux, current and voltage phasors</li>
+        <li>Active and reactive power flows: stator side, rotor side, and grid side of converter</li>
+        <li>Slip range analysis (sub-synchronous and super-synchronous operation)</li>
+        <li>Converter sizing: minimum required current and voltage ratings of the rotor-side converter (RSC) and grid-side converter (GSC)</li>
+        <li>Power factor analysis at the point of common coupling (PCC)</li>
+        <li>Ideal for post-mortem analysis of converter failures</li>
+      </ul>
+      <p data-i18n="s51_p3">
+        A free 2-day evaluation license is granted automatically on first launch.
+      </p>
+      <img src="/img/dfigb2b.png" alt="DFIG B2B Converter Analyser application screenshot" style="max-width:100%;height:auto;margin:1rem 0;display:block;" />
+      <div class="btn-row">
+        <a href="descargas-simuladores-aerogeneradores.html" class="btn-accent" data-i18n="btn.dl-free-eval">Download Application (free evaluation)</a>
+        <a href="index.html?section=b2b" class="btn-secondary" data-i18n="btn.open-in-app">Open in Interactive App</a>
+      </div>
+    </div>
+
+    <!-- 5-2 -->
+    <div class="topic-section">
+      <h2 data-i18n="s52_h2">5-2 &nbsp;Video – Practical Use Cases</h2>
+      <p data-i18n="s52_p1">
+        A video explanation of the DFIG B2B application, showing typical use cases in engineering
+        and training contexts:
+      </p>
+      <ul data-i18n-html="s52_ul">
+        <li>How to enter machine parameters and operating setpoints</li>
+        <li>Interpreting the phasor diagrams and power flow results</li>
+        <li>Using the tool for converter sizing in a new wind turbine design</li>
+        <li>Post-mortem analysis: identifying converter stress from field measurements</li>
+      </ul>
+      <div class="btn-row">
+        <a href="https://youtu.be/AfkW0Qvy8AI" target="_blank" rel="noopener" class="btn-primary" data-i18n="s52_btn1">▶ Watch Video (YouTube)</a>
+        <a href="index.html?section=b2b" class="btn-secondary" data-i18n="btn.open-in-app">Open in Interactive App</a>
+      </div>
+    </div>
+
+    <div class="cta-box">
+      <h2 data-i18n="cta_h2">Download the DFIG B2B Converter Analyser</h2>
+      <p data-i18n="cta_p">Engineering tool for DFIG Back-to-Back converter analysis. Free 2-day evaluation license included.</p>
+      <a href="descargas-simuladores-aerogeneradores.html" class="btn-cta" data-i18n="cta_btn">Download Free Evaluation</a>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <p>&copy; 2025 Automated Computing Machinery SL &nbsp;·&nbsp; <a href="contacto.html" data-i18n="footer.contact">Contact</a> &nbsp;·&nbsp; <a href="index.html" data-i18n="footer.home">Home</a></p>
+</footer>
+
+<script id="pt" type="application/json">
+{
+  "en": {
+    "_title": "Back-to-Back Converters in DFIG Wind Turbines – Engineering Analysis Tool | ACMSL",
+    "_meta_desc": "DFIG Back-to-Back converter analyser by ACMSL: compute all electrical and magnetic variables of the asynchronous machine and converter sizing for any operating point. Free evaluation.",
+    "breadcrumb.current": "B2B Converters \u2013 DFIG",
+    "h1": "Power Electronics Back-to-Back Converters in DFIG Wind Turbines",
+    "lead": "The Back-to-Back (B2B) converter is the heart of DFIG wind turbines: it enables wide-range variable-speed operation by controlling the rotor winding currents. ACMSL provides a dedicated engineering tool for computing all electrical and magnetic variables in the DFIG machine.",
+    "s51_h2": "5-1 \u00a0The DFIG B2B Converter Analyser Application",
+    "s51_p1": "The <strong>DFIG B2B Converter Analyser</strong> computes all the magnetic and electric variables in the asynchronous induction machine of DFIG wind turbines, and derives the current, voltage and power demand on the Back-to-Back converter for any operating point.",
+    "s51_p2": "Key capabilities:",
+    "s51_ul": "<li>Computation of stator and rotor flux, current and voltage phasors</li><li>Active and reactive power flows: stator side, rotor side, and grid side of converter</li><li>Slip range analysis (sub-synchronous and super-synchronous operation)</li><li>Converter sizing: minimum required current and voltage ratings of the rotor-side converter (RSC) and grid-side converter (GSC)</li><li>Power factor analysis at the point of common coupling (PCC)</li><li>Ideal for post-mortem analysis of converter failures</li>",
+    "s51_p3": "A free 2-day evaluation license is granted automatically on first launch.",
+    "s52_h2": "5-2 \u00a0Video \u2013 Practical Use Cases",
+    "s52_p1": "A video explanation of the DFIG B2B application, showing typical use cases in engineering and training contexts:",
+    "s52_ul": "<li>How to enter machine parameters and operating setpoints</li><li>Interpreting the phasor diagrams and power flow results</li><li>Using the tool for converter sizing in a new wind turbine design</li><li>Post-mortem analysis: identifying converter stress from field measurements</li>",
+    "s52_btn1": "\u25b6 Watch Video (YouTube)",
+    "cta_h2": "Download the DFIG B2B Converter Analyser",
+    "cta_p": "Engineering tool for DFIG Back-to-Back converter analysis. Free 2-day evaluation license included.",
+    "cta_btn": "Download Free Evaluation"
+  },
+  "es": {
+    "_title": "Convertidores Back-to-Back en Aerogeneradores DFIG \u2013 Herramienta de An\u00e1lisis | ACMSL",
+    "_meta_desc": "Analizador de convertidores Back-to-Back DFIG de ACMSL: calcule todas las variables el\u00e9ctricas y magn\u00e9ticas de la m\u00e1quina as\u00edncrona y el dimensionamiento del convertidor para cualquier punto de operaci\u00f3n.",
+    "breadcrumb.current": "Convertidores B2B \u2013 DFIG",
+    "h1": "Convertidores Back-to-Back de Electr\u00f3nica de Potencia en Aerogeneradores DFIG",
+    "lead": "El convertidor Back-to-Back (B2B) es el coraz\u00f3n de los aerogeneradores DFIG: permite la operaci\u00f3n de velocidad variable de amplio rango controlando las corrientes del bobinado del rotor. ACMSL proporciona una herramienta de ingenier\u00eda dedicada para calcular todas las variables.",
+    "s51_h2": "5-1 \u00a0Aplicaci\u00f3n Analizador de Convertidor B2B DFIG",
+    "s51_p1": "El <strong>Analizador de Convertidor B2B DFIG</strong> calcula todas las variables magn\u00e9ticas y el\u00e9ctricas en la m\u00e1quina de inducci\u00f3n as\u00edncrona de los aerogeneradores DFIG, y obtiene la demanda de corriente, tensi\u00f3n y potencia sobre el convertidor Back-to-Back para cualquier punto de operaci\u00f3n.",
+    "s51_p2": "Capacidades principales:",
+    "s51_ul": "<li>C\u00e1lculo de los fasores de flujo, corriente y tensi\u00f3n del est\u00e1tor y rotor</li><li>Flujos de potencia activa y reactiva: lado del est\u00e1tor, lado del rotor y lado de red del convertidor</li><li>An\u00e1lisis del rango de deslizamiento (operaci\u00f3n subs\u00edncrona y supers\u00edncrona)</li><li>Dimensionamiento del convertidor: clasificaciones m\u00ednimas de corriente y tensi\u00f3n del convertidor del lado del rotor (RSC) y del lado de red (GSC)</li><li>An\u00e1lisis del factor de potencia en el punto de conexi\u00f3n com\u00fan (PCC)</li><li>Ideal para an\u00e1lisis post-mortem de fallos del convertidor</li>",
+    "s51_p3": "Una licencia de evaluaci\u00f3n gratuita de 2 d\u00edas se concede autom\u00e1ticamente en el primer arranque.",
+    "s52_h2": "5-2 \u00a0V\u00eddeo \u2013 Casos de Uso Pr\u00e1cticos",
+    "s52_p1": "Una explicaci\u00f3n en v\u00eddeo de la aplicaci\u00f3n DFIG B2B, mostrando casos de uso t\u00edpicos en contextos de ingenier\u00eda y formaci\u00f3n:",
+    "s52_ul": "<li>C\u00f3mo introducir los par\u00e1metros de la m\u00e1quina y los puntos de operaci\u00f3n</li><li>Interpretaci\u00f3n de los diagramas fasoriales y los resultados de flujo de potencia</li><li>Uso de la herramienta para el dimensionamiento del convertidor en un nuevo dise\u00f1o de aerogenerador</li><li>An\u00e1lisis post-mortem: identificaci\u00f3n del estr\u00e9s del convertidor a partir de medidas de campo</li>",
+    "s52_btn1": "\u25b6 Ver V\u00eddeo (YouTube)",
+    "cta_h2": "Descargar el Analizador de Convertidor B2B DFIG",
+    "cta_p": "Herramienta de ingenier\u00eda para el an\u00e1lisis del convertidor Back-to-Back DFIG. Licencia de evaluaci\u00f3n gratuita de 2 d\u00edas incluida.",
+    "cta_btn": "Descargar Evaluaci\u00f3n Gratuita"
+  },
+  "fr": {
+    "_title": "Convertisseurs Back-to-Back dans les \u00c9oliennes DFIG \u2013 Outil d'Analyse | ACMSL",
+    "_meta_desc": "Analyseur de convertisseurs Back-to-Back DFIG d'ACMSL : calculez toutes les variables \u00e9lectriques et magn\u00e9tiques de la machine asynchrone et le dimensionnement du convertisseur.",
+    "breadcrumb.current": "Convertisseurs B2B \u2013 DFIG",
+    "h1": "Convertisseurs Back-to-Back en \u00c9lectronique de Puissance pour \u00c9oliennes DFIG",
+    "lead": "Le convertisseur Back-to-Back (B2B) est le c\u0153ur des \u00e9oliennes DFIG : il permet un fonctionnement \u00e0 vitesse variable de large plage en contr\u00f4lant les courants d'enroulement rotorique. ACMSL fournit un outil d'ing\u00e9nierie d\u00e9di\u00e9.",
+    "s51_h2": "5-1 \u00a0Application Analyseur du Convertisseur B2B DFIG",
+    "s51_p1": "L'<strong>Analyseur de Convertisseur B2B DFIG</strong> calcule toutes les variables magn\u00e9tiques et \u00e9lectriques dans la machine \u00e0 induction asynchrone des \u00e9oliennes DFIG, et d\u00e9rive la demande en courant, tension et puissance sur le convertisseur Back-to-Back pour tout point de fonctionnement.",
+    "s51_p2": "Capacit\u00e9s principales :",
+    "s51_ul": "<li>Calcul des phaseurs de flux, courant et tension du stator et du rotor</li><li>Flux de puissance active et r\u00e9active : c\u00f4t\u00e9 stator, c\u00f4t\u00e9 rotor et c\u00f4t\u00e9 r\u00e9seau du convertisseur</li><li>Analyse de la plage de glissement (fonctionnement sous-synchrone et super-synchrone)</li><li>Dimensionnement du convertisseur : classifications minimales requises du convertisseur c\u00f4t\u00e9 rotor (RSC) et c\u00f4t\u00e9 r\u00e9seau (GSC)</li><li>Analyse du facteur de puissance au point de couplage commun (PCC)</li><li>Id\u00e9al pour l'analyse post-mortem des d\u00e9faillances du convertisseur</li>",
+    "s51_p3": "Une licence d'\u00e9valuation gratuite de 2 jours est accord\u00e9e automatiquement au premier lancement.",
+    "s52_h2": "5-2 \u00a0Vid\u00e9o \u2013 Cas d'Usage Pratiques",
+    "s52_p1": "Une explication vid\u00e9o de l'application DFIG B2B, montrant des cas d'usage typiques dans des contextes d'ing\u00e9nierie et de formation :",
+    "s52_ul": "<li>Comment saisir les param\u00e8tres de la machine et les points de consigne</li><li>Interpr\u00e9tation des diagrammes phasoriels et des r\u00e9sultats de flux de puissance</li><li>Utilisation de l'outil pour le dimensionnement du convertisseur dans une nouvelle conception d'\u00e9olienne</li><li>Analyse post-mortem : identification du stress du convertisseur \u00e0 partir des mesures de terrain</li>",
+    "s52_btn1": "\u25b6 Voir la Vid\u00e9o (YouTube)",
+    "cta_h2": "T\u00e9l\u00e9charger l'Analyseur de Convertisseur B2B DFIG",
+    "cta_p": "Outil d'ing\u00e9nierie pour l'analyse du convertisseur Back-to-Back DFIG. Licence d'\u00e9valuation gratuite de 2 jours incluse.",
+    "cta_btn": "T\u00e9l\u00e9charger l'\u00c9valuation Gratuite"
+  },
+  "de": {
+    "_title": "Back-to-Back-Umrichter in DFIG-Windturbinen \u2013 Analysetool | ACMSL",
+    "_meta_desc": "DFIG Back-to-Back-Umrichter-Analyser von ACMSL: Berechnen Sie alle elektrischen und magnetischen Gr\u00f6\u00dfen der Asynchronmaschine und die Umrichterauslegung f\u00fcr jeden Betriebspunkt.",
+    "breadcrumb.current": "B2B-Umrichter \u2013 DFIG",
+    "h1": "Back-to-Back-Leistungselektronik-Umrichter in DFIG-Windturbinen",
+    "lead": "Der Back-to-Back-Umrichter (B2B) ist das Herzst\u00fcck der DFIG-Windturbinen: Er erm\u00f6glicht einen weiten Drehzahlbereich durch Regelung der Rotorwicklungsstrome. ACMSL bietet ein dediziertes Ingenieurwerkzeug.",
+    "s51_h2": "5-1 \u00a0DFIG B2B-Umrichter-Analyser-Anwendung",
+    "s51_p1": "Der <strong>DFIG B2B-Umrichter-Analyser</strong> berechnet alle magnetischen und elektrischen Gr\u00f6\u00dfen in der Asynchronmaschine von DFIG-Windturbinen und leitet die Strom-, Spannungs- und Leistungsanforderungen an den Back-to-Back-Umrichter f\u00fcr jeden Betriebspunkt ab.",
+    "s51_p2": "Hauptfunktionen:",
+    "s51_ul": "<li>Berechnung der Stator- und Rotorfluss-, Strom- und Spannungszeiger</li><li>Wirk- und Blindleistungsfl\u00fcsse: Statorseite, Rotorseite und netzseitig des Umrichters</li><li>Schlupfbereichsanalyse (untersynchroner und \u00fcbersynchroner Betrieb)</li><li>Umrichterauslegung: Mindestanforderungen an Strom- und Spannungsklassifizierungen des RSC und GSC</li><li>Leistungsfaktoranalyse am \u00dcbergabepunkt (PCC)</li><li>Ideal f\u00fcr die Post-mortem-Analyse von Umrichterausf\u00e4llen</li>",
+    "s51_p3": "Eine kostenlose 2-t\u00e4gige Testlizenz wird automatisch beim ersten Start gew\u00e4hrt.",
+    "s52_h2": "5-2 \u00a0Video \u2013 Praktische Anwendungsf\u00e4lle",
+    "s52_p1": "Eine Videoerkl\u00e4rung der DFIG B2B-Anwendung mit typischen Anwendungsf\u00e4llen in Ingenieur- und Schulungskontexten:",
+    "s52_ul": "<li>So geben Sie Maschinenparameter und Betriebssollwerte ein</li><li>Interpretation der Zeigerdiagramme und Leistungsfluss-Ergebnisse</li><li>Verwendung des Tools zur Umrichterauslegung in einem neuen Windturbinendesign</li><li>Post-mortem-Analyse: Identifizierung der Umrichterbelastung aus Feldmessungen</li>",
+    "s52_btn1": "\u25b6 Video ansehen (YouTube)",
+    "cta_h2": "DFIG B2B-Umrichter-Analyser herunterladen",
+    "cta_p": "Ingenieurwerkzeug f\u00fcr die DFIG Back-to-Back-Umrichteranalyse. 2-t\u00e4gige kostenlose Testlizenz enthalten.",
+    "cta_btn": "Kostenlose Testversion herunterladen"
+  },
+  "it": {
+    "_title": "Convertitori Back-to-Back nelle Turbine Eoliche DFIG \u2013 Strumento di Analisi | ACMSL",
+    "_meta_desc": "Analizzatore di convertitori Back-to-Back DFIG di ACMSL: calcola tutte le variabili elettriche e magnetiche della macchina asincrona e il dimensionamento del convertitore.",
+    "breadcrumb.current": "Convertitori B2B \u2013 DFIG",
+    "h1": "Convertitori Back-to-Back in Elettronica di Potenza per Turbine Eoliche DFIG",
+    "lead": "Il convertitore Back-to-Back (B2B) \u00e8 il cuore delle turbine eoliche DFIG: consente un funzionamento a velocit\u00e0 variabile di ampia portata controllando le correnti dell'avvolgimento rotorico. ACMSL fornisce uno strumento di ingegneria dedicato.",
+    "s51_h2": "5-1 \u00a0Applicazione Analizzatore del Convertitore B2B DFIG",
+    "s51_p1": "L'<strong>Analizzatore del Convertitore B2B DFIG</strong> calcola tutte le variabili magnetiche ed elettriche nella macchina a induzione asincrona delle turbine eoliche DFIG, e ricava la domanda di corrente, tensione e potenza sul convertitore Back-to-Back per qualsiasi punto di funzionamento.",
+    "s51_p2": "Capacit\u00e0 principali:",
+    "s51_ul": "<li>Calcolo dei fasori di flusso, corrente e tensione di statore e rotore</li><li>Flussi di potenza attiva e reattiva: lato statore, lato rotore e lato rete del convertitore</li><li>Analisi dell'intervallo di scorrimento (funzionamento sotto-sincrono e super-sincrono)</li><li>Dimensionamento del convertitore: classificazioni minime richieste del RSC e GSC</li><li>Analisi del fattore di potenza nel punto di accoppiamento comune (PCC)</li><li>Ideale per l'analisi post-mortem dei guasti del convertitore</li>",
+    "s51_p3": "Una licenza di valutazione gratuita di 2 giorni viene concessa automaticamente al primo avvio.",
+    "s52_h2": "5-2 \u00a0Video \u2013 Casi d'Uso Pratici",
+    "s52_p1": "Una spiegazione video dell'applicazione DFIG B2B, che mostra casi d'uso tipici in contesti di ingegneria e formazione:",
+    "s52_ul": "<li>Come inserire i parametri della macchina e i punti di setpoint</li><li>Interpretazione dei diagrammi fasoriali e dei risultati del flusso di potenza</li><li>Utilizzo dello strumento per il dimensionamento del convertitore in un nuovo progetto di turbina eolica</li><li>Analisi post-mortem: identificazione dello stress del convertitore dalle misure sul campo</li>",
+    "s52_btn1": "\u25b6 Guarda il Video (YouTube)",
+    "cta_h2": "Scarica l'Analizzatore del Convertitore B2B DFIG",
+    "cta_p": "Strumento di ingegneria per l'analisi del convertitore Back-to-Back DFIG. Licenza di valutazione gratuita di 2 giorni inclusa.",
+    "cta_btn": "Scarica Valutazione Gratuita"
+  },
+  "pt": {
+    "_title": "Conversores Back-to-Back em Aerogeradores DFIG \u2013 Ferramenta de An\u00e1lise | ACMSL",
+    "_meta_desc": "Analisador de conversores Back-to-Back DFIG da ACMSL: calcule todas as vari\u00e1veis el\u00e9tricas e magn\u00e9ticas da m\u00e1quina ass\u00edncrona e o dimensionamento do conversor para qualquer ponto de opera\u00e7\u00e3o.",
+    "breadcrumb.current": "Conversores B2B \u2013 DFIG",
+    "h1": "Conversores Back-to-Back em Eletr\u00f3nica de Pot\u00eancia para Aerogeradores DFIG",
+    "lead": "O conversor Back-to-Back (B2B) \u00e9 o cora\u00e7\u00e3o dos aerogeradores DFIG: permite opera\u00e7\u00e3o de velocidade vari\u00e1vel de ampla gama controlando as correntes do enrolamento rot\u00f3rico. A ACMSL fornece uma ferramenta de engenharia dedicada.",
+    "s51_h2": "5-1 \u00a0Aplica\u00e7\u00e3o Analisador do Conversor B2B DFIG",
+    "s51_p1": "O <strong>Analisador do Conversor B2B DFIG</strong> calcula todas as vari\u00e1veis magn\u00e9ticas e el\u00e9tricas na m\u00e1quina de indu\u00e7\u00e3o ass\u00edncrona dos aerogeradores DFIG, e deriva a demanda de corrente, tens\u00e3o e pot\u00eancia no conversor Back-to-Back para qualquer ponto de opera\u00e7\u00e3o.",
+    "s51_p2": "Capacidades principais:",
+    "s51_ul": "<li>C\u00e1lculo dos fasores de fluxo, corrente e tens\u00e3o do estator e rotor</li><li>Fluxos de pot\u00eancia ativa e reativa: lado do estator, lado do rotor e lado da rede do conversor</li><li>An\u00e1lise da gama de deslizamento (opera\u00e7\u00e3o sub-s\u00edncrona e super-s\u00edncrona)</li><li>Dimensionamento do conversor: classifica\u00e7\u00f5es m\u00ednimas requeridas do RSC e GSC</li><li>An\u00e1lise do fator de pot\u00eancia no ponto de acoplamento comum (PCC)</li><li>Ideal para an\u00e1lise post-mortem de falhas do conversor</li>",
+    "s51_p3": "Uma licen\u00e7a de avalia\u00e7\u00e3o gratuita de 2 dias \u00e9 concedida automaticamente no primeiro lan\u00e7amento.",
+    "s52_h2": "5-2 \u00a0V\u00eddeo \u2013 Casos de Uso Pr\u00e1ticos",
+    "s52_p1": "Uma explica\u00e7\u00e3o em v\u00eddeo da aplica\u00e7\u00e3o DFIG B2B, mostrando casos de uso t\u00edpicos em contextos de engenharia e forma\u00e7\u00e3o:",
+    "s52_ul": "<li>Como inserir os par\u00e2metros da m\u00e1quina e os pontos de opera\u00e7\u00e3o</li><li>Interpreta\u00e7\u00e3o dos diagramas fasoriais e dos resultados de fluxo de pot\u00eancia</li><li>Utiliza\u00e7\u00e3o da ferramenta para o dimensionamento do conversor num novo projeto de aerogerador</li><li>An\u00e1lise post-mortem: identifica\u00e7\u00e3o do stress do conversor a partir de medi\u00e7\u00f5es de campo</li>",
+    "s52_btn1": "\u25b6 Ver V\u00eddeo (YouTube)",
+    "cta_h2": "Baixar o Analisador do Conversor B2B DFIG",
+    "cta_p": "Ferramenta de engenharia para an\u00e1lise do conversor Back-to-Back DFIG. Licen\u00e7a de avalia\u00e7\u00e3o gratuita de 2 dias inclu\u00edda.",
+    "cta_btn": "Baixar Avalia\u00e7\u00e3o Gratuita"
+  }
+}
+</script>
+</body>
+</html>

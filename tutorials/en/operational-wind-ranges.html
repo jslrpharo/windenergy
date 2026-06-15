@@ -1,0 +1,259 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Operational Wind Speed Ranges - ACMSL</title>
+  <link rel="icon" type="image/x-icon" href="../../img/favicon.ico">
+  <link rel="stylesheet" href="../tutorial.css">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-T1XF1Z8ML9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-T1XF1Z8ML9');
+  </script>
+</head>
+<body>
+
+<header class="tut-header">
+  <div class="tut-header-row">
+    <div class="tut-header-left">
+      <img src="../../img/ACM_LOGO.png" alt="ACMSL" class="logo">
+      <a href="https://www.acm-sl.com" class="brand">ACMSL</a>
+    </div>
+    <nav>
+<a href="introduction.html">Introduction</a>
+    <a href="industrial-wind-turbines.html">Wind Turbines</a>
+    <a href="wind-turbine-families.html">Families</a>
+    <a href="operational-wind-ranges.html" class="active">Wind Ranges</a>
+    <a href="simulators-and-tutorials.html">Simulators</a>
+    <a href="wind-energy-mindmap.html">Knowledge Map</a>
+    </nav>
+  </div>
+  <div class="tut-header-toolbar">
+    <div class="tut-toolbar-actions">
+      <a href="../../index.html?lang=en">&#127968; Home</a>
+      <a href="https://www.acm-sl.com/en/contact" target="_blank" rel="noopener">&#127760; Contact</a>
+      <a href="downloads.html">&#128229; Downloads</a>
+    </div>
+    <div class="tut-lang-selector">
+      <select onchange="window.location.href = this.value" aria-label="Language">
+        <option value="../en/operational-wind-ranges.html" selected>EN</option>
+        <option value="../es/rangos-operacionales.html">ES</option>
+        <option value="../fr/plages-operationnelles.html">FR</option>
+        <option value="../it/intervalli-operativi-vento.html">IT</option>
+        <option value="../de/betriebliche-windgeschwindigkeiten.html">DE</option>
+        <option value="../pt/faixas-operacionais-vento.html">PT</option>
+      </select>
+    </div>
+  </div>
+<nav class="tut-breadcrumb" aria-label="breadcrumb">
+  <a href="../../index.html?lang=en">Home</a> &rsaquo;
+  <a href="../../index.html?lang=en&section=tutorials">Tutorials</a> &rsaquo;
+  <span class="bc-current">Wind Ranges</span>
+</nav>
+</header>
+
+<section class="tut-hero">
+  <h1>Operational Wind Speed Ranges</h1>
+  <p>Understanding the wind thresholds that govern wind turbine behavior</p>
+</section>
+
+<main class="tut-content">
+
+  <h2>The production curve</h2>
+  <p>
+    Every wind turbine has a characteristic <strong>production curve</strong> (also called a power curve) that
+    defines the relationship between wind speed and electrical power output. This curve is not a smooth
+    theoretical function &mdash; it is shaped by a series of <strong>discrete wind speed thresholds</strong>
+    that trigger different operational modes and control actions.
+  </p>
+  <p>
+    Understanding these thresholds is fundamental for wind turbine operators, as they determine when the
+    machine starts, stops, changes speed, and how it responds to varying wind conditions. Each threshold
+    represents a critical decision point in the turbine's control logic.
+  </p>
+
+  <figure class="tut-figure">
+    <img src="img/Wind operational limits.jpg" alt="Wind turbine operational wind speed limits">
+    <figcaption>Operational wind speed thresholds and their effect on wind turbine behavior</figcaption>
+  </figure>
+
+  <h2>Wind speed thresholds explained</h2>
+  <p>
+    The following table summarizes the key wind speed parameters that define a wind turbine's operational
+    envelope. While the exact values vary by manufacturer and model, the typical ranges presented here
+    apply to most modern industrial wind turbines.
+  </p>
+
+  <table class="tut-table">
+    <thead>
+      <tr>
+        <th>Parameter</th>
+        <th>Typical Value</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Min for yawing</strong></td>
+        <td>~2.5 m/s</td>
+        <td>Below this wind speed, automatic yaw orientation does not operate</td>
+      </tr>
+      <tr>
+        <td><strong>Min for cut-in</strong></td>
+        <td>~5 m/s</td>
+        <td>Below this wind speed, the wind turbine will not attempt to start production</td>
+      </tr>
+      <tr>
+        <td><strong>Min for Large</strong></td>
+        <td>~6.5 m/s</td>
+        <td>Dual-speed wind turbines: switch from high speed to low speed below this threshold</td>
+      </tr>
+      <tr>
+        <td><strong>Max for Small</strong></td>
+        <td>~7 m/s</td>
+        <td>Dual-speed wind turbines: switch from low speed to high speed above this threshold</td>
+      </tr>
+      <tr>
+        <td><strong>Max to depart</strong></td>
+        <td>~20 m/s</td>
+        <td>If idle and wind exceeds this, the wind turbine will not attempt a cut-in</td>
+      </tr>
+      <tr>
+        <td><strong>Max for Operation</strong></td>
+        <td>~28 m/s</td>
+        <td>If sustained, the controller initiates an orderly cut-out procedure</td>
+      </tr>
+      <tr>
+        <td><strong>Temp max</strong></td>
+        <td>~25 m/s</td>
+        <td>Emergency threshold: triggers a faster cut-out response than normal maximum</td>
+      </tr>
+      <tr>
+        <td><strong>Abs max</strong></td>
+        <td>~30 m/s</td>
+        <td>Absolute maximum: triggers immediate cut-out (emergency stop)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Detailed threshold analysis</h2>
+
+  <h3>Minimum for yawing (~2.5 m/s)</h3>
+  <p>
+    The yaw system orients the nacelle to face the wind direction. Below approximately 2.5 m/s, wind
+    direction measurements become unreliable and the energy available is negligible, so the yaw system
+    is disabled to avoid unnecessary wear on the yaw motors and bearings. The turbine simply waits,
+    maintaining its last orientation.
+  </p>
+
+  <h3>Minimum for cut-in (~5 m/s)</h3>
+  <p>
+    This is the wind speed at which the turbine controller decides there is enough energy to justify
+    starting the generator. Below this threshold, the aerodynamic torque is insufficient to overcome
+    mechanical friction and generator magnetization losses. The cut-in sequence typically involves
+    releasing the rotor brake, allowing the blades to accelerate, and then connecting the generator
+    to the grid once synchronous (or near-synchronous) speed is reached.
+  </p>
+
+  <h3>Dual-speed thresholds: Min for Large (~6.5 m/s) and Max for Small (~7 m/s)</h3>
+  <p>
+    Dual-speed wind turbines (common in Families 1 and 2) have two separate generator windings: a
+    <strong>small generator</strong> (fewer poles, lower power) for low winds and a <strong>large generator</strong>
+    (more poles, higher power) for stronger winds. The gap between 6.5 and 7 m/s creates a
+    <strong>hysteresis band</strong> that prevents the turbine from constantly switching between speeds
+    when wind hovers around the threshold.
+  </p>
+  <div class="tut-card">
+    <h4>Practical example</h4>
+    <p>
+      Consider a 1,300 kW dual-speed turbine with a 300 kW small generator and a 1,300 kW large generator.
+      At 6 m/s, the turbine operates on the small generator producing about 80 kW. As wind increases to
+      7 m/s, the controller disconnects the small generator, briefly coasts, and connects the large generator.
+      If wind then drops to 6.8 m/s, the turbine stays on the large generator (no switch). Only when wind
+      drops below 6.5 m/s does it switch back to the small generator. This hysteresis prevents mechanical
+      stress from frequent switching.
+    </p>
+  </div>
+
+  <h3>Maximum to depart (~20 m/s)</h3>
+  <p>
+    This often-overlooked threshold is a safety measure. If the turbine is currently idle (not producing)
+    and the wind speed is already above ~20 m/s, the controller will <strong>not attempt to start</strong>
+    the machine. Starting a turbine in very high winds would create dangerous transient loads during the
+    acceleration and grid connection phases. The turbine must wait until wind drops below this threshold
+    before attempting a cut-in.
+  </p>
+
+  <h3>Maximum for operation (~28 m/s)</h3>
+  <p>
+    When the 10-minute average wind speed exceeds approximately 28 m/s, the controller initiates an
+    <strong>orderly shutdown</strong>. The blades are pitched to feather position (minimum angle of attack),
+    the generator is disconnected from the grid, and the rotor brake is applied. This is a controlled
+    process designed to minimize structural loads. The turbine will automatically restart when wind
+    drops below the cut-in threshold again.
+  </p>
+
+  <h3>Temporary maximum (~25 m/s)</h3>
+  <p>
+    This threshold is lower than the operational maximum and represents an <strong>emergency condition</strong>
+    that requires a faster response. It typically corresponds to a shorter averaging period (e.g., 30-second
+    average instead of 10-minute average) or a rapid wind speed increase. The controller executes a faster
+    shutdown sequence compared to the normal maximum threshold.
+  </p>
+
+  <h3>Absolute maximum (~30 m/s)</h3>
+  <p>
+    The absolute maximum wind speed triggers an <strong>immediate emergency stop</strong>. This is typically
+    based on instantaneous (3-second) wind speed readings. The turbine executes its fastest possible shutdown
+    &mdash; blades pitch to full feather, generator disconnects, and the emergency brake engages simultaneously.
+    This threshold exists to protect the turbine from structural damage during extreme wind events.
+  </p>
+
+  <div class="tut-card">
+    <h4>Important note</h4>
+    <p>
+      The exact values of all thresholds vary significantly between manufacturers and turbine models.
+      They depend on the structural design, rotor diameter, tower height, and the specific wind class
+      (IEC 61400-1) the turbine is certified for. Always consult the specific turbine's operating manual
+      for the actual threshold values.
+    </p>
+  </div>
+
+  <h2>Practical implications for operators</h2>
+  <p>
+    Understanding these thresholds allows operators to:
+  </p>
+  <ul>
+    <li><strong>Anticipate turbine behavior</strong> &mdash; Predict when turbines will start, stop, or
+    change operating modes based on weather forecasts.</li>
+    <li><strong>Diagnose anomalies</strong> &mdash; Recognize when a turbine is not responding correctly
+    to wind conditions (e.g., failing to cut in despite adequate wind).</li>
+    <li><strong>Optimize production</strong> &mdash; Understand how threshold settings affect annual energy
+    production and whether site-specific adjustments could be beneficial.</li>
+    <li><strong>Plan maintenance windows</strong> &mdash; Schedule maintenance during periods when wind
+    conditions will keep the turbine idle anyway.</li>
+  </ul>
+
+  <div class="tut-cta">
+    <h3>Try our real-time simulators</h3>
+    <p>Free 2-day evaluation &mdash; see these thresholds in action during simulated operations</p>
+    <a href="../../index.html?section=downloads&lang=en">Download simulators</a>
+  </div>
+
+  <div class="tut-nav">
+    <a href="wind-turbine-families.html">&larr; Previous: The 5 Families</a>
+    <a href="simulators-and-tutorials.html">Next: Simulators &amp; Tutorials &rarr;</a>
+  </div>
+
+</main>
+
+<footer class="tut-footer">
+  &copy; 2026 <a href="https://www.acm-sl.com">Automated Computing Machinery SL (ACMSL)</a>. All rights reserved.
+</footer>
+
+</body>
+</html>

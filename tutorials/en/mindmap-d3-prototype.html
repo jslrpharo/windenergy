@@ -1,0 +1,1259 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Knowledge Map - ACMSL</title>
+  <link rel="icon" type="image/x-icon" href="../../img/favicon.ico">
+  <link rel="stylesheet" href="../tutorial.css">
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    /* ── Mindmap-specific styles ── */
+    .mindmap-container {
+      position: relative;
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin: 0;
+      overflow: hidden;
+    }
+
+    .mindmap-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.7rem 1rem;
+      background: linear-gradient(135deg, #f8fbff, #eef4fa);
+      border-bottom: 1px solid #dde6ef;
+      flex-wrap: wrap;
+    }
+
+    .mindmap-toolbar button {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.4rem 1rem;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+      box-shadow: 0 2px 6px rgba(0,102,153,0.2);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .mindmap-toolbar button:hover {
+      background: #005580;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px rgba(0,102,153,0.3);
+    }
+
+    .mindmap-toolbar button:active {
+      transform: translateY(0);
+    }
+
+    .mindmap-toolbar button.secondary {
+      background: rgba(0,102,153,0.1);
+      color: var(--primary);
+      box-shadow: none;
+      border: 1px solid rgba(0,102,153,0.2);
+    }
+
+    .mindmap-toolbar button.secondary:hover {
+      background: rgba(0,102,153,0.18);
+      box-shadow: 0 2px 6px rgba(0,102,153,0.1);
+    }
+
+    .mindmap-toolbar .separator {
+      width: 1px;
+      height: 1.4rem;
+      background: #ccd6df;
+      margin: 0 0.3rem;
+    }
+
+    .mindmap-toolbar .info {
+      font-size: 0.78rem;
+      color: #6a8090;
+      margin-left: auto;
+    }
+
+    .mindmap-svg-wrap {
+      width: 100%;
+      height: calc(100vh - 310px);
+      min-height: 400px;
+      cursor: grab;
+    }
+
+    .mindmap-svg-wrap:active {
+      cursor: grabbing;
+    }
+
+    .mindmap-svg-wrap svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* D3 tree nodes */
+    .mm-node circle {
+      stroke-width: 2px;
+      cursor: pointer;
+      transition: r 0.15s;
+    }
+
+    .mm-node circle:hover {
+      filter: brightness(1.15);
+    }
+
+    .mm-node text {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      pointer-events: none;
+    }
+
+    .mm-node .node-label {
+      fill: var(--dark);
+      font-size: 12px;
+    }
+
+    .mm-node .node-label-root {
+      fill: var(--dark);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .mm-node .link-icon {
+      cursor: pointer;
+      pointer-events: all;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+
+    .mm-node .link-icon:hover {
+      opacity: 1;
+    }
+
+    .mm-link {
+      fill: none;
+      stroke-width: 1.5px;
+      opacity: 0.5;
+    }
+
+    /* Badge showing child count on collapsed nodes */
+    .mm-badge {
+      font-size: 9px;
+      fill: white;
+      font-weight: 700;
+      pointer-events: none;
+      text-anchor: middle;
+      dominant-baseline: central;
+    }
+
+    /* Search bar */
+    .mindmap-search {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .mindmap-search input {
+      padding: 0.35rem 0.7rem;
+      border: 1px solid #ccd6df;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      width: 180px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .mindmap-search input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(0,102,153,0.12);
+    }
+
+    .highlight-match circle {
+      stroke: #ff9900 !important;
+      stroke-width: 3px !important;
+    }
+
+    /* Tooltip */
+    .mm-tooltip {
+      position: absolute;
+      background: var(--dark);
+      color: white;
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.15s;
+      max-width: 350px;
+      word-wrap: break-word;
+      z-index: 100;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .mm-tooltip.visible {
+      opacity: 1;
+    }
+
+    /* Loading / Error states */
+    .mindmap-status {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: calc(100vh - 310px);
+      min-height: 400px;
+      flex-direction: column;
+      gap: 1rem;
+      color: #6a8090;
+    }
+
+    .mindmap-status .spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid #dde6ef;
+      border-top: 4px solid var(--primary);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .mindmap-status.error {
+      color: #cc3333;
+    }
+
+    .mindmap-status.error .icon {
+      font-size: 2rem;
+    }
+
+    /* Override tut-content max-width for full-width mindmap */
+    .tut-content.full-width {
+      max-width: 100%;
+      padding: 0 1rem;
+    }
+
+    /* Breadcrumb / path display */
+    .mindmap-breadcrumb {
+      font-size: 0.78rem;
+      color: #6a8090;
+      padding: 0.4rem 1rem;
+      background: #f8fbff;
+      border-top: 1px solid #eef2f7;
+      min-height: 1.6rem;
+    }
+
+    .mindmap-breadcrumb span {
+      color: var(--primary);
+      font-weight: 500;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .mindmap-svg-wrap {
+        height: calc(100vh - 350px);
+      }
+      .mindmap-toolbar {
+        padding: 0.5rem 0.7rem;
+      }
+      .mindmap-search input {
+        width: 130px;
+      }
+    }
+  </style>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-T1XF1Z8ML9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-T1XF1Z8ML9');
+  </script>
+</head>
+<body>
+
+<header class="tut-header">
+  <div class="tut-header-row">
+    <div class="tut-header-left">
+      <img src="../../img/ACM_LOGO.png" alt="ACMSL" class="logo">
+      <a href="https://www.acm-sl.com" class="brand">ACMSL</a>
+    </div>
+    <nav>
+      <a href="introduction.html">Introduction</a>
+      <a href="industrial-wind-turbines.html">Wind Turbines</a>
+      <a href="wind-turbine-families.html">Families</a>
+      <a href="operational-wind-ranges.html">Wind Ranges</a>
+      <a href="simulators-and-tutorials.html">Simulators</a>
+      <a href="wind-energy-mindmap.html" class="active">Knowledge Map</a>
+    </nav>
+  </div>
+  <div class="tut-header-toolbar">
+    <div class="tut-toolbar-actions">
+      <a href="../../index.html?lang=en">&#127968; Home</a>
+      <a href="https://www.acm-sl.com/en/contact" target="_blank" rel="noopener">&#127760; Contact</a>
+      <a href="downloads.html">&#128229; Downloads</a>
+    </div>
+    <div class="tut-lang-selector">
+      <select onchange="window.location.href = this.value" aria-label="Language">
+        <option value="../en/wind-energy-mindmap.html" selected>EN</option>
+        <option value="../es/mapa-mental.html">ES</option>
+        <option value="../fr/carte-mentale.html">FR</option>
+        <option value="../it/mappa-conoscenza-eolica.html">IT</option>
+        <option value="../de/windenergie-wissenskarte.html">DE</option>
+        <option value="../pt/mapa-conhecimento-eolico.html">PT</option>
+      </select>
+    </div>
+  </div>
+<nav class="tut-breadcrumb" aria-label="breadcrumb">
+  <a href="../../index.html?lang=en">Home</a> &rsaquo;
+  <a href="../../index.html?lang=en&section=tutorials">Tutorials</a> &rsaquo;
+  <span class="bc-current">Mind Map (D3)</span>
+</nav>
+</header>
+
+<section class="tut-hero">
+  <h1>Interactive Knowledge Map</h1>
+  <p>Explore the complete wind energy knowledge tree &mdash; click nodes to expand, zoom and pan to navigate</p>
+</section>
+
+<main class="tut-content full-width">
+
+  <div class="mindmap-container" id="mindmap-container">
+    <div class="mindmap-toolbar" id="toolbar">
+      <button id="btn-expand" title="Expand all nodes">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        Expand All
+      </button>
+      <button id="btn-collapse" title="Collapse to 2 levels">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14"/></svg>
+        Collapse All
+      </button>
+      <div class="separator"></div>
+      <button id="btn-reset" class="secondary" title="Reset zoom and position">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg>
+        Reset View
+      </button>
+      <button id="btn-zoom-in" class="secondary" title="Zoom in">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4M8 11h6M11 8v6"/></svg>
+      </button>
+      <button id="btn-zoom-out" class="secondary" title="Zoom out">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4M8 11h6"/></svg>
+      </button>
+      <div class="separator"></div>
+      <div class="mindmap-search">
+        <input type="text" id="search-input" placeholder="Search nodes..." aria-label="Search nodes">
+        <button id="btn-search" class="secondary" title="Search">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
+        </button>
+        <button id="btn-clear-search" class="secondary" title="Clear search" style="display:none">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <span class="info" id="toolbar-info"></span>
+    </div>
+
+    <div class="mindmap-svg-wrap" id="svg-wrap">
+      <div class="mindmap-status" id="loading-status">
+        <div class="spinner"></div>
+        <div>Loading knowledge map...</div>
+      </div>
+    </div>
+
+    <div class="mindmap-breadcrumb" id="breadcrumb">&nbsp;</div>
+  </div>
+
+  <div class="mm-tooltip" id="tooltip"></div>
+
+</main>
+
+<footer class="tut-footer">
+  &copy; 2026 <a href="https://www.acm-sl.com">Automated Computing Machinery SL (ACMSL)</a>. All rights reserved.
+</footer>
+
+<script id="mm-data" type="text/xml">
+<map version="freeplane 1.12.1">
+<!--To view this file, download free mind mapping software Freeplane from https://www.freeplane.org -->
+<node LOCALIZED_STYLE_REF="defaultstyle.details" FOLDED="false" ID="ID_1723255651" CREATED="1283093380553" MODIFIED="1769892384305" BORDER_WIDTH="5 px"><richcontent TYPE="NODE">
+
+<html>
+  <head>
+
+  </head>
+  <body>
+    <p style="text-align: center">
+      Training in<br/><b>Industrial aspects </b>
+    </p>
+    <p style="text-align: center">
+      <b>of<br/>Wind Energy</b>
+    </p>
+  </body>
+</html>
+</richcontent>
+<hook NAME="MapStyle" zoom="0.827">
+    <properties show_tags="UNDER_NODES" fit_to_viewport="false"/>
+    <tags category_separator="::"/>
+
+<map_styles>
+<stylenode LOCALIZED_TEXT="styles.root_node" STYLE="oval" UNIFORM_SHAPE="true" VGAP_QUANTITY="24 pt">
+<font SIZE="24"/>
+<stylenode LOCALIZED_TEXT="styles.predefined" POSITION="bottom_or_right" STYLE="bubble">
+<stylenode LOCALIZED_TEXT="default" ID="ID_417914922" MAX_WIDTH="600 px" COLOR="#000000" BACKGROUND_COLOR="#ffffff" STYLE="as_parent">
+<arrowlink SHAPE="CUBIC_CURVE" COLOR="#000000" WIDTH="2" TRANSPARENCY="200" DASH="" FONT_SIZE="9" FONT_FAMILY="SansSerif" DESTINATION="ID_417914922" STARTARROW="NONE" ENDARROW="DEFAULT"/>
+<font NAME="SansSerif" SIZE="10" BOLD="false" ITALIC="false"/>
+</stylenode>
+<stylenode LOCALIZED_TEXT="defaultstyle.details"/>
+<stylenode LOCALIZED_TEXT="defaultstyle.tags">
+<font SIZE="10"/>
+</stylenode>
+<stylenode LOCALIZED_TEXT="defaultstyle.attributes">
+<font SIZE="9"/>
+</stylenode>
+<stylenode LOCALIZED_TEXT="defaultstyle.note"/>
+<stylenode LOCALIZED_TEXT="defaultstyle.floating">
+<edge STYLE="hide_edge"/>
+<cloud COLOR="#f0f0f0" SHAPE="ROUND_RECT"/>
+</stylenode>
+<stylenode LOCALIZED_TEXT="defaultstyle.selection" BACKGROUND_COLOR="#4e85f8" BORDER_COLOR_LIKE_EDGE="false" BORDER_COLOR="#4e85f8"/>
+</stylenode>
+<stylenode LOCALIZED_TEXT="styles.user-defined" POSITION="bottom_or_right" STYLE="bubble">
+<stylenode LOCALIZED_TEXT="styles.topic" COLOR="#18898b" STYLE="fork">
+<font NAME="Liberation Sans" SIZE="10" BOLD="true"/>
+</stylenode>
+<stylenode LOCALIZED_TEXT="styles.subtopic" COLOR="#cc3300" STYLE="fork">
+<font NAME="Liberation Sans" SIZE="10" BOLD="true"/>
+</stylenode>
+<stylenode LOCALIZED_TEXT="styles.subsubtopic" COLOR="#669900">
+<font NAME="Liberation Sans" SIZE="10" BOLD="true"/>
+</stylenode>
+<stylenode LOCALIZED_TEXT="styles.important">
+<icon BUILTIN="yes"/>
+</stylenode>
+</stylenode>
+<stylenode LOCALIZED_TEXT="styles.AutomaticLayout" POSITION="bottom_or_right" STYLE="bubble">
+<stylenode LOCALIZED_TEXT="AutomaticLayout.level.root" COLOR="#000000">
+<font SIZE="18"/>
+<edge STYLE="bezier"/>
+</stylenode>
+<stylenode LOCALIZED_TEXT="AutomaticLayout.level,1" COLOR="#0033ff" BACKGROUND_COLOR="#ffffff" STYLE="as_parent">
+<font SIZE="16"/>
+<edge COLOR="#66ff66" WIDTH="thin"/>
+</stylenode>
+<stylenode LOCALIZED_TEXT="AutomaticLayout.level,2" COLOR="#ff6699">
+<font SIZE="14"/>
+</stylenode>
+<stylenode LOCALIZED_TEXT="AutomaticLayout.level,3" COLOR="#990000">
+<font SIZE="12"/>
+<cloud COLOR="#f0f0f0" SHAPE="ROUND_RECT"/>
+</stylenode>
+<stylenode LOCALIZED_TEXT="AutomaticLayout.level,4" COLOR="#000000" STYLE="as_parent">
+<font SIZE="14"/>
+</stylenode>
+</stylenode>
+</stylenode>
+</map_styles>
+</hook>
+<hook NAME="AutomaticEdgeColor" COUNTER="8" RULE="ON_BRANCH_CREATION"/>
+<hook NAME="accessories/plugins/AutomaticLayout.properties" VALUE="ALL"/>
+<edge WIDTH="5"/>
+<node LOCALIZED_STYLE_REF="AutomaticLayout.level,1" FOLDED="true" POSITION="bottom_or_right" ID="ID_323223660" CREATED="1403339036780" MODIFIED="1769537437047" COLOR="#000000"><richcontent TYPE="NODE">
+
+<html>
+  <head>
+
+  </head>
+  <body>
+    <p>
+      <font color="#3366ff">Physical principles</font>
+    </p>
+  </body>
+</html>
+</richcontent>
+<edge STYLE="bezier" COLOR="#00007c" WIDTH="5"/>
+<node TEXT="Aerodynamic&#xa;principles" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_1804292542" CREATED="1403339106636" MODIFIED="1769437897612" COLOR="#000000">
+<node TEXT="Blades" ID="ID_1290813035" CREATED="1403514974045" MODIFIED="1403514982020"/>
+<node TEXT="Tower" ID="ID_672551256" CREATED="1403514983389" MODIFIED="1403514991435"/>
+</node>
+<node TEXT="Electric&#xa;principles" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_260258659" CREATED="1403339155608" MODIFIED="1769437897659" COLOR="#000000">
+<node TEXT="Electric Generators" FOLDED="true" ID="ID_81333566" CREATED="1403339852765" MODIFIED="1403339882816">
+<node TEXT="Induction Generators" LOCALIZED_STYLE_REF="AutomaticLayout.level,4" ID="ID_46916702" CREATED="1403339888102" MODIFIED="1403515464499"/>
+<node TEXT="Synchronous Generators" LOCALIZED_STYLE_REF="AutomaticLayout.level,4" ID="ID_1990262417" CREATED="1403339946694" MODIFIED="1403515464487"/>
+</node>
+<node TEXT="Power Electronics" FOLDED="true" ID="ID_363606566" CREATED="1403339903925" MODIFIED="1403339910623">
+<node TEXT="Back to Back Converters" LOCALIZED_STYLE_REF="AutomaticLayout.level,4" ID="ID_1248712516" CREATED="1403341125807" MODIFIED="1403515464503"/>
+<node TEXT="Rotor Resistance Control" LOCALIZED_STYLE_REF="AutomaticLayout.level,4" ID="ID_469607798" CREATED="1403515274122" MODIFIED="1403515464506"/>
+</node>
+<node TEXT="Control components" FOLDED="true" ID="ID_320394795" CREATED="1403339914409" MODIFIED="1403339932535">
+<node TEXT="Soft starter" LOCALIZED_STYLE_REF="AutomaticLayout.level,4" ID="ID_1917083506" CREATED="1403341141651" MODIFIED="1403515464508"/>
+</node>
+</node>
+</node>
+<node LOCALIZED_STYLE_REF="AutomaticLayout.level,1" POSITION="bottom_or_right" ID="ID_1057379267" CREATED="1403339232172" MODIFIED="1769537468613" COLOR="#000000"><richcontent TYPE="NODE">
+
+<html>
+  <head>
+
+  </head>
+  <body>
+    <p>
+      <font color="#000000">Electric Power </font>
+    </p>
+    <p>
+      <font color="#000000">Generation and </font>
+    </p>
+    <p>
+      <font color="#000000">Distribution</font>
+    </p>
+  </body>
+</html>
+</richcontent>
+<edge COLOR="#00ff00" WIDTH="5"/>
+<node LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_1872434553" CREATED="1403339734539" MODIFIED="1769437897674" COLOR="#000000"><richcontent TYPE="NODE">
+
+<html>
+  <head>
+
+  </head>
+  <body>
+    <p>
+      Main characteristics of
+    </p>
+    <p>
+      <b>Power Grids</b>
+    </p>
+  </body>
+</html>
+</richcontent>
+</node>
+<node TEXT="Influence of Power Grid&#xa;on Wind Turbines" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_1671913460" CREATED="1403339796963" MODIFIED="1769437897690" COLOR="#000000"/>
+<node TEXT="Influence of Wind Turbines&#xa;in the Power Grid" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_6690789" CREATED="1403339813740" MODIFIED="1769437897706" COLOR="#000000">
+<node TEXT="Droop characteristics&#xa;of Wind Turbines" ID="ID_1166872696" CREATED="1403341044426" MODIFIED="1403341075759"/>
+<node TEXT="Production inertia" ID="ID_1239825410" CREATED="1403341080358" MODIFIED="1403341089082"/>
+<node TEXT="Backup requirements" ID="ID_54304001" CREATED="1403342084288" MODIFIED="1403342094975"/>
+<node TEXT="Inertial response" ID="ID_980411090" CREATED="1439497631234" MODIFIED="1439498096218" LINK="../Energia/Eolica/Estabilidad%20de%20la%20red/Inertial%20response%202005.PDF"/>
+</node>
+<node TEXT="Influence of Power&#xa;Connection Lines" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_329815560" CREATED="1403340068580" MODIFIED="1769437897706" COLOR="#000000"/>
+<node TEXT="Storage of Electric Energy" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_144373857" CREATED="1403342049651" MODIFIED="1769437897721" COLOR="#000000"/>
+<node TEXT="Power Quality Norms" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_1100013151" CREATED="1403508739195" MODIFIED="1769437897721" COLOR="#000000"/>
+</node>
+<node TEXT="Industrial Instrumentation&#xa;and Control" LOCALIZED_STYLE_REF="AutomaticLayout.level,1" POSITION="bottom_or_right" ID="ID_563951472" CREATED="1403508505071" MODIFIED="1769537468597" COLOR="#000000">
+<edge COLOR="#ff6666" WIDTH="5"/>
+<node LOCALIZED_STYLE_REF="AutomaticLayout.level,2" FOLDED="true" ID="ID_49713744" CREATED="1403508575540" MODIFIED="1403514516403"><richcontent TYPE="NODE">
+
+<html>
+  <head>
+
+  </head>
+  <body>
+    <p>
+      <font color="#000000">Sensors</font>
+    </p>
+  </body>
+</html>
+</richcontent>
+<node TEXT="Electric Parameters" FOLDED="true" ID="ID_558631817" CREATED="1403508699755" MODIFIED="1403508710219">
+<node TEXT="Power, Voltage, Current,&#xa;Frequency" ID="ID_973300688" CREATED="1403515773015" MODIFIED="1403515829949"/>
+<node TEXT="Power Quality" ID="ID_866028071" CREATED="1403508718971" MODIFIED="1403508729042"/>
+</node>
+<node TEXT="RPMs" ID="ID_1157233209" CREATED="1403508766240" MODIFIED="1403508771051"/>
+<node TEXT="Temperature" ID="ID_943612144" CREATED="1403508775162" MODIFIED="1403508779727"/>
+<node TEXT="Wind (direction + intensity)" ID="ID_902619078" CREATED="1403508783141" MODIFIED="1403513369242"/>
+<node TEXT="Vibrations" ID="ID_294216725" CREATED="1403508815111" MODIFIED="1403508824367"/>
+<node TEXT="Oil quality" ID="ID_542445279" CREATED="1403508854337" MODIFIED="1403508875194"/>
+<node TEXT="Torque" ID="ID_1819931213" CREATED="1403508878187" MODIFIED="1403508895590"/>
+</node>
+<node TEXT="Plant Communications" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_364116083" CREATED="1403508587278" MODIFIED="1403513201024">
+<node TEXT="Configurations" ID="ID_836076012" CREATED="1403508896900" MODIFIED="1403508901610"/>
+<node TEXT="Protocols" ID="ID_168608998" CREATED="1403508904485" MODIFIED="1403508909458"/>
+</node>
+<node TEXT="Algorithms" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" FOLDED="true" ID="ID_1287467094" CREATED="1403508646809" MODIFIED="1403514833452">
+<node TEXT="Control Algorithms" ID="ID_1090354322" CREATED="1403508663651" MODIFIED="1403508669530"/>
+<node TEXT="Data treatment&#xa;and Analysis" ID="ID_515102646" CREATED="1403508676511" MODIFIED="1403508844277"/>
+</node>
+<node TEXT="Substation Monitoring&#xa;and Control" ID="ID_1983507417" CREATED="1403515864024" MODIFIED="1538150870050"/>
+</node>
+<node TEXT="Wind Farms" LOCALIZED_STYLE_REF="AutomaticLayout.level,1" POSITION="top_or_left" ID="ID_158094941" CREATED="1403339203083" MODIFIED="1769537533356" COLOR="#000000">
+<edge COLOR="#0000ff" WIDTH="5"/>
+<node TEXT="Site evaluation" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_436132783" CREATED="1403339289452" MODIFIED="1769536527161" COLOR="#000000"/>
+<node TEXT="Project Management" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_1935075169" CREATED="1403339319628" MODIFIED="1769437734457" COLOR="#000000"/>
+<node TEXT="Construction" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_956324526" CREATED="1403339342596" MODIFIED="1769437769280" COLOR="#000000"/>
+<node TEXT="Production Management" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_1184853172" CREATED="1403339395071" MODIFIED="1769437782828" COLOR="#000000">
+<node TEXT="Contract agreements&#xa;for delivery of Production" ID="ID_1479118879" CREATED="1403339994923" MODIFIED="1403340014560"/>
+<node TEXT="Wind Forecast" ID="ID_958108085" CREATED="1403340019427" MODIFIED="1403340064385"/>
+</node>
+<node TEXT="Maintenance Management" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_844779317" CREATED="1403339409900" MODIFIED="1769536554217" COLOR="#000000" BACKGROUND_COLOR="#f0f0f0">
+<node TEXT="Statistics analysis&#xa;of Incidences" ID="ID_567854379" CREATED="1403341896067" MODIFIED="1403342007672"><richcontent TYPE="DETAILS" HIDDEN="true">
+<html>
+
+
+  <head>
+
+  </head>
+  <body>
+  </body>
+</html></richcontent>
+</node>
+<node TEXT="Logistics" ID="ID_917730521" CREATED="1403341758196" MODIFIED="1403341766430"/>
+<node TEXT="Activities planning" FOLDED="true" ID="ID_318037761" CREATED="1403341803299" MODIFIED="1403341861681">
+<node TEXT="Planned Maintenance" ID="ID_919017353" CREATED="1403341249043" MODIFIED="1403341262515"/>
+<node TEXT="Predictive Maintenance" ID="ID_236935387" CREATED="1403341267000" MODIFIED="1403341279120"/>
+<node TEXT="Corrective Maintenance" ID="ID_1250011778" CREATED="1403341741660" MODIFIED="1403341748739"/>
+</node>
+</node>
+</node>
+<node TEXT="Wind Turbines" LOCALIZED_STYLE_REF="AutomaticLayout.level,1" POSITION="top_or_left" ID="ID_1879732168" CREATED="1403339441747" MODIFIED="1769537533356" COLOR="#000000">
+<edge COLOR="#ff00ff" WIDTH="5"/>
+<node TEXT="Design Evolution" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_1480711894" CREATED="1403339452276" MODIFIED="1769437809068" COLOR="#000000"/>
+<node TEXT="Families" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_159496869" CREATED="1403339471252" MODIFIED="1769437820995" COLOR="#000000"/>
+<node TEXT="Classification" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_1374540326" CREATED="1403339484903" MODIFIED="1769437828324" COLOR="#000000"/>
+<node TEXT="Components and&#xa;Subassemblies" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_279462942" CREATED="1403339505562" MODIFIED="1769437844941" COLOR="#000000">
+<node TEXT="Pole or Tower" ID="ID_152863914" CREATED="1403339521226" MODIFIED="1403339530832"/>
+<node TEXT="Blades" ID="ID_434040287" CREATED="1403339534490" MODIFIED="1403339538311"/>
+<node TEXT="Nacelle" FOLDED="true" ID="ID_234410849" CREATED="1403339541930" MODIFIED="1403339558233">
+<node TEXT="Drive Train" FOLDED="true" ID="ID_920071775" CREATED="1403339564139" MODIFIED="1403339571632">
+<node TEXT="Hubs" LOCALIZED_STYLE_REF="AutomaticLayout.level,4" ID="ID_500739092" CREATED="1403516075597" MODIFIED="1403516122858"/>
+<node TEXT="Bearings" LOCALIZED_STYLE_REF="AutomaticLayout.level,4" ID="ID_1704515367" CREATED="1403516098221" MODIFIED="1403516122855"/>
+<node TEXT="Gearboxes" LOCALIZED_STYLE_REF="AutomaticLayout.level,4" ID="ID_192875248" CREATED="1403516108305" MODIFIED="1403516122848"/>
+</node>
+<node TEXT="Electric Subsytem" ID="ID_91058062" CREATED="1403339577322" MODIFIED="1403339585463"/>
+<node TEXT="Meteorological sensors" ID="ID_929558436" CREATED="1403339602589" MODIFIED="1403339614111"/>
+<node TEXT="Yawing mechanism" ID="ID_1940143551" CREATED="1403515997035" MODIFIED="1403516011146"/>
+</node>
+</node>
+</node>
+<node TEXT="Weather forecasting" LOCALIZED_STYLE_REF="AutomaticLayout.level,1" POSITION="bottom_or_right" ID="ID_332445787" CREATED="1403508117771" MODIFIED="1769537468613" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
+<edge COLOR="#00ffff" WIDTH="5"/>
+</node>
+</node>
+</map>
+</script>
+
+<script>
+(function () {
+  "use strict";
+
+  // ─────────────────────────────────────
+  //  Configuration
+  // ─────────────────────────────────────
+  const INITIAL_DEPTH = 2;
+  const TRANSITION_MS = 400;
+  const NODE_RADIUS = 6;
+  const NODE_RADIUS_ROOT = 10;
+  const LINK_ICON = "\uD83D\uDD17"; // chain link emoji
+
+  // Color palette by depth
+  const DEPTH_COLORS = [
+    "#006699",                                                         // 0 - root
+    "#ff9900", "#9900ff", "#00007c", "#00ff00", "#ff6666",             // 1
+    "#0000ff", "#ff00ff", "#00ffff", "#cc6600", "#009900", "#cc0000",
+  ];
+
+  // ─────────────────────────────────────
+  //  DOM references
+  // ─────────────────────────────────────
+  const container   = document.getElementById("mindmap-container");
+  const svgWrap     = document.getElementById("svg-wrap");
+  const loadingEl   = document.getElementById("loading-status");
+  const tooltipEl   = document.getElementById("tooltip");
+  const breadcrumb  = document.getElementById("breadcrumb");
+  const toolbarInfo = document.getElementById("toolbar-info");
+  const searchInput = document.getElementById("search-input");
+
+  // ─────────────────────────────────────
+  //  .mm XML → JSON tree parser
+  // ─────────────────────────────────────
+
+  function parseMMXML(xmlText) {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(xmlText, "application/xml");
+    const parseErr = doc.querySelector("parsererror");
+    if (parseErr) throw new Error("XML parse error: " + parseErr.textContent.slice(0, 200));
+
+    const mapEl = doc.querySelector("map");
+    if (!mapEl) throw new Error("No <map> element found in .mm file");
+
+    const rootNode = mapEl.querySelector(":scope > node");
+    if (!rootNode) throw new Error("No root <node> found inside <map>");
+
+    let totalNodes = 0;
+
+    function extractText(nodeEl) {
+      // First try TEXT attribute
+      const textAttr = nodeEl.getAttribute("TEXT");
+      if (textAttr) return textAttr.trim();
+
+      // Try richcontent
+      const rc = nodeEl.querySelector(":scope > richcontent[TYPE='NODE']");
+      if (rc) {
+        // The richcontent contains an <html><body>...</body></html> block
+        const bodyEl = rc.querySelector("body");
+        if (bodyEl) return bodyEl.textContent.trim();
+        return rc.textContent.trim();
+      }
+
+      return "(unnamed)";
+    }
+
+    function parseNode(nodeEl, depth, siblingIndex) {
+      totalNodes++;
+      const name = extractText(nodeEl);
+      const link = nodeEl.getAttribute("LINK") || null;
+      const folded = nodeEl.getAttribute("FOLDED") === "true";
+      const color = nodeEl.getAttribute("COLOR") || null;
+      const bgColor = nodeEl.getAttribute("BACKGROUND_COLOR") || null;
+
+      // Edge color (for branch coloring)
+      const edgeEl = nodeEl.querySelector(":scope > edge");
+      const edgeColor = edgeEl ? edgeEl.getAttribute("COLOR") : null;
+
+      // Collect direct child <node> elements (skip hooks, richcontent, etc.)
+      const childEls = nodeEl.querySelectorAll(":scope > node");
+      const children = [];
+      childEls.forEach(function (ch, i) {
+        children.push(parseNode(ch, depth + 1, i));
+      });
+
+      return {
+        name: name,
+        link: link,
+        folded: folded,
+        color: color,
+        bgColor: bgColor,
+        edgeColor: edgeColor,
+        depth: depth,
+        siblingIndex: siblingIndex,
+        children: children.length > 0 ? children : undefined,
+      };
+    }
+
+    const tree = parseNode(rootNode, 0, 0);
+    return { tree: tree, totalNodes: totalNodes };
+  }
+
+  // ─────────────────────────────────────
+  //  Color helpers
+  // ─────────────────────────────────────
+
+  /** Assign a "branch color" to every node.  Level-1 nodes each get a distinct
+      hue from the palette (or from their edgeColor); deeper nodes inherit from
+      their level-1 ancestor and get progressively lighter. */
+  function assignBranchColors(root) {
+    root._branchColor = DEPTH_COLORS[0];
+
+    if (!root.children) return;
+
+    root.children.forEach(function (child, i) {
+      // Use the Freeplane edge color if available, else cycle through palette
+      const base = child.edgeColor || DEPTH_COLORS[(i % (DEPTH_COLORS.length - 1)) + 1];
+      propagateColor(child, base, 1);
+    });
+
+    function propagateColor(node, baseColor, depth) {
+      if (depth <= 1) {
+        node._branchColor = baseColor;
+      } else {
+        // Lighten the base towards white as depth increases
+        const t = Math.min((depth - 1) * 0.12, 0.7);
+        node._branchColor = blendToWhite(baseColor, t);
+      }
+      if (node.children) {
+        node.children.forEach(function (ch) {
+          propagateColor(ch, baseColor, depth + 1);
+        });
+      }
+    }
+  }
+
+  function blendToWhite(hex, t) {
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    const mix = function (c) { return Math.round(c + (255 - c) * t); };
+    return "#" + [mix(r), mix(g), mix(b)].map(function (v) {
+      return v.toString(16).padStart(2, "0");
+    }).join("");
+  }
+
+  function darken(hex, amount) {
+    const r = Math.max(0, parseInt(hex.slice(1, 3), 16) - amount);
+    const g = Math.max(0, parseInt(hex.slice(3, 5), 16) - amount);
+    const b = Math.max(0, parseInt(hex.slice(5, 7), 16) - amount);
+    return "#" + [r, g, b].map(function (v) {
+      return v.toString(16).padStart(2, "0");
+    }).join("");
+  }
+
+  // ─────────────────────────────────────
+  //  Collapse helpers
+  // ─────────────────────────────────────
+
+  /** Collapse children beyond `maxDepth` from root (depth 0). */
+  function collapseToDepth(node, maxDepth, currentDepth) {
+    if (currentDepth === undefined) currentDepth = 0;
+    if (node.children) {
+      if (currentDepth >= maxDepth) {
+        node._children = node.children;
+        node.children = null;
+      } else {
+        node.children.forEach(function (c) { collapseToDepth(c, maxDepth, currentDepth + 1); });
+      }
+    }
+    if (node._children) {
+      if (currentDepth >= maxDepth) {
+        // already collapsed – recurse into hidden subtree
+        node._children.forEach(function (c) { collapseToDepth(c, maxDepth, currentDepth + 1); });
+      } else {
+        // expand it back
+        node.children = node._children;
+        node._children = null;
+        node.children.forEach(function (c) { collapseToDepth(c, maxDepth, currentDepth + 1); });
+      }
+    }
+  }
+
+  function expandAll(node) {
+    if (node._children) {
+      node.children = node._children;
+      node._children = null;
+    }
+    if (node.children) node.children.forEach(expandAll);
+  }
+
+  function countDescendants(node) {
+    var n = 0;
+    if (node.children) node.children.forEach(function (c) { n += 1 + countDescendants(c); });
+    if (node._children) node._children.forEach(function (c) { n += 1 + countDescendants(c); });
+    return n;
+  }
+
+  function hasHiddenChildren(d) {
+    return d._children && d._children.length > 0;
+  }
+
+  function hasVisibleChildren(d) {
+    return d.children && d.children.length > 0;
+  }
+
+  function nodeDepth(d) {
+    return d.data ? d.data.depth : (d.depth || 0);
+  }
+
+  // ─────────────────────────────────────
+  //  Breadcrumb - path from root to node
+  // ─────────────────────────────────────
+  function showBreadcrumb(d) {
+    const path = [];
+    let cur = d;
+    while (cur) {
+      path.unshift(cur.data ? cur.data.name : cur.name);
+      cur = cur.parent;
+    }
+    breadcrumb.innerHTML = path.map(function (p, i) {
+      return i === path.length - 1
+        ? "<span>" + escapeHtml(p) + "</span>"
+        : escapeHtml(p);
+    }).join(" &rsaquo; ");
+  }
+
+  function escapeHtml(text) {
+    const div = document.createElement("div");
+    div.textContent = text;
+    return div.innerHTML;
+  }
+
+  // ─────────────────────────────────────
+  //  MAIN: parse embedded data and render
+  // ─────────────────────────────────────
+
+  var mmXml = document.getElementById("mm-data").textContent;
+  var result = parseMMXML(mmXml);
+  assignBranchColors(result.tree);
+  toolbarInfo.textContent = result.totalNodes + " nodes";
+  loadingEl.remove();
+  renderTree(result.tree);
+
+  // ─────────────────────────────────────
+  //  D3 Tree Rendering
+  // ─────────────────────────────────────
+
+  function renderTree(rootData) {
+    // Initial collapse
+    collapseToDepth(rootData, INITIAL_DEPTH);
+
+    const width  = svgWrap.clientWidth;
+    const height = svgWrap.clientHeight;
+    const margin = { top: 30, right: 200, bottom: 30, left: 120 };
+
+    // Create SVG
+    const svg = d3.select(svgWrap)
+      .append("svg")
+      .attr("viewBox", [0, 0, width, height])
+      .attr("preserveAspectRatio", "xMidYMid meet");
+
+    // Zoom layer
+    const g = svg.append("g").attr("class", "mm-zoom-layer");
+
+    const zoomBehavior = d3.zoom()
+      .scaleExtent([0.15, 4])
+      .on("zoom", function (event) {
+        g.attr("transform", event.transform);
+      });
+
+    svg.call(zoomBehavior);
+
+    // Initial transform
+    const initialTransform = d3.zoomIdentity.translate(margin.left, height / 2).scale(0.9);
+    svg.call(zoomBehavior.transform, initialTransform);
+
+    // Links group & nodes group (links behind nodes)
+    const gLinks = g.append("g").attr("class", "mm-links-layer");
+    const gNodes = g.append("g").attr("class", "mm-nodes-layer");
+
+    // D3 tree layout
+    const treeLayout = d3.tree().nodeSize([22, 260]);
+
+    let i = 0; // unique id counter
+
+    // Source for initial animation
+    const rootHierarchy = d3.hierarchy(rootData);
+    rootHierarchy.x0 = 0;
+    rootHierarchy.y0 = 0;
+
+    update(rootHierarchy);
+
+    // ── Update function ──
+    function update(source) {
+      const root = d3.hierarchy(rootData);
+      root.x0 = source.x0 || 0;
+      root.y0 = source.y0 || 0;
+
+      treeLayout(root);
+
+      const nodes = root.descendants();
+      const links = root.links();
+
+      // Normalize depth spacing
+      nodes.forEach(function (d) {
+        d.y = d.depth * 260;
+      });
+
+      // ── LINKS ──
+      const link = gLinks.selectAll("path.mm-link")
+        .data(links, function (d) { return d.target.data.name + "-" + d.target.data.siblingIndex + "-" + d.target.depth; });
+
+      const linkEnter = link.enter()
+        .append("path")
+        .attr("class", "mm-link")
+        .attr("d", function () {
+          const o = { x: source.x0, y: source.y0 };
+          return diagonal(o, o);
+        })
+        .attr("stroke", function (d) {
+          return d.target.data._branchColor || "#ccc";
+        });
+
+      const linkUpdate = linkEnter.merge(link);
+
+      linkUpdate.transition()
+        .duration(TRANSITION_MS)
+        .attr("d", function (d) { return diagonal(d.source, d.target); })
+        .attr("stroke", function (d) {
+          return d.target.data._branchColor || "#ccc";
+        });
+
+      link.exit()
+        .transition()
+        .duration(TRANSITION_MS)
+        .attr("d", function () {
+          const o = { x: source.x || 0, y: source.y || 0 };
+          return diagonal(o, o);
+        })
+        .remove();
+
+      // ── NODES ──
+      const node = gNodes.selectAll("g.mm-node")
+        .data(nodes, function (d) { return d.data.name + "-" + d.data.siblingIndex + "-" + d.depth; });
+
+      const nodeEnter = node.enter()
+        .append("g")
+        .attr("class", "mm-node")
+        .attr("transform", function () {
+          return "translate(" + (source.y0 || 0) + "," + (source.x0 || 0) + ")";
+        })
+        .on("click", function (event, d) {
+          event.stopPropagation();
+          // If the click is on the link icon, don't toggle
+          if (event.target.classList.contains("link-icon")) return;
+          toggle(d, root);
+        })
+        .on("mouseover", function (event, d) {
+          showBreadcrumb(d);
+          if (d.data.name.length > 50 || d.data.link) {
+            showTooltip(event, d);
+          }
+        })
+        .on("mouseout", function () {
+          hideTooltip();
+        });
+
+      // Node circles
+      nodeEnter.append("circle")
+        .attr("r", function (d) { return d.depth === 0 ? NODE_RADIUS_ROOT : NODE_RADIUS; })
+        .attr("fill", function (d) {
+          if (hasHiddenChildren(d.data)) return d.data._branchColor || "#006699";
+          if (hasVisibleChildren(d.data)) return "white";
+          return d.data._branchColor || "#aaa";
+        })
+        .attr("stroke", function (d) {
+          return d.data._branchColor || "#006699";
+        });
+
+      // Labels
+      nodeEnter.append("text")
+        .attr("class", function (d) { return d.depth === 0 ? "node-label-root" : "node-label"; })
+        .attr("dy", "0.35em")
+        .attr("x", function (d) {
+          return d.depth === 0 ? (NODE_RADIUS_ROOT + 8) : (hasVisibleChildren(d.data) || hasHiddenChildren(d.data) ? (NODE_RADIUS + 8) : (NODE_RADIUS + 6));
+        })
+        .text(function (d) {
+          const name = d.data.name;
+          return name.length > 60 ? name.slice(0, 57) + "..." : name;
+        });
+
+      // Link icon for nodes with URLs
+      nodeEnter.filter(function (d) { return !!d.data.link; })
+        .append("text")
+        .attr("class", "link-icon")
+        .attr("x", function (d) {
+          const labelLen = Math.min(d.data.name.length, 60);
+          const offset = d.depth === 0 ? (NODE_RADIUS_ROOT + 8) : (NODE_RADIUS + 8);
+          return offset + labelLen * 6.5 + 8;
+        })
+        .attr("dy", "0.35em")
+        .attr("font-size", "11px")
+        .text(LINK_ICON)
+        .style("cursor", "pointer")
+        .on("click", function (event, d) {
+          event.stopPropagation();
+          window.open(d.data.link, "_blank", "noopener");
+        });
+
+      // Collapsed badge (child count)
+      nodeEnter.filter(function (d) { return hasHiddenChildren(d.data); })
+        .append("text")
+        .attr("class", "mm-badge-text")
+        .attr("x", 0)
+        .attr("dy", "0.35em")
+        .attr("text-anchor", "middle")
+        .attr("fill", "white")
+        .attr("font-size", "8px")
+        .attr("font-weight", "700")
+        .attr("pointer-events", "none")
+        .text(function (d) {
+          const n = d.data._children ? d.data._children.length : 0;
+          return n > 0 ? n : "";
+        });
+
+      // ── Update existing + new ──
+      const nodeUpdate = nodeEnter.merge(node);
+
+      nodeUpdate.transition()
+        .duration(TRANSITION_MS)
+        .attr("transform", function (d) {
+          return "translate(" + d.y + "," + d.x + ")";
+        });
+
+      nodeUpdate.select("circle")
+        .attr("r", function (d) { return d.depth === 0 ? NODE_RADIUS_ROOT : NODE_RADIUS; })
+        .attr("fill", function (d) {
+          if (hasHiddenChildren(d.data)) return d.data._branchColor || "#006699";
+          if (hasVisibleChildren(d.data)) return "white";
+          return d.data._branchColor || "#aaa";
+        })
+        .attr("stroke", function (d) {
+          return d.data._branchColor || "#006699";
+        });
+
+      // Update badge
+      nodeUpdate.select(".mm-badge-text")
+        .text(function (d) {
+          const n = d.data._children ? d.data._children.length : 0;
+          return n > 0 ? n : "";
+        });
+
+      // ── Exit ──
+      const nodeExit = node.exit()
+        .transition()
+        .duration(TRANSITION_MS)
+        .attr("transform", function () {
+          return "translate(" + (source.y || 0) + "," + (source.x || 0) + ")";
+        })
+        .remove();
+
+      nodeExit.select("circle").attr("r", 1e-6);
+      nodeExit.select("text").style("fill-opacity", 1e-6);
+
+      // Stash positions for next transition
+      nodes.forEach(function (d) {
+        d.x0 = d.x;
+        d.y0 = d.y;
+      });
+    }
+
+    // ── Toggle expand/collapse ──
+    function toggle(d, root) {
+      if (d.data.children) {
+        d.data._children = d.data.children;
+        d.data.children = null;
+      } else if (d.data._children) {
+        d.data.children = d.data._children;
+        d.data._children = null;
+      }
+      // Update using clicked node as source (for animation origin)
+      const fakeSource = { x0: d.x, y0: d.y, x: d.x, y: d.y };
+      update(fakeSource);
+    }
+
+    // ── Diagonal link generator (horizontal tree) ──
+    function diagonal(s, d) {
+      return "M" + s.y + "," + s.x +
+        "C" + ((s.y + d.y) / 2) + "," + s.x +
+        " " + ((s.y + d.y) / 2) + "," + d.x +
+        " " + d.y + "," + d.x;
+    }
+
+    // ── Tooltip ──
+    function showTooltip(event, d) {
+      let html = "<strong>" + escapeHtml(d.data.name) + "</strong>";
+      if (d.data.link) {
+        html += '<br><span style="color:#6bb8e8">' + escapeHtml(d.data.link) + "</span>";
+      }
+      const hidden = d.data._children ? d.data._children.length : 0;
+      if (hidden > 0) {
+        html += '<br><span style="opacity:0.7">' + hidden + " collapsed children</span>";
+      }
+      tooltipEl.innerHTML = html;
+      tooltipEl.classList.add("visible");
+
+      const rect = container.getBoundingClientRect();
+      const ex = event.clientX - rect.left + 15;
+      const ey = event.clientY - rect.top + 15;
+      tooltipEl.style.left = ex + "px";
+      tooltipEl.style.top = ey + "px";
+    }
+
+    function hideTooltip() {
+      tooltipEl.classList.remove("visible");
+    }
+
+    // ─────────────────────────────────────
+    //  Toolbar actions
+    // ─────────────────────────────────────
+
+    document.getElementById("btn-expand").addEventListener("click", function () {
+      expandAll(rootData);
+      update({ x0: 0, y0: 0, x: 0, y: 0 });
+    });
+
+    document.getElementById("btn-collapse").addEventListener("click", function () {
+      expandAll(rootData);           // first fully expand
+      collapseToDepth(rootData, INITIAL_DEPTH); // then collapse
+      update({ x0: 0, y0: 0, x: 0, y: 0 });
+      svg.transition().duration(TRANSITION_MS)
+        .call(zoomBehavior.transform, initialTransform);
+    });
+
+    document.getElementById("btn-reset").addEventListener("click", function () {
+      svg.transition().duration(TRANSITION_MS)
+        .call(zoomBehavior.transform, initialTransform);
+    });
+
+    document.getElementById("btn-zoom-in").addEventListener("click", function () {
+      svg.transition().duration(300).call(zoomBehavior.scaleBy, 1.4);
+    });
+
+    document.getElementById("btn-zoom-out").addEventListener("click", function () {
+      svg.transition().duration(300).call(zoomBehavior.scaleBy, 0.7);
+    });
+
+    // ─────────────────────────────────────
+    //  Search
+    // ─────────────────────────────────────
+    const btnSearch = document.getElementById("btn-search");
+    const btnClear  = document.getElementById("btn-clear-search");
+
+    function doSearch() {
+      const query = searchInput.value.trim().toLowerCase();
+      if (!query) { clearSearch(); return; }
+
+      // Expand all so we can search everything
+      expandAll(rootData);
+      update({ x0: 0, y0: 0, x: 0, y: 0 });
+
+      // Find matches
+      setTimeout(function () {
+        const allNodes = gNodes.selectAll("g.mm-node");
+        let matchCount = 0;
+        let firstMatch = null;
+
+        allNodes.classed("highlight-match", function (d) {
+          const match = d.data.name.toLowerCase().includes(query);
+          if (match) {
+            matchCount++;
+            if (!firstMatch) firstMatch = d;
+          }
+          return match;
+        });
+
+        toolbarInfo.textContent = matchCount + " match" + (matchCount !== 1 ? "es" : "") + " found";
+        btnClear.style.display = "inline-flex";
+
+        // Zoom to first match
+        if (firstMatch) {
+          const t = d3.zoomIdentity
+            .translate(width / 2 - firstMatch.y, height / 2 - firstMatch.x)
+            .scale(1);
+          svg.transition().duration(500).call(zoomBehavior.transform, t);
+        }
+      }, TRANSITION_MS + 50);
+    }
+
+    function clearSearch() {
+      searchInput.value = "";
+      gNodes.selectAll("g.mm-node").classed("highlight-match", false);
+      btnClear.style.display = "none";
+
+      // Collapse back
+      expandAll(rootData);
+      collapseToDepth(rootData, INITIAL_DEPTH);
+      update({ x0: 0, y0: 0, x: 0, y: 0 });
+      svg.transition().duration(TRANSITION_MS)
+        .call(zoomBehavior.transform, initialTransform);
+
+      toolbarInfo.textContent = countAllNodes(rootData) + " nodes";
+    }
+
+    function countAllNodes(node) {
+      let n = 1;
+      var ch = node.children || node._children;
+      if (ch) ch.forEach(function (c) { n += countAllNodes(c); });
+      return n;
+    }
+
+    btnSearch.addEventListener("click", doSearch);
+    btnClear.addEventListener("click", clearSearch);
+    searchInput.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") doSearch();
+      if (e.key === "Escape") clearSearch();
+    });
+
+  } // end renderTree
+
+})();
+</script>
+
+</body>
+</html>

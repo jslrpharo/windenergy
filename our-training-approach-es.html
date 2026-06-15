@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nuestro Enfoque para la Formación en Aerogeneradores | ACMSL</title>
+  <meta name="description" content="Descubra cómo los simuladores en tiempo real de ACMSL proporcionan formación integrada y basada en la experiencia para el personal de O&M de aerogeneradores — operación normal, condiciones extremas y diagnóstico de fallos." />
+  <link rel="icon" type="image/png" href="img/ACM_LOGO.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary:       #006699;
+      --primary-dark:  #004d73;
+      --primary-light: #e3f4ff;
+      --accent:        #00a878;
+      --accent-dark:   #007d5a;
+      --dark:          #123047;
+      --mid:           #3a5068;
+      --bg:            #f5f7fb;
+      --white:         #ffffff;
+      --radius:        14px;
+      --shadow:        0 10px 32px rgba(0,0,0,0.10);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Open Sans', system-ui, sans-serif; background: var(--bg); color: var(--dark); line-height: 1.7; }
+    header { background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 60%, #0099cc 100%); color: var(--white); padding: 1.1rem 2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; box-shadow: 0 4px 16px rgba(0,0,0,0.22); position: sticky; top: 0; z-index: 100; flex-wrap: wrap; }
+    .header-brand { display: flex; align-items: center; gap: 0.8rem; text-decoration: none; color: inherit; }
+    .header-brand img { height: 34px; width: auto; }
+    .header-brand span { font-family: 'Montserrat', sans-serif; font-size: 1.7rem; font-weight: 800; letter-spacing: 0.05em; }
+    .header-nav { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .header-nav a { color: rgba(255,255,255,0.92); text-decoration: none; font-size: 0.88rem; font-weight: 600; padding: 0.45rem 1rem; border-radius: 999px; background: rgba(255,255,255,0.12); transition: background 0.2s; }
+    .header-nav a:hover { background: rgba(255,255,255,0.25); }
+    .header-nav a.cta { background: var(--accent); color: var(--white); }
+    .header-nav a.cta:hover { background: var(--accent-dark); }
+    .hero { background: linear-gradient(160deg, var(--primary-dark) 0%, var(--primary) 45%, #1a9abf 100%); color: var(--white); padding: 4.5rem 2rem 5rem; text-align: center; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; inset: 0; background: url('img/Aerogenerador_vista_interna_copilot.png') center/cover no-repeat; opacity: 0.10; }
+    .hero-inner { position: relative; max-width: 820px; margin: 0 auto; }
+    .hero-tag { display: inline-block; background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.30); border-radius: 999px; padding: 0.35rem 1.1rem; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 1.2rem; }
+    .hero h1 { font-family: 'Montserrat', sans-serif; font-size: clamp(1.9rem, 4.5vw, 3rem); font-weight: 800; line-height: 1.2; margin-bottom: 1.1rem; }
+    .hero h1 em { font-style: normal; color: #7fdfff; }
+    .hero p { font-size: clamp(1rem, 2vw, 1.18rem); opacity: 0.92; max-width: 680px; margin: 0 auto 2rem; }
+    .hero-cta-group { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.8rem; border-radius: 999px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.95rem; text-decoration: none; transition: transform 0.18s, box-shadow 0.18s, background 0.18s; cursor: pointer; border: none; }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.18); }
+    .btn-primary { background: var(--accent); color: var(--white); }
+    .btn-primary:hover { background: var(--accent-dark); }
+    .btn-outline { background: rgba(255,255,255,0.15); color: var(--white); border: 2px solid rgba(255,255,255,0.55); }
+    .btn-outline:hover { background: rgba(255,255,255,0.28); }
+    main { max-width: 1000px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+    .intro-block { background: var(--white); border-radius: var(--radius); padding: 2.4rem 2.8rem; box-shadow: var(--shadow); margin-bottom: 2.8rem; border-left: 5px solid var(--primary); }
+    .intro-block p { font-size: 1.08rem; color: var(--mid); }
+    .intro-block strong { color: var(--primary-dark); }
+    .intro-block a { color: var(--primary); font-weight: 600; }
+    .section-heading { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.3rem; }
+    .section-heading .icon { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
+    .icon-challenge { background: #fff0f0; }
+    .icon-approach  { background: #e8f9f3; }
+    .section-heading h2 { font-family: 'Montserrat', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--dark); }
+    .challenge-block { background: var(--white); border-radius: var(--radius); padding: 2.4rem 2.8rem; box-shadow: var(--shadow); margin-bottom: 2.8rem; }
+    .challenge-block p { font-size: 1.02rem; color: var(--mid); margin-bottom: 1rem; }
+    .challenge-block p:last-child { margin-bottom: 0; }
+    .highlight-box { background: #fff8e1; border-left: 4px solid #f5a623; border-radius: 8px; padding: 1rem 1.4rem; margin: 1.4rem 0; font-size: 1rem; color: #5c4200; font-style: italic; }
+    .approach-block { background: var(--white); border-radius: var(--radius); padding: 2.4rem 2.8rem; box-shadow: var(--shadow); margin-bottom: 2.8rem; }
+    .approach-block > p { font-size: 1.02rem; color: var(--mid); margin-bottom: 1.8rem; }
+    .pillars { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.2rem; margin-bottom: 1.8rem; }
+    .pillar { border-radius: 12px; padding: 1.5rem 1.6rem; border: 1px solid transparent; }
+    .pillar-normal { background: #edfaf5; border-color: #a8e6d0; }
+    .pillar-extreme { background: #fff4e5; border-color: #ffc97a; }
+    .pillar-fault { background: #fdecea; border-color: #f5b4ae; }
+    .pillar-icon { font-size: 1.9rem; margin-bottom: 0.5rem; }
+    .pillar h3 { font-family: 'Montserrat', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--dark); }
+    .pillar p { font-size: 0.93rem; color: var(--mid); }
+    .controller-note { background: var(--primary-light); border-left: 4px solid var(--primary); border-radius: 8px; padding: 1.1rem 1.4rem; font-size: 0.98rem; color: var(--primary-dark); }
+    .controller-note strong { color: var(--primary-dark); }
+    .benefits-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.2rem; margin-bottom: 2.8rem; }
+    .benefit-card { background: var(--white); border-radius: var(--radius); padding: 1.6rem 1.8rem; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 0.6rem; }
+    .benefit-card .b-icon { font-size: 2rem; }
+    .benefit-card h4 { font-family: 'Montserrat', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--dark); }
+    .benefit-card p { font-size: 0.88rem; color: var(--mid); }
+    .cta-banner { background: linear-gradient(135deg, var(--primary) 0%, #0099cc 100%); border-radius: var(--radius); padding: 3rem 2.8rem; color: var(--white); text-align: center; box-shadow: var(--shadow); }
+    .cta-banner h2 { font-family: 'Montserrat', sans-serif; font-size: 1.75rem; font-weight: 800; margin-bottom: 0.8rem; }
+    .cta-banner p { font-size: 1.05rem; opacity: 0.92; max-width: 600px; margin: 0 auto 1.8rem; }
+    .cta-banner .btn-primary { background: var(--accent); }
+    footer { background: var(--dark); color: rgba(255,255,255,0.7); text-align: center; padding: 1.5rem; font-size: 0.84rem; }
+    footer a { color: #7fdfff; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+    @media (max-width: 600px) {
+      .intro-block, .challenge-block, .approach-block { padding: 1.6rem 1.4rem; }
+      .hero { padding: 3rem 1.2rem 3.5rem; }
+      .cta-banner { padding: 2rem 1.4rem; }
+    }
+  </style>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-T1XF1Z8ML9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-T1XF1Z8ML9');
+  </script>
+</head>
+<body>
+
+  <header>
+    <a class="header-brand" href="https://www.acm-sl.com" target="_blank" rel="noopener">
+      <img src="img/ACM_LOGO.png" alt="ACMSL Logo" />
+      <span>ACMSL</span>
+    </a>
+    <nav class="header-nav">
+      <a href="index.html?lang=es">&#127968; Inicio</a>
+      <a href="contacto.html" class="cta">&#9993; Contáctenos</a>
+      <select onchange="window.location.href=this.value" aria-label="Language" style="background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.4);border-radius:999px;padding:0.4rem 0.8rem;font-size:0.85rem;font-weight:600;cursor:pointer;">
+        <option value="our-training-approach.html" style="background:#123047;color:#fff;">EN</option>
+        <option value="our-training-approach-es.html" selected style="background:#123047;color:#fff;">ES</option>
+        <option value="our-training-approach-fr.html" style="background:#123047;color:#fff;">FR</option>
+        <option value="our-training-approach-de.html" style="background:#123047;color:#fff;">DE</option>
+        <option value="our-training-approach-it.html" style="background:#123047;color:#fff;">IT</option>
+        <option value="our-training-approach-pt.html" style="background:#123047;color:#fff;">PT</option>
+      </select>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-tag">Formación en Energía Eólica</div>
+      <h1>Nuestro Enfoque para la<br><em>Formación en Tecnología de Aerogeneradores</em></h1>
+      <p>Acelere el camino del aula al pie del aerogenerador con la experiencia de formación más realista e integrada del mercado.</p>
+      <div class="hero-cta-group">
+        <a href="contacto.html" class="btn btn-primary">&#9993;&nbsp; Solicitar una Demo</a>
+        <a href="index.html?lang=es" class="btn btn-outline">&#9654;&nbsp; Explorar Simuladores</a>
+      </div>
+    </div>
+  </section>
+
+  <main>
+
+    <div class="intro-block">
+      <p>En <a href="https://www.acm-sl.com" target="_blank" rel="noopener"><strong>ACM SL</strong></a>, hemos desarrollado una suite de <strong>Simuladores en Tiempo Real</strong> diseñados exclusivamente para la formación técnica del personal de <strong>Operación y Mantenimiento (O&amp;M)</strong> que trabaja con aerogeneradores en parques eólicos. Diseñados para replicar con precisión el comportamiento dinámico de cada subsistema principal de un aerogenerador industrial, estos simuladores representan un <strong>recurso de formación único</strong> — que va mucho más allá de lo que ofrecen los bancos de prueba convencionales o los cursos a nivel de componentes.</p>
+    </div>
+
+    <div class="challenge-block">
+      <div class="section-heading">
+        <div class="icon icon-challenge">&#9888;&#65039;</div>
+        <h2>El Desafío de la Formación Moderna en Aerogeneradores</h2>
+      </div>
+      <p>Los aerogeneradores modernos son plantas de generación de energía completamente autónomas — diseñadas para operar sin supervisión, sin personal en su interior. Ese nivel de automatización exige técnicos de O&amp;M con una <strong>comprensión integral e integrada</strong> de los sistemas mecánicos, eléctricos, electrónicos, hidráulicos y de control que trabajan en conjunto.</p>
+      <div class="highlight-box">
+        "Los programas de formación tradicionales enseñan los componentes de forma aislada. Pero un aerogenerador real no falla de forma aislada — sus subsistemas están profundamente interconectados."
+      </div>
+      <p>Los cursos convencionales de O&amp;M — e incluso los bancos de formación especializados para temas como el freno hidráulico o el mecanismo de control de paso — enseñan componentes individuales sin mostrar nunca cómo se comporta todo el sistema en conjunto. El resultado: técnicos que comprenden las partes, pero que nunca han experimentado la <strong>operación coordinada de un aerogenerador real</strong>.</p>
+    </div>
+
+    <div class="approach-block">
+      <div class="section-heading">
+        <div class="icon icon-approach">&#9989;</div>
+        <h2>Nuestro Enfoque: Formación Integrada y Realista</h2>
+      </div>
+      <p>Nuestros simuladores fueron desarrollados con una misión clara: <strong>reducir el tiempo y el coste de la formación basada en la experiencia</strong>, al tiempo que se da a los alumnos acceso directo y observable a las señales internas de un aerogenerador en todo el espectro de condiciones de operación.</p>
+      <div class="pillars">
+        <div class="pillar pillar-normal">
+          <div class="pillar-icon">&#127807;</div>
+          <h3>Operación Normal</h3>
+          <p>Observe el comportamiento del aerogenerador dentro de los rangos de operación especificados por el fabricante — arranque, producción en estado estacionario y parada controlada.</p>
+        </div>
+        <div class="pillar pillar-extreme">
+          <div class="pillar-icon">&#127755;</div>
+          <h3>Condiciones Excepcionales</h3>
+          <p>Entrénese frente a vientos de fuerza huracán, ráfagas repentinas, cambios bruscos de dirección y fallos de red — todo en un entorno seguro y repetible.</p>
+        </div>
+        <div class="pillar pillar-fault">
+          <div class="pillar-icon">&#9889;</div>
+          <h3>Escenarios de Fallo</h3>
+          <p>Introduzca fallos específicos en subsistemas o componentes y aprenda a diagnosticarlos a través de los mismos mensajes de alarma y señales que se ven en máquinas reales.</p>
+        </div>
+      </div>
+      <div class="controller-note">
+        Nuestros simuladores reproducen fielmente el comportamiento del <strong>controlador</strong> central del aerogenerador — típicamente un PLC o un ordenador industrial robusto — generando mensajes de fallo y alarma exactamente como lo hacen las máquinas reales. Estas alarmas simuladas son la <strong>principal fuente de información de diagnóstico</strong>, reflejando la práctica real de O&amp;M en el campo.
+      </div>
+    </div>
+
+    <div class="benefits-strip">
+      <div class="benefit-card">
+        <div class="b-icon">&#9201;</div>
+        <h4>Mayor Rapidez en la Adquisición de Competencias</h4>
+        <p>Los alumnos alcanzan la aptitud operacional significativamente más rápido que a través de cursos tradicionales basados en componentes.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="b-icon">&#128200;</div>
+        <h4>Menores Costes de Formación</h4>
+        <p>Sustituya los costosos escenarios en sitio por simulaciones de alta fidelidad — sin tiempos de inactividad, sin riesgo de seguridad, sin desplazamientos.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="b-icon">&#128268;</div>
+        <h4>Cobertura Multitecnológica</h4>
+        <p>Los simuladores abarcan las principales familias industriales: DFIG, Stall Activo y aerogeneradores de Control por Resistencia de Rotor.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="b-icon">&#127891;</div>
+        <h4>Avalado por Instituciones</h4>
+        <p>Implantado en colegios técnicos y universidades de 8 países — desde España y Canadá hasta EE. UU. y Uzbekistán.</p>
+      </div>
+    </div>
+
+    <div class="challenge-block">
+      <div class="section-heading">
+        <div class="icon" style="background:#eef0ff;">&#128218;</div>
+        <h2>Recursos de Aprendizaje Interactivo</h2>
+      </div>
+      <p>Cada simulador incluye un <strong>Tutorial interactivo</strong> dedicado, diseñado específicamente para ese modelo de turbina. Entregado como aplicación web, cada tutorial presenta <strong>contenido con índice completo</strong> que se adapta a diferentes estilos de aprendizaje — los alumnos pueden leerlo secuencialmente como un manual técnico, o saltar directamente a cualquier tema mediante búsqueda por palabras clave.</p>
+      <p>Más allá de la teoría, los tutoriales incluyen <strong>experimentos guiados</strong> basados en escenarios operativos reales encontrados en parques eólicos en producción. Estos ejercicios entrenan a los alumnos a:</p>
+      <ul style="margin: 0.8rem 0 1rem 1.4rem; color: var(--mid); font-size: 1.02rem; line-height: 1.9;">
+        <li>Analizar eventos y condiciones transitorias tal como se desarrollan en tiempo real</li>
+        <li>Interpretar las señales internas de un aerogenerador en operación normal y anormal</li>
+        <li>Tomar decisiones operativas informadas — en un <strong>entorno de aprendizaje completamente seguro</strong></li>
+      </ul>
+      <p>El resultado es una experiencia de formación que refleja la práctica real de mantenimiento, sin ninguno de los riesgos o costes de trabajar en un aerogenerador real.</p>
+    </div>
+
+    <div class="approach-block">
+      <div class="section-heading">
+        <div class="icon" style="background:#f0f4ff;">&#127758;</div>
+        <h2>Una Plataforma Educativa Integral</h2>
+      </div>
+      <p>Juntos, la suite de simuladores y sus tutoriales asociados forman una <strong>plataforma educativa completa</strong> que integra tres dimensiones en una experiencia de aprendizaje coherente:</p>
+      <div class="pillars">
+        <div class="pillar" style="background:#eefaf5; border-color:#a8e6d0;">
+          <div class="pillar-icon">&#9881;&#65039;</div>
+          <h3>Precisión Técnica</h3>
+          <p>Cada subsistema — mecánico, eléctrico, hidráulico y de control — se comporta como lo hace en un aerogenerador real.</p>
+        </div>
+        <div class="pillar" style="background:#fff8e5; border-color:#ffd080;">
+          <div class="pillar-icon">&#127982;</div>
+          <h3>Realismo Operacional</h3>
+          <p>Los códigos de fallo, mensajes de alarma y respuestas del controlador coinciden con los encontrados en máquinas reales en el campo.</p>
+        </div>
+        <div class="pillar" style="background:#f0f4ff; border-color:#a8b8f0;">
+          <div class="pillar-icon">&#127979;</div>
+          <h3>Pedagogía Moderna</h3>
+          <p>Contenido progresivo y visualmente rico, diseñado para alumnos con diferentes niveles técnicos — no se requiere experiencia previa para comenzar.</p>
+        </div>
+      </div>
+      <div class="controller-note">
+        Los alumnos terminan el programa con una <strong>comprensión holística</strong> de cómo funcionan los aerogeneradores industriales y una clara apreciación del papel crítico que desempeña el personal de O&amp;M para mantener los parques eólicos en funcionamiento seguro y eficiente.
+      </div>
+    </div>
+
+    <div class="cta-banner">
+      <h2>Prepare a Sus Alumnos para Carreras Reales en Energía Eólica</h2>
+      <p>Al integrar los Simuladores en Tiempo Real de ACM SL en su programa de formación profesional, ofrece a los alumnos una experiencia de aprendizaje incomparable que <strong>conecta teoría y práctica</strong> — preparándoles para destacar en la creciente industria de la energía eólica.</p>
+      <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; margin-top:0.5rem;">
+        <a href="contacto.html" class="btn btn-primary">&#9993;&nbsp; Solicitar Evaluación Gratuita</a>
+        <a href="index.html?lang=es" class="btn btn-outline">&#8592;&nbsp; Volver al Inicio</a>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    &copy; 2026 <a href="https://www.acm-sl.com" target="_blank" rel="noopener">Automated Computing Machinery SL (ACMSL)</a>. Todos los derechos reservados.
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Controlador de Aerogenerador | ACM SL</title>
+    <meta
+      id="pageDescription"
+      name="description"
+      content="Controlador de Aerogenerador de pala fija con generador de jaula de ardilla y mecanismo Soft Starter. Equipo real usado en simuladores de entrenamiento para técnicos de fabricación, instalación y mantenimiento de aerogeneradores. ACM SL."
+    />
+    <link rel="icon" type="image/png" href="img/ACM_LOGO.png" />
+    <link rel="shortcut icon" type="image/png" href="img/ACM_LOGO.png" />
+    <style>
+      :root {
+        --primary: #006699;
+        --primary-dark: #004d73;
+        --primary-soft: #e3f4ff;
+        --accent: #00a878;
+        --ink: #123047;
+        --muted: #516272;
+        --surface: #ffffff;
+        --bg: #f3f7fb;
+        --border: rgba(18, 48, 71, 0.1);
+        --shadow: 0 18px 45px rgba(18, 48, 71, 0.12);
+        --radius: 18px;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background:
+          radial-gradient(circle at top left, rgba(0, 153, 204, 0.14), transparent 28%),
+          linear-gradient(180deg, #f9fcff 0%, var(--bg) 100%);
+        color: var(--ink);
+        min-height: 100vh;
+      }
+
+      header {
+        background: linear-gradient(135deg, var(--primary), #0099cc);
+        color: #fff;
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.18);
+      }
+
+      .header-wrap {
+        max-width: 1140px;
+        margin: 0 auto;
+        padding: 1.35rem 1.25rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .brand img {
+        width: auto;
+        height: 44px;
+      }
+
+      .brand-copy h1 {
+        font-size: 1.35rem;
+      }
+
+      .brand-copy p {
+        margin-top: 0.2rem;
+        opacity: 0.88;
+      }
+
+      .header-link,
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.8rem 1.2rem;
+        border-radius: 999px;
+        text-decoration: none;
+        font-weight: 700;
+      }
+
+      .header-link {
+        border: 1px solid rgba(255, 255, 255, 0.32);
+        background: rgba(255, 255, 255, 0.14);
+        color: #fff;
+      }
+
+      main {
+        max-width: 1140px;
+        margin: 0 auto;
+        padding: 2rem 1.25rem 3rem;
+      }
+
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 2rem;
+      }
+
+      .layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+        gap: 2rem;
+      }
+
+      .content h2 {
+        font-size: 2rem;
+        margin-bottom: 0.9rem;
+      }
+
+      .content p,
+      .content li {
+        color: var(--muted);
+        line-height: 1.8;
+      }
+
+      .resources {
+        margin-top: 1.2rem;
+        padding-left: 1.1rem;
+      }
+
+      .resources li + li {
+        margin-top: 0.5rem;
+      }
+
+      .resources a {
+        color: var(--primary);
+        font-weight: 600;
+      }
+
+      .gallery {
+        display: grid;
+        gap: 1rem;
+      }
+
+      .gallery figure {
+        border-radius: 16px;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        background: #fff;
+        box-shadow: 0 10px 26px rgba(18, 48, 71, 0.1);
+      }
+
+      .gallery img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      .gallery figcaption {
+        padding: 0.85rem 1rem;
+        color: var(--muted);
+        font-size: 0.92rem;
+        line-height: 1.55;
+      }
+
+      .actions {
+        margin-top: 1.5rem;
+      }
+
+      .btn {
+        background: var(--accent);
+        color: #fff;
+      }
+
+      footer {
+        max-width: 1140px;
+        margin: 0 auto;
+        padding: 0 1.25rem 2rem;
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+
+      @media (max-width: 860px) {
+        .layout {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+    <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-T1XF1Z8ML9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-T1XF1Z8ML9');
+  </script>
+</head>
+  <body>
+    <header>
+      <div class="header-wrap">
+        <a class="brand" href="index.html" title="Ir a Inicio" style="text-decoration:none;color:inherit;cursor:pointer;">
+          <img src="img/ACM_LOGO.png" alt="ACM SL" />
+          <div class="brand-copy">
+            <h1>Automated Computing Machinery SL</h1>
+            <p>ACM SL</p>
+          </div>
+        </a>
+        <a class="header-link" id="backDevelopmentsLink" href="desarrollos.html?lang=es">Volver a Desarrollos</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="card">
+        <div class="layout">
+          <div class="content">
+            <h2 id="pageTitle">Controlador de Aerogenerador</h2>
+            <p id="pageDescriptionText">
+              Controlador de Aerogenerador de Pala Fija, con Generador Eléctrico
+              de Jaula de Ardilla, incorporando el mecanismo de "Soft Starter".
+            </p>
+            <ul class="resources">
+              <li>
+                <a id="leafletLink" href="img/Controlador600/Leaflet%20Controller600.pdf" target="_blank" rel="noopener noreferrer">
+                  Folleto del Controlador 600
+                </a>
+              </li>
+            </ul>
+            <div class="actions">
+              <a class="btn" id="backDevelopmentsButton" href="desarrollos.html?lang=es">Volver a la página Desarrollos</a>
+            </div>
+          </div>
+          <div class="gallery" id="gallery" aria-label="Imágenes del Controlador de Aerogenerador">
+            <figure>
+              <img id="controllerImage" src="img/Controlador600/Controlador600.jpg" alt="Controlador de Aerogenerador Controlador 600" />
+              <figcaption id="controllerCaption">Controlador 600 para aerogeneradores de pala fija con soft starter integrado.</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p id="footerText">&copy; 2026 Automated Computing Machinery SL (ACM SL).</p>
+    </footer>
+    <script>
+      const supportedLangs = ['es', 'en', 'fr', 'it', 'de', 'pt'];
+      const pageLang = new URLSearchParams(window.location.search).get('lang');
+      const browserLang = (navigator.language || navigator.userLanguage || 'en').split('-')[0].toLowerCase();
+      const lang = supportedLangs.includes(pageLang)
+        ? pageLang
+        : (supportedLangs.includes(browserLang) ? browserLang : 'en');
+
+      const translations = {
+        es: {
+          title: 'Controlador de Aerogenerador | ACM SL',
+          description: 'Ficha descriptiva del Controlador de Aerogenerador de Automated Computing Machinery SL.',
+          backDevelopments: 'Volver a Desarrollos',
+          pageTitle: 'Controlador de Aerogenerador',
+          pageDescriptionText: 'Sistema de control para aerogeneradores de pala fija con generador eléctrico de jaula de ardilla, que incorpora el mecanismo de "Soft Starter" para gestionar el arranque y la integración del conjunto electrome-cánico.',
+          leafletLink: 'Folleto del Controlador 600',
+          backDevelopmentsButton: 'Volver a la página Desarrollos',
+          galleryAria: 'Imágenes del Controlador de Aerogenerador',
+          controllerAlt: 'Controlador de Aerogenerador Controlador 600',
+          controllerCaption: 'Controlador 600 para aerogeneradores de pala fija con soft starter integrado.',
+          footerText: '&copy; 2026 Automated Computing Machinery SL (ACM SL).'
+        },
+        en: {
+          title: 'Wind Turbine Controller | ACM SL',
+          description: 'Descriptive page for the Wind Turbine Controller by Automated Computing Machinery SL.',
+          backDevelopments: 'Back to Developments',
+          pageTitle: 'Wind Turbine Controller',
+          pageDescriptionText: 'Control system for fixed-blade wind turbines with squirrel-cage induction generator, incorporating the soft starter mechanism to manage start-up and integration of the electromechanical set.',
+          leafletLink: 'Controller 600 leaflet',
+          backDevelopmentsButton: 'Back to Developments page',
+          galleryAria: 'Wind turbine controller images',
+          controllerAlt: 'Wind Turbine Controller 600',
+          controllerCaption: 'Controller 600 for fixed-blade wind turbines with integrated soft starter.',
+          footerText: '&copy; 2026 Automated Computing Machinery SL (ACM SL).'
+        },
+        fr: {
+          title: 'Contrôleur d’éolienne | ACM SL',
+          description: 'Fiche descriptive du contrôleur d’éolienne d’Automated Computing Machinery SL.',
+          backDevelopments: 'Retour aux développements',
+          pageTitle: 'Contrôleur d’éolienne',
+          pageDescriptionText: 'Système de contrôle pour éoliennes à pales fixes avec générateur électrique à cage d’écureuil, intégrant le mécanisme de soft starter pour gérer le démarrage et l’intégration de l’ensemble électromécanique.',
+          leafletLink: 'Brochure du contrôleur 600',
+          backDevelopmentsButton: 'Retour à la page Développements',
+          galleryAria: 'Images du contrôleur d’éolienne',
+          controllerAlt: 'Contrôleur d’éolienne 600',
+          controllerCaption: 'Contrôleur 600 pour éoliennes à pales fixes avec soft starter intégré.',
+          footerText: '&copy; 2026 Automated Computing Machinery SL (ACM SL).'
+        },
+        it: {
+          title: 'Controllore per aerogeneratore | ACM SL',
+          description: 'Scheda descrittiva del controllore per aerogeneratore di Automated Computing Machinery SL.',
+          backDevelopments: 'Torna agli Sviluppi',
+          pageTitle: 'Controllore per aerogeneratore',
+          pageDescriptionText: 'Sistema di controllo per aerogeneratori a pale fisse con generatore elettrico a gabbia di scoiattolo, che incorpora il meccanismo di soft starter per gestire l’avviamento e l’integrazione dell’insieme elettromeccanico.',
+          leafletLink: 'Brochure del Controller 600',
+          backDevelopmentsButton: 'Torna alla pagina Sviluppi',
+          galleryAria: 'Immagini del controllore per aerogeneratore',
+          controllerAlt: 'Controller 600 per aerogeneratore',
+          controllerCaption: 'Controller 600 per aerogeneratori a pale fisse con soft starter integrato.',
+          footerText: '&copy; 2026 Automated Computing Machinery SL (ACM SL).'
+        },
+        de: {
+          title: 'Windenergieanlagen-Steuerung | ACM SL',
+          description: 'Beschreibungsseite für die Windenergieanlagen-Steuerung von Automated Computing Machinery SL.',
+          backDevelopments: 'Zurück zu Entwicklungen',
+          pageTitle: 'Windenergieanlagen-Steuerung',
+          pageDescriptionText: 'Steuerungssystem für Windenergieanlagen mit festen Rotorblättern und Käfigläufergenerator, das den Soft-Starter-Mechanismus zur Steuerung des Anlaufs und zur Integration des elektromechanischen Systems umfasst.',
+          leafletLink: 'Prospekt Controller 600',
+          backDevelopmentsButton: 'Zurück zur Seite Entwicklungen',
+          galleryAria: 'Bilder der Windenergieanlagen-Steuerung',
+          controllerAlt: 'Windenergieanlagen-Steuerung Controller 600',
+          controllerCaption: 'Controller 600 für Windenergieanlagen mit festen Rotorblättern und integriertem Soft Starter.',
+          footerText: '&copy; 2026 Automated Computing Machinery SL (ACM SL).'
+        },
+        pt: {
+          title: 'Controlador de Aerogerador | ACM SL',
+          description: 'Ficha descritiva do Controlador de Aerogerador da Automated Computing Machinery SL.',
+          backDevelopments: 'Voltar a Desenvolvimentos',
+          pageTitle: 'Controlador de Aerogerador',
+          pageDescriptionText: 'Sistema de controlo para aerogeradores de pá fixa com gerador elétrico de gaiola de esquilo, incorporando o mecanismo de soft starter para gerir o arranque e a integração do conjunto eletromecânico.',
+          leafletLink: 'Folheto do Controlador 600',
+          backDevelopmentsButton: 'Voltar à página Desenvolvimentos',
+          galleryAria: 'Imagens do controlador de aerogerador',
+          controllerAlt: 'Controlador de Aerogerador 600',
+          controllerCaption: 'Controlador 600 para aerogeradores de pá fixa com soft starter integrado.',
+          footerText: '&copy; 2026 Automated Computing Machinery SL (ACM SL).'
+        }
+      };
+
+      const t = translations[lang];
+
+      function setText(id, value) {
+        const element = document.getElementById(id);
+        if (element) {
+          element.textContent = value;
+        }
+      }
+
+      function setHtml(id, value) {
+        const element = document.getElementById(id);
+        if (element) {
+          element.innerHTML = value;
+        }
+      }
+
+      document.documentElement.lang = lang;
+      document.title = t.title;
+      document.getElementById('pageDescription').setAttribute('content', t.description);
+      document.getElementById('backDevelopmentsLink').href = `desarrollos.html?lang=${lang}`;
+      document.getElementById('backDevelopmentsLink').textContent = t.backDevelopments;
+      document.getElementById('backDevelopmentsButton').href = `desarrollos.html?lang=${lang}`;
+      document.getElementById('gallery').setAttribute('aria-label', t.galleryAria);
+      document.getElementById('controllerImage').setAttribute('alt', t.controllerAlt);
+
+      ['pageTitle', 'pageDescriptionText', 'leafletLink', 'backDevelopmentsButton', 'controllerCaption'].forEach((key) => {
+        setText(key, t[key]);
+      });
+
+      setHtml('footerText', t.footerText);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>Solicitud de Descarga | Automated Computing Machinery SL</title>
+    <meta id="pageDescription" name="description" content="Formulario de solicitud de descarga de Automated Computing Machinery SL." />
+    <link rel="icon" type="image/png" href="img/ACM_LOGO.png" />
+    <link rel="shortcut icon" type="image/png" href="img/ACM_LOGO.png" />
+    <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+    <style>
+      :root {
+        --primary: #006699;
+        --primary-dark: #004d73;
+        --primary-soft: #e3f4ff;
+        --accent: #00a878;
+        --ink: #123047;
+        --muted: #516272;
+        --surface: #ffffff;
+        --bg: #f3f7fb;
+        --border: rgba(18, 48, 71, 0.1);
+        --shadow: 0 18px 45px rgba(18, 48, 71, 0.12);
+        --radius: 18px;
+        --err: #c0392b;
+      }
+
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background:
+          radial-gradient(circle at top left, rgba(0, 153, 204, 0.14), transparent 28%),
+          linear-gradient(180deg, #f9fcff 0%, var(--bg) 100%);
+        color: var(--ink);
+        min-height: 100vh;
+      }
+
+      /* ── Header ────────────────────────────────────────────── */
+      header {
+        background: linear-gradient(135deg, var(--primary), #0099cc);
+        color: #fff;
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.18);
+      }
+
+      .header-wrap {
+        max-width: 1140px;
+        margin: 0 auto;
+        padding: 1.35rem 1.25rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .brand { display: flex; align-items: center; gap: 1rem; }
+      .brand img { width: auto; height: 44px; display: block; }
+      .brand-copy h1 { font-size: 1.35rem; line-height: 1.15; font-weight: 700; }
+      .brand-copy p { margin-top: 0.2rem; font-size: 0.95rem; opacity: 0.88; }
+
+      .header-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.7rem 1.1rem;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.32);
+        background: rgba(255, 255, 255, 0.14);
+        color: #fff;
+        text-decoration: none;
+        font-weight: 600;
+        transition: background 0.2s ease, transform 0.2s ease;
+      }
+      .header-link:hover { background: rgba(255, 255, 255, 0.24); transform: translateY(-1px); }
+
+      /* ── Main ──────────────────────────────────────────────── */
+      main {
+        max-width: 780px;
+        margin: 2rem auto 3rem;
+        padding: 0 1.25rem;
+      }
+
+      /* ── Download info card ─────────────────────────────────── */
+      .dl-info-card {
+        background: var(--primary-soft);
+        border: 1px solid #b3d9f0;
+        border-radius: 14px;
+        padding: 1.25rem 1.5rem;
+        margin-bottom: 1.5rem;
+        display: flex;
+        gap: 1rem;
+        align-items: flex-start;
+      }
+      .dl-info-icon { font-size: 2rem; line-height: 1; flex-shrink: 0; }
+      .dl-info-body { flex: 1; min-width: 0; }
+      .dl-info-title { font-weight: 700; font-size: 1.05rem; color: var(--primary); margin-bottom: 0.3rem; }
+      .dl-info-pkg {
+        font-weight: 600; color: var(--ink); font-size: 0.97rem;
+        margin-bottom: 0.5rem; word-break: break-word;
+        background: rgba(0,102,153,0.08); border-radius: 6px;
+        padding: 0.3rem 0.55rem; display: inline-block;
+      }
+      .dl-info-text { color: var(--muted); font-size: 0.92rem; margin-bottom: 0.7rem; line-height: 1.55; }
+      .dl-direct-link {
+        display: inline-flex; align-items: center; gap: 0.4rem;
+        color: var(--primary); font-weight: 600; font-size: 0.93rem;
+        text-decoration: none; border-bottom: 1.5px solid currentColor;
+        transition: color 0.15s;
+      }
+      .dl-direct-link:hover { color: var(--primary-dark); }
+
+      /* ── Form card ─────────────────────────────────────────── */
+      .form-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 2.25rem;
+      }
+
+      .form-card h2 { font-size: 1.45rem; margin-bottom: 0.4rem; color: var(--ink); }
+      .form-card .subtitle { color: var(--muted); font-size: 0.96rem; margin-bottom: 1.75rem; line-height: 1.6; }
+
+      .form-row {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      .form-group { display: flex; flex-direction: column; gap: 0.35rem; }
+      .form-group.full { grid-column: 1 / -1; }
+
+      .visually-hidden {
+        position: absolute; width: 1px; height: 1px; padding: 0;
+        margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0);
+        white-space: nowrap; border: 0;
+      }
+
+      label { font-size: 0.9rem; font-weight: 600; color: var(--ink); }
+      .req { color: var(--err); margin-left: 0.15em; }
+
+      input, select, textarea {
+        width: 100%; padding: 0.72rem 0.9rem;
+        border: 1.5px solid #d0dce6; border-radius: 10px;
+        font-size: 0.97rem; color: var(--ink); background: #fafcff;
+        transition: border-color 0.18s ease, box-shadow 0.18s ease;
+        font-family: inherit;
+      }
+
+      input:focus, select:focus, textarea:focus {
+        outline: none; border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(0, 102, 153, 0.12); background: #fff;
+      }
+
+      input.invalid, select.invalid, textarea.invalid {
+        border-color: var(--err); box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.1);
+      }
+
+      textarea { resize: vertical; min-height: 160px; line-height: 1.6; }
+
+      .interest-label {
+        font-size: 0.97rem; color: var(--ink);
+        margin-bottom: 0.5rem; margin-top: 0.25rem; line-height: 1.5;
+      }
+
+      .captcha-wrap { margin-top: 1.25rem; }
+
+      .btn-submit {
+        display: inline-flex; align-items: center; justify-content: center;
+        gap: 0.55rem; margin-top: 1.5rem; padding: 0.9rem 2.2rem;
+        background: var(--accent); color: #fff; border: none;
+        border-radius: 999px; font-size: 1.05rem; font-weight: 700;
+        cursor: pointer; box-shadow: 0 8px 22px rgba(0, 168, 120, 0.25);
+        transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+      }
+      .btn-submit:hover { background: #009669; transform: translateY(-1px); box-shadow: 0 12px 26px rgba(0, 168, 120, 0.3); }
+      .btn-submit:active { transform: translateY(0); }
+      .btn-submit:disabled { background: #9ecfbe; cursor: not-allowed; transform: none; box-shadow: none; }
+
+      .btn-download {
+        display: inline-flex; align-items: center; justify-content: center;
+        gap: 0.55rem; margin-top: 1rem; padding: 0.75rem 2rem;
+        background: var(--primary); color: #fff; border: none;
+        border-radius: 999px; font-size: 1rem; font-weight: 700;
+        text-decoration: none; cursor: pointer;
+        box-shadow: 0 6px 18px rgba(0, 102, 153, 0.25);
+        transition: background 0.2s ease, transform 0.15s ease;
+      }
+      .btn-download:hover { background: var(--primary-dark); transform: translateY(-1px); }
+
+      /* ── Status messages ──────────────────────────────────── */
+      .msg {
+        display: none; padding: 1rem 1.25rem; border-radius: 12px;
+        font-size: 0.97rem; line-height: 1.6; margin-top: 1.5rem;
+      }
+      .msg.success { background: #e7fbf4; color: #006644; border: 1px solid #b2e8d5; }
+      .msg.error   { background: #fdecea; color: var(--err); border: 1px solid #f5c6c3; }
+
+      /* ── Footer ───────────────────────────────────────────── */
+      footer {
+        max-width: 1140px; margin: 0 auto;
+        padding: 0 1.25rem 2rem; color: var(--muted); font-size: 0.92rem;
+      }
+
+      /* ── Responsive ───────────────────────────────────────── */
+      @media (max-width: 640px) {
+        .form-row { grid-template-columns: 1fr; }
+        .form-card { padding: 1.35rem; }
+        .dl-info-card { flex-direction: column; gap: 0.6rem; }
+      }
+    </style>
+    <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-T1XF1Z8ML9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-T1XF1Z8ML9');
+  </script>
+</head>
+  <body>
+
+    <header>
+      <div class="header-wrap">
+        <div class="brand">
+          <img src="img/ACM_LOGO.png" alt="ACM SL" />
+          <div class="brand-copy">
+            <h1>Automated Computing Machinery SL</h1>
+            <p>ACM SL</p>
+          </div>
+        </div>
+        <a class="header-link" id="backLink" href="tutorials/es/descargas.html">&#8592; Volver a Descargas</a>
+      </div>
+    </header>
+
+    <main>
+
+
+      <div class="form-card">
+        <h2 id="formTitle">Solicitud de Descarga</h2>
+        <p class="subtitle" id="formSubtitle">Los campos marcados con <span class="req">*</span> son obligatorios.</p>
+
+        <form id="contactForm" novalidate>
+          <div class="form-group visually-hidden" aria-hidden="true">
+            <label id="websiteLabel" for="website">Website</label>
+            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label id="nombreLabel" for="nombre">Nombre <span class="req">*</span></label>
+              <input type="text" id="nombre" name="nombre" autocomplete="given-name" required />
+            </div>
+            <div class="form-group">
+              <label id="apellidosLabel" for="apellidos">Apellidos <span class="req">*</span></label>
+              <input type="text" id="apellidos" name="apellidos" autocomplete="family-name" required />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label id="emailLabel" for="email">Correo electr&#243;nico <span class="req">*</span></label>
+              <input type="email" id="email" name="email" autocomplete="email" required />
+            </div>
+            <div class="form-group">
+              <label id="telefonoLabel" for="telefono">Tel&#233;fono <span class="req">*</span></label>
+              <input type="tel" id="telefono" name="telefono" autocomplete="tel" required />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label id="direccionLabel" for="direccion">Direcci&#243;n (calle y n&#250;mero)</label>
+              <input type="text" id="direccion" name="direccion" autocomplete="street-address" />
+            </div>
+            <div class="form-group">
+              <label id="ciudadLabel" for="ciudad">Ciudad <span class="req">*</span></label>
+              <input type="text" id="ciudad" name="ciudad" autocomplete="address-level2" required />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label id="paisLabel" for="pais">Pa&#237;s <span class="req">*</span></label>
+              <input type="text" id="pais" name="pais" autocomplete="country-name" required />
+            </div>
+          </div>
+
+          <div class="form-row" id="dlPkgRow" style="display:none">
+            <div class="form-group full">
+              <label id="dlPkgLabel" for="dlPkgField">Descarga solicitada</label>
+              <input type="text" id="dlPkgField" name="dlPkgField" readonly
+                style="background:#f0f5fa; color:var(--muted); cursor:default; font-weight:600;" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group full">
+              <label class="interest-label" id="mensajeLabel" for="mensaje">
+                Notas adicionales (opcional)
+              </label>
+              <textarea id="mensaje" name="mensaje" rows="5" placeholder="Describa su inter&#233;s, proyecto o consulta"></textarea>
+            </div>
+          </div>
+
+          <div class="captcha-wrap">
+            <div class="h-captcha" data-sitekey="28beebb8-0dfc-4a36-95ae-9af6e668d9ca"></div>
+          </div>
+
+          <button type="submit" class="btn-submit" id="submitBtn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="22" y1="2" x2="11" y2="13"></line>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg>
+            <span id="submitBtnText">Enviar</span>
+          </button>
+
+          <div id="msgSuccess" class="msg" role="alert" aria-live="polite">
+            <p id="successText">&#161;Solicitud enviada correctamente! Tambi&#233;n recibir&#225; el enlace en su correo electr&#243;nico.</p>
+          </div>
+          <div id="msgError" class="msg" role="alert"></div>
+        </form>
+      </div>
+    </main>
+
+    <footer>
+      <p>&copy; 2026 Automated Computing Machinery SL (ACM SL).</p>
+    </footer>
+
+    <script>
+      const WORKER_URL = 'https://sweet-wood-42f6.josesanleandro.workers.dev';
+
+      /* ── Language detection ─────────────────────────────────── */
+      const supportedLangs = ['es', 'en', 'fr', 'it', 'de', 'pt'];
+      const params = new URLSearchParams(window.location.search);
+      const pageLang = params.get('lang');
+      const browserLang = (navigator.language || navigator.userLanguage || 'en').split('-')[0].toLowerCase();
+      const lang = supportedLangs.includes(pageLang)
+        ? pageLang
+        : (supportedLangs.includes(browserLang) ? browserLang : 'en');
+
+      /* ── Download params ─────────────────────────────────────── */
+      const dlPkg    = params.get('pkg') || '';
+      const dlUrlRaw = params.get('url') || '';
+      // Make URL absolute for email links
+      const dlAbsUrl = dlUrlRaw
+        ? (dlUrlRaw.startsWith('http') ? dlUrlRaw : window.location.origin + (dlUrlRaw.startsWith('/') ? '' : '/') + dlUrlRaw)
+        : '';
+
+      /* ── Back-to-downloads URLs ──────────────────────────────── */
+      const downloadsUrls = {
+        es: 'tutorials/es/descargas.html',
+        en: 'tutorials/en/downloads.html',
+        fr: 'tutorials/fr/telechargements.html',
+        de: 'tutorials/de/downloads.html',
+        it: 'tutorials/it/download.html',
+        pt: 'tutorials/pt/downloads.html',
+      };
+
+      /* ── Translations ────────────────────────────────────────── */
+      const translations = {
+        es: {
+          title: 'Solicitud de Descarga | Automated Computing Machinery SL',
+          description: 'Formulario de solicitud de descarga de Automated Computing Machinery SL.',
+          backLabel: '&#8592; Volver a Descargas',
+          dlInfoTitle: 'Descarga solicitada',
+          dlInfoText: 'Complete el formulario. Recibirá el enlace de descarga por correo electrónico.',
+          dlDirectLinkText: '⬇ Descargar directamente',
+          dlPkgLabel: 'Descarga solicitada',
+          formTitle: 'Solicitud de Descarga',
+          formSubtitle: 'Los campos marcados con <span class="req">*</span> son obligatorios.',
+          websiteLabel: 'Website',
+          nombreLabel: 'Nombre <span class="req">*</span>',
+          apellidosLabel: 'Apellidos <span class="req">*</span>',
+          emailLabel: 'Correo electrónico <span class="req">*</span>',
+          telefonoLabel: 'Teléfono <span class="req">*</span>',
+          direccionLabel: 'Dirección (calle y número)',
+          ciudadLabel: 'Ciudad <span class="req">*</span>',
+          paisLabel: 'País <span class="req">*</span>',
+          mensajeLabel: 'Notas adicionales (opcional)',
+          mensajePlaceholder: 'Describa su interés, proyecto o consulta',
+          submitLabel: 'Enviar',
+          sendingLabel: 'Enviando…',
+          successText: '¡Solicitud enviada correctamente! También recibirá el enlace en su correo electrónico.',
+          downloadNowBtn: '⬇ Descargar ahora',
+          invalidMessage: 'Por favor, complete todos los campos obligatorios correctamente.',
+          captchaMessage: 'Por favor, complete el captcha antes de enviar.',
+          configMessage: 'Configure primero la constante WORKER_URL con la URL pública real del Cloudflare Worker',
+          connectionMessage: 'No se pudo conectar con el Cloudflare Worker. Verifique que la URL publicada sea correcta y que el Worker esté desplegado',
+          sendErrorPrefix: 'Error al enviar la solicitud',
+          sendErrorSuffix: 'Por favor, inténtelo de nuevo o escriba directamente a support@acm-sl.com',
+        },
+        en: {
+          title: 'Download Request | Automated Computing Machinery SL',
+          description: 'Download request form for Automated Computing Machinery SL.',
+          backLabel: '&#8592; Back to Downloads',
+          dlInfoTitle: 'Download requested',
+          dlInfoText: 'Please complete the form. You will receive the download link by email.',
+          dlDirectLinkText: '⬇ Download directly',
+          dlPkgLabel: 'Requested download',
+          formTitle: 'Download Request',
+          formSubtitle: 'Fields marked with <span class="req">*</span> are required.',
+          websiteLabel: 'Website',
+          nombreLabel: 'First name <span class="req">*</span>',
+          apellidosLabel: 'Last name <span class="req">*</span>',
+          emailLabel: 'Email <span class="req">*</span>',
+          telefonoLabel: 'Phone <span class="req">*</span>',
+          direccionLabel: 'Address (street and number)',
+          ciudadLabel: 'City <span class="req">*</span>',
+          paisLabel: 'Country <span class="req">*</span>',
+          mensajeLabel: 'Additional notes (optional)',
+          mensajePlaceholder: 'Describe your interest, project, or enquiry',
+          submitLabel: 'Send',
+          sendingLabel: 'Sending…',
+          successText: 'Request sent successfully! You will also receive the link by email.',
+          downloadNowBtn: '⬇ Download now',
+          invalidMessage: 'Please complete all required fields correctly.',
+          captchaMessage: 'Please complete the captcha before submitting.',
+          configMessage: 'Please configure the WORKER_URL constant with the real public Cloudflare Worker URL first',
+          connectionMessage: 'Could not connect to the Cloudflare Worker. Verify the URL is correct and the Worker is deployed',
+          sendErrorPrefix: 'Error sending the request',
+          sendErrorSuffix: 'Please try again or write directly to support@acm-sl.com',
+        },
+        fr: {
+          title: 'Demande de téléchargement | Automated Computing Machinery SL',
+          description: 'Formulaire de demande de téléchargement d\'Automated Computing Machinery SL.',
+          backLabel: '&#8592; Retour aux téléchargements',
+          dlInfoTitle: 'Téléchargement demandé',
+          dlInfoText: 'Remplissez le formulaire. Vous recevrez le lien de téléchargement par e-mail.',
+          dlDirectLinkText: '⬇ Télécharger directement',
+          dlPkgLabel: 'Téléchargement demandé',
+          formTitle: 'Demande de téléchargement',
+          formSubtitle: 'Les champs marqués avec <span class="req">*</span> sont obligatoires.',
+          websiteLabel: 'Site web',
+          nombreLabel: 'Prénom <span class="req">*</span>',
+          apellidosLabel: 'Nom <span class="req">*</span>',
+          emailLabel: 'E-mail <span class="req">*</span>',
+          telefonoLabel: 'Téléphone <span class="req">*</span>',
+          direccionLabel: 'Adresse (rue et numéro)',
+          ciudadLabel: 'Ville <span class="req">*</span>',
+          paisLabel: 'Pays <span class="req">*</span>',
+          mensajeLabel: 'Notes supplémentaires (optionnel)',
+          mensajePlaceholder: 'Décrivez votre besoin, projet ou demande',
+          submitLabel: 'Envoyer',
+          sendingLabel: 'Envoi…',
+          successText: 'Demande envoyée avec succès ! Vous recevrez également le lien par e-mail.',
+          downloadNowBtn: '⬇ Télécharger maintenant',
+          invalidMessage: 'Veuillez renseigner correctement tous les champs obligatoires.',
+          captchaMessage: 'Veuillez compléter le captcha avant l\'envoi.',
+          configMessage: 'Veuillez d\'abord configurer la constante WORKER_URL avec l\'URL publique réelle du Cloudflare Worker',
+          connectionMessage: 'Connexion au Cloudflare Worker impossible.',
+          sendErrorPrefix: 'Erreur lors de l\'envoi de la demande',
+          sendErrorSuffix: 'Veuillez réessayer ou écrire directement à support@acm-sl.com',
+        },
+        de: {
+          title: 'Download-Anfrage | Automated Computing Machinery SL',
+          description: 'Download-Anfrageformular von Automated Computing Machinery SL.',
+          backLabel: '&#8592; Zurück zu Downloads',
+          dlInfoTitle: 'Download angefordert',
+          dlInfoText: 'Füllen Sie das Formular aus. Sie erhalten den Download-Link per E-Mail.',
+          dlDirectLinkText: '⬇ Direkt herunterladen',
+          dlPkgLabel: 'Angeforderter Download',
+          formTitle: 'Download-Anfrage',
+          formSubtitle: 'Mit <span class="req">*</span> markierte Felder sind erforderlich.',
+          websiteLabel: 'Website',
+          nombreLabel: 'Vorname <span class="req">*</span>',
+          apellidosLabel: 'Nachname <span class="req">*</span>',
+          emailLabel: 'E-Mail <span class="req">*</span>',
+          telefonoLabel: 'Telefon <span class="req">*</span>',
+          direccionLabel: 'Adresse (Straße und Nummer)',
+          ciudadLabel: 'Stadt <span class="req">*</span>',
+          paisLabel: 'Land <span class="req">*</span>',
+          mensajeLabel: 'Zusätzliche Hinweise (optional)',
+          mensajePlaceholder: 'Beschreiben Sie Ihr Interesse, Projekt oder Anliegen',
+          submitLabel: 'Senden',
+          sendingLabel: 'Wird gesendet…',
+          successText: 'Anfrage erfolgreich gesendet! Sie erhalten den Link auch per E-Mail.',
+          downloadNowBtn: '⬇ Jetzt herunterladen',
+          invalidMessage: 'Bitte füllen Sie alle Pflichtfelder korrekt aus.',
+          captchaMessage: 'Bitte vervollständigen Sie das Captcha vor dem Senden.',
+          configMessage: 'Bitte konfigurieren Sie zuerst die Konstante WORKER_URL',
+          connectionMessage: 'Verbindung zum Cloudflare Worker konnte nicht hergestellt werden.',
+          sendErrorPrefix: 'Fehler beim Senden der Anfrage',
+          sendErrorSuffix: 'Bitte versuchen Sie es erneut oder schreiben Sie direkt an support@acm-sl.com',
+        },
+        it: {
+          title: 'Richiesta di download | Automated Computing Machinery SL',
+          description: 'Modulo di richiesta di download di Automated Computing Machinery SL.',
+          backLabel: '&#8592; Torna ai download',
+          dlInfoTitle: 'Download richiesto',
+          dlInfoText: 'Compila il modulo. Riceverai il link per il download via email.',
+          dlDirectLinkText: '⬇ Scarica direttamente',
+          dlPkgLabel: 'Download richiesto',
+          formTitle: 'Richiesta di download',
+          formSubtitle: 'I campi contrassegnati con <span class="req">*</span> sono obbligatori.',
+          websiteLabel: 'Sito web',
+          nombreLabel: 'Nome <span class="req">*</span>',
+          apellidosLabel: 'Cognome <span class="req">*</span>',
+          emailLabel: 'Email <span class="req">*</span>',
+          telefonoLabel: 'Telefono <span class="req">*</span>',
+          direccionLabel: 'Indirizzo (via e numero)',
+          ciudadLabel: 'Città <span class="req">*</span>',
+          paisLabel: 'Paese <span class="req">*</span>',
+          mensajeLabel: 'Note aggiuntive (opzionale)',
+          mensajePlaceholder: 'Descriva il suo interesse, progetto o richiesta',
+          submitLabel: 'Invia',
+          sendingLabel: 'Invio…',
+          successText: 'Richiesta inviata correttamente! Riceverà anche il link via email.',
+          downloadNowBtn: '⬇ Scarica ora',
+          invalidMessage: 'Compili correttamente tutti i campi obbligatori.',
+          captchaMessage: 'Completi il captcha prima di inviare.',
+          configMessage: 'Configuri prima la costante WORKER_URL',
+          connectionMessage: 'Impossibile connettersi al Cloudflare Worker.',
+          sendErrorPrefix: 'Errore durante l\'invio della richiesta',
+          sendErrorSuffix: 'Riprovi oppure scriva direttamente a support@acm-sl.com',
+        },
+        pt: {
+          title: 'Pedido de download | Automated Computing Machinery SL',
+          description: 'Formulário de pedido de download da Automated Computing Machinery SL.',
+          backLabel: '&#8592; Voltar para downloads',
+          dlInfoTitle: 'Download solicitado',
+          dlInfoText: 'Preencha o formulário. Receberá o link de download por email.',
+          dlDirectLinkText: '⬇ Descarregar diretamente',
+          dlPkgLabel: 'Download solicitado',
+          formTitle: 'Pedido de download',
+          formSubtitle: 'Os campos assinalados com <span class="req">*</span> são obrigatórios.',
+          websiteLabel: 'Website',
+          nombreLabel: 'Nome <span class="req">*</span>',
+          apellidosLabel: 'Apelido <span class="req">*</span>',
+          emailLabel: 'Email <span class="req">*</span>',
+          telefonoLabel: 'Telefone <span class="req">*</span>',
+          direccionLabel: 'Morada (rua e número)',
+          ciudadLabel: 'Cidade <span class="req">*</span>',
+          paisLabel: 'País <span class="req">*</span>',
+          mensajeLabel: 'Notas adicionais (opcional)',
+          mensajePlaceholder: 'Descreva o seu interesse, projeto ou consulta',
+          submitLabel: 'Enviar',
+          sendingLabel: 'A enviar…',
+          successText: 'Pedido enviado com sucesso! Receberá também o link por email.',
+          downloadNowBtn: '⬇ Descarregar agora',
+          invalidMessage: 'Por favor, preencha corretamente todos os campos obrigatórios.',
+          captchaMessage: 'Por favor, complete o captcha antes de enviar.',
+          configMessage: 'Configure primeiro a constante WORKER_URL',
+          connectionMessage: 'Não foi possível ligar ao Cloudflare Worker.',
+          sendErrorPrefix: 'Erro ao enviar o pedido',
+          sendErrorSuffix: 'Por favor, tente novamente ou escreva diretamente para support@acm-sl.com',
+        },
+      };
+
+      const t = translations[lang] || translations['en'];
+
+      /* ── Apply translations ──────────────────────────────────── */
+      function setHtml(id, value) {
+        const el = document.getElementById(id);
+        if (el) el.innerHTML = value;
+      }
+      function setText(id, value) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = value;
+      }
+
+      document.documentElement.lang = lang;
+      document.title = t.title;
+      document.getElementById('pageDescription').setAttribute('content', t.description);
+      document.getElementById('backLink').href = downloadsUrls[lang] || downloadsUrls['es'];
+      document.getElementById('backLink').innerHTML = t.backLabel;
+      setHtml('formTitle', t.formTitle);
+      setHtml('formSubtitle', t.formSubtitle);
+      setHtml('websiteLabel', t.websiteLabel);
+      setHtml('nombreLabel', t.nombreLabel);
+      setHtml('apellidosLabel', t.apellidosLabel);
+      setHtml('emailLabel', t.emailLabel);
+      setHtml('telefonoLabel', t.telefonoLabel);
+      setHtml('direccionLabel', t.direccionLabel);
+      setHtml('ciudadLabel', t.ciudadLabel);
+      setHtml('paisLabel', t.paisLabel);
+      setText('mensajeLabel', t.mensajeLabel);
+      document.getElementById('mensaje').placeholder = t.mensajePlaceholder;
+      setText('submitBtnText', t.submitLabel);
+      setText('successText', t.successText);
+
+      /* ── Populate readonly download package field ─────────────── */
+      if (dlPkg) {
+        const row = document.getElementById('dlPkgRow');
+        row.style.display = '';
+        setHtml('dlPkgLabel', t.dlPkgLabel);
+        document.getElementById('dlPkgField').value = dlPkg;
+      }
+
+      /* ── Form logic ──────────────────────────────────────────── */
+      const form         = document.getElementById('contactForm');
+      const submitBtn    = document.getElementById('submitBtn');
+      const msgOk        = document.getElementById('msgSuccess');
+      const msgErr       = document.getElementById('msgError');
+      const formStartedAt = Date.now();
+
+      const submitIcon = `
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="22" y1="2" x2="11" y2="13"></line>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+        </svg>`;
+
+      function markField(el, valid) { el.classList.toggle('invalid', !valid); }
+
+      function validateForm() {
+        let ok = true;
+        form.querySelectorAll('[required]').forEach(el => {
+          const valid = el.value.trim() !== '';
+          markField(el, valid);
+          if (!valid) ok = false;
+        });
+        const emailEl = document.getElementById('email');
+        const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailEl.value.trim());
+        markField(emailEl, emailValid);
+        if (!emailValid) ok = false;
+        return ok;
+      }
+
+      async function sendMail() {
+        const g = id => document.getElementById(id).value.trim();
+        const notesVal = g('mensaje');
+        // Always include package name in mensaje so anti-spam length check passes
+        // regardless of which Worker version is deployed on Cloudflare.
+        const mensajeVal = dlPkg
+          ? `Descarga: ${dlPkg}${notesVal ? '\nNotas: ' + notesVal : ''}`
+          : (notesVal && notesVal.trim().length >= 20 ? notesVal : (notesVal ? notesVal + ' (sin más detalles)' : '(Sin mensaje especificado)'));
+
+        const payload = {
+          nombre:    g('nombre'),
+          apellidos: g('apellidos'),
+          email:     g('email'),
+          telefono:  g('telefono'),
+          direccion: g('direccion') || '—',
+          ciudad:    g('ciudad'),
+          pais:      g('pais'),
+          mensaje:   mensajeVal,
+          website:   g('website'),
+          hcaptchaToken: hcaptcha.getResponse(),
+          elapsedMs: Date.now() - formStartedAt,
+          dlpkg:     dlPkg  || undefined,
+          dlurl:     dlAbsUrl || undefined,
+        };
+
+        if (!/^https:\/\//i.test(WORKER_URL) || WORKER_URL.includes('TU-WORKER')) {
+          throw new Error(t.configMessage);
+        }
+
+        let response;
+        try {
+          response = await fetch(WORKER_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+          });
+        } catch {
+          throw new Error(t.connectionMessage);
+        }
+
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok || !result.ok) {
+          throw new Error(result.error || `HTTP ${response.status}`);
+        }
+      }
+
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        msgOk.style.display = 'none';
+        msgErr.style.display = 'none';
+
+        if (!validateForm()) {
+          msgErr.textContent = t.invalidMessage;
+          msgErr.className = 'msg error';
+          msgErr.style.display = 'block';
+          return;
+        }
+
+        const captchaToken = hcaptcha.getResponse();
+        if (!captchaToken) {
+          msgErr.textContent = t.captchaMessage;
+          msgErr.className = 'msg error';
+          msgErr.style.display = 'block';
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `${submitIcon}<span id="submitBtnText">${t.sendingLabel}</span>`;
+
+        try {
+          await sendMail();
+          form.reset();
+          hcaptcha.reset();
+
+          // Show success message
+          setText('successText', t.successText);
+          msgOk.className = 'msg success';
+          msgOk.style.display = 'block';
+          msgOk.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        } catch (err) {
+          msgErr.textContent = `${t.sendErrorPrefix}: ${err.message}. ${t.sendErrorSuffix}`;
+          msgErr.className = 'msg error';
+          msgErr.style.display = 'block';
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = `${submitIcon}<span id="submitBtnText">${t.submitLabel}</span>`;
+        }
+      });
+
+      form.querySelectorAll('input, textarea').forEach(el => {
+        el.addEventListener('input', () => el.classList.remove('invalid'));
+      });
+    </script>
+  </body>
+</html>

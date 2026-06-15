@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simulador de aerogenerador Bonus 1300 | ACM SL</title>
+    <meta
+      id="pageDescription"
+      name="description"
+      content="Simulador de aerogenerador Bonus 1300 con controlador real, Generador de Red Trifásica programable y Software de Operador. Equipo de entrenamiento Hardware-in-the-Loop para técnicos de fabricación, instalación y mantenimiento de aerogeneradores. ACM SL."
+    />
+    <link rel="icon" type="image/png" href="img/ACM_LOGO.png" />
+    <link rel="shortcut icon" type="image/png" href="img/ACM_LOGO.png" />
+    <style>
+      :root {
+        --primary: #006699;
+        --primary-dark: #004d73;
+        --primary-soft: #e3f4ff;
+        --accent: #00a878;
+        --ink: #123047;
+        --muted: #516272;
+        --surface: #ffffff;
+        --bg: #f3f7fb;
+        --border: rgba(18, 48, 71, 0.1);
+        --shadow: 0 18px 45px rgba(18, 48, 71, 0.12);
+        --radius: 18px;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background:
+          radial-gradient(circle at top left, rgba(0, 153, 204, 0.14), transparent 28%),
+          linear-gradient(180deg, #f9fcff 0%, var(--bg) 100%);
+        color: var(--ink);
+        min-height: 100vh;
+      }
+
+      header {
+        background: linear-gradient(135deg, var(--primary), #0099cc);
+        color: #fff;
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.18);
+      }
+
+      .header-wrap {
+        max-width: 1140px;
+        margin: 0 auto;
+        padding: 1.35rem 1.25rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .brand img {
+        width: auto;
+        height: 44px;
+      }
+
+      .brand-copy h1 {
+        font-size: 1.35rem;
+      }
+
+      .brand-copy p {
+        margin-top: 0.2rem;
+        opacity: 0.88;
+      }
+
+      .header-link,
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.8rem 1.2rem;
+        border-radius: 999px;
+        text-decoration: none;
+        font-weight: 700;
+      }
+
+      .header-link {
+        border: 1px solid rgba(255, 255, 255, 0.32);
+        background: rgba(255, 255, 255, 0.14);
+        color: #fff;
+      }
+
+      main {
+        max-width: 1140px;
+        margin: 0 auto;
+        padding: 2rem 1.25rem 3rem;
+      }
+
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 2rem;
+      }
+
+      .layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+        gap: 2rem;
+      }
+
+      .content h2 {
+        font-size: 2rem;
+        margin-bottom: 0.9rem;
+      }
+
+      .content p,
+      .content li {
+        color: var(--muted);
+        line-height: 1.8;
+      }
+
+      .resources {
+        margin-top: 1.2rem;
+        padding-left: 1.1rem;
+      }
+
+      .resources li + li {
+        margin-top: 0.5rem;
+      }
+
+      .resources a {
+        color: var(--primary);
+        font-weight: 600;
+      }
+
+      .gallery {
+        display: grid;
+        gap: 1rem;
+      }
+
+      .gallery figure {
+        border-radius: 16px;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        background: #fff;
+        box-shadow: 0 10px 26px rgba(18, 48, 71, 0.1);
+      }
+
+      .gallery img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      .gallery figcaption {
+        padding: 0.85rem 1rem;
+        color: var(--muted);
+        font-size: 0.92rem;
+        line-height: 1.55;
+      }
+
+      .actions {
+        margin-top: 1.5rem;
+      }
+
+      .btn {
+        background: var(--accent);
+        color: #fff;
+      }
+
+      footer {
+        max-width: 1140px;
+        margin: 0 auto;
+        padding: 0 1.25rem 2rem;
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+
+      @media (max-width: 860px) {
+        .layout {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+    <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-T1XF1Z8ML9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-T1XF1Z8ML9');
+  </script>
+</head>
+  <body>
+    <header>
+      <div class="header-wrap">
+        <a class="brand" href="index.html" title="Ir a Inicio" style="text-decoration:none;color:inherit;cursor:pointer;">
+          <img src="img/ACM_LOGO.png" alt="ACM SL" />
+          <div class="brand-copy">
+            <h1>Automated Computing Machinery SL</h1>
+            <p>ACM SL</p>
+          </div>
+        </a>
+        <a class="header-link" id="backDevelopmentsLink" href="desarrollos.html?lang=es">Volver a Desarrollos</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="card">
+        <div class="layout">
+          <div class="content">
+            <h2 id="pageTitle">Simulador de aerogenerador Bonus 1300</h2>
+            <p id="pageDescriptionText">
+              Simulador para entrenamiento en oficina de personal técnico de
+              fabricación, instalación y mantenimiento de aerogeneradores.
+            </p>
+            <ul class="resources">
+              <li>
+                <a id="manualLink" href="img/SimuladorBonus1300/Short%20notice%20manual%20for%20the%20Simulator-Trainer%201300.pdf" target="_blank" rel="noopener noreferrer">
+                  Manual de usuario
+                </a>
+              </li>
+            </ul>
+            <div class="actions">
+              <a class="btn" id="backDevelopmentsButton" href="desarrollos.html?lang=es">Volver a la página Desarrollos</a>
+            </div>
+          </div>
+          <div class="gallery" id="gallery" aria-label="Imágenes del simulador Bonus 1300">
+            <figure>
+              <img id="frontImage" src="img/SimuladorBonus1300/Frontal_Simulador1300.jpg" alt="Vista frontal del simulador Bonus 1300" />
+              <figcaption id="frontCaption">Vista frontal del simulador de aerogenerador Bonus 1300.</figcaption>
+            </figure>
+            <figure>
+              <img id="nacelleImage" src="img/SimuladorBonus1300/Nacelle_transversalView.jpg" alt="Vista transversal de la nacelle del simulador Bonus 1300" />
+              <figcaption id="nacelleCaption">Vista transversal de la nacelle asociada al simulador Bonus 1300.</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p id="footerText">&copy; 2026 Automated Computing Machinery SL (ACM SL).</p>
+    </footer>
+    <script>
+      const supportedLangs = ['es', 'en', 'fr', 'it', 'de', 'pt'];
+      const pageLang = new URLSearchParams(window.location.search).get('lang');
+      const browserLang = (navigator.language || navigator.userLanguage || 'en').split('-')[0].toLowerCase();
+      const lang = supportedLangs.includes(pageLang)
+        ? pageLang
+        : (supportedLangs.includes(browserLang) ? browserLang : 'en');
+
+      const translations = {
+        es: {
+          title: 'Simulador de aerogenerador Bonus 1300 | ACM SL',
+          description: 'Ficha descriptiva del Simulador de aerogenerador Bonus 1300 de Automated Computing Machinery SL.',
+          backDevelopments: 'Volver a Desarrollos',
+          pageTitle: 'Simulador de aerogenerador Bonus 1300',
+          pageDescriptionText: 'Simulador para entrenamiento en oficina de personal técnico de fabricación, instalación y mantenimiento de aerogeneradores.',
+          manualLink: 'Manual de usuario',
+          backDevelopmentsButton: 'Volver a la página Desarrollos',
+          galleryAria: 'Imágenes del simulador Bonus 1300',
+          frontAlt: 'Vista frontal del simulador Bonus 1300',
+          frontCaption: 'Vista frontal del simulador de aerogenerador Bonus 1300.',
+          nacelleAlt: 'Vista transversal de la nacelle del simulador Bonus 1300',
+          nacelleCaption: 'Vista transversal de la nacelle asociada al simulador Bonus 1300.',
+          footerText: '&copy; 2026 Automated Computing Machinery SL (ACM SL).'
+        },
+        en: {
+          title: 'Bonus 1300 wind turbine simulator | ACM SL',
+          description: 'Descriptive page for the Bonus 1300 wind turbine simulator by Automated Computing Machinery SL.',
+          backDevelopments: 'Back to Developments',
+          pageTitle: 'Bonus 1300 wind turbine simulator',
+          pageDescriptionText: 'Office-based simulator for training technical staff in the manufacturing, installation, and maintenance of wind turbines.',
+          manualLink: 'User manual',
+          backDevelopmentsButton: 'Back to Developments page',
+          galleryAria: 'Bonus 1300 simulator images',
+          frontAlt: 'Front view of the Bonus 1300 simulator',
+          frontCaption: 'Front view of the Bonus 1300 wind turbine simulator.',
+          nacelleAlt: 'Cross-sectional nacelle view for the Bonus 1300 simulator',
+          nacelleCaption: 'Cross-sectional view of the nacelle associated with the Bonus 1300 simulator.',
+          footerText: '&copy; 2026 Automated Computing Machinery SL (ACM SL).'
+        },
+        fr: {
+          title: 'Simulateur d’éolienne Bonus 1300 | ACM SL',
+          description: 'Fiche descriptive du simulateur d’éolienne Bonus 1300 d’Automated Computing Machinery SL.',
+          backDevelopments: 'Retour aux développements',
+          pageTitle: 'Simulateur d’éolienne Bonus 1300',
+          pageDescriptionText: 'Simulateur de bureau destiné à la formation du personnel technique à la fabrication, l’installation et la maintenance d’éoliennes.',
+          manualLink: 'Manuel utilisateur',
+          backDevelopmentsButton: 'Retour à la page Développements',
+          galleryAria: 'Images du simulateur Bonus 1300',
+          frontAlt: 'Vue avant du simulateur Bonus 1300',
+          frontCaption: 'Vue avant du simulateur d’éolienne Bonus 1300.',
+          nacelleAlt: 'Vue transversale de la nacelle du simulateur Bonus 1300',
+          nacelleCaption: 'Vue transversale de la nacelle associée au simulateur Bonus 1300.',
+          footerText: '&copy; 2026 Automated Computing Machinery SL (ACM SL).'
+        },
+        it: {
+          title: 'Simulatore di aerogeneratore Bonus 1300 | ACM SL',
+          description: 'Scheda descrittiva del simulatore di aerogeneratore Bonus 1300 di Automated Computing Machinery SL.',
+          backDevelopments: 'Torna agli Sviluppi',
+          pageTitle: 'Simulatore di aerogeneratore Bonus 1300',
+          pageDescriptionText: 'Simulatore da ufficio per la formazione del personale tecnico nella fabbricazione, installazione e manutenzione degli aerogeneratori.',
+          manualLink: 'Manuale utente',
+          backDevelopmentsButton: 'Torna alla pagina Sviluppi',
+          galleryAria: 'Immagini del simulatore Bonus 1300',
+          frontAlt: 'Vista frontale del simulatore Bonus 1300',
+          frontCaption: 'Vista frontale del simulatore di aerogeneratore Bonus 1300.',
+          nacelleAlt: 'Vista trasversale della navicella del simulatore Bonus 1300',
+          nacelleCaption: 'Vista trasversale della navicella associata al simulatore Bonus 1300.',
+          footerText: '&copy; 2026 Automated Computing Machinery SL (ACM SL).'
+        },
+        de: {
+          title: 'Windturbinen-Simulator Bonus 1300 | ACM SL',
+          description: 'Beschreibungsseite für den Windturbinen-Simulator Bonus 1300 von Automated Computing Machinery SL.',
+          backDevelopments: 'Zurück zu Entwicklungen',
+          pageTitle: 'Windturbinen-Simulator Bonus 1300',
+          pageDescriptionText: 'Bürosimulator für die Schulung von technischem Personal in Fertigung, Installation und Wartung von Windturbinen.',
+          manualLink: 'Benutzerhandbuch',
+          backDevelopmentsButton: 'Zurück zur Seite Entwicklungen',
+          galleryAria: 'Bilder des Bonus 1300-Simulators',
+          frontAlt: 'Frontansicht des Bonus 1300-Simulators',
+          frontCaption: 'Frontansicht des Windturbinen-Simulators Bonus 1300.',
+          nacelleAlt: 'Querschnittsansicht der Gondel des Bonus 1300-Simulators',
+          nacelleCaption: 'Querschnittsansicht der mit dem Bonus 1300-Simulator verbundenen Gondel.',
+          footerText: '&copy; 2026 Automated Computing Machinery SL (ACM SL).'
+        },
+        pt: {
+          title: 'Simulador de aerogerador Bonus 1300 | ACM SL',
+          description: 'Ficha descritiva do simulador de aerogerador Bonus 1300 da Automated Computing Machinery SL.',
+          backDevelopments: 'Voltar a Desenvolvimentos',
+          pageTitle: 'Simulador de aerogerador Bonus 1300',
+          pageDescriptionText: 'Simulador de escritório para formação de pessoal técnico na fabricação, instalação e manutenção de aerogeradores.',
+          manualLink: 'Manual do utilizador',
+          backDevelopmentsButton: 'Voltar à página Desenvolvimentos',
+          galleryAria: 'Imagens do simulador Bonus 1300',
+          frontAlt: 'Vista frontal do simulador Bonus 1300',
+          frontCaption: 'Vista frontal do simulador de aerogerador Bonus 1300.',
+          nacelleAlt: 'Vista transversal da nacele do simulador Bonus 1300',
+          nacelleCaption: 'Vista transversal da nacele associada ao simulador Bonus 1300.',
+          footerText: '&copy; 2026 Automated Computing Machinery SL (ACM SL).'
+        }
+      };
+
+      const t = translations[lang];
+
+      function setText(id, value) {
+        const element = document.getElementById(id);
+        if (element) {
+          element.textContent = value;
+        }
+      }
+
+      function setHtml(id, value) {
+        const element = document.getElementById(id);
+        if (element) {
+          element.innerHTML = value;
+        }
+      }
+
+      document.documentElement.lang = lang;
+      document.title = t.title;
+      document.getElementById('pageDescription').setAttribute('content', t.description);
+      document.getElementById('backDevelopmentsLink').href = `desarrollos.html?lang=${lang}`;
+      document.getElementById('backDevelopmentsLink').textContent = t.backDevelopments;
+      document.getElementById('backDevelopmentsButton').href = `desarrollos.html?lang=${lang}`;
+      document.getElementById('gallery').setAttribute('aria-label', t.galleryAria);
+      document.getElementById('frontImage').setAttribute('alt', t.frontAlt);
+      document.getElementById('nacelleImage').setAttribute('alt', t.nacelleAlt);
+
+      ['pageTitle', 'pageDescriptionText', 'manualLink', 'backDevelopmentsButton', 'frontCaption', 'nacelleCaption'].forEach((key) => {
+        setText(key, t[key]);
+      });
+
+      setHtml('footerText', t.footerText);
+    </script>
+  </body>
+</html>
