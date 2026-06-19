@@ -246,6 +246,14 @@
           </div>
         </div>
         <a class="header-link" id="backContactLink" href="contacto.html?lang=es">Volver a Contacto</a>
+        <select class="lang-select" aria-label="Language" style="width:auto;border-radius:999px;padding:0.45rem 0.7rem;border:1.5px solid rgba(255,255,255,0.5);background:rgba(255,255,255,0.15);color:#fff;font-size:0.85rem;font-weight:700;cursor:pointer;">
+          <option value="en" style="background:#004d73;color:#fff;">EN</option>
+          <option value="es" style="background:#004d73;color:#fff;">ES</option>
+          <option value="fr" style="background:#004d73;color:#fff;">FR</option>
+          <option value="de" style="background:#004d73;color:#fff;">DE</option>
+          <option value="it" style="background:#004d73;color:#fff;">IT</option>
+          <option value="pt" style="background:#004d73;color:#fff;">PT</option>
+        </select>
       </div>
     </header>
 
@@ -656,6 +664,15 @@
       form.querySelectorAll('input, textarea').forEach(el => {
         el.addEventListener('input', () => el.classList.remove('invalid'));
       });
+
+      const langSel = document.querySelector('.lang-select');
+      if (langSel) {
+        langSel.value = lang;
+        langSel.addEventListener('change', function () {
+          const curPage = window.location.pathname.split('/').pop() || 'index.html';
+          window.location.href = curPage + '?lang=' + this.value;
+        });
+      }
     </script>
   </body>
 </html>
