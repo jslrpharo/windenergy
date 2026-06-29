@@ -7,6 +7,7 @@
       label: 'Cookie consent',
       title: 'Analytics cookies',
       text: 'We use Google Analytics to understand how this website is used and improve its content. You can accept or reject analytics cookies.',
+      more: 'Cookie policy',
       accept: 'Accept analytics',
       reject: 'Reject'
     },
@@ -14,6 +15,7 @@
       label: 'Consentimiento de cookies',
       title: 'Cookies analiticas',
       text: 'Utilizamos Google Analytics para entender como se usa este sitio web y mejorar su contenido. Puede aceptar o rechazar las cookies analiticas.',
+      more: 'Politica de cookies',
       accept: 'Aceptar analitica',
       reject: 'Rechazar'
     },
@@ -21,6 +23,7 @@
       label: 'Consentement aux cookies',
       title: 'Cookies analytiques',
       text: 'Nous utilisons Google Analytics pour comprendre comment ce site est utilise et ameliorer son contenu. Vous pouvez accepter ou refuser les cookies analytiques.',
+      more: 'Politique de cookies',
       accept: 'Accepter',
       reject: 'Refuser'
     },
@@ -28,6 +31,7 @@
       label: 'Cookie-Einwilligung',
       title: 'Analyse-Cookies',
       text: 'Wir verwenden Google Analytics, um die Nutzung dieser Website zu verstehen und ihre Inhalte zu verbessern. Sie konnen Analyse-Cookies akzeptieren oder ablehnen.',
+      more: 'Cookie-Richtlinie',
       accept: 'Analytik akzeptieren',
       reject: 'Ablehnen'
     },
@@ -35,6 +39,7 @@
       label: 'Consenso ai cookie',
       title: 'Cookie analitici',
       text: 'Utilizziamo Google Analytics per capire come viene usato questo sito web e migliorarne i contenuti. Puoi accettare o rifiutare i cookie analitici.',
+      more: 'Informativa sui cookie',
       accept: 'Accetta analitica',
       reject: 'Rifiuta'
     },
@@ -42,6 +47,7 @@
       label: 'Consentimento de cookies',
       title: 'Cookies analiticos',
       text: 'Utilizamos o Google Analytics para compreender como este site e utilizado e melhorar o seu conteudo. Pode aceitar ou rejeitar os cookies analiticos.',
+      more: 'Politica de cookies',
       accept: 'Aceitar analitica',
       reject: 'Rejeitar'
     }
@@ -52,6 +58,16 @@
     if (messages[lang]) return messages[lang];
     var shortLang = lang.split('-')[0];
     return messages[shortLang] || messages.en;
+  }
+
+  function getLocaleCode() {
+    var lang = (document.documentElement.lang || 'es').toLowerCase();
+    var shortLang = lang.split('-')[0];
+    return messages[shortLang] ? shortLang : 'es';
+  }
+
+  function getCookiesPolicyUrl() {
+    return '/politica-cookies.html?lang=' + getLocaleCode();
   }
 
   function updateConsent(granted) {
@@ -139,7 +155,7 @@
       '<div class="cookie-consent__inner">' +
         '<div class="cookie-consent__copy">' +
           '<p class="cookie-consent__title">' + copy.title + '</p>' +
-          '<p class="cookie-consent__text">' + copy.text + '</p>' +
+          '<p class="cookie-consent__text">' + copy.text + ' <a class="cookie-consent__link" href="' + getCookiesPolicyUrl() + '">' + copy.more + '</a>.</p>' +
         '</div>' +
         '<div class="cookie-consent__actions">' +
           '<button type="button" class="cookie-consent__btn cookie-consent__btn--reject" data-consent-action="reject">' + copy.reject + '</button>' +
