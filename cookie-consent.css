@@ -1,0 +1,117 @@
+:root {
+  --cc-bg: rgba(18, 48, 71, 0.96);
+  --cc-text: #f5f7fb;
+  --cc-muted: rgba(245, 247, 251, 0.82);
+  --cc-primary: #00a878;
+  --cc-primary-hover: #008761;
+  --cc-secondary: transparent;
+  --cc-secondary-border: rgba(255, 255, 255, 0.4);
+}
+
+.cookie-consent {
+  position: fixed;
+  left: 1rem;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 10000;
+  display: none;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 1rem 1.1rem;
+  border-radius: 16px;
+  background: var(--cc-bg);
+  color: var(--cc-text);
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.24);
+  backdrop-filter: blur(10px);
+}
+
+.cookie-consent.is-visible {
+  display: block;
+}
+
+.cookie-consent__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.cookie-consent__copy {
+  max-width: 720px;
+}
+
+.cookie-consent__title {
+  margin: 0 0 0.35rem;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.cookie-consent__text {
+  margin: 0;
+  color: var(--cc-muted);
+  font-size: 0.94rem;
+  line-height: 1.5;
+}
+
+.cookie-consent__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  flex-shrink: 0;
+}
+
+.cookie-consent__btn {
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 0.72rem 1.05rem;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.cookie-consent__btn:hover {
+  transform: translateY(-1px);
+}
+
+.cookie-consent__btn--accept {
+  background: var(--cc-primary);
+  color: #fff;
+}
+
+.cookie-consent__btn--accept:hover {
+  background: var(--cc-primary-hover);
+}
+
+.cookie-consent__btn--reject {
+  background: var(--cc-secondary);
+  color: var(--cc-text);
+  border-color: var(--cc-secondary-border);
+}
+
+.cookie-consent__btn--reject:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+@media (max-width: 720px) {
+  .cookie-consent {
+    left: 0.75rem;
+    right: 0.75rem;
+    bottom: 0.75rem;
+    padding: 0.95rem;
+  }
+
+  .cookie-consent__inner {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .cookie-consent__actions {
+    width: 100%;
+  }
+
+  .cookie-consent__btn {
+    flex: 1 1 180px;
+    justify-content: center;
+  }
+}

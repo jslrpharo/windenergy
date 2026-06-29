@@ -12664,14 +12664,34 @@ section.story-backdrop > p, section.story-backdrop > p > div.tc-tab-buttons {
 }
 div.tc-page-container{--scrollbar-width:calc(100vw - 100%)}.tc-sidebar-scrollable{max-width:calc(100vw - (8px * 2 + 2em + var(--scrollbar-width)))}
 </style>
+    <link rel="stylesheet" href="/cookie-consent.css">
   <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-T1XF1Z8ML9"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
+    window.gtag = window.gtag || gtag;
+    (function() {
+      var consentState = 'denied';
+      try {
+        if (window.localStorage.getItem('acmsl_cookie_consent') === 'accepted') {
+          consentState = 'granted';
+        }
+      } catch (e) {}
+      gtag('consent', 'default', {
+        analytics_storage: consentState,
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+        wait_for_update: 500
+      });
+    })();
     gtag('js', new Date());
-    gtag('config', 'G-T1XF1Z8ML9');
+    gtag('config', 'G-T1XF1Z8ML9', {
+      anonymize_ip: true
+    });
   </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-T1XF1Z8ML9"></script>
+  <script defer src="/cookie-consent.js"></script>
 </head>
 <body class="tc-body">
 
