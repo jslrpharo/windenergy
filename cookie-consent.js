@@ -65,6 +65,51 @@
     });
   }
 
+  function getMeasurementId() {
+    return window.ACMSL_GA_ID || 'G-T1XF1Z8ML9';
+  }
+
+  function disableAnalytics() {
+    var measurementId = getMeasurementId();
+    window['ga-disable-' + measurementId] = true;
+  }
+
+  function enableAnalytics() {
+    var measurementId = getMeasurementId();
+    if (!measurementId || typeof window.gtag !== 'function') return;
+
+    window['ga-disable-' + measurementId] = false;
+
+    if (window.ACMSL_GA_INITIALIZED) return;
+
+    window.gtag('config', measurementId, {
+      anonymize_ip: true,
+      send_page_view: false
+    });
+    window.ACMSL_GA_INITIALIZED = true;
+  }
+
+  function clearAnalyticsCookies() {
+    var cookieNames = ['_ga', '_gid', '_gat', '_ga_' + getMeasurementId().replace(/^G-/, '')];
+    var hostname = window.location.hostname;
+    var domainParts = hostname ? hostname.split('.') : [];
+    var domains = [''];
+
+    if (domainParts.length >= 2) {
+      domains.push('.' + domainParts.slice(-2).join('.'));
+    }
+    if (domainParts.length >= 3) {
+      domains.push('.' + domainParts.slice(-3).join('.'));
+    }
+
+    cookieNames.forEach(function (name) {
+      domains.forEach(function (domain) {
+        var domainPart = domain ? '; domain=' + domain : '';
+        document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/' + domainPart;
+      });
+    });
+  }
+
   function trackPageView() {
     if (typeof window.gtag !== 'function') return;
     window.gtag('event', 'page_view', {
@@ -121,13 +166,19 @@
   function initBanner() {
     var currentChoice = readChoice();
     if (currentChoice === acceptedValue) {
+      enableAnalytics();
       updateConsent(true);
+      trackPageView();
       return;
     }
     if (currentChoice === rejectedValue) {
+      disableAnalytics();
       updateConsent(false);
+      clearAnalyticsCookies();
       return;
     }
+
+    disableAnalytics();
 
     var banner = buildBanner();
     document.body.appendChild(banner);
@@ -139,11 +190,14 @@
 
       if (action === 'accept') {
         persistChoice(acceptedValue);
+        enableAnalytics();
         updateConsent(true);
         trackPageView();
       } else {
         persistChoice(rejectedValue);
+        disableAnalytics();
         updateConsent(false);
+        clearAnalyticsCookies();
       }
 
       hideBanner(banner);
