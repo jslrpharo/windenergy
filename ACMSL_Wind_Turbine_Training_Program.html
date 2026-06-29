@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wind Turbine Training Programme | ACMSL</title>
+  <meta name="description" content="ACMSL's Wind Turbine Training Programme: a structured overview of personnel training for installation and maintenance of industrial wind turbines and wind farms." />
+  <link rel="icon" type="image/png" href="img/ACM_LOGO.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary:       #006699;
+      --primary-dark:  #004d73;
+      --primary-light: #e3f4ff;
+      --accent:        #00a878;
+      --accent-dark:   #007d5a;
+      --dark:          #123047;
+      --mid:           #3a5068;
+      --bg:            #f5f7fb;
+      --white:         #ffffff;
+      --radius:        14px;
+      --shadow:        0 10px 32px rgba(0,0,0,0.10);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Open Sans', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--dark);
+      line-height: 1.7;
+    }
+
+    /* ── HEADER ─────────────────────────────────── */
+    header {
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 60%, #0099cc 100%);
+      color: var(--white);
+      padding: 1.1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.22);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      flex-wrap: wrap;
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .header-brand img { height: 34px; width: auto; }
+
+    .header-brand span {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.7rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+    }
+
+    .header-nav { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+    .header-nav a {
+      color: rgba(255,255,255,0.92);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 600;
+      padding: 0.45rem 1rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.12);
+      transition: background 0.2s;
+    }
+    .header-nav a:hover { background: rgba(255,255,255,0.25); }
+    .header-nav a.cta {
+      background: var(--accent);
+      color: var(--white);
+    }
+    .header-nav a.cta:hover { background: var(--accent-dark); }
+
+    /* ── HERO ────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(160deg, #1e3c72 0%, #2a5298 55%, #1a9abf 100%);
+      color: var(--white);
+      padding: 4.5rem 2rem 5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url('img/Aerogenerador_3d_chatgpt-reducida.png') center/cover no-repeat;
+      opacity: 0.08;
+    }
+
+    .hero-inner {
+      position: relative;
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.30);
+      border-radius: 999px;
+      padding: 0.35rem 1.1rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+    }
+
+    .hero h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(1.9rem, 4.5vw, 3rem);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 1.1rem;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: #7fdfff;
+    }
+
+    .hero p {
+      font-size: clamp(1rem, 2vw, 1.18rem);
+      opacity: 0.92;
+      max-width: 680px;
+      margin: 0 auto 2rem;
+    }
+
+    .hero-cta-group { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.8rem;
+      border-radius: 999px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.18); }
+
+    .btn-primary { background: var(--accent); color: var(--white); }
+    .btn-primary:hover { background: var(--accent-dark); }
+    .btn-outline { background: rgba(255,255,255,0.15); color: var(--white); border: 2px solid rgba(255,255,255,0.55); }
+    .btn-outline:hover { background: rgba(255,255,255,0.28); }
+
+    /* ── MAIN CONTENT ────────────────────────────── */
+    main {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 5rem;
+    }
+
+    /* ── CONTENT BLOCKS ──────────────────────────── */
+    .content-block {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 2.4rem 2.8rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 2.8rem;
+    }
+
+    .content-block.accent-left { border-left: 5px solid var(--primary); }
+    .content-block.accent-warning { border-left: 5px solid #f5a623; }
+    .content-block.accent-danger { border-left: 5px solid #e74c3c; }
+    .content-block.accent-success { border-left: 5px solid var(--accent); }
+
+    .content-block p, .content-block li {
+      font-size: 1.02rem;
+      color: var(--mid);
+      margin-bottom: 0.7rem;
+    }
+
+    .content-block ul {
+      margin: 0.5rem 0 0.5rem 1.4rem;
+    }
+
+    .content-block strong { color: var(--primary-dark); }
+
+    /* ── SECTION HEADING ─────────────────────────── */
+    .section-heading {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 1.3rem;
+    }
+
+    .section-heading .icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+
+    .section-heading h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--dark);
+    }
+
+    /* ── TWO-COLUMN GRID ─────────────────────────── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin: 1.2rem 0;
+    }
+
+    @media (max-width: 640px) { .two-col { grid-template-columns: 1fr; } }
+
+    .col-block {
+      background: var(--bg);
+      border-radius: 10px;
+      padding: 1.3rem 1.5rem;
+    }
+
+    .col-block h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 0.7rem;
+    }
+
+    /* ── PILLARS ─────────────────────────────────── */
+    .pillars {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.2rem;
+      margin: 1.5rem 0;
+    }
+
+    .pillar {
+      border-radius: 12px;
+      padding: 1.5rem 1.6rem;
+      border: 1px solid transparent;
+    }
+
+    .pillar-blue   { background: #e3f4ff; border-color: #9cc8e8; }
+    .pillar-green  { background: #edfaf5; border-color: #a8e6d0; }
+    .pillar-orange { background: #fff4e5; border-color: #ffc97a; }
+    .pillar-red    { background: #fdecea; border-color: #f5b4ae; }
+    .pillar-purple { background: #f3eeff; border-color: #c4a8f0; }
+
+    .pillar-icon { font-size: 1.9rem; margin-bottom: 0.5rem; }
+
+    .pillar h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--dark);
+    }
+
+    .pillar p {
+      font-size: 0.93rem;
+      color: var(--mid);
+    }
+
+    /* ── HIGHLIGHT / NOTE BOXES ──────────────────── */
+    .highlight-box {
+      background: #fff8e1;
+      border-left: 4px solid #f5a623;
+      border-radius: 8px;
+      padding: 1rem 1.4rem;
+      margin: 1.4rem 0;
+      font-size: 1rem;
+      color: #5c4200;
+      font-style: italic;
+    }
+
+    .note-box {
+      background: var(--primary-light);
+      border-left: 4px solid var(--primary);
+      border-radius: 8px;
+      padding: 1.1rem 1.4rem;
+      margin: 1.4rem 0;
+      font-size: 0.98rem;
+      color: var(--primary-dark);
+    }
+
+    .note-box.danger {
+      background: #fdecea;
+      border-color: #e74c3c;
+      color: #8b0000;
+    }
+
+    /* ── BENEFITS STRIP ──────────────────────────── */
+    .benefits-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.2rem;
+      margin-bottom: 2.8rem;
+    }
+
+    .benefit-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 1.6rem 1.8rem;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .benefit-card .b-icon { font-size: 2rem; }
+
+    .benefit-card h4 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--dark);
+    }
+
+    .benefit-card p { font-size: 0.88rem; color: var(--mid); }
+
+    /* ── CTA BANNER ──────────────────────────────── */
+    .cta-banner {
+      background: linear-gradient(135deg, var(--primary) 0%, #0099cc 100%);
+      border-radius: var(--radius);
+      padding: 3rem 2.8rem;
+      color: var(--white);
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    .cta-banner h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.75rem;
+      font-weight: 800;
+      margin-bottom: 0.8rem;
+    }
+
+    .cta-banner p {
+      font-size: 1.05rem;
+      opacity: 0.92;
+      max-width: 600px;
+      margin: 0 auto 1.8rem;
+    }
+
+    .cta-banner .btn-primary { background: var(--accent); }
+
+    /* ── FOOTER ──────────────────────────────────── */
+    footer {
+      background: var(--dark);
+      color: rgba(255,255,255,0.7);
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.84rem;
+    }
+
+    footer a { color: #7fdfff; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    /* ── RESPONSIVE ──────────────────────────────── */
+    @media (max-width: 600px) {
+      .content-block { padding: 1.6rem 1.4rem; }
+      .hero { padding: 3rem 1.2rem 3.5rem; }
+      .cta-banner { padding: 2rem 1.4rem; }
+    }
+  </style>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-T1XF1Z8ML9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-T1XF1Z8ML9');
+  </script>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <a class="header-brand" href="https://www.acm-sl.com" target="_blank" rel="noopener">
+      <img src="img/ACM_LOGO.png" alt="ACMSL Logo" />
+      <span>ACMSL</span>
+    </a>
+    <nav class="header-nav">
+      <a href="index.html">&#127968; Home</a>
+      <a href="our-training-approach.html">&#127891; Training Approach</a>
+      <a href="contacto.html" class="cta">&#9993; Contact Us</a>
+      <select onchange="window.location.href=this.value" aria-label="Language" style="background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.4);border-radius:999px;padding:0.4rem 0.8rem;font-size:0.85rem;font-weight:600;cursor:pointer;">
+        <option value="ACMSL_Wind_Turbine_Training_Program.html" selected style="background:#123047;color:#fff;">EN</option>
+        <option value="ACMSL_Wind_Turbine_Training_Program-es.html" style="background:#123047;color:#fff;">ES</option>
+        <option value="ACMSL_Wind_Turbine_Training_Program-fr.html" style="background:#123047;color:#fff;">FR</option>
+        <option value="ACMSL_Wind_Turbine_Training_Program-de.html" style="background:#123047;color:#fff;">DE</option>
+        <option value="ACMSL_Wind_Turbine_Training_Program-it.html" style="background:#123047;color:#fff;">IT</option>
+        <option value="ACMSL_Wind_Turbine_Training_Program-pt.html" style="background:#123047;color:#fff;">PT</option>
+      </select>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-tag">ACMSL Training Proposal</div>
+      <h1>Wind Turbine<br><em>Training Programme</em></h1>
+      <p>Personnel training for installation and maintenance of horizontal-axis wind turbines in wind farms.</p>
+      <div class="hero-cta-group">
+        <a href="contacto.html" class="btn btn-primary">&#9993;&nbsp; Request Information</a>
+        <a href="our-training-approach.html" class="btn btn-outline">&#8592;&nbsp; Training Approach</a>
+      </div>
+    </div>
+  </section>
+
+  <main>
+
+    <!-- 1. SCALE & MAGNITUDE -->
+    <div class="content-block accent-left">
+      <div class="section-heading">
+        <div class="icon" style="background:#e3f4ff;">&#128260;</div>
+        <h2>Wind Turbine Scale &amp; Magnitude</h2>
+      </div>
+
+      <div class="two-col">
+        <div class="col-block">
+          <h3>&#127981; Onshore Wind Turbines</h3>
+          <ul>
+            <li><strong>2 MW models:</strong> Standard land-based installations</li>
+            <li>Hub heights: 80–120 metres</li>
+            <li>Rotor diameters: 80–100 metres</li>
+            <li>Total height: up to 170 metres</li>
+          </ul>
+        </div>
+        <div class="col-block">
+          <h3>&#127754; Offshore Wind Turbines</h3>
+          <ul>
+            <li><strong>10+ MW models:</strong> Large-scale marine installations</li>
+            <li>Hub heights: 120–150 metres</li>
+            <li>Rotor diameters: 150–220 metres</li>
+            <li>Total height: up to 260 metres</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="highlight-box">
+        Modern wind turbines are among the <strong>largest rotating machines ever built</strong> — comparable in height to skyscrapers. This scale alone demands highly specialised O&amp;M knowledge.
+      </div>
+    </div>
+
+    <!-- 2. PHYSICAL PRINCIPLES -->
+    <div class="content-block">
+      <div class="section-heading">
+        <div class="icon" style="background:#edfaf5;">&#9881;&#65039;</div>
+        <h2>Physical Operating Principles</h2>
+      </div>
+
+      <p>Wind turbines operate on two fundamental energy conversion processes that O&amp;M technicians must fully understand:</p>
+
+      <div class="two-col">
+        <div class="col-block">
+          <h3>&#127807; A) Kinetic Energy Converter</h3>
+          <ul>
+            <li><strong>Blades:</strong> Capture wind's kinetic energy through aerodynamic lift</li>
+            <li><strong>Hub:</strong> Connects blades to the main shaft</li>
+            <li><strong>Main shaft:</strong> Single-degree-of-freedom rotation on bearings</li>
+            <li><strong>Gearbox:</strong> Multiplies blade rotation speed for generator compatibility</li>
+          </ul>
+        </div>
+        <div class="col-block">
+          <h3>&#9889; B) Electrical Energy Generator</h3>
+          <ul>
+            <li><strong>Generator:</strong> Converts mechanical rotation to electrical energy</li>
+            <li><strong>Power electronics:</strong> Condition electricity for grid compatibility</li>
+            <li><strong>Grid connection:</strong> Delivers power to the electrical network</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. CRITICAL DESIGN -->
+    <div class="content-block accent-warning">
+      <div class="section-heading">
+        <div class="icon" style="background:#fff0f0;">&#9888;&#65039;</div>
+        <h2>Critical Design Considerations</h2>
+      </div>
+
+      <div class="note-box" style="background:#fff8e1; border-color:#f5a623; color:#5c4200;">
+        Wind turbines are <strong>electricity generation plants designed for unattended operation</strong> — they must function reliably without constant human supervision.
+      </div>
+
+      <h3 style="font-family:'Montserrat',sans-serif; font-size:1.05rem; margin:1.2rem 0 0.6rem; color:var(--dark);">Key Design Drivers</h3>
+      <ul>
+        <li><strong>Power capacity:</strong> Directly determined by blade size and swept area</li>
+        <li><strong>Installation height:</strong> Larger blades require higher hub heights for ground clearance</li>
+        <li><strong>Grid integration:</strong> Must meet strict electrical grid requirements for voltage, frequency, and power quality</li>
+        <li><strong>Autonomous operation:</strong> Control system manages the full operating cycle with no manual intervention</li>
+      </ul>
+
+      <div class="highlight-box">
+        Supplying the electrical grid is far more demanding than simply charging a battery — it requires precise voltage, frequency, and power quality control at all times.
+      </div>
+    </div>
+
+    <!-- 4. REQUIRED KNOWLEDGE -->
+    <div class="content-block">
+      <div class="section-heading">
+        <div class="icon" style="background:#e8f9f3;">&#127979;</div>
+        <h2>Required Knowledge for O&amp;M Personnel</h2>
+      </div>
+
+      <p>Effective O&amp;M technicians must master two complementary knowledge areas:</p>
+
+      <div class="pillars">
+        <div class="pillar pillar-blue">
+          <div class="pillar-icon">&#128295;</div>
+          <h3>Core Industrial Skills</h3>
+          <ul style="font-size:0.9rem; color:var(--mid); margin-left:1.1rem;">
+            <li>Industrial electricity</li>
+            <li>Hydraulic systems</li>
+            <li>Mechanical systems (bearings, gearboxes)</li>
+            <li>Instrumentation &amp; industrial control</li>
+          </ul>
+          <p style="margin-top:0.7rem; font-style:italic;">Available through standard industrial training programmes</p>
+        </div>
+        <div class="pillar pillar-green">
+          <div class="pillar-icon">&#127981;</div>
+          <h3>Wind-Specific Knowledge</h3>
+          <ul style="font-size:0.9rem; color:var(--mid); margin-left:1.1rem;">
+            <li>Aerodynamics and wind energy conversion</li>
+            <li>Wind turbine control systems</li>
+            <li>Grid integration requirements</li>
+            <li>Wind farm operation &amp; maintenance</li>
+          </ul>
+          <p style="margin-top:0.7rem; font-style:italic;">Requires specialised training materials</p>
+        </div>
+      </div>
+
+      <div class="note-box">
+        ACMSL materials complement standard industrial training with wind turbine-specific content originally developed by wind turbine manufacturers — providing the wind-specific layer that no generic industrial course covers.
+      </div>
+    </div>
+
+    <!-- 5. CONTROL SYSTEM CHALLENGES -->
+    <div class="content-block accent-left">
+      <div class="section-heading">
+        <div class="icon" style="background:#e3f4ff;">&#128187;</div>
+        <h2>Wind Turbine Control Systems</h2>
+      </div>
+
+      <h3 style="font-family:'Montserrat',sans-serif; font-size:1.05rem; margin-bottom:0.8rem; color:var(--dark);">The Proprietary Knowledge Challenge</h3>
+      <ul>
+        <li><strong>Accumulated experience:</strong> Control systems incorporate years of manufacturer knowledge and real-world field experience</li>
+        <li><strong>Protected intellectual property:</strong> Control algorithms are closely guarded industrial secrets</li>
+        <li><strong>Insurance restrictions:</strong> Direct access to controller internals is limited by warranty and insurance policies</li>
+        <li><strong>Operational consequence:</strong> Maintenance personnel work through data terminals connected to turbine controllers — not through direct system access</li>
+      </ul>
+
+      <div class="two-col" style="margin-top:1.5rem;">
+        <div class="col-block">
+          <h3>&#128203; Available at Local Terminal</h3>
+          <ul>
+            <li>Wind speed and direction</li>
+            <li>Active and reactive power</li>
+            <li>Component temperatures</li>
+            <li>Hydraulic system status</li>
+            <li>Blade rotation speed</li>
+            <li>System component states</li>
+          </ul>
+        </div>
+        <div class="col-block">
+          <h3>&#128225; Remote Monitoring</h3>
+          <ul>
+            <li>Connection to Park Control Centre</li>
+            <li>Periodic data transmission</li>
+            <li>Limited variable subset</li>
+            <li>Incident and fault messaging</li>
+            <li>Operational status updates</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. DIAGNOSTIC LIMITATIONS -->
+    <div class="content-block accent-danger">
+      <div class="section-heading">
+        <div class="icon" style="background:#fdecea;">&#128680;</div>
+        <h2>Critical System Limitations</h2>
+      </div>
+
+      <div class="note-box danger">
+        Wind turbine controllers do <strong>NOT</strong> include fault diagnostic functionalities. They detect operational failures and report states outside acceptable parameters — but they do not diagnose the root cause.
+      </div>
+
+      <div class="two-col">
+        <div class="col-block">
+          <h3>What Controllers Do</h3>
+          <ul>
+            <li>Detect operational failures</li>
+            <li>Report states outside acceptable parameters</li>
+            <li>Generate fault messages and alarm codes</li>
+          </ul>
+        </div>
+        <div class="col-block">
+          <h3>Critical Challenges</h3>
+          <ul>
+            <li><strong>No standardisation:</strong> Each turbine model has unique fault codes</li>
+            <li><strong>Manufacturer variation:</strong> Different message systems even within the same brand</li>
+            <li><strong>Interpretation required:</strong> Messages demand experience-based reading</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="highlight-box">
+        Understanding controller messages is <strong>fundamental to any maintenance action</strong>. Technicians who cannot interpret alarm codes effectively cannot diagnose or resolve turbine faults.
+      </div>
+    </div>
+
+    <!-- 7. TRADITIONAL LIMITATIONS -->
+    <div class="content-block">
+      <div class="section-heading">
+        <div class="icon" style="background:#fff4e5;">&#128218;</div>
+        <h2>Traditional Training Methods and Their Limitations</h2>
+      </div>
+
+      <div class="pillars">
+        <div class="pillar pillar-orange">
+          <div class="pillar-icon">&#128196;</div>
+          <h3>1. Operation Manual Study</h3>
+          <p><strong>Approach:</strong> Learn fault codes from technical documentation</p>
+          <p><strong>Limitation:</strong> Difficult to understand turbine state context when incidents occur</p>
+          <p><strong>Effectiveness:</strong> Low — lacks real-world application context</p>
+        </div>
+        <div class="pillar pillar-orange">
+          <div class="pillar-icon">&#128295;</div>
+          <h3>2. On-the-Job Training</h3>
+          <p><strong>Approach:</strong> Learn by participating in actual repairs</p>
+          <p><strong>Requirement:</strong> Supervision by specialised technicians at all times</p>
+          <p><strong>Limitation:</strong> Dependent on fault occurrence and expert availability</p>
+        </div>
+      </div>
+
+      <div class="highlight-box">
+        Traditional methods are either <strong>ineffective</strong> (manual study, no context) or <strong>inefficient</strong> (waiting for real failures under expert supervision).
+      </div>
+    </div>
+
+    <!-- 8. ACMSL SOLUTION -->
+    <div class="content-block accent-success">
+      <div class="section-heading">
+        <div class="icon" style="background:#e8f9f3;">&#9989;</div>
+        <h2>ACMSL Innovative Solution: Real-Time Simulators</h2>
+      </div>
+
+      <p>ACMSL has developed <strong>real-time simulators</strong> specifically designed for wind turbine O&amp;M training — one for each major turbine model in commercial use. These simulators allow instructors to:</p>
+
+      <div class="pillars" style="margin-top:1.5rem;">
+        <div class="pillar pillar-green">
+          <div class="pillar-icon">&#127807;</div>
+          <h3>Modify Operating Conditions</h3>
+          <p>Change wind speed, wind direction, gusts, temperature, and power demand in real time — all in a safe, repeatable environment.</p>
+        </div>
+        <div class="pillar pillar-orange">
+          <div class="pillar-icon">&#127755;</div>
+          <h3>Introduce Controlled Faults</h3>
+          <p>Inject specific subsystem or component faults and let students diagnose them through the same alarm messages seen on real machines.</p>
+        </div>
+        <div class="pillar pillar-blue">
+          <div class="pillar-icon">&#128200;</div>
+          <h3>Explore Extreme Conditions</h3>
+          <p>Train against hurricane-force winds, sudden gusts, grid failures, and other exceptional scenarios that cannot be reproduced safely in the field.</p>
+        </div>
+      </div>
+
+      <div class="note-box">
+        The simulators faithfully reproduce the turbine controller's behavior — generating fault and alarm messages <strong>exactly as real machines do</strong>. Trainees learn to interpret the same diagnostic information they will face in the field.
+      </div>
+    </div>
+
+    <!-- 9. BENEFITS -->
+    <div class="benefits-strip">
+      <div class="benefit-card">
+        <div class="b-icon">&#9201;</div>
+        <h4>Faster Time-to-Competence</h4>
+        <p>Trainees reach operational readiness significantly faster than through traditional component-based courses alone.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="b-icon">&#128200;</div>
+        <h4>Lower Training Costs</h4>
+        <p>Replace expensive on-site scenarios with high-fidelity simulated ones — no downtime, no safety risk, no travel required.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="b-icon">&#128268;</div>
+        <h4>Multi-Technology Coverage</h4>
+        <p>Simulators span the main industrial families: DFIG, Active Stall, and Rotor Resistance Controlled wind turbines.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="b-icon">&#127891;</div>
+        <h4>Trusted by Institutions</h4>
+        <p>Deployed in technical colleges and universities across 8 countries — from Spain and Canada to the USA and Uzbekistan.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="b-icon">&#128202;</div>
+        <h4>Standardised Training</h4>
+        <p>Consistent skill development across all personnel — every trainee works with the same scenarios and diagnostic challenges.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="b-icon">&#128521;</div>
+        <h4>Safe Learning Environment</h4>
+        <p>Explore complex fault scenarios, emergency shutdowns, and extreme conditions without any risk to equipment or personnel.</p>
+      </div>
+    </div>
+
+    <!-- CTA BANNER -->
+    <div class="cta-banner">
+      <h2>Prepare Your Team for Real-World Wind Energy Operations</h2>
+      <p>By integrating ACMSL's Real-Time Simulators into your training programme, you give technicians an unparalleled learning experience that <strong>bridges theory and practice</strong> — preparing them to excel in the fast-growing wind energy sector.</p>
+      <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; margin-top:0.5rem;">
+        <a href="contacto.html" class="btn btn-primary">&#9993;&nbsp; Request a Free Evaluation</a>
+        <a href="our-training-approach.html" class="btn btn-outline">&#127891;&nbsp; Our Training Approach</a>
+        <a href="index.html" class="btn btn-outline">&#8592;&nbsp; Back to Home</a>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    &copy; 2026 <a href="https://www.acm-sl.com" target="_blank" rel="noopener">Automated Computing Machinery SL (ACMSL)</a>. All rights reserved.
+  </footer>
+
+</body>
+</html>

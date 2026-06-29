@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Programme de Formation aux Éoliennes | ACMSL</title>
+  <meta name="description" content="Programme de formation ACMSL : présentation structurée de la formation du personnel pour l'installation et la maintenance d'éoliennes industrielles dans des parcs éoliens." />
+  <link rel="icon" type="image/png" href="img/ACM_LOGO.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root { --primary:#006699; --primary-dark:#004d73; --primary-light:#e3f4ff; --accent:#00a878; --accent-dark:#007d5a; --dark:#123047; --mid:#3a5068; --bg:#f5f7fb; --white:#ffffff; --radius:14px; --shadow:0 10px 32px rgba(0,0,0,0.10); }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Open Sans', system-ui, sans-serif; background: var(--bg); color: var(--dark); line-height: 1.7; }
+    header { background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 60%, #0099cc 100%); color: var(--white); padding: 1.1rem 2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; box-shadow: 0 4px 16px rgba(0,0,0,0.22); position: sticky; top: 0; z-index: 100; flex-wrap: wrap; }
+    .header-brand { display: flex; align-items: center; gap: 0.8rem; text-decoration: none; color: inherit; }
+    .header-brand img { height: 34px; width: auto; }
+    .header-brand span { font-family: 'Montserrat', sans-serif; font-size: 1.7rem; font-weight: 800; letter-spacing: 0.05em; }
+    .header-nav { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .header-nav a { color: rgba(255,255,255,0.92); text-decoration: none; font-size: 0.88rem; font-weight: 600; padding: 0.45rem 1rem; border-radius: 999px; background: rgba(255,255,255,0.12); transition: background 0.2s; }
+    .header-nav a:hover { background: rgba(255,255,255,0.25); }
+    .header-nav a.cta { background: var(--accent); color: var(--white); }
+    .header-nav a.cta:hover { background: var(--accent-dark); }
+    .hero { background: linear-gradient(160deg, #1e3c72 0%, #2a5298 55%, #1a9abf 100%); color: var(--white); padding: 4.5rem 2rem 5rem; text-align: center; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; inset: 0; background: url('img/Aerogenerador_3d_chatgpt-reducida.png') center/cover no-repeat; opacity: 0.08; }
+    .hero-inner { position: relative; max-width: 820px; margin: 0 auto; }
+    .hero-tag { display: inline-block; background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.30); border-radius: 999px; padding: 0.35rem 1.1rem; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 1.2rem; }
+    .hero h1 { font-family: 'Montserrat', sans-serif; font-size: clamp(1.9rem, 4.5vw, 3rem); font-weight: 800; line-height: 1.2; margin-bottom: 1.1rem; }
+    .hero h1 em { font-style: normal; color: #7fdfff; }
+    .hero p { font-size: clamp(1rem, 2vw, 1.18rem); opacity: 0.92; max-width: 680px; margin: 0 auto 2rem; }
+    .hero-cta-group { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.8rem; border-radius: 999px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.95rem; text-decoration: none; transition: transform 0.18s, box-shadow 0.18s, background 0.18s; cursor: pointer; border: none; }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.18); }
+    .btn-primary { background: var(--accent); color: var(--white); }
+    .btn-primary:hover { background: var(--accent-dark); }
+    .btn-outline { background: rgba(255,255,255,0.15); color: var(--white); border: 2px solid rgba(255,255,255,0.55); }
+    .btn-outline:hover { background: rgba(255,255,255,0.28); }
+    main { max-width: 1000px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+    .content-block { background: var(--white); border-radius: var(--radius); padding: 2.4rem 2.8rem; box-shadow: var(--shadow); margin-bottom: 2.8rem; }
+    .content-block.accent-left { border-left: 5px solid var(--primary); }
+    .content-block.accent-warning { border-left: 5px solid #f5a623; }
+    .content-block.accent-danger { border-left: 5px solid #e74c3c; }
+    .content-block.accent-success { border-left: 5px solid var(--accent); }
+    .content-block p, .content-block li { font-size: 1.02rem; color: var(--mid); margin-bottom: 0.7rem; }
+    .content-block ul { margin: 0.5rem 0 0.5rem 1.4rem; }
+    .content-block strong { color: var(--primary-dark); }
+    .section-heading { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.3rem; }
+    .section-heading .icon { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
+    .section-heading h2 { font-family: 'Montserrat', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--dark); }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.2rem 0; }
+    @media (max-width: 640px) { .two-col { grid-template-columns: 1fr; } }
+    .col-block { background: var(--bg); border-radius: 10px; padding: 1.3rem 1.5rem; }
+    .col-block h3 { font-family: 'Montserrat', sans-serif; font-size: 1rem; font-weight: 700; color: var(--dark); margin-bottom: 0.7rem; }
+    .pillars { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.2rem; margin: 1.5rem 0; }
+    .pillar { border-radius: 12px; padding: 1.5rem 1.6rem; border: 1px solid transparent; }
+    .pillar-blue { background: #e3f4ff; border-color: #9cc8e8; }
+    .pillar-green { background: #edfaf5; border-color: #a8e6d0; }
+    .pillar-orange { background: #fff4e5; border-color: #ffc97a; }
+    .pillar-icon { font-size: 1.9rem; margin-bottom: 0.5rem; }
+    .pillar h3 { font-family: 'Montserrat', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--dark); }
+    .pillar p { font-size: 0.93rem; color: var(--mid); }
+    .highlight-box { background: #fff8e1; border-left: 4px solid #f5a623; border-radius: 8px; padding: 1rem 1.4rem; margin: 1.4rem 0; font-size: 1rem; color: #5c4200; font-style: italic; }
+    .note-box { background: var(--primary-light); border-left: 4px solid var(--primary); border-radius: 8px; padding: 1.1rem 1.4rem; margin: 1.4rem 0; font-size: 0.98rem; color: var(--primary-dark); }
+    .note-box.danger { background: #fdecea; border-color: #e74c3c; color: #8b0000; }
+    .benefits-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.2rem; margin-bottom: 2.8rem; }
+    .benefit-card { background: var(--white); border-radius: var(--radius); padding: 1.6rem 1.8rem; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 0.6rem; }
+    .benefit-card .b-icon { font-size: 2rem; }
+    .benefit-card h4 { font-family: 'Montserrat', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--dark); }
+    .benefit-card p { font-size: 0.88rem; color: var(--mid); }
+    .cta-banner { background: linear-gradient(135deg, var(--primary) 0%, #0099cc 100%); border-radius: var(--radius); padding: 3rem 2.8rem; color: var(--white); text-align: center; box-shadow: var(--shadow); }
+    .cta-banner h2 { font-family: 'Montserrat', sans-serif; font-size: 1.75rem; font-weight: 800; margin-bottom: 0.8rem; }
+    .cta-banner p { font-size: 1.05rem; opacity: 0.92; max-width: 600px; margin: 0 auto 1.8rem; }
+    .cta-banner .btn-primary { background: var(--accent); }
+    footer { background: var(--dark); color: rgba(255,255,255,0.7); text-align: center; padding: 1.5rem; font-size: 0.84rem; }
+    footer a { color: #7fdfff; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+    @media (max-width: 600px) { .content-block { padding: 1.6rem 1.4rem; } .hero { padding: 3rem 1.2rem 3.5rem; } .cta-banner { padding: 2rem 1.4rem; } }
+  </style>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-T1XF1Z8ML9"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-T1XF1Z8ML9');</script>
+</head>
+<body>
+
+  <header>
+    <a class="header-brand" href="https://www.acm-sl.com" target="_blank" rel="noopener">
+      <img src="img/ACM_LOGO.png" alt="ACMSL Logo" />
+      <span>ACMSL</span>
+    </a>
+    <nav class="header-nav">
+      <a href="index.html?lang=fr">&#127968; Accueil</a>
+      <a href="our-training-approach-fr.html">&#127891; Approche de Formation</a>
+      <a href="contacto.html?lang=fr" class="cta">&#9993; Contact</a>
+      <select onchange="window.location.href=this.value" aria-label="Langue" style="background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.4);border-radius:999px;padding:0.4rem 0.8rem;font-size:0.85rem;font-weight:600;cursor:pointer;">
+        <option value="ACMSL_Wind_Turbine_Training_Program.html" style="background:#123047;color:#fff;">EN</option>
+        <option value="ACMSL_Wind_Turbine_Training_Program-es.html" style="background:#123047;color:#fff;">ES</option>
+        <option value="ACMSL_Wind_Turbine_Training_Program-fr.html" selected style="background:#123047;color:#fff;">FR</option>
+        <option value="ACMSL_Wind_Turbine_Training_Program-de.html" style="background:#123047;color:#fff;">DE</option>
+        <option value="ACMSL_Wind_Turbine_Training_Program-it.html" style="background:#123047;color:#fff;">IT</option>
+        <option value="ACMSL_Wind_Turbine_Training_Program-pt.html" style="background:#123047;color:#fff;">PT</option>
+      </select>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-tag">Proposition de Formation ACMSL</div>
+      <h1>Programme de Formation en<br><em>Technologie des Éoliennes</em></h1>
+      <p>Formation du personnel pour l'installation et la maintenance d'éoliennes à axe horizontal dans des parcs éoliens.</p>
+      <div class="hero-cta-group">
+        <a href="contacto.html?lang=fr" class="btn btn-primary">&#9993;&nbsp; Demander des informations</a>
+        <a href="our-training-approach-fr.html" class="btn btn-outline">&#8592;&nbsp; Approche de formation</a>
+      </div>
+    </div>
+  </section>
+
+  <main>
+
+    <div class="content-block accent-left">
+      <div class="section-heading">
+        <div class="icon" style="background:#e3f4ff;">&#128260;</div>
+        <h2>Échelle et Magnitude des Éoliennes</h2>
+      </div>
+      <div class="two-col">
+        <div class="col-block">
+          <h3>&#127981; Éoliennes Terrestres (Onshore)</h3>
+          <ul>
+            <li><strong>Modèles de 2 MW :</strong> Installations terrestres standard</li>
+            <li>Hauteur de moyeu : 80–120 mètres</li>
+            <li>Diamètre du rotor : 80–100 mètres</li>
+            <li>Hauteur totale : jusqu'à 170 mètres</li>
+          </ul>
+        </div>
+        <div class="col-block">
+          <h3>&#127754; Éoliennes Offshore</h3>
+          <ul>
+            <li><strong>Modèles de 10+ MW :</strong> Installations marines à grande échelle</li>
+            <li>Hauteur de moyeu : 120–150 mètres</li>
+            <li>Diamètre du rotor : 150–220 mètres</li>
+            <li>Hauteur totale : jusqu'à 260 mètres</li>
+          </ul>
+        </div>
+      </div>
+      <div class="highlight-box">
+        Les éoliennes modernes comptent parmi les <strong>plus grandes machines rotatives jamais construites</strong> — comparables en hauteur à des gratte-ciel. Cette échelle exige à elle seule des connaissances O&amp;M hautement spécialisées.
+      </div>
+    </div>
+
+    <div class="content-block">
+      <div class="section-heading">
+        <div class="icon" style="background:#edfaf5;">&#9881;&#65039;</div>
+        <h2>Principes Physiques de Fonctionnement</h2>
+      </div>
+      <p>Les éoliennes fonctionnent selon deux processus fondamentaux de conversion d'énergie que les techniciens O&amp;M doivent pleinement maîtriser :</p>
+      <div class="two-col">
+        <div class="col-block">
+          <h3>&#127807; A) Convertisseur d'Énergie Cinétique</h3>
+          <ul>
+            <li><strong>Pales :</strong> Captent l'énergie cinétique du vent par portance aérodynamique</li>
+            <li><strong>Moyeu :</strong> Relie les pales à l'arbre principal</li>
+            <li><strong>Arbre principal :</strong> Rotation à un degré de liberté sur roulements</li>
+            <li><strong>Multiplicateur :</strong> Multiplie la vitesse de rotation des pales pour la compatibilité avec le générateur</li>
+          </ul>
+        </div>
+        <div class="col-block">
+          <h3>&#9889; B) Générateur d'Énergie Électrique</h3>
+          <ul>
+            <li><strong>Générateur :</strong> Convertit la rotation mécanique en énergie électrique</li>
+            <li><strong>Électronique de puissance :</strong> Conditionne l'électricité pour la compatibilité avec le réseau</li>
+            <li><strong>Connexion au réseau :</strong> Délivre la puissance au réseau électrique</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-block accent-warning">
+      <div class="section-heading">
+        <div class="icon" style="background:#fff0f0;">&#9888;&#65039;</div>
+        <h2>Considérations Critiques de Conception</h2>
+      </div>
+      <div class="note-box" style="background:#fff8e1; border-color:#f5a623; color:#5c4200;">
+        Les éoliennes sont des <strong>centrales de production d'électricité conçues pour un fonctionnement sans surveillance</strong> — elles doivent fonctionner de manière fiable sans supervision humaine constante.
+      </div>
+      <h3 style="font-family:'Montserrat',sans-serif; font-size:1.05rem; margin:1.2rem 0 0.6rem; color:var(--dark);">Facteurs Clés de Conception</h3>
+      <ul>
+        <li><strong>Capacité de puissance :</strong> Déterminée directement par la taille des pales et la surface balayée</li>
+        <li><strong>Hauteur d'installation :</strong> Les pales plus grandes nécessitent des hauteurs de moyeu plus élevées pour le dégagement au sol</li>
+        <li><strong>Intégration au réseau :</strong> Doit satisfaire aux exigences strictes de tension, fréquence et qualité d'énergie</li>
+        <li><strong>Fonctionnement autonome :</strong> Le système de contrôle gère le cycle opérationnel complet sans intervention manuelle</li>
+      </ul>
+      <div class="highlight-box">
+        Alimenter le réseau électrique est bien plus exigeant que simplement recharger une batterie — cela nécessite un contrôle précis de la tension, de la fréquence et de la qualité de l'énergie en permanence.
+      </div>
+    </div>
+
+    <div class="content-block">
+      <div class="section-heading">
+        <div class="icon" style="background:#e8f9f3;">&#127979;</div>
+        <h2>Connaissances Requises pour le Personnel O&amp;M</h2>
+      </div>
+      <p>Les techniciens O&amp;M efficaces doivent maîtriser deux domaines de connaissances complémentaires :</p>
+      <div class="pillars">
+        <div class="pillar pillar-blue">
+          <div class="pillar-icon">&#128295;</div>
+          <h3>Compétences Industrielles Fondamentales</h3>
+          <ul style="font-size:0.9rem; color:var(--mid); margin-left:1.1rem;">
+            <li>Électricité industrielle</li>
+            <li>Systèmes hydrauliques</li>
+            <li>Systèmes mécaniques (roulements, multiplicateurs)</li>
+            <li>Instrumentation et contrôle industriel</li>
+          </ul>
+          <p style="margin-top:0.7rem; font-style:italic;">Disponibles dans les programmes de formation industrielle standard</p>
+        </div>
+        <div class="pillar pillar-green">
+          <div class="pillar-icon">&#127981;</div>
+          <h3>Connaissances Spécifiques aux Éoliennes</h3>
+          <ul style="font-size:0.9rem; color:var(--mid); margin-left:1.1rem;">
+            <li>Aérodynamique et conversion de l'énergie éolienne</li>
+            <li>Systèmes de contrôle des éoliennes</li>
+            <li>Exigences d'intégration au réseau</li>
+            <li>Exploitation et maintenance des parcs éoliens</li>
+          </ul>
+          <p style="margin-top:0.7rem; font-style:italic;">Nécessite des matériaux de formation spécialisés</p>
+        </div>
+      </div>
+      <div class="note-box">
+        Les matériaux ACMSL complètent la formation industrielle standard avec des contenus spécifiques aux éoliennes développés à l'origine par les fabricants — fournissant la couche spécifique au vent qu'aucun cours industriel générique ne couvre.
+      </div>
+    </div>
+
+    <div class="content-block accent-left">
+      <div class="section-heading">
+        <div class="icon" style="background:#e3f4ff;">&#128187;</div>
+        <h2>Systèmes de Contrôle des Éoliennes</h2>
+      </div>
+      <h3 style="font-family:'Montserrat',sans-serif; font-size:1.05rem; margin-bottom:0.8rem; color:var(--dark);">Le Défi de la Connaissance Propriétaire</h3>
+      <ul>
+        <li><strong>Expérience accumulée :</strong> Les systèmes de contrôle intègrent des années de savoir-faire du fabricant et d'expérience terrain</li>
+        <li><strong>Propriété intellectuelle protégée :</strong> Les algorithmes de contrôle sont des secrets industriels jalousement gardés</li>
+        <li><strong>Restrictions d'assurance :</strong> L'accès direct à l'intérieur du contrôleur est limité par les politiques de garantie et d'assurance</li>
+        <li><strong>Conséquence opérationnelle :</strong> Le personnel de maintenance travaille via des terminaux de données connectés aux contrôleurs de turbines — pas par accès direct au système</li>
+      </ul>
+      <div class="two-col" style="margin-top:1.5rem;">
+        <div class="col-block">
+          <h3>&#128203; Disponible au Terminal Local</h3>
+          <ul>
+            <li>Vitesse et direction du vent</li>
+            <li>Puissance active et réactive</li>
+            <li>Températures des composants</li>
+            <li>État du système hydraulique</li>
+            <li>Vitesse de rotation des pales</li>
+            <li>États des composants du système</li>
+          </ul>
+        </div>
+        <div class="col-block">
+          <h3>&#128225; Surveillance à Distance</h3>
+          <ul>
+            <li>Connexion au Centre de Contrôle du Parc</li>
+            <li>Transmission périodique de données</li>
+            <li>Sous-ensemble limité de variables</li>
+            <li>Messagerie d'incidents et de pannes</li>
+            <li>Mises à jour du statut opérationnel</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-block accent-danger">
+      <div class="section-heading">
+        <div class="icon" style="background:#fdecea;">&#128680;</div>
+        <h2>Limitations Critiques du Système</h2>
+      </div>
+      <div class="note-box danger">
+        Les contrôleurs d'éoliennes n'incluent <strong>PAS</strong> de fonctionnalités de diagnostic de pannes. Ils détectent les défaillances opérationnelles et signalent les états hors des paramètres acceptables — mais ne diagnostiquent pas la cause première.
+      </div>
+      <div class="two-col">
+        <div class="col-block">
+          <h3>Ce que Font les Contrôleurs</h3>
+          <ul>
+            <li>Détectent les défaillances opérationnelles</li>
+            <li>Signalent les états hors des paramètres acceptables</li>
+            <li>Génèrent des messages de panne et codes d'alarme</li>
+          </ul>
+        </div>
+        <div class="col-block">
+          <h3>Défis Critiques</h3>
+          <ul>
+            <li><strong>Pas de standardisation :</strong> Chaque modèle d'éolienne a des codes de panne uniques</li>
+            <li><strong>Variation entre fabricants :</strong> Systèmes de messages différents même au sein d'une même marque</li>
+            <li><strong>Interprétation requise :</strong> Les messages exigent une lecture basée sur l'expérience</li>
+          </ul>
+        </div>
+      </div>
+      <div class="highlight-box">
+        Comprendre les messages du contrôleur est <strong>fondamental pour toute action de maintenance</strong>. Les techniciens qui ne peuvent pas interpréter efficacement les codes d'alarme ne peuvent pas diagnostiquer ni résoudre les pannes d'éoliennes.
+      </div>
+    </div>
+
+    <div class="content-block">
+      <div class="section-heading">
+        <div class="icon" style="background:#fff4e5;">&#128218;</div>
+        <h2>Méthodes de Formation Traditionnelles et Leurs Limites</h2>
+      </div>
+      <div class="pillars">
+        <div class="pillar pillar-orange">
+          <div class="pillar-icon">&#128196;</div>
+          <h3>1. Étude du Manuel d'Exploitation</h3>
+          <p><strong>Approche :</strong> Apprendre les codes de panne à partir de la documentation technique</p>
+          <p><strong>Limitation :</strong> Difficile de comprendre le contexte de l'état de l'éolienne lors d'incidents</p>
+          <p><strong>Efficacité :</strong> Faible — manque de contexte d'application réelle</p>
+        </div>
+        <div class="pillar pillar-orange">
+          <div class="pillar-icon">&#128295;</div>
+          <h3>2. Formation sur le Terrain</h3>
+          <p><strong>Approche :</strong> Apprendre en participant à des réparations réelles</p>
+          <p><strong>Exigence :</strong> Supervision par des techniciens spécialisés en permanence</p>
+          <p><strong>Limitation :</strong> Dépendant de l'occurrence des pannes et de la disponibilité des experts</p>
+        </div>
+      </div>
+      <div class="highlight-box">
+        Les méthodes traditionnelles sont soit <strong>inefficaces</strong> (étude de manuels, sans contexte) soit <strong>inefficientes</strong> (attendre de vraies pannes sous supervision experte).
+      </div>
+    </div>
+
+    <div class="content-block accent-success">
+      <div class="section-heading">
+        <div class="icon" style="background:#e8f9f3;">&#9989;</div>
+        <h2>Solution Innovante d'ACMSL : Simulateurs Temps Réel</h2>
+      </div>
+      <p>ACMSL a développé des <strong>simulateurs temps réel</strong> spécifiquement conçus pour la formation O&amp;M en éoliennes — un pour chaque modèle principal d'éolienne en usage commercial. Ces simulateurs permettent aux formateurs de :</p>
+      <div class="pillars" style="margin-top:1.5rem;">
+        <div class="pillar pillar-green">
+          <div class="pillar-icon">&#127807;</div>
+          <h3>Modifier les Conditions d'Exploitation</h3>
+          <p>Modifier la vitesse et la direction du vent, les rafales, la température et la demande de puissance en temps réel — dans un environnement sûr et reproductible.</p>
+        </div>
+        <div class="pillar pillar-orange">
+          <div class="pillar-icon">&#127755;</div>
+          <h3>Introduire des Pannes Contrôlées</h3>
+          <p>Injecter des pannes spécifiques de sous-systèmes ou composants et laisser les étudiants les diagnostiquer via les mêmes messages d'alarme vus sur les vraies machines.</p>
+        </div>
+        <div class="pillar pillar-blue">
+          <div class="pillar-icon">&#128200;</div>
+          <h3>Explorer les Conditions Extrêmes</h3>
+          <p>S'entraîner face à des vents de force ouragan, des rafales soudaines, des défaillances de réseau et autres scénarios exceptionnels impossibles à reproduire en toute sécurité sur le terrain.</p>
+        </div>
+      </div>
+      <div class="note-box">
+        Les simulateurs reproduisent fidèlement le comportement du contrôleur de l'éolienne — générant des messages de panne et d'alarme <strong>exactement comme le font les vraies machines</strong>. Les étudiants apprennent à interpréter les mêmes informations diagnostiques qu'ils rencontreront sur le terrain.
+      </div>
+    </div>
+
+    <div class="benefits-strip">
+      <div class="benefit-card"><div class="b-icon">&#9201;</div><h4>Montée en Compétence Plus Rapide</h4><p>Les étudiants atteignent l'opérationnalité bien plus vite qu'avec les cours traditionnels basés sur les composants.</p></div>
+      <div class="benefit-card"><div class="b-icon">&#128200;</div><h4>Coûts de Formation Réduits</h4><p>Remplacer les scénarios coûteux sur site par des simulations haute fidélité — sans indisponibilité, sans risque de sécurité, sans déplacement.</p></div>
+      <div class="benefit-card"><div class="b-icon">&#128268;</div><h4>Couverture Multi-Technologies</h4><p>Les simulateurs couvrent les principales familles industrielles : DFIG, Stall Actif et éoliennes à résistance rotorique contrôlée.</p></div>
+      <div class="benefit-card"><div class="b-icon">&#127891;</div><h4>Reconnu par les Institutions</h4><p>Déployé dans des lycées techniques et universités de 8 pays — d'Espagne et du Canada aux États-Unis et à l'Ouzbékistan.</p></div>
+      <div class="benefit-card"><div class="b-icon">&#128202;</div><h4>Formation Standardisée</h4><p>Développement homogène des compétences pour tout le personnel — chaque étudiant travaille avec les mêmes scénarios et défis diagnostiques.</p></div>
+      <div class="benefit-card"><div class="b-icon">&#128521;</div><h4>Environnement d'Apprentissage Sûr</h4><p>Explorer des scénarios de pannes complexes, des arrêts d'urgence et des conditions extrêmes sans aucun risque pour les équipements ou le personnel.</p></div>
+    </div>
+
+    <div class="cta-banner">
+      <h2>Préparez Votre Équipe aux Opérations Réelles dans l'Énergie Éolienne</h2>
+      <p>En intégrant les Simulateurs Temps Réel d'ACMSL dans votre programme de formation, vous offrez aux techniciens une expérience d'apprentissage incomparable qui <strong>relie théorie et pratique</strong> — les préparant à exceller dans le secteur de l'énergie éolienne.</p>
+      <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; margin-top:0.5rem;">
+        <a href="contacto.html?lang=fr" class="btn btn-primary">&#9993;&nbsp; Demander une évaluation gratuite</a>
+        <a href="our-training-approach-fr.html" class="btn btn-outline">&#127891;&nbsp; Notre approche de formation</a>
+        <a href="index.html?lang=fr" class="btn btn-outline">&#8592;&nbsp; Retour à l'accueil</a>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    &copy; 2026 <a href="https://www.acm-sl.com" target="_blank" rel="noopener">Automated Computing Machinery SL (ACMSL)</a>. Tous droits réservés.
+  </footer>
+
+</body>
+</html>
