@@ -1087,8 +1087,281 @@
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-T1XF1Z8ML9"></script>
   <script defer src="/cookie-consent.js"></script>
   <script defer src="/legal-links.js"></script>
+  <style>
+    /* ── Welcome overlay (first-visit guide, dismissible, not indexed) ── */
+    #acmsl-welcome-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1500;
+      background: rgba(10, 25, 40, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.2rem;
+    }
+    #acmsl-welcome-overlay.wo-hidden { display: none; }
+    .wo-modal {
+      position: relative;
+      width: min(900px, 100%);
+      max-height: 90vh;
+      overflow-y: auto;
+      background: var(--card-bg);
+      border-radius: 16px;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.35);
+    }
+    .wo-close {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.9rem;
+      border: none;
+      background: rgba(255,255,255,0.85);
+      color: var(--dark);
+      width: 2rem;
+      height: 2rem;
+      border-radius: 999px;
+      font-size: 1.1rem;
+      line-height: 1;
+      cursor: pointer;
+      z-index: 1;
+    }
+    .wo-hero {
+      background: linear-gradient(135deg, var(--primary-light) 0%, #fff 100%);
+      padding: 1.75rem 2rem 1.25rem;
+      border-radius: 16px 16px 0 0;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .wo-hero img {
+      width: 140px;
+      height: 100px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+    .wo-hero h2 { font-size: 1.4rem; color: var(--dark); margin: 0 0 0.4rem; }
+    .wo-hero p { font-size: 0.95rem; color: #4a5a6a; margin: 0; line-height: 1.5; }
+    .wo-body { padding: 1.25rem 2rem 1.75rem; }
+    .wo-profile {
+      display: flex;
+      gap: 1rem;
+      padding: 0.9rem 0;
+      border-top: 1px solid rgba(0,0,0,0.08);
+      align-items: flex-start;
+    }
+    .wo-profile img {
+      width: 84px;
+      height: 64px;
+      object-fit: cover;
+      border-radius: 8px;
+      flex-shrink: 0;
+    }
+    .wo-profile-tag {
+      display: inline-block;
+      background: var(--primary);
+      color: #fff;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      padding: 0.18rem 0.6rem;
+      border-radius: 999px;
+      margin-bottom: 0.4rem;
+    }
+    .wo-profile p { font-size: 0.87rem; color: #333; line-height: 1.55; margin: 0 0 0.5rem; }
+    .wo-profile-links { display: flex; flex-wrap: wrap; gap: 0.9rem; }
+    .wo-profile-links a { font-size: 0.83rem; font-weight: 600; color: var(--primary); text-decoration: none; }
+    .wo-profile-links a:hover { text-decoration: underline; }
+    .wo-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1rem 2rem;
+      border-top: 1px solid rgba(0,0,0,0.08);
+      flex-wrap: wrap;
+    }
+    .wo-noshow { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: #4a5a6a; cursor: pointer; }
+    .wo-enter {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 0.65rem 1.4rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    @media (max-width: 620px) {
+      .wo-hero { flex-direction: column; text-align: center; padding: 1.5rem; }
+      .wo-hero img { width: 120px; }
+      .wo-body { padding: 1rem 1.25rem; }
+      .wo-profile { flex-direction: column; }
+      .wo-footer { flex-direction: column; align-items: stretch; }
+      .wo-enter { width: 100%; }
+    }
+  </style>
 </head>
   <body>
+
+    <!-- ══════════ WELCOME OVERLAY (first-visit guide) ══════════ -->
+    <div id="acmsl-welcome-overlay" role="dialog" aria-modal="true" aria-labelledby="wo-title">
+      <div class="wo-modal">
+        <button class="wo-close" id="wo-close" aria-label="Cerrar">✕</button>
+
+        <div class="wo-hero">
+          <img src="img/Aerogenerador_3d_chatgpt-1.png" alt="Aerogenerador industrial" />
+          <div>
+            <h2 id="wo-title" data-es="Bienvenido a esta página web" data-en="Welcome to this website">Bienvenido a esta página web</h2>
+            <p data-es="En ella encontrará material didáctico para la formación en tecnologías de aerogeneradores y parques eólicos."
+               data-en="Here you will find didactic material for training in wind turbine and wind farm technologies.">
+              En ella encontrará material didáctico para la formación en tecnologías de aerogeneradores y parques eólicos.
+            </p>
+          </div>
+        </div>
+
+        <div class="wo-body">
+
+          <div class="wo-profile">
+            <img src="img/ParqueEolico.png" alt="Parque eólico" loading="lazy" />
+            <div>
+              <div class="wo-profile-tag" data-es="Estado del arte" data-en="State of the art">Estado del arte</div>
+              <p data-es="Si su interés es conocer el «estado del arte» de los aspectos industriales de estas tecnologías puede acceder a Introducción a los Conceptos de Aerogeneradores y a Red Eléctrica y Parques Eólicos. En Videos y Demostraciones tiene acceso a una selección de vídeos escogidos."
+                 data-en="If your interest is the industrial «state of the art» of these technologies, you can access Introduction to Wind Turbine Concepts and Electric Grid &amp; Wind Farms. In Videos &amp; Demonstrations you have access to a selection of curated videos.">
+                Si su interés es conocer el «estado del arte» de los aspectos industriales de estas tecnologías puede acceder a Introducción a los Conceptos de Aerogeneradores y a Red Eléctrica y Parques Eólicos. En Videos y Demostraciones tiene acceso a una selección de vídeos escogidos.
+              </p>
+              <div class="wo-profile-links">
+                <a href="conceptos-energia-eolica.html" data-es="Introducción a los Conceptos de Aerogeneradores" data-en="Introduction to Wind Turbine Concepts">Introducción a los Conceptos de Aerogeneradores</a>
+                <a href="parques-eolicos-red-electrica.html" data-es="Red Eléctrica y Parques Eólicos" data-en="Electric Grid &amp; Wind Farms">Red Eléctrica y Parques Eólicos</a>
+                <a href="#" class="wo-videos-link" data-es="Videos y Demostraciones" data-en="Videos &amp; Demonstrations">Videos y Demostraciones</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="wo-profile">
+            <img src="img/dfigr12-normal.png" alt="Simulador en tiempo real" loading="lazy" />
+            <div>
+              <div class="wo-profile-tag" data-es="Estudiante" data-en="Student">Estudiante</div>
+              <p data-es="Si es «estudiante» puede acceder, en Simuladores en Tiempo Real, a un conjunto de Simuladores realizados sobre Gemelos Digitales especializados por familias de aerogeneradores. Estos simuladores son únicos en el mercado porque permiten experimentar su comportamiento como lo que realmente son: plantas de producción de energía eléctrica diseñadas para su funcionamiento desatendido. Van acompañados de aplicaciones web interactivas (tutoriales) donde se explican en detalle sus componentes. Podrá observar la reacción de los aerogeneradores en condiciones normales, excepcionales (vientos huracanados, fallos de Red, temperaturas elevadas, etc.) y también con fallos en componentes, como si estuviera dentro del aerogenerador."
+                 data-en="If you are a «student», in Real-Time Simulators you can access a set of Simulators built on Digital Twins specialised by wind turbine family. These simulators are unique on the market because they let you experience their behaviour as what they truly are: electricity production plants designed for unattended operation. They come with interactive web applications (tutorials) that explain their components in detail. You will be able to observe how the turbines react under normal conditions, exceptional conditions (hurricane winds, grid faults, high temperatures, etc.) and also with component failures, as if you were inside the turbine.">
+                Si es «estudiante» puede acceder, en Simuladores en Tiempo Real, a un conjunto de Simuladores realizados sobre Gemelos Digitales especializados por familias de aerogeneradores. Estos simuladores son únicos en el mercado porque permiten experimentar su comportamiento como lo que realmente son: plantas de producción de energía eléctrica diseñadas para su funcionamiento desatendido. Van acompañados de aplicaciones web interactivas (tutoriales) donde se explican en detalle sus componentes. Podrá observar la reacción de los aerogeneradores en condiciones normales, excepcionales (vientos huracanados, fallos de Red, temperaturas elevadas, etc.) y también con fallos en componentes, como si estuviera dentro del aerogenerador.
+              </p>
+              <div class="wo-profile-links">
+                <a href="simuladores-aerogeneradores-tiempo-real.html" data-es="Simuladores en Tiempo Real" data-en="Real-Time Simulators">Simuladores en Tiempo Real</a>
+                <a href="tutoriales-aerogeneradores.html" data-es="Tutoriales" data-en="Tutorials">Tutoriales</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="wo-profile">
+            <img src="img/aerogenerador_corte_nacelle_es.svg" alt="Corte de góndola" loading="lazy" />
+            <div>
+              <div class="wo-profile-tag" data-es="Profesor · Instructor" data-en="Professor · Instructor">Profesor · Instructor</div>
+              <p data-es="Si es «Profesor o Instructor», los tutoriales complementarán su propio material, con detalles difíciles de encontrar. Además, se incluyen un conjunto de Ejercicios Prácticos diseñados para que los alumnos puedan reproducir situaciones similares a las que ocurren realmente en la operación de aerogeneradores."
+                 data-en="If you are a «Professor or Instructor», the tutorials will complement your own material with details that are hard to find elsewhere. A set of Practical Exercises is also included, designed so students can reproduce situations similar to those that actually occur in wind turbine operation.">
+                Si es «Profesor o Instructor», los tutoriales complementarán su propio material, con detalles difíciles de encontrar. Además, se incluyen un conjunto de Ejercicios Prácticos diseñados para que los alumnos puedan reproducir situaciones similares a las que ocurren realmente en la operación de aerogeneradores.
+              </p>
+              <div class="wo-profile-links">
+                <a href="tutoriales-aerogeneradores.html" data-es="Tutoriales" data-en="Tutorials">Tutoriales</a>
+                <a href="tutoriales-aerogeneradores.html" data-es="Ejercicios Prácticos" data-en="Practical Exercises">Ejercicios Prácticos</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="wo-profile">
+            <img src="img/dfigb2b.png" alt="Convertidor Back-to-Back DFIG" loading="lazy" />
+            <div>
+              <div class="wo-profile-tag" data-es="Estudiante de Ingeniería" data-en="Engineering Student">Estudiante de Ingeniería</div>
+              <p data-es="Si es un «estudiante de Ingeniería», dispone de dos aplicaciones clave para el diseño de aerogeneradores: Software de Análisis del Tren de Potencia y, para el estudio de Convertidores Back-to-Back de DFIGs."
+                 data-en="If you are an «Engineering student», you have two key applications for wind turbine design: Drive Train Analysis Software and, for the study of DFIG Back-to-Back Converters.">
+                Si es un «estudiante de Ingeniería», dispone de dos aplicaciones clave para el diseño de aerogeneradores: Software de Análisis del Tren de Potencia y, para el estudio de Convertidores Back-to-Back de DFIGs.
+              </p>
+              <div class="wo-profile-links">
+                <a href="analisis-tren-potencia-aerogeneradores.html" data-es="Software de Análisis del Tren de Potencia" data-en="Drive Train Analysis Software">Software de Análisis del Tren de Potencia</a>
+                <a href="convertidores-back-to-back-dfig.html" data-es="Convertidores Back-to-Back de DFIGs" data-en="DFIG Back-to-Back Converters">Convertidores Back-to-Back de DFIGs</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="wo-profile">
+            <img src="img/Mantenimiento_aerogeneradores.png" alt="Mantenimiento de aerogeneradores" loading="lazy" />
+            <div>
+              <div class="wo-profile-tag" data-es="Profesional del sector eólico" data-en="Wind Energy Professional">Profesional del sector eólico</div>
+              <p data-es="Si es un «Profesional del sector eólico», vea nuestras soluciones de Ayuda para el Mantenimiento («De incidencia a Diagnóstico»)."
+                 data-en="If you are a «Wind energy professional», see our Maintenance Support solutions («From incident to diagnosis»).">
+                Si es un «Profesional del sector eólico», vea nuestras soluciones de Ayuda para el Mantenimiento («De incidencia a Diagnóstico»).
+              </p>
+              <div class="wo-profile-links">
+                <a href="mantenimiento-aerogeneradores.html" data-es="Ayuda para el Mantenimiento" data-en="Maintenance Support">Ayuda para el Mantenimiento</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="wo-footer">
+          <label class="wo-noshow">
+            <input type="checkbox" id="wo-noshow-cb" />
+            <span data-es="No mostrar en próximas entradas" data-en="Don't show again">No mostrar en próximas entradas</span>
+          </label>
+          <button class="wo-enter" id="wo-enter" data-es="Entrar en la web →" data-en="Enter the website →">Entrar en la web →</button>
+        </div>
+
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        'use strict';
+        var OVERLAY_KEY = 'acmsl-welcome-hidden';
+        var overlay  = document.getElementById('acmsl-welcome-overlay');
+        if (!overlay) { return; }
+
+        if (localStorage.getItem(OVERLAY_KEY) === '1') {
+          overlay.classList.add('wo-hidden');
+        }
+
+        // Language: reuse the same detection the rest of the page uses
+        // (?lang= param, else browser language, default 'en'); overlay text
+        // defaults to Spanish in the markup and swaps to English otherwise.
+        var urlLang = new URLSearchParams(window.location.search).get('lang');
+        var lang = (urlLang || navigator.language || 'en').split('-')[0].toLowerCase();
+        if (lang !== 'es') {
+          overlay.querySelectorAll('[data-en]').forEach(function (el) {
+            el.innerHTML = el.getAttribute('data-en');
+          });
+        }
+
+        function closeOverlay() {
+          overlay.classList.add('wo-hidden');
+          var cb = document.getElementById('wo-noshow-cb');
+          if (cb && cb.checked) {
+            localStorage.setItem(OVERLAY_KEY, '1');
+          }
+        }
+
+        var btnClose = document.getElementById('wo-close');
+        var btnEnter = document.getElementById('wo-enter');
+        if (btnClose) { btnClose.addEventListener('click', closeOverlay); }
+        if (btnEnter) { btnEnter.addEventListener('click', closeOverlay); }
+
+        overlay.addEventListener('click', function (e) {
+          if (e.target === overlay) { closeOverlay(); }
+        });
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape') { closeOverlay(); }
+        });
+
+        var videosLink = overlay.querySelector('.wo-videos-link');
+        if (videosLink) {
+          videosLink.addEventListener('click', function (e) {
+            e.preventDefault();
+            closeOverlay();
+            if (typeof showSection === 'function') { showSection('videos'); }
+          });
+        }
+      })();
+    </script>
+
     <header>
       <div class="header-left">
         <img src="img/ACM_LOGO.png" alt="Logo ACM" class="logo-acm" style="cursor:pointer;" onclick="goHome()" />
@@ -1114,7 +1387,7 @@
         </select>
         <button class="home-btn" type="button" onclick="goHome()"><span data-i18n="home">Home</span></button>
         <a href="bienvenida.html" target="_self" rel="noopener noreferrer" class="web-btn" data-i18n="header.guide">Training Guide</a>
-        <a href="contacto.html" target="_self" rel="noopener noreferrer" class="web-btn" data-i18n="header.website">Website &amp; Contact</a>
+        <a href="contacto.html" id="aboutBtn" target="_self" rel="noopener noreferrer" class="web-btn" data-i18n="header.website">Website &amp; Contact</a>
         <a href="formulario.html" id="contactFormBtn" target="_self" rel="noopener noreferrer" class="web-btn" data-i18n="header.contact">Contact</a>
       </div>
       <div id="breadcrumb" class="breadcrumb"></div>
@@ -2298,7 +2571,7 @@
       "header.subtitle": "Líderes en Gemelos Digitales y formación técnica: atención experta y soluciones avanzadas para la evolución continua en el sector eólico.",
       "header.title": "Simuladores en Tiempo Real, Formación y Herramientas de Ingeniería",
       "header.website": "Sobre nosotros",
-      "header.guide":   "Guía de Formación",
+      "header.guide":   "Visita guiada",
       "header.contact": "Contacto",
       "landing.title": "Explora nuestra Suite de Formación en Energía Eólica",
       "mindmap.windenergy.path": "tutorials\\data\\wind_energy_mindmap-es.mm",
@@ -4484,10 +4757,17 @@
       });
 
       // Update "Website & Contact" button URL based on language
-      const webBtn = document.querySelector('a.web-btn');
+      const webBtn = document.getElementById('aboutBtn');
       if (webBtn) {
         webBtn.href = `contacto.html?lang=${lang}`;
         webBtn.target = '_self';
+      }
+
+      // Update "Training Guide" button URL based on language
+      const guideBtn = document.querySelector('a.web-btn[data-i18n="header.guide"]');
+      if (guideBtn) {
+        guideBtn.href = `bienvenida.html?lang=${lang}`;
+        guideBtn.target = '_self';
       }
 
       // Update "Contact" button URL based on language
