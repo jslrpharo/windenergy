@@ -1,0 +1,507 @@
+﻿<!DOCTYPE html>
+
+<!-- saved from url=(0016)about:internet -->
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coste del desenrollamiento de cables de potencia</title>
+    <link rel="icon" type="image/png" href="favicon.ico">
+    <meta name="description" content="Experimento para calcular el coste económico de las operaciones de desenrollamiento de cables">
+    <meta name="keywords" content="desenrollamiento, cables, yaw, coste, producción perdida, aerogenerador">
+    
+    <link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+    <link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+    <link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+    
+    <style type="text/css">
+        #topic_header {
+            background-color: #EFEFEF;
+        }
+        
+        body {
+            font-size: 15px;
+            line-height: 1.6;
+        }
+        
+        #topic_content {
+            /* Unificado en base.css */
+        }
+        
+        h1 {
+            font-size: 28px;
+            line-height: 1.3;
+        }
+        
+        h2 {
+            font-size: 23px;
+            line-height: 1.4;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        
+        h3 {
+            font-size: 20px;
+            line-height: 1.4;
+        }
+        
+        h4 {
+            font-size: 18px;
+            line-height: 1.4;
+            margin-top: 15px;
+        }
+        
+        p, li {
+            font-size: 16px;
+            margin-bottom: 12px;
+        }
+        
+        .learning-objective {
+            background-color: #fff9e6;
+            border-left: 4px solid #ffcc00;
+            padding: 18px;
+            margin: 18px 0;
+        }
+        
+        .didactic-box {
+            background-color: #f0f8ff;
+            border-left: 4px solid #0066cc;
+            padding: 18px;
+            margin: 18px 0;
+        }
+        
+        .procedure-box {
+            background-color: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 18px;
+            margin: 18px 0;
+        }
+        
+        .important-note {
+            background-color: #ffe6e6;
+            border-left: 4px solid #cc0000;
+            padding: 18px;
+            margin: 18px 0;
+        }
+        
+        .key-concept {
+            font-weight: bold;
+            color: #0066cc;
+        }
+        
+        .calculation-box {
+            background-color: #f9f9f9;
+            border: 2px solid #666;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .data-table {
+            background-color: #f5f5f5;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+        
+        th, td {
+            padding: 10px;
+            border: 1px solid #999;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #ddd;
+            font-weight: bold;
+        }
+    </style>
+    
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/hnd.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            if (top.frames.length == 0) {
+                var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+                top.location.href = "Experiments.html?" + sTopicUrl;
+            } else {
+                (function notifyTOC(nTry)
+                {
+                    nTry = nTry || 0;
+                    try
+                    {
+                        if (top && top.frames && top.frames['FrameTOC'])
+                        {
+                            top.frames['FrameTOC'].postMessage({ type: 'HND_SELECT', id: "CostofPowerCablesuntwisting" }, '*');
+                        }
+                    }
+                    catch (e) {}
+                    if (nTry < 10) setTimeout(function() { notifyTOC(nTry + 1); }, 300);
+                })();
+            }
+        });
+    </script>
+<style>*{-webkit-user-select:none!important;-moz-user-select:none!important;user-select:none!important;-webkit-touch-callout:none!important;}img{pointer-events:none!important;}</style><style>@media print{html,body{display:none!important;}}</style></head>
+
+<body>
+    <div id="topic_header">
+        <div id="topic_header_content">
+            <h1 id="topic_header_text">Coste del desenrollamiento de cables de potencia</h1>
+        </div>
+        
+        <div id="topic_header_nav">
+            <a href="../Experiments/ObservationoftheNacelleYawoperat.html"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAARhJREFUeNqck19OwzAMxr/AQAMmVZrEv64t3QqDS/DME3fjCpyCG/FAN4Vt7dIloSGN1qqZ1HWrpSiO5e8X25LJx+cX9pja3qQp4WSfOAo9tFkTQE20+Pll2gmgxoGLp8cJFskGhb9tRdXaqs4uQIX+PaIoxG+SQUph/Pe3VyupeJexXl384N1hHPqgS1YFqRCgO798z5LKLwEqGN0i8F3MF2lr30JwC6A89xoj9wYzusIhJrgNABcS8YFiA9CzqQPIT0wVYxzDodOtggKySlKV539wnMHRMyiNpOtMQ3IMrvpHV1BBWMYN5PLizATWTGDDpZUUz5eNAAPRAgPpn5+W4voyWYvVa6iSCJkrTem8TAYi2/X4F2AASu5+SCpdydAAAAAASUVORK5CYII=" alt="Anterior"/></a>
+            <a href="../Experiments/Responsetowindgusts.html"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAStJREFUeNqUk1tSgzAUhn86WEcX4APaDi3eNuGzT+7NLbgGHxyf3YiXWnXoRWwoaQ6SktALmhTafwZC/uR8c3LIcW7vHlAhuRidTRsaqFHgn5RBuwMuLs/RrYA0FgvlZ7lZdtoeIjbD2WkX6tsGcdXr5vpKT+4fn1YLykvELyYJ4ZsRgsCHlBLPbx+yXBMN6A+Ykdp/b0yEjt/SkJfe5wqiAUTCANi8YSTQbnka8vr+pSEFQFgAFk9pkPvH3hEymaHXD2UBSMkEWLylwjFBULquwS4ZKI1GESYsxvoIW9ZAKYoY4inH3yJumQGLORIuYPzGcPhjnjP39psuDg/29Hya34eZSI2+cDc0ivbyANl0HfD8QlGaWZvKreuFhBOKWHtH1jZTVbDSXIABACa5nociETrsAAAAAElFTkSuQmCC" alt="Siguiente"/></a>
+        </div>
+        
+        <div class="clear"></div>
+    </div>
+    
+    <div id="topic_content">
+        <div class="learning-objective">
+            <h3>🎯 Objetivos de aprendizaje</h3>
+            <p>Al completar este experimento serás capaz de:</p>
+            <ul>
+                <li>Comprender por qué el desenrollamiento de cables tiene un coste económico significativo</li>
+                <li>Calcular el tiempo total de una operación de desenrollamiento completa</li>
+                <li>Estimar las pérdidas de producción asociadas a este proceso</li>
+                <li>Analizar los componentes del coste: producción perdida vs consumo de motores</li>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+        </div>
+
+        <h2>Introducción: ¿Por qué existe un coste?</h2>
+        
+        <div class="didactic-box">
+            <h3>💰 El problema económico del desenrollamiento</h3>
+            <p>Como vimos en el experimento anterior, los cables de potencia se enrollan progresivamente a medida que la góndola gira siguiendo los cambios de dirección del viento. Cuando se alcanza el límite de enrollamiento, el aerogenerador debe ejecutar una <span class="key-concept">operación de desenrollamiento</span>.</p>
+            
+            <p>Esta operación tiene varios componentes de coste:</p>
+            <ul>
+                <li><strong>Desconexión de la red (cut-out):</strong> Durante esta fase no se genera electricidad</li>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+                <li><strong>Consumo de los motores de yaw:</strong> Estos motores consumen energía durante el proceso</li>
+            </ul>
+            
+            <p>El <strong>objetivo de este experimento</strong> es cuantificar estos costes en términos económicos.</p>
+        </div>
+
+        <h2>Planteamiento del problema</h2>
+        
+        <div class="important-note">
+            <h3>📋 Escenario de análisis</h3>
+            <p>Consideraremos el siguiente escenario realista:</p>
+            
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+                <li>El aerogenerador está en <strong>Producción</strong> (generando electricidad)</li>
+                <li>Los cables de potencia han alcanzado el <strong>límite de enrollamiento</strong> en una dirección</li>
+                <li>Límite configurado: <strong>2.5 vueltas completas</strong> (900 grados)</li>
+                <li>Es necesario ejecutar una operación completa de desenrollamiento</li>
+            </ul>
+            
+            <h4>Parámetros del sistema:</h4>
+            <ul>
+                <li>Velocidad del viento: <strong>Por encima de la velocidad nominal</strong> (buenas condiciones de producción)</li>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+                <li>Precio de venta de la electricidad: <strong>0,10 €/kWh</strong></li>
+                <li>Velocidad de los motores de yaw: <strong>0,5 °/s</strong></li>
+            </ul>
+        </div>
+
+        <h2>Metodología del experimento</h2>
+        
+        <p>El experimento requiere que determines tres tiempos críticos y luego calcules los costes asociados:</p>
+
+        <div class="procedure-box">
+            <h3>📝 Tarea 1: Observar el tiempo de desconexión (cut-out)</h3>
+            
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+            
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+            <ol>
+                <li>Configura el simulador con las condiciones especificadas</li>
+                <li>Activa el proceso de cut-out (desconexión)</li>
+                <li>Utiliza los registradores gráficos (StripRecorders) para medir el tiempo</li>
+                <li>Registra el <strong>tiempo desde el inicio del cut-out hasta que la potencia generada llega a 0 kW</strong></li>
+            </ol>
+            
+            <div class="data-table">
+                <h4>Datos a registrar:</h4>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+                        <th>Variable</th>
+                        <th>Valor</th>
+                    </tr>
+                    <tr>
+                        <td>Tiempo de desconexión (t_cutout)</td>
+                        <td>_______ segundos</td>
+                    </tr>
+                </table>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+
+        <div class="procedure-box">
+            <h3>📝 Tarea 2: Calcular el tiempo de desenrollamiento</h3>
+            
+            <p>Una vez desconectado, la góndola debe girar para desenrollar los cables.</p>
+            
+            <h4>Cálculo teórico:</h4>
+            <div class="calculation-box">
+                <p><strong>Ángulo total a recorrer:</strong></p>
+                <p>Si el límite es 2.5 vueltas en un sentido, debemos girar 2.5 vueltas en sentido contrario</p>
+                <p>Ángulo = 2.5 vueltas × 360°/vuelta = 900 grados</p>
+                
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+                
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+                <p>t_desenrollamiento = Ángulo total / Velocidad</p>
+                <p>t_desenrollamiento = 900° / 0.5 °/s = <strong>1.800 segundos</strong> = <strong>30 minutos</strong></p>
+            </div>
+            
+            <h4>Verificación experimental (opcional):</h4>
+            <p>Puedes observar este proceso en el simulador si modificas los parámetros de velocidad de yaw:</p>
+            <ul>
+                <!--li>Localiza los parámetros <a href="shellcommand%20C:%5CACMSL%5CViewerTutorialsWFS.exe%20-n%20%20%20C:%5CACMSL%5CWindFarmSimulator%5CHelp%5CSpanish%5CDSASWTSimulator%5CDesenrrolleCables.htmle">'NacelleYawing.CWYawingSpeed'</a> 
+                                             y <a href="shellcommand%20C:%5CACMSL%5CViewerTutorialsWFS.exe%20-n%20%20%20C:%5CACMSL%5CWindFarmSimulator%5CHelp%5CSpanish%5CDSASWTSimulator%5CDesenrrolleCables.htmle">'NacelleYawing.CCWYawingSpeed'</a></li-->
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+                    y <a href="acmsl://viewertutorial%20-n%20-h433A5C41434D534C5C57696E644661726D53696D756C61746F725C48656C705C5370616E6973685C44534153575453696D756C61746F725C446573656E72726F6C6C654361626C65732E68746D6C65/">'NacelleYawing.CCWYawingSpeed'</a></li>
+               <li>Configúralos a 0.5 °/s</li>
+                <li>Observa el tiempo real que tarda el proceso completo</li>
+
+                < -->
+                <li>Localiza los parámetros <a href="acmsl://viewertutorial%20-n%20-rDSASTutorial\DesenrrolleCables.htmle">'NacelleYawing.CWYawingSpeed'</a> 
+                    y <a href="acmsl://viewertutorial%20-n%20-rDSASExercises\DesenrrolleCables.htmle">'NacelleYawing.CCWYawingSpeed'</a></li>
+               <li>Configúralos a 0.5 °/s</li>
+                <li>Observa el tiempo real que tarda el proceso completo</li>
+
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+            
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+                <h4>Datos a registrar:</h4>
+                <table>
+                    <tr>
+                        <th>Variable</th>
+                        <th>Valor calculado</th>
+                        <th>Valor observado (opcional)</th>
+                    </tr>
+                    <tr>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+                        <td>_______ segundos</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="procedure-box">
+            <h3>📝 Tarea 3: Observar el tiempo de reconexión (cut-in)</h3>
+            
+            <p>Tras completar el desenrollamiento, el aerogenerador debe volver a conectarse a la red y alcanzar producción estable.</p>
+            
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+                <li>Una vez completado el desenrollamiento, inicia el proceso de cut-in</li>
+                <li>Utiliza los StripRecorders para medir el tiempo</li>
+                <li>Registra el <strong>tiempo desde el inicio del cut-in hasta que se alcanza producción estable a Potencia Nominal</strong></li>
+            </ol>
+            
+            <p>💡 <strong>Nota:</strong> Puedes aprovechar los datos del experimento <a href="../Experiments/ComparisonofcutinindifferentWind.html">"Comparación de cut-in en diferentes familias de aerogeneradores"</a> si ya realizaste mediciones con viento por encima de velocidad nominal.</p>
+            
+            <div class="data-table">
+                <h4>Datos a registrar:</h4>
+                <table>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+                        <th>Valor</th>
+                    </tr>
+                    <tr>
+                        <td>Tiempo de reconexión (t_cutin)</td>
+                        <td>_______ segundos</td>
+                    </tr>
+                </table>
+            </div>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+        
+        <div class="important-note">
+            <h3>💶 Análisis económico</h3>
+            
+            <p>Una vez obtenidos todos los tiempos, podemos calcular el coste total de la operación de desenrollamiento.</p>
+            
+            <h4>Tiempo total de la operación:</h4>
+            <div class="calculation-box">
+                <p>T_total = t_cutout + t_desenroll + t_cutin</p>
+                <p>T_total = _____ s + 1.800 s + _____ s = _____ segundos</p>
+                <p>T_total en horas = _____ s / 3.600 s/h = _____ horas</p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+            
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+            
+            <h5>1. Producción perdida (ingresos no obtenidos):</h5>
+            <div class="calculation-box">
+                <p><strong>Durante cut-out, desenrollamiento y cut-in:</strong></p>
+                <p>Energía que se habría generado = Potencia Nominal × Tiempo total</p>
+                <p>E_perdida = 1.500 kW × _____ h = _____ kWh</p>
+                <p></p>
+                <p>Ingresos perdidos = E_perdida × Precio</p>
+                <p>Coste_producción_perdida = _____ kWh × 0,10 €/kWh = <strong>_____ €</strong></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+            
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+            <div class="calculation-box">
+                <p><strong>Solo durante el desenrollamiento:</strong></p>
+                <p>Energía consumida = Potencia motores × Tiempo desenrollamiento</p>
+                <p>E_consumida = 5 kW × (1.800 s / 3.600 s/h) = 5 kW × 0,5 h = 2,5 kWh</p>
+                <p></p>
+                <p>Coste del consumo = E_consumida × Precio</p>
+                <p>Coste_motores = 2,5 kWh × 0,10 €/kWh = <strong>0,25 €</strong></p>
+            </div>
+            
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+                <p>Coste_total = Coste_producción_perdida + Coste_motores</p>
+                <p>Coste_total = _____ € + 0,25 € = <strong>_____ €</strong></p>
+            </div>
+        </div>
+
+        <h2>Plantilla de cálculo</h2>
+        
+        <div class="data-table">
+            <h3>📊 Resumen de resultados</h3>
+            <table>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+                </tr>
+                <tr>
+                    <td>Tiempo de cut-out (s)</td>
+                    <td>_______</td>
+                </tr>
+                <tr>
+                    <td>Tiempo de desenrollamiento (s)</td>
+                    <td>1.800</td>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+                    <td>Tiempo de cut-in (s)</td>
+                    <td>_______</td>
+                </tr>
+                <tr>
+                    <th colspan="2" style="text-align: center; background-color: #2196f3; color: white;">TIEMPOS CALCULADOS</th>
+                </tr>
+                <tr>
+                    <td>Tiempo total de la operación (s)</td>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+                <tr>
+                    <td>Tiempo total de la operación (h)</td>
+                    <td>_______</td>
+                </tr>
+                <tr>
+                    <th colspan="2" style="text-align: center; background-color: #ff9800; color: white;">COSTES</th>
+                </tr>
+                <tr>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+                </tr>
+                <tr>
+                    <td>Ingresos perdidos (€)</td>
+                    <td>_______</td>
+                </tr>
+                <tr>
+                    <td>Consumo motores (kWh)</td>
+                    <td>2,5</td>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+                    <td>Coste consumo motores (€)</td>
+                    <td>0,25</td>
+                </tr>
+                <tr style="font-weight: bold; background-color: #ffeb3b;">
+                    <td>COSTE TOTAL (€)</td>
+                    <td>_______</td>
+                </tr>
+            </table>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+        
+        <div class="learning-objective">
+            <h3>🤔 Preguntas para análisis</h3>
+            <ol>
+                <li><strong>Componente dominante del coste:</strong>
+                    <ul>
+                        <li>¿Cuál es el componente principal del coste: la producción perdida o el consumo de motores?</li>
+                        <li>¿En qué proporción contribuye cada uno al coste total?</li>
+                    </ul>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+                    <ul>
+                        <li>¿Cómo cambiaría el coste si el desenrollamiento ocurriera con viento por debajo de velocidad nominal?</li>
+                        <li>¿Sería más económico esperar a condiciones de bajo viento para desenrollar?</li>
+                    </ul>
+                </li>
+                <li><strong>Frecuencia de desenrollamiento:</strong>
+                    <ul>
+                        <li>Si el patrón de vientos provoca un desenrollamiento cada semana, ¿cuál sería el coste anual?</li>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+                </li>
+                <li><strong>Optimización:</strong>
+                    <ul>
+                        <li>¿Qué estrategias podrían reducir este coste?</li>
+                        <li>¿Valdría la pena aumentar el límite de vueltas permitidas? ¿Qué riesgos implicaría?</li>
+                        <li>¿Sería beneficioso tener motores de yaw más rápidos? ¿Qué consideraciones habría que hacer?</li>
+                    </ul>
+                </li>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+                        <li>¿Este coste es igual para todos los tipos de aerogeneradores (DSAS, RRC, DFIG)?</li>
+                        <li>¿Qué diferencias podrían existir en los tiempos de cut-out y cut-in entre tecnologías?</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+
+        <h2>Consideraciones prácticas</h2>
+        
+        <div class="didactic-box">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+                <li><strong>Planificación inteligente:</strong> Los sistemas SCADA modernos pueden planificar desenrollamientos durante periodos de baja producción (vientos bajos nocturnos, por ejemplo)</li>
+                <li><strong>Predicción meteorológica:</strong> Se utilizan pronósticos para evitar desenrollar justo antes de periodos de vientos óptimos</li>
+                <li><strong>Monitorización continua:</strong> Sistemas de alarma temprana cuando se acerca al límite de enrollamiento</li>
+                <li><strong>Estrategias preventivas:</strong> Algunos controladores intentan equilibrar los giros en ambas direcciones para minimizar la acumulación</li>
+                <li><strong>Límites adaptativos:</strong> En algunos diseños, el límite de vueltas puede ajustarse según las condiciones operativas</li>
+            </ul>
+        </div>
+
+        <h2>Conclusiones</h2>
+        
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+            <ul>
+                <li>El desenrollamiento de cables tiene un <strong>coste económico significativo</strong>, principalmente por producción perdida</li>
+                <li>El coste es mucho mayor cuando ocurre durante condiciones óptimas de viento</li>
+                <li>La componente de <strong>tiempo de desenrollamiento</strong> es la más larga de todo el proceso</li>
+                <li>El consumo de los motores de yaw es relativamente pequeño comparado con la producción perdida</li>
+                <li>Una buena <strong>estrategia de gestión</strong> puede minimizar significativamente estos costes</li>
+                <li>Este es un ejemplo de cómo decisiones operativas aparentemente simples tienen <strong>impacto económico directo</strong> en un parque eólico</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div id="topic_footer">
+        <div id="topic_footer_content">
+            Copyright &copy; 2017-2025 by AUTOMATED COMPUTING MACHINERY SL. All Rights Reserved.
+        </div>
+    </div>
+<script>(function(){['copy','cut','contextmenu','dragstart'].forEach(function(ev){document.addEventListener(ev,function(e){e.preventDefault();},true);});document.onselectstart=function(){return false;};document.ondragstart=function(){return false;};document.addEventListener('keydown',function(e){var k=e.key;if(k==='F12'||k==='PrintScreen'){e.preventDefault();return;}if((e.ctrlKey||e.metaKey)&&e.shiftKey&&(k==='I'||k==='i'||k==='J'||k==='j'||k==='C')){e.preventDefault();return;}if((e.ctrlKey||e.metaKey)&&(k==='u'||k==='U'||k==='s'||k==='S'||k==='a'||k==='A'||k==='p'||k==='P'||k==='c'||k==='C'||k==='v'||k==='V')){e.preventDefault();}},true);})();</script><script>(function(){window.addEventListener("beforeprint",function(){document.documentElement.style.display="none";});window.addEventListener("afterprint",function(){document.documentElement.style.display="";});document.addEventListener("keydown",function(e){var k=(e.key||"").toLowerCase();if(k==="printscreen"||e.keyCode===44||e.which===44){document.documentElement.style.display="none";setTimeout(function(){document.documentElement.style.display="";},300);}},true);})();</script></body>
+</html>

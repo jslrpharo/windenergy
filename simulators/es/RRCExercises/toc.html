@@ -1,0 +1,538 @@
+﻿
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+	<title>RotorResistorContolledWT- Table of Contents</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="HelpNDoc Professional Edition 5.9.0.711">
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/silver-theme/jquery-ui-1.8.12.custom.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/dynatree/chm/ui.dynatree.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+    <link type="text/css" rel="stylesheet" media="all" href="css/toc.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#tabs .ui-widget-header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/jquery-ui-1.8.17.custom.min.js"></script>
+    <script type="text/javascript" src="js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="js/jquery.dynatree.min.js"></script>
+	<script type="text/javascript" src="js/hndjsse.js"></script>
+	<script type="text/javascript">
+	
+		window.bSearchDataLoaded = false;
+		var sHelpIdToActivate = '';
+
+		var HND_CURRENT_TUTORIAL = "RRCExercises";
+		var HND_TUTORIAL_ENTRIES = {"DSASTutorial":"DSASTutorial.html","DSASExercises":"DSASExercises.html","RRCTutorial":"RotorResistorContolledWT.html","RRCExercises":"RotorResistorContolledWT.html","DFIGTutorial":"DFIGWTSimulator.html","DFIGExercises":"DFIGWTSimulator.html","WFSSCADA":"SimuladorParqueEolico.html","Experiments":"Experiments.html"};
+		function openTopic(href) {
+		    if (!href || href == "#") return;
+		    if (href.indexOf("../") !== 0) { window.open(href, "FrameMain"); return; }
+		    var sRest = href.substring(3);
+		    var nSlash = sRest.indexOf("/");
+		    if (nSlash < 0) { window.open(href, "FrameMain"); return; }
+		    var sTutorial = sRest.substring(0, nSlash);
+		    var sFile = sRest.substring(nSlash + 1);
+		    if (sTutorial === HND_CURRENT_TUTORIAL) { window.open(href, "FrameMain"); return; }
+		    var sEntry = HND_TUTORIAL_ENTRIES[sTutorial];
+		    var nQ = sFile.indexOf("?");
+		    var sPath = (nQ >= 0) ? sFile.substring(0, nQ) : sFile;
+		    var sQuery = (nQ >= 0) ? sFile.substring(nQ) : "";
+		    if (sQuery.indexOf("?search=") === 0) sQuery = "";
+		    if (!sEntry) {
+		        window.open("../" + sTutorial + "/" + sPath + sQuery, "_blank");
+		    } else if (sPath === sEntry) {
+		        window.open("../" + sTutorial + "/" + sPath + sQuery, "_blank");
+		    } else {
+		        window.open("../" + sTutorial + "/" + sEntry + "?" + sPath + sQuery, "_blank");
+		    }
+		}
+
+	
+		$(document).ready(function()
+		{
+			var sAnchorName = '';
+			try { sAnchorName = top.location.href.substring(top.location.href.lastIndexOf("#") + 1, top.location.href.length); }
+			catch(err) { sAnchorName = ''; }
+			var nSelectedTab = 0;
+			if (sAnchorName == '_index') nSelectedTab = 1
+			else if (sAnchorName == '_search') nSelectedTab = 2;			
+			$("#tabs").tabs({
+				selected: nSelectedTab,
+				select: function(event, ui) { HideKwPopup(); }
+			});
+			
+			// Toc
+			if ($("#tab-toc").length) {
+				$("#tab-toc").dynatree({
+					clickFolderMode: 1,
+					debugLevel: 0,
+					imagePath: 'css/dynatree/chm/',
+					onActivate: function(node){
+						if ($("#tab-keywords").length && $("#tab-keywords").dynatree && $("#tab-keywords").dynatree("getTree") && $("#tab-keywords").dynatree("getTree").activateKey)
+							$("#tab-keywords").dynatree("getTree").activateKey(null);
+						if(node.data.href && node.data.href != '#'){
+							openTopic(node.data.href);
+						}
+					}
+				});
+				// Expand all nodes if required
+				
+					$("#tab-toc").dynatree("getRoot").visit(function(node){
+						node.expand(true);
+					});
+				
+				// Select the active help id
+				if (sHelpIdToActivate != '') $("#tab-toc").dynatree("getTree").activateKey(sHelpIdToActivate);
+			}
+			
+			// Keywords
+			
+			if ($("#tab-keywords").length) {
+				$("#tab-keywords").dynatree({
+					clickFolderMode: 1,
+					debugLevel: 0,
+					imagePath: 'css/dynatree/chm/',
+					onClick: function(node, event){
+						HideKwPopup();
+						if (node.data && node.data.click)
+						{
+							var aRefList = null;
+							eval('aRefList=' + node.data.click);
+							if (ShowKwPopup(node.li, aRefList))
+							{
+								if ($("#tab-toc") && $("#tab-toc").dynatree && $("#tab-toc").dynatree("getTree") && $("#tab-toc").dynatree("getTree").activateKey)
+									$("#tab-toc").dynatree("getTree").activateKey(null);
+								if(node.data.href && node.data.href != '#'){
+									openTopic(node.data.href);
+								}
+							}
+						}
+					}
+				});
+				// Expand all nodes if required
+				
+					$("#tab-keywords").dynatree("getRoot").visit(function(node){
+						node.expand(true);
+					});
+				
+			}
+			
+			// Load search data
+			(function() {
+				var se = document.createElement('script'); se.type = 'text/javascript'; se.async = true;
+				se.src = '../js/hndsd.js';
+				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(se, s);
+			})();
+		});
+		
+		$('body').click(function() {
+			HideKwPopup();
+		});
+		
+		function SelectTocItem(sHelpId)
+		{
+			if ($("#tab-toc").length && $("#tab-toc").dynatree && $("#tab-toc").dynatree("getTree") && $("#tab-toc").dynatree("getTree").getNodeByKey) {
+				var aNode = $("#tab-toc").dynatree("getTree").getNodeByKey(sHelpId);
+				if (aNode) {
+					aNode.activateSilently();  
+				}
+			}
+			else {
+				sHelpIdToActivate = sHelpId;
+			}
+		}
+window.addEventListener('message', function(e) {
+	var d = e.data;
+	if (d && d.type === 'HND_SELECT' && d.id) {
+		SelectTocItem(d.id);
+	}
+});
+
+		
+		function HideKwPopup()
+		{
+			if($("#popupMenu")) $("#popupMenu").remove();
+		}
+		
+		function ShowKwPopup(oSender, aLinks)
+		{
+			HideKwPopup();
+			if (!aLinks || !aLinks.length || aLinks.length == 0) return false
+			else if (aLinks.length == 1) return true
+			else
+			{
+				var oParentDiv = document.createElement("DIV");
+				oParentDiv.id = "popupMenu";
+				var oLink = null;
+				// Close button
+				oLink = document.createElement("SPAN");
+				oLink.className = "close-button";
+				oLink.innerHTML = "X";
+				oLink.href = "#";
+				oLink.onclick = HideKwPopup;
+				oParentDiv.appendChild(oLink);
+				// Items
+				for (var nCnt=0; nCnt<aLinks.length; nCnt++)
+				{
+					oLink = document.createElement("A");
+					oLink.innerHTML = aLinks[nCnt][0];
+					oLink.href = '../' + HND_CURRENT_TUTORIAL + '/' + aLinks[nCnt][1];
+					oLink.target = "FrameMain";
+					oLink.onclick = HideKwPopup;
+					oParentDiv.appendChild(oLink);
+				}
+				document.body.appendChild(oParentDiv);
+				var pos = $(oSender).offset(); 
+				var height = $(oSender).height();
+				$(oParentDiv).css({
+					"left": (pos.left+20) + "px",
+					"top": (pos.top + height + 5) + "px"
+				});
+				$(oParentDiv).show();
+				return false;
+			}
+		}
+		
+		function PerformSearch()
+		{
+			if (!window.bSearchDataLoaded) {
+				$("#search_results").html("Search engine data hasn't been fully loaded yet or an error occurred while loading it. This usually happens when documentation is browsed locally.");
+				return;
+			}
+			sValue = $("#search_value").val();
+			$("#search_results").html('Searching...');
+			var oSearchEngine = new HndJsSe;
+			oSearchEngine.ParseInput(sValue);			
+			oSearchEngine.PerformSearch();
+			if (!oSearchEngine.aResults || !oSearchEngine.aResults.length)
+			{
+				$("#search_results").html('No results found.');
+			}
+			else
+			{
+				$("#search_results").html('<div id="search_results_content"></div>');
+				var oUl = $("#search_results_content").append("<ul id='lr'></ul>").find("ul");
+				for (var nCnt = 0; nCnt < oSearchEngine.aResults.length; nCnt++)
+				{
+					if (oSearchEngine.aResults[nCnt][0] < aTl.length)
+					{
+						oUl.append("<li><a href='" + aTl[oSearchEngine.aResults[nCnt][0]][0] + "?search=" + escape(sValue) + "' target='FrameMain'>" + unescape(aTl[oSearchEngine.aResults[nCnt][0]][1]) + "</a></li>");
+					}
+				}
+				// Tree
+				$("#search_results_content").dynatree({
+					clickFolderMode: 1,
+					debugLevel: 0,
+					imagePath: 'css/dynatree/chm/',
+					onActivate: function(node){
+						if ($("#search_results_content") && $("#search_results_content").dynatree && $("#search_results_content").dynatree("getTree") && $("#search_results_content").dynatree("getTree").activateKey)
+							$("#search_results_content").dynatree("getTree").activateKey(null);
+						if(node.data.href && node.data.href != '#'){
+							openTopic(node.data.href);
+						}
+					}
+				});
+			}
+		}
+	</script>
+</head>
+
+<body>
+
+	<div id="tabs">
+		<ul>
+			
+				<li><a href="#tab-toc">Contents</a></li>
+			
+				<li><a href="#tab-keywords">Index</a></li>
+			
+				<li><a href="#tab-search">Search</a></li>
+			
+		</ul>
+		
+		<div id="tab-toc">
+			<ul id="toc" class="">
+
+
+				
+
+						<li class="folder" id="Clasesprcticas" data="">
+							<a
+							href="../RRCExercises/Clasesprcticas.html"
+							target="FrameMain">
+								Clases pr&aacute;cticas
+							</a>
+
+				<ul>
+
+						<li class="" id="SecuenciadeconexinalaRedcutincon" data="icon: '16.png'">
+							<a
+							href="../RRCExercises/SecuenciadeconexinalaRedcutincon.html"
+							target="FrameMain">
+								Secuencia de conexi&oacute;n a la Red (cutin) con viento inferior al nominal
+							</a>
+
+				</li>
+
+						<li class="folder" id="Rfagasconvientoinferioralnominal" data="">
+							<a
+							href="../RRCExercises/Rfagasconvientoinferioralnominal.html"
+							target="FrameMain">
+								R&aacute;fagas con viento inferior al nominal
+							</a>
+
+				<ul>
+
+						<li class="" id="Rfagadevientopequea" data="icon: '16.png'">
+							<a
+							href="../RRCExercises/Rfagadevientopequea.html"
+							target="FrameMain">
+								R&aacute;faga de viento peque&ntilde;a
+							</a>
+
+				</li>
+
+						<li class="" id="Rfagadevientogrande" data="icon: '16.png'">
+							<a
+							href="../RRCExercises/Rfagadevientogrande.html"
+							target="FrameMain">
+								R&aacute;faga de viento grande
+							</a>
+
+				</li></ul></li>
+
+						<li class="" id="SecuenciadeconexinaRedcutinconvi" data="icon: '16.png'">
+							<a
+							href="../RRCExercises/SecuenciadeconexinaRedcutinconvi.html"
+							target="FrameMain">
+								Secuencia de conexi&oacute;n a Red (cutin) con viento superior al nominal
+							</a>
+
+				</li>
+
+						<li class="" id="Rfagasdevientoconvientodepartida" data="icon: '16.png'">
+							<a
+							href="../RRCExercises/Rfagasdevientoconvientodepartida.html"
+							target="FrameMain">
+								R&aacute;fagas de viento con viento de partida superior al nominal
+							</a>
+
+				</li>
+
+						<li class="" id="Observacindelmecanismodecontrold" data="icon: '16.png'">
+							<a
+							href="../RRCExercises/Observacindelmecanismodecontrold.html"
+							target="FrameMain">
+								Observaci&oacute;n del mecanismo de control de rpms
+							</a>
+
+				</li>
+
+						<li class="" id="Influenciadelacapacidaddecambiod" data="icon: '16.png'">
+							<a
+							href="../RRCExercises/Influenciadelacapacidaddecambiod.html"
+							target="FrameMain">
+								Influencia de la capacidad de cambio del mecanismo de Pitch
+							</a>
+
+				</li>
+
+						<li class="" id="CambiodelaPotenciaActivadeseada" data="icon: '16.png'">
+							<a
+							href="../RRCExercises/CambiodelaPotenciaActivadeseada.html"
+							target="FrameMain">
+								Cambio de la Potencia Activa deseada
+							</a>
+
+				</li></ul></li>
+
+</ul>
+		</div>
+		
+		
+		
+		<div id="tab-keywords">
+			<ul id="keywords"><li class="file" data="click:'[[\'Influencia de la capacidad de cambio del mecanismo de Pitch\',\'Influenciadelacapacidaddecambiod.html\']]'">
+							<a
+								href="../RRCExercises/Influenciadelacapacidaddecambiod.html"
+								target="FrameMain"
+								onClick="[['Influencia de la capacidad de cambio del mecanismo de Pitch','Influenciadelacapacidaddecambiod.html']]"
+								>
+								Controller.Control.PitchOut
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Secuencia de conexi&oacute;n a Red (cutin) con viento superior al nominal\',\'SecuenciadeconexinaRedcutinconvi.html\'],[\'Secuencia de conexi&oacute;n a la Red (cutin) con viento inferior al nominal\',\'SecuenciadeconexinalaRedcutincon.html\']]'">
+							<a
+								href="../RRCExercises/SecuenciadeconexinaRedcutinconvi.html"
+								target="FrameMain"
+								onClick="[['Secuencia de conexi&oacute;n a Red (cutin) con viento superior al nominal','SecuenciadeconexinaRedcutinconvi.html'],['Secuencia de conexi&oacute;n a la Red (cutin) con viento inferior al nominal','SecuenciadeconexinalaRedcutincon.html']]"
+								>
+								cutin
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Influencia de la capacidad de cambio del mecanismo de Pitch\',\'Influenciadelacapacidaddecambiod.html\']]'">
+							<a
+								href="../RRCExercises/Influenciadelacapacidaddecambiod.html"
+								target="FrameMain"
+								onClick="[['Influencia de la capacidad de cambio del mecanismo de Pitch','Influenciadelacapacidaddecambiod.html']]"
+								>
+								DriveTrain
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'R&aacute;faga de viento peque&ntilde;a\',\'Rfagadevientopequea.html\'],[\'R&aacute;faga de viento grande\',\'Rfagadevientogrande.html\']]'">
+							<a
+								href="../RRCExercises/Rfagadevientopequea.html"
+								target="FrameMain"
+								onClick="[['R&aacute;faga de viento peque&ntilde;a','Rfagadevientopequea.html'],['R&aacute;faga de viento grande','Rfagadevientogrande.html']]"
+								>
+								DutyCycle
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'R&aacute;faga de viento peque&ntilde;a\',\'Rfagadevientopequea.html\']]'">
+							<a
+								href="../RRCExercises/Rfagadevientopequea.html"
+								target="FrameMain"
+								onClick="[['R&aacute;faga de viento peque&ntilde;a','Rfagadevientopequea.html']]"
+								>
+								Forzar
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Secuencia de conexi&oacute;n a la Red (cutin) con viento inferior al nominal\',\'SecuenciadeconexinalaRedcutincon.html\'],[\'Secuencia de conexi&oacute;n a Red (cutin) con viento superior al nominal\',\'SecuenciadeconexinaRedcutinconvi.html\']]'">
+							<a
+								href="../RRCExercises/SecuenciadeconexinalaRedcutincon.html"
+								target="FrameMain"
+								onClick="[['Secuencia de conexi&oacute;n a la Red (cutin) con viento inferior al nominal','SecuenciadeconexinalaRedcutincon.html'],['Secuencia de conexi&oacute;n a Red (cutin) con viento superior al nominal','SecuenciadeconexinaRedcutinconvi.html']]"
+								>
+								Grafico Potencia vs Deslizamiento
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Secuencia de conexi&oacute;n a la Red (cutin) con viento inferior al nominal\',\'SecuenciadeconexinalaRedcutincon.html\']]'">
+							<a
+								href="../RRCExercises/SecuenciadeconexinalaRedcutincon.html"
+								target="FrameMain"
+								onClick="[['Secuencia de conexi&oacute;n a la Red (cutin) con viento inferior al nominal','SecuenciadeconexinalaRedcutincon.html']]"
+								>
+								Nacelle.DriveTrain.PWMOut
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Influencia de la capacidad de cambio del mecanismo de Pitch\',\'Influenciadelacapacidaddecambiod.html\']]'">
+							<a
+								href="../RRCExercises/Influenciadelacapacidaddecambiod.html"
+								target="FrameMain"
+								onClick="[['Influencia de la capacidad de cambio del mecanismo de Pitch','Influenciadelacapacidaddecambiod.html']]"
+								>
+								NacelleDriveTrain.PitchNacelleOut
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Influencia de la capacidad de cambio del mecanismo de Pitch\',\'Influenciadelacapacidaddecambiod.html\']]'">
+							<a
+								href="../RRCExercises/Influenciadelacapacidaddecambiod.html"
+								target="FrameMain"
+								onClick="[['Influencia de la capacidad de cambio del mecanismo de Pitch','Influenciadelacapacidaddecambiod.html']]"
+								>
+								NacellePitch.BladeSlewRate
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Observaci&oacute;n del mecanismo de control de rpms\',\'Observacindelmecanismodecontrold.html\']]'">
+							<a
+								href="../RRCExercises/Observacindelmecanismodecontrold.html"
+								target="FrameMain"
+								onClick="[['Observaci&oacute;n del mecanismo de control de rpms','Observacindelmecanismodecontrold.html']]"
+								>
+								Potencia vs Deslizamiento
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Secuencia de conexi&oacute;n a Red (cutin) con viento superior al nominal\',\'SecuenciadeconexinaRedcutinconvi.html\']]'">
+							<a
+								href="../RRCExercises/SecuenciadeconexinaRedcutinconvi.html"
+								target="FrameMain"
+								onClick="[['Secuencia de conexi&oacute;n a Red (cutin) con viento superior al nominal','SecuenciadeconexinaRedcutinconvi.html']]"
+								>
+								Potenvia vs Deslizamiento
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'R&aacute;faga de viento peque&ntilde;a\',\'Rfagadevientopequea.html\'],[\'R&aacute;faga de viento grande\',\'Rfagadevientogrande.html\']]'">
+							<a
+								href="../RRCExercises/Rfagadevientopequea.html"
+								target="FrameMain"
+								onClick="[['R&aacute;faga de viento peque&ntilde;a','Rfagadevientopequea.html'],['R&aacute;faga de viento grande','Rfagadevientogrande.html']]"
+								>
+								PWM
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'R&aacute;faga de viento peque&ntilde;a\',\'Rfagadevientopequea.html\']]'">
+							<a
+								href="../RRCExercises/Rfagadevientopequea.html"
+								target="FrameMain"
+								onClick="[['R&aacute;faga de viento peque&ntilde;a','Rfagadevientopequea.html']]"
+								>
+								ráfagas de viento
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Secuencia de conexi&oacute;n a la Red (cutin) con viento inferior al nominal\',\'SecuenciadeconexinalaRedcutincon.html\']]'">
+							<a
+								href="../RRCExercises/SecuenciadeconexinalaRedcutincon.html"
+								target="FrameMain"
+								onClick="[['Secuencia de conexi&oacute;n a la Red (cutin) con viento inferior al nominal','SecuenciadeconexinalaRedcutincon.html']]"
+								>
+								START
+							</a>
+
+				</li></ul>
+		</div>
+		
+		
+		
+		<div id="tab-search">
+			<form onsubmit="PerformSearch(); return false;">
+				<label for="search_value">Search:</label>
+				<input id="search_value" name="search_value"></input>
+				<input type="submit" value="Search"/>
+			</form>
+			<div id="search_results"></div>
+		</div>
+		
+		
+		
+	</div>
+    
+</body>
+
+</html>
+

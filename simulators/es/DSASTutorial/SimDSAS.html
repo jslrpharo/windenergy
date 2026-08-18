@@ -1,0 +1,913 @@
+﻿
+
+
+<!-- saved from url=(0016)about:internet -->
+
+<!-- saved from url=(0016)about:internet -->
+
+<!-- saved from url=(0016)about:internet -->
+
+<!-- saved from url=(0016)about:internet -->
+<html>
+	
+<head>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+	<title>Simulador de Aerogenerador con Active Stall y Dos Velocidades</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="HelpNDoc Professional Edition 10.7.0.400">
+	<meta name="description" content="" /> 
+	<meta name="keywords" content="configuración, , sinóptico, jaula de ardilla, , Function, Active Stall, Active Stalling">
+	
+	
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "Introduccion.html?" + sTopicUrl;
+			}
+			else
+			{
+				(function notifyTOC(nTry)
+				{
+					nTry = nTry || 0;
+					try
+					{
+						if (top && top.frames && top.frames['FrameTOC'])
+						{
+							top.frames['FrameTOC'].postMessage({ type: 'HND_SELECT', id: "SimDSAS" }, '*');
+						}
+					}
+					catch (e) {}
+					if (nTry < 10) setTimeout(function() { notifyTOC(nTry + 1); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	
+<style>*{-webkit-user-select:none!important;-moz-user-select:none!important;user-select:none!important;-webkit-touch-callout:none!important;}img{pointer-events:none!important;}</style><style>@media print{html,body{display:none!important;}}</style></head>
+
+<body>
+
+
+
+	
+		<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Simulador de Aerogenerador con Active Stall y Dos Velocidades</h1>
+				
+				
+			</div>
+			
+			<div id="topic_header_nav">
+				
+				
+				<a href="../DSASTutorial/Bibliography.html"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAARhJREFUeNqck19OwzAMxr/AQAMmVZrEv64t3QqDS/DME3fjCpyCG/FAN4Vt7dIloSGN1qqZ1HWrpSiO5e8X25LJx+cX9pja3qQp4WSfOAo9tFkTQE20+Pll2gmgxoGLp8cJFskGhb9tRdXaqs4uQIX+PaIoxG+SQUph/Pe3VyupeJexXl384N1hHPqgS1YFqRCgO798z5LKLwEqGN0i8F3MF2lr30JwC6A89xoj9wYzusIhJrgNABcS8YFiA9CzqQPIT0wVYxzDodOtggKySlKV539wnMHRMyiNpOtMQ3IMrvpHV1BBWMYN5PLizATWTGDDpZUUz5eNAAPRAgPpn5+W4voyWYvVa6iSCJkrTem8TAYi2/X4F2AASu5+SCpdydAAAAAASUVORK5CYII=" alt="Previous"/></a>
+				
+				
+				
+				<a href="../DSASTutorial/SimDSASObjetivos.html"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAStJREFUeNqUk1tSgzAUhn86WEcX4APaDi3eNuGzT+7NLbgGHxyf3YiXWnXoRWwoaQ6SktALmhTafwZC/uR8c3LIcW7vHlAhuRidTRsaqFHgn5RBuwMuLs/RrYA0FgvlZ7lZdtoeIjbD2WkX6tsGcdXr5vpKT+4fn1YLykvELyYJ4ZsRgsCHlBLPbx+yXBMN6A+Ykdp/b0yEjt/SkJfe5wqiAUTCANi8YSTQbnka8vr+pSEFQFgAFk9pkPvH3hEymaHXD2UBSMkEWLylwjFBULquwS4ZKI1GESYsxvoIW9ZAKYoY4inH3yJumQGLORIuYPzGcPhjnjP39psuDg/29Hya34eZSI2+cDc0ivbyANl0HfD8QlGaWZvKreuFhBOKWHtH1jZTVbDSXIABACa5nociETrsAAAAAElFTkSuQmCC" alt="Next"/></a>
+				
+				
+			</div>
+			
+			<div class="clear"></div>
+		</div>
+	
+	
+	<div id="topic_content">
+		
+<p class="rvps2"><span class="rvts6">El "</span><span class="rvts28">Simulador de Aerogenerador de Dos Velocidades</span><span class="rvts6">" es una </span><span class="rvts28">aplicación LdP</span><span class="rvts6"> que simula el comportamiento de un aerogenerador con un </span><span class="rvts17">generador eléctrico de jaula de ardilla,</span><span class="rvts6"> con capacidad de funcionar a </span><span class="rvts17">dos velocidades </span><span class="rvts6"> (correspondientes a dos velocidades </span><span class="rvts17">de sincronismo</span><span class="rvts6"> del generador, correspondientes a las 2 conexiones posibles del bobinado del estator), y que tiene </span><span class="rvts17">control de pitch de las palas</span><span class="rvts6">.</span></p>
+<p class="rvps4"><span class="rvts6">El algoritmo de control del Tren de Potencia usado es conocido como  "</span><span class="rvts17">Active Stalling</span><span class="rvts6">" (es decir, </span><span class="rvts17">entrada activa en perdidas aerodinámicas</span><span class="rvts6">), que está descrito en </span><a class="rvts18" href="../DSASTutorial/Stalling.html">Por entrada en pérdidas (Stalling)</a><span class="rvts6">. El concepto de </span><span class="rvts17">'activo'</span><span class="rvts6"> se refiere a que el angulo de la pala (pitch) se gobierna de forma que se produce la entrada en pérdidas con un viento menor que el característico de la pala que se usa. Este método tiene la ventaja de que el rango de ángulos que hay que manejar para su control es mucho menor que en el caso de control por </span><span class="rvts17">'dejar pasar el viento'</span><span class="rvts6"> (</span><span class="rvts17">'to the feathers'</span><span class="rvts6"> en inglés), lo que implica mayor sencillez del mecanismo de actuación del pitch.</span></p>
+<p class="rvps4"><span class="rvts6">La entrada en pérdidas de las palas es necesaria para disminuir la energía recogida del viento, cuando este es superior al Viento Nominal.</span></p>
+<p class="rvps2"><span class="rvts6">El simulador del Controlador implementa, adicionalmente a las funcionalidades relativas a:</span></p>
+<p class="rvps2" style="text-indent: -24px; padding-left: 24px; margin-left: 0px;"><span style="font-size: 12pt; font-family: Symbola, 'Lucida Sans Unicode', 'Arial', 'Helvetica', sans-serif; color: #000000; display: inline-block; text-indent: 0px; min-width: 24px;">•</span><span class="rvts6">la Operación (puesta en marcha, paro, orientación de la Góndola, control del Pitch, etc)</span></p>
+<p class="rvps2" style="text-indent: -24px; padding-left: 24px; margin-left: 0px;"><span style="font-size: 12pt; font-family: Symbola, 'Lucida Sans Unicode', 'Arial', 'Helvetica', sans-serif; color: #000000; display: inline-block; text-indent: 0px; min-width: 24px;">•</span><span class="rvts6">la Seguridad (diversas incidencias de paro)</span></p>
+<p class="rvps2" style="text-indent: -24px; padding-left: 24px; margin-left: 0px;"><span style="font-size: 12pt; font-family: Symbola, 'Lucida Sans Unicode', 'Arial', 'Helvetica', sans-serif; color: #000000; display: inline-block; text-indent: 0px; min-width: 24px;">•</span><span class="rvts6">el algoritmo de cambio de modo de conexión del estátor del Generador, es decir, las dos velocidades de funcionamiento posibles. Esta facilidad permite que el aerogenerador se adapte mejor a velocidades de viento inferiores al nominal.</span></p>
+<p class="rvps2"><span class="rvts11">La configuración de LdP para este simulador se denomina (para lenguaje español) "</span><span class="rvts15">DSASSpanish.conf</span><span class="rvts11">", y define un conjunto de "</span><span class="rvts15">Procesos</span><span class="rvts11">", "</span><span class="rvts15">Sinopticos</span><span class="rvts11">", "</span><span class="rvts15">Parametros</span><span class="rvts11">" y "</span><span class="rvts15">Conexiones</span><span class="rvts11">"</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<table width="100%" style="border-color: #000000; border-style: solid; border-width: 1px; border-spacing: 2px;">
+ <tr style="vertical-align: top;">
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 18%;">
+   <p class="rvps2"><span class="rvts93">Proceso</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 24%;">
+   <p class="rvps2"><span class="rvts93">Nombre interno</span></p>
+  </td>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  </td>
+ </tr>
+ <tr style="vertical-align: top;">
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 18%;">
+   <p class="rvps2"><span class="rvts30">NacelleEmulator</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 24%;">
+   <p class="rvps2"><span class="rvts30">Nacelle</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+   <br/>
+  </td>
+ </tr>
+ <tr style="vertical-align: top;">
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 18%;">
+   <p class="rvps2"><span class="rvts30">DriveTrainDynamics</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 24%;">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 56%;">
+   <p class="rvps2"><span class="rvts30">Simulador del Tren de Potencia</span></p>
+  </td>
+ </tr>
+ <tr style="vertical-align: top;">
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 18%;">
+   <p class="rvps2"><span class="rvts30">YawingNacelle</span></p>
+  </td>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 56%;">
+   <p class="rvps2"><span class="rvts30">Simulador del Mecanismo de Orientación de la Góndola</span></p>
+  </td>
+ </tr>
+ <tr style="vertical-align: top;">
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 18%;">
+   <p class="rvps2"><span class="rvts30">BrakeHydraulicCircuit</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+   <p class="rvps2"><span class="rvts30">Nacelle.Braking</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 56%;">
+   <p class="rvps2"><span class="rvts30">Simulador del Circuito Hidráulico de Frenos</span></p>
+  </td>
+ </tr>
+ <tr style="vertical-align: top;">
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 18%;">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 24%;">
+   <p class="rvps2"><span class="rvts30">Controller.Yawing</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 56%;">
+   <p class="rvps2"><span class="rvts30">Simulador del Controlador de Orientación de la Góndola: seguimiento de la dirección del viento, y desenrolle de cables de potencia.</span></p>
+  </td>
+ </tr>
+ <tr style="vertical-align: top;">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 24%;">
+   <p class="rvps2"><span class="rvts30">Controller.Control</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 56%;">
+   <p class="rvps2"><span class="rvts30">Simulador del Controlador de Aerogenerador, incluyendo las funciones de Operación (cutin / cutout) y las de Seguridad.</span></p>
+  </td>
+ </tr>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p class="rvps2"><span class="rvts30"><br/></span></p>
+<p class="rvps4"><span class="rvts11">Un "Sinoptico" es un bloque de código LdP que contiene una determinada interfaz de usuario, mediante la cual éste accede al valor de determinadas variables y, a algunas de ellas puede también modificarlas.</span></p>
+<p class="rvps4"><span class="rvts11">Esta configuración utilizan </span></p>
+<div class="rvps2">
+<table width="100%" style="border-color: #000000; border-style: solid; border-width: 1px; border-spacing: 2px;">
+ <tr style="vertical-align: top;">
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 17%;">
+   <p class="rvps2"><span class="rvts93">Synoptico</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+   <p class="rvps2"><span class="rvts93">Nombre interno</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 38%;">
+   <p class="rvps2"><span class="rvts93">Descripción</span></p>
+  </td>
+ </tr>
+ <tr style="vertical-align: top;">
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 17%;">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 20%;">
+   <p class="rvps2"><span class="rvts30">Controller.Control</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 38%;">
+   <p class="rvps2"><span class="rvts30">Interfaz de usuario que emula el 'Terminal de Control' del aerogenerador y también al Controlador propiamente dicho.</span></p>
+  </td>
+ </tr>
+ <tr style="vertical-align: top;">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 20%;">
+   <p class="rvps2"><span class="rvts30">SynopticDriveTrain</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 38%;">
+   <p class="rvps2"><span class="rvts30">Sinoptico que presenta dos vistas del aerogenerador: en 3D e interna de la Góndola, juntos con un conjunto de elementos gráficos relativos al Tren de Potencia, el sistema de frenos y el generador eléctrico.</span></p>
+  </td>
+ </tr>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+   <p class="rvps2"><span class="rvts30">IFWindNacelle</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 20%;">
+   <p class="rvps2"><span class="rvts30">SynopticWindNacelle</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 38%;">
+   <p class="rvps2"><span class="rvts30">Sinóptico mediante el que se puede acceder a las siguientes variables y funcionalidades:</span></p>
+   <p class="rvps2"><span class="rvts30"><br/></span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+   <p class="rvps2"><span class="rvts30">c) Ver la señal de la Veleta.</span></p>
+   <p class="rvps2"><span class="rvts30">d) Ver el estado de los Cables de Potencia que bajan desde la Góndola </span></p>
+   <p class="rvps2"><span class="rvts30">e) Ver la sección de una de las palas donde se presentan: </span></p>
+   <p class="rvps7" style="text-indent: -24px; padding-left: 24px; margin-left: 48px;"><span style="font-size: 12pt; font-family: 'Courier New', 'Courier', monospace; color: #000000; display: inline-block; text-indent: 0px; min-width: 24px;">o</span><span class="rvts30">El valor del angulo de Pitch ordenado por el Controlador.</span></p>
+   <p class="rvps7" style="text-indent: -24px; padding-left: 24px; margin-left: 48px;"><span style="font-size: 12pt; font-family: 'Courier New', 'Courier', monospace; color: #000000; display: inline-block; text-indent: 0px; min-width: 24px;">o</span><span class="rvts30">El valor real del angulo de Pitch en el Hub.</span></p>
+   <p class="rvps7" style="text-indent: -24px; padding-left: 24px; margin-left: 48px;"><span style="font-size: 12pt; font-family: 'Courier New', 'Courier', monospace; color: #000000; display: inline-block; text-indent: 0px; min-width: 24px;">o</span><span class="rvts30">El valor eficaz de la velocidad del viento.</span></p>
+   <p class="rvps7" style="text-indent: -24px; padding-left: 24px; margin-left: 48px;"><span style="font-size: 12pt; font-family: 'Courier New', 'Courier', monospace; color: #000000; display: inline-block; text-indent: 0px; min-width: 24px;">o</span><span class="rvts30">El viento equivalente debido a la rotación de las palas.</span></p>
+   <p class="rvps7" style="text-indent: -24px; padding-left: 24px; margin-left: 48px;"><span style="font-size: 12pt; font-family: 'Courier New', 'Courier', monospace; color: #000000; display: inline-block; text-indent: 0px; min-width: 24px;">o</span><span class="rvts30">El viento total compuesto que incide sobre la pala.</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+ <tr style="vertical-align: top;">
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 17%;">
+   <p class="rvps2"><span class="rvts30">IFElectricPanel</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 20%;">
+   <p class="rvps2"><span class="rvts30">WTElectricPanel</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 38%;">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+ </tr>
+</table>
+</div>
+<p class="rvps2"><span class="rvts30"><br/></span></p>
+<p class="rvps4"><span class="rvts11">Un "Parametro" es un valor con nombre que es usado por alguno de los Procesos o Sinopticos en su emulación de los subsistemas mecánicos, hidráulicos, aerodinámicos, etc., y/o de sus mecanismos de control.</span></p>
+<p class="rvps4"><span class="rvts11">En esta configuración existen los siguientes parámetros;</span></p>
+<p class="rvps2"><span class="rvts30"><br/></span></p>
+<div class="rvps2">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 99px;">
+   <p class="rvps2"><span class="rvts93">ProcessID</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 110px;">
+   <p class="rvps2"><span class="rvts93">Nombre</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 32px;">
+   <p class="rvps2"><span class="rvts93">Tipo</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+   <p class="rvps2"><span class="rvts93">Valor</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 131px;">
+   <p class="rvps2"><span class="rvts93">Valor max</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 89px;">
+   <p class="rvps2"><span class="rvts93">Valor min</span></p>
+  </td>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 274px;">
+   <p class="rvps2"><span class="rvts93">Description</span></p>
+  </td>
+ </tr>
+ <tr style="vertical-align: top;">
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 99px;">
+   <p class="rvps2"><span class="rvts30">NacelleYawing</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+   <p class="rvps2"><span class="rvts30">CCWYawingSpeed</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 32px;">
+   <p class="rvps2"><span class="rvts30">A</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 87px;">
+   <p class="rvps2"><span class="rvts30">10</span></p>
+  </td>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 89px;">
+   <p class="rvps2"><span class="rvts30">0</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 89px;">
+   <p class="rvps2"><span class="rvts30">º /second</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 274px;">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+ </tr>
+ <tr style="vertical-align: top;">
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 99px;">
+   <p class="rvps2"><span class="rvts30">NacelleYawing</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 110px;">
+   <p class="rvps2"><span class="rvts30">CWYawingSpeed</span></p>
+  </td>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 87px;">
+   <p class="rvps2"><span class="rvts30">10</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 131px;">
+   <p class="rvps2"><span class="rvts30">10</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 89px;">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 89px;">
+   <p class="rvps2"><span class="rvts30">º /second</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 274px;">
+   <p class="rvps2"><span class="rvts30">Clock Wise motor speed in degress/second</span></p>
+  </td>
+ </tr>
+ <tr style="vertical-align: top;">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 110px;">
+   <p class="rvps2"><span class="rvts30">MaxCableTwist</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 32px;">
+   <p class="rvps2"><span class="rvts30">A</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 87px;">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 131px;">
+   <p class="rvps2"><span class="rvts30">100</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 89px;">
+   <p class="rvps2"><span class="rvts30">0</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 89px;">
+   <p class="rvps2"><span class="rvts30">turns</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+   <p class="rvps2"><span class="rvts30">max number of turns of the power cables in any direction</span></p>
+  </td>
+ </tr>
+ <tr style="vertical-align: top;">
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 99px;">
+   <p class="rvps2"><span class="rvts30">Nacelle</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 110px;">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 32px;">
+   <p class="rvps2"><span class="rvts30">A</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 87px;">
+   <p class="rvps2"><span class="rvts30">3500000</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 131px;">
+   <p class="rvps2"><span class="rvts30">6000000</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+   <p class="rvps2"><span class="rvts30">1000000</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 89px;">
+   <p class="rvps2"><span class="rvts30">kg * m2</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 274px;">
+   <p class="rvps2"><span class="rvts30">Moment of Inertia of the whole DriveTrain</span></p>
+  </td>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 99px;">
+   <p class="rvps2"><span class="rvts30">Nacelle</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 110px;">
+   <p class="rvps2"><span class="rvts30">GeneratorSpeedVCU</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 32px;">
+   <p class="rvps2"><span class="rvts30">A</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+   <p class="rvps2"><span class="rvts30">1803</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 131px;">
+   <p class="rvps2"><span class="rvts30">2000</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 89px;">
+   <p class="rvps2"><span class="rvts30">0</span></p>
+  </td>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 274px;">
+   <p class="rvps2"><span class="rvts30">Generator rpms that set the VCU - overspeed electrical centrifugal contact</span></p>
+  </td>
+ </tr>
+ <tr style="vertical-align: top;">
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 99px;">
+   <p class="rvps2"><span class="rvts30">Nacelle</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+   <p class="rvps2"><span class="rvts30">RotorSpeedforHCU</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 32px;">
+   <p class="rvps2"><span class="rvts30">A</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 87px;">
+   <p class="rvps2"><span class="rvts30">26.4</span></p>
+  </td>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 89px;">
+   <p class="rvps2"><span class="rvts30">0</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 89px;">
+   <p class="rvps2"><span class="rvts30">rpms</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 274px;">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+ </tr>
+ <tr style="vertical-align: top;">
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 99px;">
+   <p class="rvps2"><span class="rvts30">NacelleBrake</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 110px;">
+   <p class="rvps2"><span class="rvts30">HydrPumpMaxRunTime</span></p>
+  </td>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 87px;">
+   <p class="rvps2"><span class="rvts30">40</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 131px;">
+   <p class="rvps2"><span class="rvts30">200</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 89px;">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 89px;">
+   <p class="rvps2"><span class="rvts30">seconds</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 274px;">
+   <p class="rvps2"><span class="rvts30">Max time for reaching operating pressure</span></p>
+  </td>
+ </tr>
+ <tr style="vertical-align: top;">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 110px;">
+   <p class="rvps2"><span class="rvts30">HydrPumpMinTimeBetweenStarts</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 32px;">
+   <p class="rvps2"><span class="rvts30">A</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 87px;">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 131px;">
+   <p class="rvps2"><span class="rvts30">100</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 89px;">
+   <p class="rvps2"><span class="rvts30">2</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 89px;">
+   <p class="rvps2"><span class="rvts30">seconds</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+   <p class="rvps2"><span class="rvts30">Min time between successive starts of the hydraulic pump</span></p>
+  </td>
+ </tr>
+ <tr style="vertical-align: top;">
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 99px;">
+   <p class="rvps2"><span class="rvts30">NacelleBrake</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 110px;">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 32px;">
+   <p class="rvps2"><span class="rvts30">A</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 87px;">
+   <p class="rvps2"><span class="rvts30">0.01</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 131px;">
+   <p class="rvps2"><span class="rvts30">10</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+   <p class="rvps2"><span class="rvts30">0</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 89px;">
+   <p class="rvps2"><span class="rvts30">bars / second</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 274px;">
+   <p class="rvps2"><span class="rvts30">Overall leakage of the brake hydraulic circuit</span></p>
+  </td>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 99px;">
+   <p class="rvps2"><span class="rvts30">NacelleBrake</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 110px;">
+   <p class="rvps2"><span class="rvts30">PumpCaudal</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 32px;">
+   <p class="rvps2"><span class="rvts30">A</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+   <p class="rvps2"><span class="rvts30">5</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 131px;">
+   <p class="rvps2"><span class="rvts30">100</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 89px;">
+   <p class="rvps2"><span class="rvts30">0</span></p>
+  </td>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 274px;">
+   <p class="rvps2"><span class="rvts30">Caudal of pump. Volumen of the reservoir is assumed to be 100 units</span></p>
+  </td>
+ </tr>
+ <tr style="vertical-align: top;">
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 99px;">
+   <p class="rvps2"><span class="rvts30">NacellePitch</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+   <p class="rvps2"><span class="rvts30">BladeSlewRate</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 32px;">
+   <p class="rvps2"><span class="rvts30">A</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 87px;">
+   <p class="rvps2"><span class="rvts30">10</span></p>
+  </td>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 89px;">
+   <p class="rvps2"><span class="rvts30">0.5</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 89px;">
+   <p class="rvps2"><span class="rvts30">degrees / second</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 274px;">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+ </tr>
+ <tr style="vertical-align: top;">
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 99px;">
+   <p class="rvps2"><span class="rvts30">Controller</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 110px;">
+   <p class="rvps2"><span class="rvts30">TempMaxGenerator</span></p>
+  </td>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 87px;">
+   <p class="rvps2"><span class="rvts30">150</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 131px;">
+   <p class="rvps2"><span class="rvts30">180</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 89px;">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 89px;">
+   <p class="rvps2"><span class="rvts30">degrees</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 274px;">
+   <p class="rvps2"><span class="rvts30">Generator's maximum temperature to operate</span></p>
+  </td>
+ </tr>
+ <tr style="vertical-align: top;">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 110px;">
+   <p class="rvps2"><span class="rvts30">TempMaxGearBox</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 32px;">
+   <p class="rvps2"><span class="rvts30">A</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 87px;">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 131px;">
+   <p class="rvps2"><span class="rvts30">180</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 89px;">
+   <p class="rvps2"><span class="rvts30">-10</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 89px;">
+   <p class="rvps2"><span class="rvts30">degrees</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+   <p class="rvps2"><span class="rvts30">GearBox's maximum temperature to operate</span></p>
+  </td>
+ </tr>
+ <tr style="vertical-align: top;">
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 99px;">
+   <p class="rvps2"><span class="rvts30">Controller</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 110px;">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 32px;">
+   <p class="rvps2"><span class="rvts30">A</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 87px;">
+   <p class="rvps2"><span class="rvts30">80</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 131px;">
+   <p class="rvps2"><span class="rvts30">180</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+   <p class="rvps2"><span class="rvts30">-10</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 89px;">
+   <p class="rvps2"><span class="rvts30">degrees</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 274px;">
+   <p class="rvps2"><span class="rvts30">Rotor Bearing's maximum temperature to operate</span></p>
+  </td>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 99px;">
+   <p class="rvps2"><span class="rvts30">Controller</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 110px;">
+   <p class="rvps2"><span class="rvts30">TempMaxAmbient</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 32px;">
+   <p class="rvps2"><span class="rvts30">A</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+   <p class="rvps2"><span class="rvts30">50</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 131px;">
+   <p class="rvps2"><span class="rvts30">180</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 89px;">
+   <p class="rvps2"><span class="rvts30">-10</span></p>
+  </td>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 274px;">
+   <p class="rvps2"><span class="rvts30">Max ambient temperature to operate</span></p>
+  </td>
+ </tr>
+ <tr style="vertical-align: top;">
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 99px;">
+   <p class="rvps2"><span class="rvts30">Controller</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+   <p class="rvps2"><span class="rvts30">WindMaxForOperation</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 32px;">
+   <p class="rvps2"><span class="rvts30">A</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 87px;">
+   <p class="rvps2"><span class="rvts30">25</span></p>
+  </td>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 89px;">
+   <p class="rvps2"><span class="rvts30">3</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 89px;">
+   <p class="rvps2"><span class="rvts30">m/s</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 274px;">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+ </tr>
+ <tr style="vertical-align: top;">
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 99px;">
+   <p class="rvps2"><span class="rvts30">Controller</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 110px;">
+   <p class="rvps2"><span class="rvts30">WindMaxForTemporalOperation</span></p>
+  </td>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 87px;">
+   <p class="rvps2"><span class="rvts30">28</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 131px;">
+   <p class="rvps2"><span class="rvts30">35</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 89px;">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 89px;">
+   <p class="rvps2"><span class="rvts30">m/s</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 274px;">
+   <p class="rvps2"><span class="rvts30">Max wind to operate during 100 seconds</span></p>
+  </td>
+ </tr>
+ <tr style="vertical-align: top;">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 110px;">
+   <p class="rvps2"><span class="rvts30">WindAbsolutMax</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 32px;">
+   <p class="rvps2"><span class="rvts30">A</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 87px;">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 131px;">
+   <p class="rvps2"><span class="rvts30">35</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 89px;">
+   <p class="rvps2"><span class="rvts30">3</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 89px;">
+   <p class="rvps2"><span class="rvts30">m/s</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+   <p class="rvps2"><span class="rvts30">Wind for immediate shutdown</span></p>
+  </td>
+ </tr>
+ <tr style="vertical-align: top;">
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 99px;">
+   <p class="rvps2"><span class="rvts30">ControllerYawing</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 110px;">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 32px;">
+   <p class="rvps2"><span class="rvts30">A</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 87px;">
+   <p class="rvps2"><span class="rvts30">1.5</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 131px;">
+   <p class="rvps2"><span class="rvts30">10</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+   <p class="rvps2"><span class="rvts30">0.1</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 89px;">
+   <p class="rvps2"><span class="rvts30">m/s</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 274px;">
+   <p class="rvps2"><span class="rvts30">Wind speed below which the WindTurbine does not yaw</span></p>
+  </td>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 99px;">
+   <p class="rvps2"><span class="rvts30">ControllerYawing</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 110px;">
+   <p class="rvps2"><span class="rvts30">MaxCableTwistForReorientation</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 32px;">
+   <p class="rvps2"><span class="rvts30">A</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+   <p class="rvps2"><span class="rvts30">1.5</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 131px;">
+   <p class="rvps2"><span class="rvts30">5</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 89px;">
+   <p class="rvps2"><span class="rvts30">1</span></p>
+  </td>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 274px;">
+   <p class="rvps2"><span class="rvts30">Number of Cables turns that will force reorientation before trying to Cutin. Must be smaller than NacelleYawing.MaxCablesTurns</span></p>
+  </td>
+ </tr>
+ <tr style="vertical-align: top;">
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 99px;">
+   <p class="rvps2"><span class="rvts30">ControllerYawing</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+   <p class="rvps2"><span class="rvts30">MaxYawingTime</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 32px;">
+   <p class="rvps2"><span class="rvts30">A</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 87px;">
+   <p class="rvps2"><span class="rvts30">120</span></p>
+  </td>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 89px;">
+   <p class="rvps2"><span class="rvts30">0</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 89px;">
+   <p class="rvps2"><span class="rvts30">seconds</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 274px;">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+ </tr>
+ <tr style="vertical-align: top;">
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 99px;">
+   <p class="rvps2"><span class="rvts30">ControllerCutin</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 110px;">
+   <p class="rvps2"><span class="rvts30">MaxWindForCutin</span></p>
+  </td>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 87px;">
+   <p class="rvps2"><span class="rvts30">18</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 131px;">
+   <p class="rvps2"><span class="rvts30">25</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 89px;">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 89px;">
+   <p class="rvps2"><span class="rvts30">m/s</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 274px;">
+   <p class="rvps2"><span class="rvts30">Wind above which the Cutin operation does not start.</span></p>
+  </td>
+ </tr>
+ <tr style="vertical-align: top;">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 110px;">
+   <p class="rvps2"><span class="rvts30">MainSwitch</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 32px;">
+   <p class="rvps2"><span class="rvts30">D</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 87px;">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 131px;">
+   <br/>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 89px;">
+   <br/>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 89px;">
+   <br/>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+   <p class="rvps2"><span class="rvts30">WindFarm's Main Switch</span></p>
+  </td>
+ </tr>
+</table>
+</div>
+<p class="rvps2"><span class="rvts30"><br/></span></p>
+
+	</div>
+	
+	
+		<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright © &lt;2026&gt;, &lt;Automated Computing Machinery SL&gt; ACM SL
+			</div>
+		</div>
+	
+	
+
+	
+<script>(function(){['copy','cut','contextmenu','dragstart'].forEach(function(ev){document.addEventListener(ev,function(e){e.preventDefault();},true);});document.onselectstart=function(){return false;};document.ondragstart=function(){return false;};document.addEventListener('keydown',function(e){var k=e.key;if(k==='F12'||k==='PrintScreen'){e.preventDefault();return;}if((e.ctrlKey||e.metaKey)&&e.shiftKey&&(k==='I'||k==='i'||k==='J'||k==='j'||k==='C')){e.preventDefault();return;}if((e.ctrlKey||e.metaKey)&&(k==='u'||k==='U'||k==='s'||k==='S'||k==='a'||k==='A'||k==='p'||k==='P'||k==='c'||k==='C'||k==='v'||k==='V')){e.preventDefault();}},true);})();</script><script>(function(){window.addEventListener("beforeprint",function(){document.documentElement.style.display="none";});window.addEventListener("afterprint",function(){document.documentElement.style.display="";});document.addEventListener("keydown",function(e){var k=(e.key||"").toLowerCase();if(k==="printscreen"||e.keyCode===44||e.which===44){document.documentElement.style.display="none";setTimeout(function(){document.documentElement.style.display="";},300);}},true);})();</script></body>
+	
+</html>
+
+
+
+

@@ -1,0 +1,337 @@
+﻿<!DOCTYPE html>
+
+<!-- saved from url=(0016)about:internet -->
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparación del arranque en diferentes familias de aerogeneradores</title>
+    <link rel="icon" type="image/png" href="favicon.ico">
+    <meta name="description" content="Experimento comparativo del proceso de arranque (cut-in) en aerogeneradores DSAS, RRC y DFIG">
+    <meta name="keywords" content="cut-in, arranque, aerogeneradores, DSAS, RRC, DFIG, comparación">
+    
+    <link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+    <link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+    <link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+    
+    <style type="text/css">
+        #topic_header {
+            background-color: #EFEFEF;
+        }
+        
+        body {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        #topic_content {
+            /* Unificado en base.css */
+        }
+        
+        h1 {
+            font-size: 32px;
+            line-height: 1.3;
+        }
+        
+        h2 {
+            font-size: 26px;
+            line-height: 1.4;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        
+        h3 {
+            font-size: 22px;
+            line-height: 1.4;
+        }
+        
+        p, li {
+            font-size: 18px;
+            margin-bottom: 12px;
+        }
+        
+        .learning-objective {
+            background-color: #fff9e6;
+            border-left: 4px solid #ffcc00;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .didactic-box {
+            background-color: #f0f8ff;
+            border-left: 4px solid #0066cc;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .procedure-box {
+            background-color: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .important-note {
+            background-color: #ffe6e6;
+            border-left: 4px solid #cc0000;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .key-concept {
+            font-weight: bold;
+            color: #0066cc;
+        }
+        
+        .data-table {
+            background-color: #f5f5f5;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        ol li {
+            margin-bottom: 20px;
+        }
+    </style>
+    
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/hnd.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            if (top.frames.length == 0) {
+                var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+                top.location.href = "Experiments.html?" + sTopicUrl;
+            } else {
+                (function notifyTOC(nTry)
+                {
+                    nTry = nTry || 0;
+                    try
+                    {
+                        if (top && top.frames && top.frames['FrameTOC'])
+                        {
+                            top.frames['FrameTOC'].postMessage({ type: 'HND_SELECT', id: "ComparisonofcutinindifferentWind" }, '*');
+                        }
+                    }
+                    catch (e) {}
+                    if (nTry < 10) setTimeout(function() { notifyTOC(nTry + 1); }, 300);
+                })();
+            }
+        });
+    </script>
+<style>*{-webkit-user-select:none!important;-moz-user-select:none!important;user-select:none!important;-webkit-touch-callout:none!important;}img{pointer-events:none!important;}</style><style>@media print{html,body{display:none!important;}}</style></head>
+
+<body>
+    <div id="topic_header">
+        <div id="topic_header_content">
+            <h1 id="topic_header_text">Comparación del arranque (cut-in) en diferentes familias de aerogeneradores</h1>
+        </div>
+        
+        <div id="topic_header_nav">
+            <a href="../Experiments/WhythebladesinaWindTurbineturn.html"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAARhJREFUeNqck19OwzAMxr/AQAMmVZrEv64t3QqDS/DME3fjCpyCG/FAN4Vt7dIloSGN1qqZ1HWrpSiO5e8X25LJx+cX9pja3qQp4WSfOAo9tFkTQE20+Pll2gmgxoGLp8cJFskGhb9tRdXaqs4uQIX+PaIoxG+SQUph/Pe3VyupeJexXl384N1hHPqgS1YFqRCgO798z5LKLwEqGN0i8F3MF2lr30JwC6A89xoj9wYzusIhJrgNABcS8YFiA9CzqQPIT0wVYxzDodOtggKySlKV539wnMHRMyiNpOtMQ3IMrvpHV1BBWMYN5PLizATWTGDDpZUUz5eNAAPRAgPpn5+W4voyWYvVa6iSCJkrTem8TAYi2/X4F2AASu5+SCpdydAAAAAASUVORK5CYII=" alt="Anterior"/></a>
+            <a href="../Experiments/ComparisonofPowervsWindcurvesofW.html"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAStJREFUeNqUk1tSgzAUhn86WEcX4APaDi3eNuGzT+7NLbgGHxyf3YiXWnXoRWwoaQ6SktALmhTafwZC/uR8c3LIcW7vHlAhuRidTRsaqFHgn5RBuwMuLs/RrYA0FgvlZ7lZdtoeIjbD2WkX6tsGcdXr5vpKT+4fn1YLykvELyYJ4ZsRgsCHlBLPbx+yXBMN6A+Ykdp/b0yEjt/SkJfe5wqiAUTCANi8YSTQbnka8vr+pSEFQFgAFk9pkPvH3hEymaHXD2UBSMkEWLylwjFBULquwS4ZKI1GESYsxvoIW9ZAKYoY4inH3yJumQGLORIuYPzGcPhjnjP39psuDg/29Hya34eZSI2+cDc0ivbyANl0HfD8QlGaWZvKreuFhBOKWHtH1jZTVbDSXIABACa5nociETrsAAAAAElFTkSuQmCC" alt="Siguiente"/></a>
+        </div>
+        
+        <div class="clear"></div>
+    </div>
+    
+    <div id="topic_content">
+        <div class="learning-objective">
+            <h3>🎯 Objetivos de aprendizaje</h3>
+            <p>Al completar este experimento serás capaz de:</p>
+            <ul>
+                <li>Comprender el proceso de arranque (cut-in) en un aerogenerador</li>
+                <li>Identificar las diferencias en el comportamiento de arranque entre las tres familias principales de aerogeneradores</li>
+                <li>Analizar la evolución de variables clave durante la transición de parado a producción</li>
+                <li>Crear y analizar gráficos comparativos del tiempo de arranque en función de la velocidad del viento</li>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+
+        <h2>¿Qué es el cut-in o arranque?</h2>
+        
+        <div class="didactic-box">
+            <h3>📖 Concepto: Cut-in (Arranque)</h3>
+            <p>El <span class="key-concept">cut-in</span> es el proceso mediante el cual un aerogenerador realiza la transición desde un estado <strong>detenido</strong> (tren de potencia parado y generador desconectado de la red) hacia el estado de <strong>producción</strong> (generando electricidad y alimentando la red eléctrica).</p>
+            <p>Este proceso involucra múltiples subsistemas del aerogenerador y varía significativamente según la tecnología empleada.</p>
+        </div>
+
+        <h2>Importancia del estudio comparativo</h2>
+        
+        <p>Cada familia de aerogeneradores utiliza diferentes estrategias y tecnologías para realizar el arranque. Comprender estas diferencias te permitirá:</p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+            <li>Comprender el impacto en la producción energética</li>
+            <li>Analizar los requerimientos de mantenimiento y desgaste</li>
+            <li>Optimizar la selección de aerogeneradores según las condiciones del emplazamiento</li>
+        </ul>
+
+        <h2>Metodología del experimento</h2>
+        
+        <div class="important-note">
+            <h3>🔬 Objetivo experimental</h3>
+            <p>Crear una tabla de datos para cada tipo de aerogenerador que relacione la <strong>velocidad del viento</strong> con el <strong>tiempo necesario para completar el arranque</strong>.</p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+            <h3>📊 Estructura de las tablas de datos</h3>
+            <p>Para cada aerogenerador crearás una tabla con dos columnas:</p>
+            <ul>
+                <li><strong>Velocidad del viento (m/s):</strong> Desde 6 m/s hasta 17 m/s en incrementos de 1 m/s</li>
+                <li><strong>Tiempo de arranque (s):</strong> Tiempo medido desde el inicio hasta la producción estable</li>
+            </ul>
+        </div>
+
+        <div class="didactic-box">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+            <ul>
+                <li>Visualizar la evolución temporal de las variables</li>
+                <li>Medir distancias de tiempo entre eventos</li>
+                <li>Crear copias activas de las mediciones</li>
+            </ul>
+            <p>📚 Consulta el tutorial "<a href="acmsl://viewertutorial%20-rLdP_Help\LdP_Help.html">Hardcopies activas de StripRecorders</a>" para aprender a utilizar esta herramienta.</p>
+        </div>
+
+        <h2>Procedimiento experimental</h2>
+
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+            <h4>Tipo: Generador de jaula de ardilla conectado directamente a red con control por pérdida aerodinámica activa</h4>
+            
+            <p><strong>Preparación:</strong></p>
+            <ul>
+                <li>Realiza la Clase Práctica; "<a href="acmsl://viewertutorial%20-rDSASExercises\DSASExercises.html">Poner las condiciones para que se produzca la entrada en Producción con viento bajo</a>"</li>
+                <li>Familiarízate con los controles del simulador DSAS</li>
+                <li>Identifica las variables clave a monitorizar</li>
+            </ul>
+            
+            <p><strong>Ejecución:</strong></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+                <li>Activa los StripRecorders para las variables principales:
+                    <ul>
+                        <li>Velocidad de rotación del rotor (rpm)</li>
+                        <li>Potencia generada (kW)</li>
+                        <li>Estado del generador (conectado/desconectado)</li>
+                    </ul>
+                </li>
+                <li>Inicia el proceso de arranque</li>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+                <li>Registra todos los tiempos en tu tabla de datos</li>
+            </ol>
+        </div>
+
+        <div class="procedure-box">
+            <h3>📝 Experimento 2: Aerogenerador RRC</h3>
+            <h4>Tipo: Generador de inducción con control por resistencia del rotor bobinado y ángulo de pitch de las palas</h4>
+            
+            <p><strong>Preparación:</strong></p>
+            <ul>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+            </ul>
+            
+            <p><strong>Ejecución:</strong></p>
+            <ol>
+                <li>Repite el mismo procedimiento que en el experimento 1</li>
+                <li>Presta especial atención a:
+                    <ul>
+                        <li>El comportamiento del control de resistencia del rotor</li>
+                        <li>El movimiento del sistema de pitch</li>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+                </li>
+                <li>Completa tu tabla de datos para el RRC</li>
+            </ol>
+        </div>
+
+        <div class="procedure-box">
+            <h3>📝 Experimento 3: Aerogenerador DFIG</h3>
+            <h4>Tipo: Generador de inducción doblemente alimentado con control por ángulo de pitch</h4>
+            
+            <p><strong>Preparación:</strong></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+                <li>Realiza la Clase Práctica "<a href="acmsl://viewertutorial%20-rDFIGExercises\Clasesprcticas.html">'Arranque del Aerogenerador (cutin) con viento inferior al nominal'</a>"</li>
+            </ul>
+            
+            <p><strong>Ejecución:</strong></p>
+            <ol>
+                <li>Repite el procedimiento de los experimentos anteriores</li>
+                <li>Observa especialmente:
+                    <ul>
+                        <li>El comportamiento de los convertidores back-to-back</li>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+                    </ul>
+                </li>
+                <li>Completa tu tabla de datos para el DFIG</li>
+            </ol>
+        </div>
+
+        <h2>Análisis de resultados</h2>
+        
+        <div class="learning-objective">
+            <h3>📊 Actividades de análisis</h3>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+                    <ul>
+                        <li>Representa en un mismo gráfico las tres curvas "Tiempo de arranque vs Velocidad del viento"</li>
+                        <li>Utiliza diferentes colores para cada tecnología</li>
+                    </ul>
+                </li>
+                <li><strong>Analizar tendencias:</strong>
+                    <ul>
+                        <li>¿Cómo varía el tiempo de arranque con la velocidad del viento?</li>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+                    </ul>
+                </li>
+                <li><strong>Comparar tecnologías:</strong>
+                    <ul>
+                        <li>¿Qué aerogenerador tiene el arranque más suave?</li>
+                        <li>¿Cuál genera esfuerzos mecánicos mayores durante el arranque?</li>
+                        <li>¿Qué impacto tiene esto en el mantenimiento?</li>
+                    </ul>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+                    <ul>
+                        <li>En un emplazamiento con vientos variables, ¿qué tecnología sería más eficiente?</li>
+                        <li>¿Cómo afecta el tiempo de arranque a la producción energética anual?</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+
+        <div class="important-note">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+            <ul>
+                <li>¿Cuáles son las principales diferencias en el proceso de arranque de cada tecnología?</li>
+                <li>¿Qué ventajas e inconvenientes presenta cada método de arranque?</li>
+                <li>¿Cómo influyen los sistemas de control (pitch, resistencia rotor, convertidores) en el arranque?</li>
+                <li>¿Qué relación existe entre la complejidad tecnológica y el rendimiento del arranque?</li>
+            </ul>
+        </div>
+
+        <h2>Recursos complementarios</h2>
+        
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+            <p>Se recomienda consultar los siguientes tutoriales para comprender en detalle cada tecnología:</p>
+            <ul>
+                <li><strong>DSAS:</strong> Fundamentos del control por pérdida aerodinámica</li>
+                <li><strong>RRC:</strong> Control por resistencia del rotor bobinado</li>
+                <li><strong>DFIG:</strong> Generadores doblemente alimentados y convertidores back-to-back</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div id="topic_footer">
+        <div id="topic_footer_content">
+            Copyright &copy; 2017-2025 by AUTOMATED COMPUTING MACHINERY SL. All Rights Reserved.
+        </div>
+    </div>
+<script>(function(){['copy','cut','contextmenu','dragstart'].forEach(function(ev){document.addEventListener(ev,function(e){e.preventDefault();},true);});document.onselectstart=function(){return false;};document.ondragstart=function(){return false;};document.addEventListener('keydown',function(e){var k=e.key;if(k==='F12'||k==='PrintScreen'){e.preventDefault();return;}if((e.ctrlKey||e.metaKey)&&e.shiftKey&&(k==='I'||k==='i'||k==='J'||k==='j'||k==='C')){e.preventDefault();return;}if((e.ctrlKey||e.metaKey)&&(k==='u'||k==='U'||k==='s'||k==='S'||k==='a'||k==='A'||k==='p'||k==='P'||k==='c'||k==='C'||k==='v'||k==='V')){e.preventDefault();}},true);})();</script><script>(function(){window.addEventListener("beforeprint",function(){document.documentElement.style.display="none";});window.addEventListener("afterprint",function(){document.documentElement.style.display="";});document.addEventListener("keydown",function(e){var k=(e.key||"").toLowerCase();if(k==="printscreen"||e.keyCode===44||e.which===44){document.documentElement.style.display="none";setTimeout(function(){document.documentElement.style.display="";},300);}},true);})();</script></body>
+</html>

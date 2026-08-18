@@ -1,0 +1,136 @@
+<svg viewBox="0 0 500 660" xmlns="http://www.w3.org/2000/svg" role="img" style="background:#fff">
+  <title>Cilindro hidráulico — Retracción (movimiento a izquierdas)</title>
+  <desc>Circuito hidráulico con válvula 4/3 desplazada a posición de retracción: P→B, A→T.</desc>
+  <defs>
+    <marker id="ah-black" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="7" markerHeight="5" orient="auto-start-reverse">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#444"/>
+    </marker>
+    <pattern id="fluid" patternUnits="userSpaceOnUse" width="20" height="6">
+      <path d="M0 3 Q5 0 10 3 T20 3" stroke="#1a73e8" stroke-width="0.8" fill="none" opacity="0.5"/>
+    </pattern>
+    <linearGradient id="piston-g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#888"/>
+      <stop offset="100%" stop-color="#666"/>
+    </linearGradient>
+    <linearGradient id="rod-g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#aaa"/>
+      <stop offset="100%" stop-color="#888"/>
+    </linearGradient>
+  </defs>
+  <style>
+    .pipe{stroke:#555;stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round}
+    .pipe-press{stroke:#1a73e8;stroke-width:2.8;fill:none;stroke-linecap:round;stroke-linejoin:round}
+    .pipe-return{stroke:#e8710a;stroke-width:2.8;fill:none;stroke-linecap:round;stroke-linejoin:round}
+    .lbl{font-family:Arial,Helvetica,sans-serif;font-size:13px;fill:#333}
+    .lbl-sm{font-family:Arial,Helvetica,sans-serif;font-size:11px;fill:#666}
+    .lbl-port{font-family:Arial,Helvetica,sans-serif;font-size:12px;font-weight:700;fill:#444}
+    .lbl-title{font-family:Arial,Helvetica,sans-serif;font-size:16px;font-weight:700;fill:#222}
+    .lbl-sub{font-family:Arial,Helvetica,sans-serif;font-size:12px;fill:#666}
+    .valve-box{stroke:#555;stroke-width:2;fill:#f7f7f7}
+    .valve-active{fill:rgba(26,115,232,0.08);stroke:#1a73e8;stroke-width:2.5}
+    .valve-arrow{stroke:#444;stroke-width:1.8;fill:none}
+  </style>
+
+  <!-- Title -->
+  <text x="250" y="28" text-anchor="middle" class="lbl-title">Cilindro hidráulico — Retracción</text>
+  <text x="250" y="46" text-anchor="middle" class="lbl-sub">Válvula 4/3 posición derecha: P→B, A→T</text>
+
+  <!-- CYLINDER -->
+  <rect x="130" y="72" width="240" height="85" rx="4" fill="#e0e0e0" stroke="#555" stroke-width="2.5"/>
+  <!-- Left chamber (RETURN) -->
+  <rect x="132" y="74" width="112" height="81" rx="3" fill="rgba(232,113,10,0.08)"/>
+  <rect x="132" y="74" width="112" height="81" rx="3" fill="url(#fluid)" opacity="0.5"/>
+  <!-- Right chamber (PRESSURIZED) -->
+  <rect x="264" y="74" width="104" height="81" rx="3" fill="rgba(26,115,232,0.15)"/>
+  <rect x="264" y="74" width="104" height="81" rx="3" fill="url(#fluid)" opacity="0.5"/>
+  <!-- Piston -->
+  <rect x="244" y="72" width="20" height="85" fill="url(#piston-g)" stroke="#444" stroke-width="2"/>
+  <!-- Rod -->
+  <rect x="264" y="103" width="115" height="22" rx="3" fill="url(#rod-g)" stroke="#444" stroke-width="1.8"/>
+  <rect x="375" y="106" width="10" height="16" rx="2" fill="#999" stroke="#444" stroke-width="1.5"/>
+  <!-- Direction arrow (LEFT) -->
+  <g transform="translate(392,58)">
+    <polygon points="16,8 0,14 16,20" fill="#1a73e8" opacity="0.7" stroke="#1a73e8" stroke-width="0.5"/>
+  </g>
+  <text x="250" y="66" text-anchor="middle" class="lbl" font-weight="600">Cilindro de doble efecto</text>
+
+  <!-- PORT A (return) -->
+  <circle cx="195" cy="157" r="4" fill="#e8710a" stroke="#fff" stroke-width="1.5"/>
+  <text x="178" y="180" class="lbl-port" fill="#e8710a">A</text>
+  <polyline points="195,161 195,250 238,250 238,295" class="pipe-return"/>
+
+  <!-- PORT B (pressure) -->
+  <circle cx="310" cy="157" r="4" fill="#1a73e8" stroke="#fff" stroke-width="1.5"/>
+  <text x="318" y="180" class="lbl-port" fill="#1a73e8">B</text>
+  <polyline points="310,161 310,250 272,250 272,295" class="pipe-press"/>
+
+  <!-- ===== VALVE STRIP — shifted LEFT by 70px ===== -->
+  <!-- Box 1: EXTEND (parallel) — shifted to 80-150 -->
+  <rect x="80" y="295" width="70" height="70" rx="2" class="valve-box"/>
+  <line x1="98" y1="357" x2="98" y2="305" class="valve-arrow" marker-end="url(#ah-black)"/>
+  <line x1="132" y1="303" x2="132" y2="355" class="valve-arrow" marker-end="url(#ah-black)"/>
+
+  <!-- Box 2: NEUTRAL (blocked) — shifted to 150-220 -->
+  <rect x="150" y="295" width="70" height="70" rx="2" class="valve-box"/>
+  <line x1="168" y1="303" x2="168" y2="315" stroke="#444" stroke-width="1.8"/>
+  <line x1="162" y1="315" x2="174" y2="315" stroke="#444" stroke-width="2"/>
+  <line x1="202" y1="303" x2="202" y2="315" stroke="#444" stroke-width="1.8"/>
+  <line x1="196" y1="315" x2="208" y2="315" stroke="#444" stroke-width="2"/>
+  <line x1="168" y1="357" x2="168" y2="345" stroke="#444" stroke-width="1.8"/>
+  <line x1="162" y1="345" x2="174" y2="345" stroke="#444" stroke-width="2"/>
+  <line x1="202" y1="357" x2="202" y2="345" stroke="#444" stroke-width="1.8"/>
+  <line x1="196" y1="345" x2="208" y2="345" stroke="#444" stroke-width="2"/>
+
+  <!-- Box 3: RETRACT (ACTIVE, crossed) — now at center position 220-290 -->
+  <rect x="220" y="295" width="70" height="70" rx="2" class="valve-active"/>
+  <!-- Crossed arrows at pipe positions: P→B and A→T -->
+  <line x1="238" y1="355" x2="272" y2="305" class="valve-arrow" marker-end="url(#ah-black)"/>
+  <line x1="238" y1="305" x2="272" y2="355" class="valve-arrow" marker-end="url(#ah-black)"/>
+  <!-- Active indicator -->
+  <rect x="220" y="368" width="70" height="4" rx="2" fill="#1a73e8"/>
+
+  <!-- Spring LEFT — at left end of strip -->
+  <polyline points="80,315 70,318 78,324 70,330 78,336 70,342 80,345" fill="none" stroke="#777" stroke-width="1.8" stroke-linecap="round"/>
+
+  <!-- Solenoid RIGHT (ACTIVE) — at right end of strip -->
+  <rect x="290" y="308" width="25" height="44" rx="2" fill="rgba(26,115,232,0.15)" stroke="#1a73e8" stroke-width="1.8"/>
+  <line x1="302" y1="344" x2="302" y2="316" stroke="#1a73e8" stroke-width="1.5"/>
+  <polygon points="296,316 308,316 302,324" fill="#1a73e8"/>
+  <text x="302" y="300" text-anchor="middle" class="lbl-sm" fill="#1a73e8">Sol.b</text>
+
+  <!-- Valve label + port labels -->
+  <text x="185" y="392" text-anchor="middle" class="lbl" font-weight="600">Válvula direccional 4/3</text>
+  <text x="238" y="290" text-anchor="middle" class="lbl-port">A</text>
+  <text x="272" y="290" text-anchor="middle" class="lbl-port">B</text>
+  <text x="225" y="385" text-anchor="end" class="lbl-port">P</text>
+  <text x="285" y="385" text-anchor="start" class="lbl-port">T</text>
+
+  <!-- PIPE P: valve → pump (pressure) -->
+  <polyline points="238,365 238,430 155,430 155,475" class="pipe-press"/>
+  <!-- PIPE T: valve → tank (return) -->
+  <polyline points="272,365 272,430 350,430 350,480" class="pipe-return"/>
+
+  <!-- PUMP -->
+  <circle cx="155" cy="500" r="26" fill="#fff" stroke="#555" stroke-width="2.5"/>
+  <polygon points="143,512 167,512 155,488" fill="none" stroke="#555" stroke-width="2"/>
+  <text x="155" y="504" text-anchor="middle" class="lbl-sm" font-weight="700">M</text>
+  <text x="155" y="545" text-anchor="middle" class="lbl" font-weight="600">Bomba</text>
+
+  <!-- TANK -->
+  <rect x="322" y="480" width="56" height="55" rx="2" fill="rgba(26,115,232,0.08)" stroke="#555" stroke-width="2"/>
+  <path d="M324 510 Q332 505 340 510 T356 510 L376 510" fill="none" stroke="#1a73e8" stroke-width="1.5" opacity="0.6"/>
+  <rect x="324" y="510" width="52" height="23" rx="1" fill="rgba(26,115,232,0.15)"/>
+  <line x1="318" y1="480" x2="382" y2="480" stroke="#555" stroke-width="3"/>
+  <text x="350" y="552" text-anchor="middle" class="lbl" font-weight="600">Tanque</text>
+
+  <!-- SUCTION LINE -->
+  <polyline points="155,526 155,575 350,575 350,535" class="pipe" stroke-dasharray="6,3"/>
+  <text x="250" y="590" text-anchor="middle" class="lbl-sm">Succión</text>
+
+  <!-- LEGEND -->
+  <rect x="15" y="615" width="470" height="35" rx="6" fill="#f5f5f5" stroke="#ddd" stroke-width="1"/>
+  <line x1="40" y1="632" x2="75" y2="632" stroke="#1a73e8" stroke-width="2.8"/>
+  <text x="82" y="637" class="lbl-sm">Presión (Bomba → P → B → Cilindro)</text>
+  <line x1="290" y1="632" x2="325" y2="632" stroke="#e8710a" stroke-width="2.8"/>
+  <text x="332" y="637" class="lbl-sm">Retorno (A → T → Tanque)</text>
+</svg>

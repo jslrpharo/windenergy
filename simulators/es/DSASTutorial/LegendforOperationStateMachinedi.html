@@ -1,0 +1,691 @@
+﻿
+
+
+<!-- saved from url=(0016)about:internet -->
+
+<!-- saved from url=(0016)about:internet -->
+
+<!-- saved from url=(0016)about:internet -->
+
+<!-- saved from url=(0016)about:internet -->
+<html>
+	
+<head>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+	<title>Leyenda del Diagrama de la M.E. Operacion</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="HelpNDoc Professional Edition 10.7.0.400">
+	<meta name="description" content="" /> 
+	<meta name="keywords" content="">
+	
+	
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "Introduccion.html?" + sTopicUrl;
+			}
+			else
+			{
+				(function notifyTOC(nTry)
+				{
+					nTry = nTry || 0;
+					try
+					{
+						if (top && top.frames && top.frames['FrameTOC'])
+						{
+							top.frames['FrameTOC'].postMessage({ type: 'HND_SELECT', id: "LegendforOperationStateMachinedi" }, '*');
+						}
+					}
+					catch (e) {}
+					if (nTry < 10) setTimeout(function() { notifyTOC(nTry + 1); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	
+<style>*{-webkit-user-select:none!important;-moz-user-select:none!important;user-select:none!important;-webkit-touch-callout:none!important;}img{pointer-events:none!important;}</style><style>@media print{html,body{display:none!important;}}</style></head>
+
+<body>
+
+
+
+	
+		<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Leyenda del Diagrama de la M.E. Operacion</h1>
+				
+				
+				<div id="topic_breadcrumb">
+					<a href="../DSASTutorial/SimDSAS.html">Simulador de Aerogenerador con Active Stall y Dos Velocidades</a> ›› <a href="../DSASTutorial/Simulacion.html">Alcance de la Simulación</a> ›› <a href="../DSASTutorial/Controller.html">Controlador</a> ›› <a href="../DSASTutorial/ControllersFunctionalstructure.html">Estructura funcional del Controlador</a> ›› <a href="../DSASTutorial/StateEventsDiagramsoftheimplemen.html">Máquinas de Estado de control internas</a> ›› <a href="../DSASTutorial/OperationStateMachine.html">Maquina de Estado de Operacion</a> ›› 
+				</div>
+				
+			</div>
+			
+			<div id="topic_header_nav">
+				
+				
+				<a href="../DSASTutorial/OperationStateMachine.html"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAARpJREFUeNqkkt1Og0AQhQ+mt6YmBn8o4Lb4d+GlD+or+BS+hJcajRdKEVFDCV3BVCFhZDdK2tLdhniSyW5mZ77MnoxxcXkFjej3NFQFG7pmj9kQMQdqqadqHtWNJ6fHzRiPfkirJlkFoKFr4ehwBJ5/y4S4U1XhKYhakGUAMWcfnscwzb+a5DQvZY6I4D+/LkDmAXRg72HIHKQfs9ZYaVnKNwEZh28N5A9A7mAXrmMh4Z9KVxNeyBoBCV7eJUQAyLZMDKwdTNIM6zQpCllbUYUwiklOUF9k9PubMM1tLSCOE9zdZwsmNoZwntFWDdGproHKRKlxEKGLlgEGOqqn2P11Un/h/IxpO69vfP0q3z74//oCZkU3D34EGABoQG6/jBs+/AAAAABJRU5ErkJggg==" alt="Parent"/></a>
+				
+				
+				
+				<a href="../DSASTutorial/OperationStateMachine.html"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAARhJREFUeNqck19OwzAMxr/AQAMmVZrEv64t3QqDS/DME3fjCpyCG/FAN4Vt7dIloSGN1qqZ1HWrpSiO5e8X25LJx+cX9pja3qQp4WSfOAo9tFkTQE20+Pll2gmgxoGLp8cJFskGhb9tRdXaqs4uQIX+PaIoxG+SQUph/Pe3VyupeJexXl384N1hHPqgS1YFqRCgO798z5LKLwEqGN0i8F3MF2lr30JwC6A89xoj9wYzusIhJrgNABcS8YFiA9CzqQPIT0wVYxzDodOtggKySlKV539wnMHRMyiNpOtMQ3IMrvpHV1BBWMYN5PLizATWTGDDpZUUz5eNAAPRAgPpn5+W4voyWYvVa6iSCJkrTem8TAYi2/X4F2AASu5+SCpdydAAAAAASUVORK5CYII=" alt="Previous"/></a>
+				
+				
+				
+				<a href="../DSASTutorial/SecurityStateMachine.html"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAStJREFUeNqUk1tSgzAUhn86WEcX4APaDi3eNuGzT+7NLbgGHxyf3YiXWnXoRWwoaQ6SktALmhTafwZC/uR8c3LIcW7vHlAhuRidTRsaqFHgn5RBuwMuLs/RrYA0FgvlZ7lZdtoeIjbD2WkX6tsGcdXr5vpKT+4fn1YLykvELyYJ4ZsRgsCHlBLPbx+yXBMN6A+Ykdp/b0yEjt/SkJfe5wqiAUTCANi8YSTQbnka8vr+pSEFQFgAFk9pkPvH3hEymaHXD2UBSMkEWLylwjFBULquwS4ZKI1GESYsxvoIW9ZAKYoY4inH3yJumQGLORIuYPzGcPhjnjP39psuDg/29Hya34eZSI2+cDc0ivbyANl0HfD8QlGaWZvKreuFhBOKWHtH1jZTVbDSXIABACa5nociETrsAAAAAElFTkSuQmCC" alt="Next"/></a>
+				
+				
+			</div>
+			
+			<div class="clear"></div>
+		</div>
+	
+	
+	<div id="topic_content">
+		
+<p class="rvps4"><span class="rvts11">LISTA DE NOMBRES UTILIZADOS EN LA MAQUINA DE ESTADOS DE OPERACIÓN.</span></p>
+<p class="rvps4"><span class="rvts11">ESTADOS:</span></p>
+<div class="rvps4">
+<table width="100%" style="border-color: #000000; border-style: solid; border-width: 1px; border-spacing: 2px;">
+ <tr style="vertical-align: top;">
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 19%;">
+   <p class="rvps4"><span class="rvts16">Nombre</span></p>
+  </td>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 64%;">
+   <p class="rvps4"><span class="rvts16">Descripción</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 15%;">
+   <p class="rvps4"><span class="rvts16">ID</span></p>
+  </td>
+ </tr>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+   <p class="rvps4"><span class="rvts11">SSTOPSM</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 14%;">
+   <p class="rvps4"><span class="rvts11">SSTOPSM</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 64%;">
+   <p class="rvps4"><span class="rvts11">Entry State. Also resting state after StopSequence received</span></p>
+  </td>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  </td>
+ </tr>
+ <tr style="vertical-align: top;">
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 19%; height: 37px;">
+   <p class="rvps4"><span class="rvts11">St</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 14%; height: 37px;">
+   <p class="rvps4"><span class="rvts11">St</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+   <p class="rvps4"><span class="rvts11">Testing wind speed</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 15%; height: 37px;">
+   <p class="rvps4"><span class="rvts11">1</span></p>
+  </td>
+ </tr>
+ <tr style="vertical-align: top;">
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 19%;">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 14%;">
+   <p class="rvps4"><span class="rvts11">sB</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 64%;">
+   <p class="rvps4"><span class="rvts11">Decision point for connection on 6 (Small) or 4 (Large) poles</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 15%;">
+   <p class="rvps4"><span class="rvts11">2</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+ <tr style="vertical-align: top;">
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 19%;">
+   <p class="rvps4"><span class="rvts11">SPrepare4CutinLarge</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 14%;">
+   <p class="rvps4"><span class="rvts11">SPreCutinL</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 64%;">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 15%;">
+   <p class="rvps4"><span class="rvts11">3</span></p>
+  </td>
+ </tr>
+ <tr style="vertical-align: top;">
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 19%;">
+   <p class="rvps4"><span class="rvts11">SPrepare4CutinSmall</span></p>
+  </td>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 64%;">
+   <p class="rvps4"><span class="rvts11"><br/></span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 15%;">
+   <p class="rvps4"><span class="rvts11">4</span></p>
+  </td>
+ </tr>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+   <p class="rvps4"><span class="rvts11">SW4BrakeReleased</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 14%;">
+   <p class="rvps4"><span class="rvts11">SW4BrRelea</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 64%;">
+   <p class="rvps4"><span class="rvts11">Waiting for brakes released</span></p>
+  </td>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  </td>
+ </tr>
+ <tr style="vertical-align: top;">
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 19%;">
+   <p class="rvps4"><span class="rvts11">SG2Cutin</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 14%;">
+   <p class="rvps4"><span class="rvts11">SG2Cutin</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+   <p class="rvps4"><span class="rvts11">Going to Cutin</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 15%;">
+   <p class="rvps4"><span class="rvts11">6</span></p>
+  </td>
+ </tr>
+ <tr style="vertical-align: top;">
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 19%;">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 14%;">
+   <p class="rvps4"><span class="rvts11">SThyrON</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 64%;">
+   <p class="rvps4"><span class="rvts11">Thyristors fired</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 15%;">
+   <p class="rvps4"><span class="rvts11">7</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+ <tr style="vertical-align: top;">
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 19%;">
+   <p class="rvps4"><span class="rvts11">SGG</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 14%;">
+   <p class="rvps4"><span class="rvts11">SGG</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 64%;">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 15%;">
+   <p class="rvps4"><span class="rvts11">8</span></p>
+  </td>
+ </tr>
+ <tr style="vertical-align: top;">
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 19%;">
+   <p class="rvps4"><span class="rvts11">Sg</span></p>
+  </td>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 64%;">
+   <p class="rvps4"><span class="rvts11">Stable production at Small connection</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 15%;">
+   <p class="rvps4"><span class="rvts11">9</span></p>
+  </td>
+ </tr>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+   <p class="rvps4"><span class="rvts11">SGSmall2Large</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 14%;">
+   <p class="rvps4"><span class="rvts11">SGS2L</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 64%;">
+   <p class="rvps4"><span class="rvts11">Changing from Large to Small connection</span></p>
+  </td>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  </td>
+ </tr>
+ <tr style="vertical-align: top;">
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 19%;">
+   <p class="rvps4"><span class="rvts11">SGLarge2Small</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 14%;">
+   <p class="rvps4"><span class="rvts11">SGL2S</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+   <p class="rvps4"><span class="rvts11">Changing form Small to Large connection</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 15%;">
+   <p class="rvps4"><span class="rvts11">10</span></p>
+  </td>
+ </tr>
+ <tr style="vertical-align: top;">
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 19%;">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 14%;">
+   <p class="rvps4"><span class="rvts11">SGoingSt</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 64%;">
+   <p class="rvps4"><span class="rvts11">Going to testing for wind speed</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 15%;">
+   <p class="rvps4"><span class="rvts11">17</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+ <tr style="vertical-align: top;">
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 19%;">
+   <p class="rvps4"><span class="rvts11">SUntwistingCables</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 14%;">
+   <p class="rvps4"><span class="rvts11">SUntwiCabl</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 64%;">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 15%;">
+   <p class="rvps4"><span class="rvts11">15</span></p>
+  </td>
+ </tr>
+ <tr style="vertical-align: top;">
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 19%;">
+   <p class="rvps4"><span class="rvts11">SW4Idle</span></p>
+  </td>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 64%;">
+   <p class="rvps4"><span class="rvts11">Intermediate state going to stop</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 15%;">
+   <p class="rvps4"><span class="rvts11">18</span></p>
+  </td>
+ </tr>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+   <p class="rvps4"><span class="rvts11">SG2Down980</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 14%;">
+   <p class="rvps4"><span class="rvts11">SG2D980</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 64%;">
+   <p class="rvps4"><span class="rvts11">Intermediate state going from Large to Small connection</span></p>
+  </td>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  </td>
+ </tr>
+ <tr style="vertical-align: top;">
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 19%;">
+   <p class="rvps4"><span class="rvts11">STestTwistedCables</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 14%;">
+   <p class="rvps4"><span class="rvts11">STTwisCabl</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+   <p class="rvps4"><span class="rvts11">Test if cables must be untwisted before cutin</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 15%;">
+   <p class="rvps4"><span class="rvts11">14</span></p>
+  </td>
+ </tr>
+</table>
+</div>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<table width="100%" style="border-color: #000000; border-style: solid; border-width: 1px; border-spacing: 2px;">
+ <tr style="vertical-align: top;">
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 21%;">
+   <p class="rvps4"><span class="rvts16">Nombre</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 14%;">
+   <p class="rvps4"><span class="rvts16">Nombre corto</span></p>
+  </td>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 9%;">
+   <p class="rvps4"><span class="rvts16">ID</span></p>
+  </td>
+ </tr>
+ <tr style="vertical-align: top;">
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 21%;">
+   <p class="rvps4"><span class="rvts11">ENoErrors</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+   <p class="rvps4"><span class="rvts11">ENEr</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 38%;">
+   <p class="rvps4"><span class="rvts11">The SequenceSTOP State Machine reported no errors</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 9%;">
+   <p class="rvps4"><span class="rvts11">2</span></p>
+  </td>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 21%;">
+   <p class="rvps4"><span class="rvts11">EUntwistCables</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 14%;">
+   <p class="rvps4"><span class="rvts11">EUnTwist</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 38%;">
+   <p class="rvps4"><span class="rvts11">The power cables must be untwisted</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+   <p class="rvps4"><span class="rvts11">19</span></p>
+  </td>
+ </tr>
+ <tr style="vertical-align: top;">
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 21%;">
+   <p class="rvps4"><span class="rvts11">ESTOPSeq</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 14%;">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 38%;">
+   <p class="rvps4"><span class="rvts11">A SequenceSTOP started</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 9%;">
+   <p class="rvps4"><span class="rvts11">1</span></p>
+  </td>
+ </tr>
+ <tr style="vertical-align: top;">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 14%;">
+   <p class="rvps4"><span class="rvts11">EInsufWind</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 38%;">
+   <p class="rvps4"><span class="rvts11">Wind is not enough for Cutin</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 9%;">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+ </tr>
+ <tr style="vertical-align: top;">
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 21%;">
+   <p class="rvps4"><span class="rvts11">EStart</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 14%;">
+   <p class="rvps4"><span class="rvts11">EStart</span></p>
+  </td>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 9%;">
+   <p class="rvps4"><span class="rvts11">5</span></p>
+  </td>
+ </tr>
+ <tr style="vertical-align: top;">
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 21%;">
+   <p class="rvps4"><span class="rvts11">EEnoughWind</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+   <p class="rvps4"><span class="rvts11">EEnoughWind</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 38%;">
+   <p class="rvps4"><span class="rvts11">There is enough wind to start cutin</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 9%;">
+   <p class="rvps4"><span class="rvts11">9</span></p>
+  </td>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 21%;">
+   <p class="rvps4"><span class="rvts11">EEnoughWind4Large</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 14%;">
+   <p class="rvps4"><span class="rvts11">EEnough4L</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 38%;">
+   <p class="rvps4"><span class="rvts11">The wind is enough for 4 poles connection (Large)</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+   <p class="rvps4"><span class="rvts11">11</span></p>
+  </td>
+ </tr>
+ <tr style="vertical-align: top;">
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 21%;">
+   <p class="rvps4"><span class="rvts11">EWOnlyForSmall</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 14%;">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 38%;">
+   <p class="rvps4"><span class="rvts11">The wind is enough only for 6 poles connection (Small)</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 9%;">
+   <p class="rvps4"><span class="rvts11">12</span></p>
+  </td>
+ </tr>
+ <tr style="vertical-align: top;">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 14%;">
+   <p class="rvps4"><span class="rvts11">EWOM4Cutin</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 38%;">
+   <p class="rvps4"><span class="rvts11">The wind is too high for trying a cutin</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 9%;">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+ </tr>
+ <tr style="vertical-align: top;">
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 21%;">
+   <p class="rvps4"><span class="rvts11">EToutBrakeReleased</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 14%;">
+   <p class="rvps4"><span class="rvts11">WTOBRel</span></p>
+  </td>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 9%;">
+   <p class="rvps4"><span class="rvts11">7</span></p>
+  </td>
+ </tr>
+ <tr style="vertical-align: top;">
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 21%;">
+   <p class="rvps4"><span class="rvts11">ECrossedCutinRPMs</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+   <p class="rvps4"><span class="rvts11">ECrosCutin</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 38%;">
+   <p class="rvps4"><span class="rvts11">The RPMs crossed the limit for cutin (1000 for Small and 1500 for Large)</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 9%;">
+   <p class="rvps4"><span class="rvts11">8</span></p>
+  </td>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 21%;">
+   <p class="rvps4"><span class="rvts11">EBypassOnLarge</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 14%;">
+   <p class="rvps4"><span class="rvts11">EBypassL</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 38%;">
+   <p class="rvps4"><span class="rvts11">Bypass on with generator in Large connection</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+   <p class="rvps4"><span class="rvts11">3</span></p>
+  </td>
+ </tr>
+ <tr style="vertical-align: top;">
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 21%;">
+   <p class="rvps4"><span class="rvts11">EBypassOnSmall</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 14%;">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 38%;">
+   <p class="rvps4"><span class="rvts11">Bypass on with generator in Small connection</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 9%;">
+   <p class="rvps4"><span class="rvts11">4</span></p>
+  </td>
+ </tr>
+ <tr style="vertical-align: top;">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 14%;">
+   <p class="rvps4"><span class="rvts11">EWCrossL2S</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 38%;">
+   <p class="rvps4"><span class="rvts11">The wind speed (decreasing) crossed the limit for changing from Large to Small connection</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 9%;">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+ </tr>
+ <tr style="vertical-align: top;">
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 21%;">
+   <p class="rvps4"><span class="rvts11">ERCrossedBelowSynch</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 14%;">
+   <p class="rvps4"><span class="rvts11">ERCrossBSyn</span></p>
+  </td>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 9%;">
+   <p class="rvps4"><span class="rvts11">14</span></p>
+  </td>
+ </tr>
+ <tr style="vertical-align: top;">
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 21%;">
+   <p class="rvps4"><span class="rvts11">ERCrossedBelow1500</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+   <p class="rvps4"><span class="rvts11">ERCrossB1500</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 38%;">
+   <p class="rvps4"><span class="rvts11">The RPMs crossed below Large connection synchronous speed</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 9%;">
+   <p class="rvps4"><span class="rvts11">16</span></p>
+  </td>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 21%;">
+   <p class="rvps4"><span class="rvts11">ECablesUntwisted</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 14%;">
+   <p class="rvps4"><span class="rvts11">ECableUntd</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 38%;">
+   <p class="rvps4"><span class="rvts11">Cables now untwisted</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+   <p class="rvps4"><span class="rvts11">18</span></p>
+  </td>
+ </tr>
+ <tr style="vertical-align: top;">
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 21%;">
+   <p class="rvps4"><span class="rvts11">ERBelowIdle</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 14%;">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 38%;">
+   <p class="rvps4"><span class="rvts11">The RPMs crossed (decreasing) the value for entering Idle state</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 9%;">
+   <p class="rvps4"><span class="rvts11">17</span></p>
+  </td>
+ </tr>
+ <tr style="vertical-align: top;">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 14%;">
+   <p class="rvps4"><span class="rvts11">ERpmB980</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 38%;">
+   <p class="rvps4"><span class="rvts11">The RPMs crossed (decreasing) the value for changing to Small</span></p>
+  </td>
+  <td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; width: 9%;">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+ </tr>
+</table>
+</div>
+<p class="rvps2"><span class="rvts6">  </span><span class="rvts6">        </span><span class="rvts6">        </span></p>
+<p class="rvps2"><span class="rvts6">     </span></p>
+<p class="rvps2"><span class="rvts6">    </span></p>
+<p class="rvps2"><span class="rvts6">   </span></p>
+<p class="rvps2"><span class="rvts6">  </span><span class="rvts6">        </span><span class="rvts6">        </span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p class="rvps2"><span class="rvts6">    </span></p>
+<p class="rvps2"><span class="rvts6">   </span></p>
+<p class="rvps2"><span class="rvts6">   </span></p>
+<p class="rvps2"><span class="rvts6">   </span></p>
+<p class="rvps2"><span class="rvts6">   </span></p>
+<p class="rvps2"><span class="rvts6">   </span></p>
+<p class="rvps2"><span class="rvts6">   </span></p>
+<p class="rvps2"><span class="rvts6">   </span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p class="rvps2"><span class="rvts6">   </span></p>
+<p class="rvps2"><span class="rvts6">   </span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6"> Actions</span></p>
+<p class="rvps2"><span class="rvts6"></span><span class="rvts6">        </span><span class="rvts6">        </span></p>
+
+	</div>
+	
+	
+		<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright © &lt;2026&gt;, &lt;Automated Computing Machinery SL&gt; ACM SL
+			</div>
+		</div>
+	
+	
+
+	
+<script>(function(){['copy','cut','contextmenu','dragstart'].forEach(function(ev){document.addEventListener(ev,function(e){e.preventDefault();},true);});document.onselectstart=function(){return false;};document.ondragstart=function(){return false;};document.addEventListener('keydown',function(e){var k=e.key;if(k==='F12'||k==='PrintScreen'){e.preventDefault();return;}if((e.ctrlKey||e.metaKey)&&e.shiftKey&&(k==='I'||k==='i'||k==='J'||k==='j'||k==='C')){e.preventDefault();return;}if((e.ctrlKey||e.metaKey)&&(k==='u'||k==='U'||k==='s'||k==='S'||k==='a'||k==='A'||k==='p'||k==='P'||k==='c'||k==='C'||k==='v'||k==='V')){e.preventDefault();}},true);})();</script><script>(function(){window.addEventListener("beforeprint",function(){document.documentElement.style.display="none";});window.addEventListener("afterprint",function(){document.documentElement.style.display="";});document.addEventListener("keydown",function(e){var k=(e.key||"").toLowerCase();if(k==="printscreen"||e.keyCode===44||e.which===44){document.documentElement.style.display="none";setTimeout(function(){document.documentElement.style.display="";},300);}},true);})();</script></body>
+	
+</html>
+
+
+
+

@@ -1,0 +1,416 @@
+﻿<!DOCTYPE html>
+
+<!-- saved from url=(0016)about:internet -->
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparación de curvas Potencia vs Viento en familias de aerogeneradores</title>
+    <link rel="icon" type="image/png" href="favicon.ico">
+    <meta name="description" content="Experimento comparativo de las curvas de potencia en función de la velocidad del viento">
+    <meta name="keywords" content="curva potencia, velocidad viento, aerogeneradores, DSAS, RRC, DFIG, rendimiento">
+    
+    <link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+    <link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+    <link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+    
+    <style type="text/css">
+        #topic_header {
+            background-color: #EFEFEF;
+        }
+        
+        body {
+            font-size: 15px;
+            line-height: 1.6;
+        }
+        
+        #topic_content {
+            /* Unificado en base.css */
+        }
+        
+        h1 {
+            font-size: 28px;
+            line-height: 1.3;
+        }
+        
+        h2 {
+            font-size: 23px;
+            line-height: 1.4;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        
+        h3 {
+            font-size: 20px;
+            line-height: 1.4;
+        }
+        
+        p, li {
+            font-size: 16px;
+            margin-bottom: 12px;
+        }
+        
+        .learning-objective {
+            background-color: #fff9e6;
+            border-left: 4px solid #ffcc00;
+            padding: 18px;
+            margin: 18px 0;
+            font-size: 16px;
+        }
+        
+        .didactic-box {
+            background-color: #f0f8ff;
+            border-left: 4px solid #0066cc;
+            padding: 18px;
+            margin: 18px 0;
+            font-size: 16px;
+        }
+        
+        .procedure-box {
+            background-color: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 18px;
+            margin: 18px 0;
+            font-size: 16px;
+        }
+        
+        .important-note {
+            background-color: #ffe6e6;
+            border-left: 4px solid #cc0000;
+            padding: 18px;
+            margin: 18px 0;
+            font-size: 16px;
+        }
+        
+        .key-concept {
+            font-weight: bold;
+            color: #0066cc;
+        }
+        
+        .data-table {
+            background-color: #f5f5f5;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        .formula-box {
+            background-color: #f9f9f9;
+            border: 2px solid #666;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+            margin: 15px 0;
+        }
+    </style>
+    
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/hnd.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            if (top.frames.length == 0) {
+                var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+                top.location.href = "Experiments.html?" + sTopicUrl;
+            } else {
+                (function notifyTOC(nTry)
+                {
+                    nTry = nTry || 0;
+                    try
+                    {
+                        if (top && top.frames && top.frames['FrameTOC'])
+                        {
+                            top.frames['FrameTOC'].postMessage({ type: 'HND_SELECT', id: "ComparisonofPowervsWindcurvesofW" }, '*');
+                        }
+                    }
+                    catch (e) {}
+                    if (nTry < 10) setTimeout(function() { notifyTOC(nTry + 1); }, 300);
+                })();
+            }
+        });
+    </script>
+<style>*{-webkit-user-select:none!important;-moz-user-select:none!important;user-select:none!important;-webkit-touch-callout:none!important;}img{pointer-events:none!important;}</style><style>@media print{html,body{display:none!important;}}</style></head>
+
+<body>
+    <div id="topic_header">
+        <div id="topic_header_content">
+            <h1 id="topic_header_text">Comparación de curvas Potencia vs Velocidad del Viento</h1>
+        </div>
+        
+        <div id="topic_header_nav">
+            <a href="../Experiments/ComparisonofcutinindifferentWind.html"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAARhJREFUeNqck19OwzAMxr/AQAMmVZrEv64t3QqDS/DME3fjCpyCG/FAN4Vt7dIloSGN1qqZ1HWrpSiO5e8X25LJx+cX9pja3qQp4WSfOAo9tFkTQE20+Pll2gmgxoGLp8cJFskGhb9tRdXaqs4uQIX+PaIoxG+SQUph/Pe3VyupeJexXl384N1hHPqgS1YFqRCgO798z5LKLwEqGN0i8F3MF2lr30JwC6A89xoj9wYzusIhJrgNABcS8YFiA9CzqQPIT0wVYxzDodOtggKySlKV539wnMHRMyiNpOtMQ3IMrvpHV1BBWMYN5PLizATWTGDDpZUUz5eNAAPRAgPpn5+W4voyWYvVa6iSCJkrTem8TAYi2/X4F2AASu5+SCpdydAAAAAASUVORK5CYII=" alt="Anterior"/></a>
+            <a href="../Experiments/ObservationoftheNacelleYawoperat.html"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAStJREFUeNqUk1tSgzAUhn86WEcX4APaDi3eNuGzT+7NLbgGHxyf3YiXWnXoRWwoaQ6SktALmhTafwZC/uR8c3LIcW7vHlAhuRidTRsaqFHgn5RBuwMuLs/RrYA0FgvlZ7lZdtoeIjbD2WkX6tsGcdXr5vpKT+4fn1YLykvELyYJ4ZsRgsCHlBLPbx+yXBMN6A+Ykdp/b0yEjt/SkJfe5wqiAUTCANi8YSTQbnka8vr+pSEFQFgAFk9pkPvH3hEymaHXD2UBSMkEWLylwjFBULquwS4ZKI1GESYsxvoIW9ZAKYoY4inH3yJumQGLORIuYPzGcPhjnjP39psuDg/29Hya34eZSI2+cDc0ivbyANl0HfD8QlGaWZvKreuFhBOKWHtH1jZTVbDSXIABACa5nociETrsAAAAAElFTkSuQmCC" alt="Siguiente"/></a>
+        </div>
+        
+        <div class="clear"></div>
+    </div>
+    
+    <div id="topic_content">
+        <div class="learning-objective">
+            <h3>🎯 Objetivos de aprendizaje</h3>
+            <p>Al completar este experimento serás capaz de:</p>
+            <ul>
+                <li>Comprender la curva de potencia característica de un aerogenerador</li>
+                <li>Identificar las diferencias en la eficiencia de conversión energética entre tecnologías</li>
+                <li>Analizar el comportamiento en la zona de velocidades por debajo de la velocidad nominal</li>
+                <li>Crear representaciones gráficas normalizadas para comparar diferentes aerogeneradores</li>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+        </div>
+
+        <h2>Introducción: La curva de potencia</h2>
+        
+        <div class="didactic-box">
+            <h3>📖 Concepto fundamental: Curva Potencia vs Viento</h3>
+            <p>La <span class="key-concept">curva de potencia</span> es una representación gráfica que muestra la relación entre la velocidad del viento y la potencia eléctrica generada por un aerogenerador.</p>
+            <p>Esta curva es la "huella dactilar" de cada aerogenerador y es fundamental para:</p>
+            <ul>
+                <li>Estimar la producción energética anual</li>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+                <li>Evaluar el retorno de inversión del proyecto</li>
+            </ul>
+        </div>
+
+        <h2>Características de las curvas Potencia vs Viento</h2>
+        
+        <!--p>Las curvas <span class="key-concept">ideales</span> de Potencia vs Velocidad del Viento para las diferentes familias de aerogeneradores están descritas en detalle en el tutorial <a href="shellcommand%20'C:%5CACMSL%5CWindFarmSimulator%5CViewerTutorialsWFS.exe'%20-n%20%20'C:%5CACMSL%5CWindFarmSimulator%5CHelp%5CEnglish%5CDFIGWTSimulator%5CDFIGWTBehaviorDriveTrain.htmle'">aquí</a>.</p-->
+            <p>Cerciorese de leer los conceptos implicados en las curvas de <span class="key-concept">Potencia vs Velocidad del Viento </span> descritas en detalle en el tutorial <a href="acmsl://viewertutorial%20-n%20-rDFIGTutorial\Implicacionesdelcomportamientode.html">aquí</a>.</p>
+
+        <div class="important-note">
+            <h3>⚡ Diferencia clave entre tecnologías</h3>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+        </div>
+
+        <h2>Zonas características de la curva de potencia</h2>
+        
+        <div class="didactic-box">
+            <h3>📊 Regiones de la curva de potencia</h3>
+            <p>Una curva de potencia típica presenta cuatro zonas características:</p>
+            <ol>
+                <li><strong>Zona I - Por debajo del cut-in:</strong> Velocidad insuficiente, aerogenerador parado (Potencia = 0)</li>
+                <li><strong>Zona II - Entre cut-in y velocidad nominal:</strong> Potencia creciente, zona de máximo aprovechamiento energético</li>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+            </ol>
+        </div>
+
+        <h2>Objetivo del experimento</h2>
+        
+        <div class="learning-objective">
+            <h3>🔬 Meta experimental</h3>
+            <p>El objetivo de este experimento es <strong>crear gráficos comparativos</strong> de las curvas Potencia vs Velocidad del Viento para las tres familias principales de aerogeneradores:</p>
+            <ul>
+                <li>DSAS (Direct Stall Active Stall)</li>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+            </ul>
+            <p>El análisis se centrará especialmente en la <strong>Zona II</strong>, donde se observan las mayores diferencias de rendimiento.</p>
+        </div>
+
+        <h2>Metodología del experimento</h2>
+
+        <div class="procedure-box">
+            <h3>📋 Preparación de datos</h3>
+            
+            <h4>Paso 1: Utilizar los simuladores del experimento anterior</h4>
+            <p>Aprovecha los simuladores que ya configuraste en el experimento <a href="../Experiments/ComparisonofcutinindifferentWind.html">"Comparación de cut-in en diferentes familias de aerogeneradores"</a>.</p>
+            
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+            <div class="data-table">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <tr style="background-color: #ddd;">
+                        <th style="padding: 8px; border: 1px solid #999;">Velocidad del Viento (m/s)</th>
+                        <th style="padding: 8px; border: 1px solid #999;">Potencia DSAS (kW)</th>
+                        <th style="padding: 8px; border: 1px solid #999;">Potencia RRC (kW)</th>
+                        <th style="padding: 8px; border: 1px solid #999;">Potencia DFIG (kW)</th>
+                    </tr>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+                        <td style="padding: 8px; border: 1px solid #999;">...</td>
+                        <td style="padding: 8px; border: 1px solid #999;">...</td>
+                        <td style="padding: 8px; border: 1px solid #999;">...</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px; border: 1px solid #999;">5</td>
+                        <td style="padding: 8px; border: 1px solid #999;">...</td>
+                        <td style="padding: 8px; border: 1px solid #999;">...</td>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+                    <tr>
+                        <td style="padding: 8px; border: 1px solid #999;">...</td>
+                        <td style="padding: 8px; border: 1px solid #999;">...</td>
+                        <td style="padding: 8px; border: 1px solid #999;">...</td>
+                        <td style="padding: 8px; border: 1px solid #999;">...</td>
+                    </tr>
+                </table>
+            </div>
+            
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+            <ol>
+                <li>Configura la velocidad del viento (comienza desde el cut-in hasta velocidades superiores a la nominal)</li>
+                <li>Espera a que el aerogenerador alcance operación estable</li>
+                <li>Registra la potencia generada en estado estacionario</li>
+                <li>Incrementa la velocidad del viento en pasos regulares (recomendado: 0.5 o 1 m/s)</li>
+            </ol>
+        </div>
+
+        <h2>Normalización de datos: Valores por unidad (p.u.)</h2>
+        
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+            <p>Los tres aerogeneradores tienen <strong>diferentes valores de Potencia Nominal</strong>, lo que dificulta la comparación directa. Por ello, es necesario <span class="key-concept">normalizar los datos</span> usando valores "por unidad" (p.u.).</p>
+        </div>
+
+        <div class="didactic-box">
+            <h3>📐 Cálculo de valores por unidad</h3>
+            <p>Para obtener los valores "por unidad" (p.u.), divide cada valor de potencia observado por la Potencia Nominal del aerogenerador correspondiente:</p>
+            
+            <div class="formula-box">
+                <p><strong>Potencia (p.u.) = Potencia Medida (kW) / Potencia Nominal (kW)</strong></p>
+            </div>
+            
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+                <li><strong>DSAS:</strong> 1300 kW</li>
+                <li><strong>RRC:</strong> 660 kW</li>
+                <li><strong>DFIG:</strong> 1500 kW</li>
+            </ul>
+            
+            <h4>Ejemplo de cálculo:</h4>
+            <p>Si el aerogenerador DFIG genera 750 kW a cierta velocidad de viento:</p>
+            <div class="formula-box">
+                Potencia (p.u.) = 750 kW / 1500 kW = 0.5 p.u.
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+
+        <h2>Creación del gráfico comparativo</h2>
+        
+        <div class="procedure-box">
+            <h3>📊 Generación del gráfico</h3>
+            <ol>
+                <li><strong>Convierte todos los datos a valores p.u.</strong> según las fórmulas anteriores</li>
+                <li><strong>Crea un gráfico con:</strong>
+                    <ul>
+                        <li>Eje X: Velocidad del Viento (m/s)</li>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+                </li>
+                <li><strong>Representa las tres curvas</strong> en el mismo gráfico usando diferentes colores o estilos de línea</li>
+                <li><strong>Añade leyenda</strong> identificando cada curva (DSAS, RRC, DFIG)</li>
+            </ol>
+        </div>
+
+        <h2>Resultado esperado</h2>
+        
+        <p>Al completar el experimento correctamente, deberías obtener un gráfico similar al siguiente:</p>
+        
+        <div style="text-align: center; margin: 20px 0;">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+        </div>
+
+        <h2>Análisis de resultados</h2>
+        
+        <div class="learning-objective">
+            <h3>🔍 Preguntas para el análisis</h3>
+            <p>Una vez obtenidas las curvas, analiza los siguientes aspectos:</p>
+            
+            <h4>1. Comparación en la Zona II (por debajo de velocidad nominal):</h4>
+            <ul>
+                <li>¿Qué aerogenerador tiene la curva más pronunciada? ¿Qué significa esto?</li>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+            </ul>
+            
+            <h4>2. Velocidad nominal del viento:</h4>
+            <ul>
+                <li>¿A qué velocidad alcanza cada aerogenerador su potencia nominal?</li>
+                <li>¿Por qué esta velocidad puede ser diferente entre tecnologías?</li>
+                <li>¿Qué ventajas tiene alcanzar la potencia nominal con vientos más bajos?</li>
+            </ul>
+            
+            <h4>3. Forma de las curvas:</h4>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+                <li>¿Observas diferencias en la transición entre zonas?</li>
+                <li>¿Cómo afecta el sistema de control a la forma de la curva?</li>
+            </ul>
+            
+            <h4>4. Eficiencia de conversión:</h4>
+            <ul>
+                <li>¿Qué tecnología tiene mayor eficiencia en la zona de vientos bajos?</li>
+                <li>¿Qué tecnología es más eficiente en la zona de vientos medios?</li>
+                <li>¿Cómo explicarías estas diferencias desde el punto de vista técnico?</li>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+
+        <div class="didactic-box">
+            <h3>💡 Interpretación física</h3>
+            <p>Las diferencias observadas en las curvas se deben fundamentalmente a:</p>
+            <ul>
+                <li><strong>Sistema de control:</strong> Pitch variable vs pitch fijo vs control de velocidad variable</li>
+                <li><strong>Tipo de generador:</strong> Jaula de ardilla, rotor bobinado, o doblemente alimentado</li>
+                <li><strong>Rango de velocidades:</strong> Velocidad fija vs velocidad variable</li>
+                <li><strong>Estrategia de regulación:</strong> Pérdida aerodinámica vs control activo</li>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+        </div>
+
+        <h2>Aplicación práctica</h2>
+        
+        <div class="important-note">
+            <h3>🌍 Relevancia en proyectos reales</h3>
+            <p>El conocimiento de estas curvas es esencial para:</p>
+            <ul>
+                <li><strong>Selección de aerogeneradores:</strong> Elegir la tecnología más apropiada según el perfil de vientos del emplazamiento</li>
+                <li><strong>Estimación de producción:</strong> Calcular la energía anual estimada combinando la curva de potencia con la distribución estadística de vientos</li>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+            </ul>
+        </div>
+
+        <h2>Conclusiones y reflexiones</h2>
+        
+        <div class="learning-objective">
+            <h3>📝 Resumen de conceptos clave</h3>
+            <ul>
+                <li>Las curvas de potencia caracterizan el rendimiento de cada aerogenerador</li>
+                <li>La normalización (valores p.u.) permite comparar aerogeneradores de diferentes tamaños</li>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+                <li>La selección óptima depende de las características específicas del emplazamiento</li>
+            </ul>
+        </div>
+
+        <h2>Recursos complementarios</h2>
+        
+        <div class="didactic-box">
+            <h3>📚 Para profundizar</h3>
+            <p>Se recomienda consultar:</p>
+            <ul>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+                <li>Casos de estudio de selección de aerogeneradores en proyectos reales</li>
+                <li>Análisis de distribuciones de viento (Weibull) y su relación con las curvas de potencia</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div id="topic_footer">
+        <div id="topic_footer_content">
+            Copyright &copy; 2017-2025 by AUTOMATED COMPUTING MACHINERY SL. All Rights Reserved.
+        </div>
+    </div>
+<script>(function(){['copy','cut','contextmenu','dragstart'].forEach(function(ev){document.addEventListener(ev,function(e){e.preventDefault();},true);});document.onselectstart=function(){return false;};document.ondragstart=function(){return false;};document.addEventListener('keydown',function(e){var k=e.key;if(k==='F12'||k==='PrintScreen'){e.preventDefault();return;}if((e.ctrlKey||e.metaKey)&&e.shiftKey&&(k==='I'||k==='i'||k==='J'||k==='j'||k==='C')){e.preventDefault();return;}if((e.ctrlKey||e.metaKey)&&(k==='u'||k==='U'||k==='s'||k==='S'||k==='a'||k==='A'||k==='p'||k==='P'||k==='c'||k==='C'||k==='v'||k==='V')){e.preventDefault();}},true);})();</script><script>(function(){window.addEventListener("beforeprint",function(){document.documentElement.style.display="none";});window.addEventListener("afterprint",function(){document.documentElement.style.display="";});document.addEventListener("keydown",function(e){var k=(e.key||"").toLowerCase();if(k==="printscreen"||e.keyCode===44||e.which===44){document.documentElement.style.display="none";setTimeout(function(){document.documentElement.style.display="";},300);}},true);})();</script></body>
+</html>

@@ -1,0 +1,2957 @@
+﻿
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+	<title>Aerogenerador con Generador Doblemente alimentado - Table of Contents</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="HelpNDoc Professional Edition 10.3.0.232">
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/silver-theme/jquery-ui-1.8.12.custom.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/dynatree/chm/ui.dynatree.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+    <link type="text/css" rel="stylesheet" media="all" href="css/toc.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#tabs .ui-widget-header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/jquery-ui-1.8.17.custom.min.js"></script>
+    <script type="text/javascript" src="js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="js/jquery.dynatree.min.js"></script>
+	<script type="text/javascript" src="js/hndjsse.js"></script>
+	<script type="text/javascript">
+	
+		window.bSearchDataLoaded = false;
+		var sHelpIdToActivate = '';
+
+		var HND_CURRENT_TUTORIAL = "DFIGTutorial";
+		var HND_TUTORIAL_ENTRIES = {"DSASTutorial":"DSASTutorial.html","DSASExercises":"DSASExercises.html","RRCTutorial":"RotorResistorContolledWT.html","RRCExercises":"RotorResistorContolledWT.html","DFIGTutorial":"DFIGWTSimulator.html","DFIGExercises":"DFIGWTSimulator.html","WFSSCADA":"SimuladorParqueEolico.html","Experiments":"Experiments.html"};
+		function openTopic(href) {
+		    if (!href || href == "#") return;
+		    if (href.indexOf("../") !== 0) { window.open(href, "FrameMain"); return; }
+		    var sRest = href.substring(3);
+		    var nSlash = sRest.indexOf("/");
+		    if (nSlash < 0) { window.open(href, "FrameMain"); return; }
+		    var sTutorial = sRest.substring(0, nSlash);
+		    var sFile = sRest.substring(nSlash + 1);
+		    if (sTutorial === HND_CURRENT_TUTORIAL) { window.open(href, "FrameMain"); return; }
+		    var sEntry = HND_TUTORIAL_ENTRIES[sTutorial];
+		    var nQ = sFile.indexOf("?");
+		    var sPath = (nQ >= 0) ? sFile.substring(0, nQ) : sFile;
+		    var sQuery = (nQ >= 0) ? sFile.substring(nQ) : "";
+		    if (sQuery.indexOf("?search=") === 0) sQuery = "";
+		    if (!sEntry) {
+		        window.open("../" + sTutorial + "/" + sPath + sQuery, "_blank");
+		    } else if (sPath === sEntry) {
+		        window.open("../" + sTutorial + "/" + sPath + sQuery, "_blank");
+		    } else {
+		        window.open("../" + sTutorial + "/" + sEntry + "?" + sPath + sQuery, "_blank");
+		    }
+		}
+
+	
+		$(document).ready(function()
+		{
+			var sAnchorName = '';
+			try { sAnchorName = top.location.href.substring(top.location.href.lastIndexOf("#") + 1, top.location.href.length); }
+			catch(err) { sAnchorName = ''; }
+			var nSelectedTab = 0;
+			if (sAnchorName == '_index') nSelectedTab = 1
+			else if (sAnchorName == '_search') nSelectedTab = 2;			
+			$("#tabs").tabs({
+				selected: nSelectedTab,
+				select: function(event, ui) { HideKwPopup(); }
+			});
+			
+			// Toc
+			if ($("#tab-toc").length) {
+				$("#tab-toc").dynatree({
+					clickFolderMode: 1,
+					debugLevel: 0,
+					imagePath: 'css/dynatree/chm/',
+					onActivate: function(node){
+						if ($("#tab-keywords").length && $("#tab-keywords").dynatree && $("#tab-keywords").dynatree("getTree") && $("#tab-keywords").dynatree("getTree").activateKey)
+							$("#tab-keywords").dynatree("getTree").activateKey(null);
+						if(node.data.href && node.data.href != '#'){
+							openTopic(node.data.href);
+						}
+					}
+				});
+				// Expand all nodes if required
+				
+					$("#tab-toc").dynatree("getRoot").visit(function(node){
+						node.expand(true);
+					});
+					
+				// Select the active help id
+				if (sHelpIdToActivate != '') $("#tab-toc").dynatree("getTree").activateKey(sHelpIdToActivate);
+			}
+			
+			// Keywords
+			
+			if ($("#tab-keywords").length) {
+				$("#tab-keywords").dynatree({
+					clickFolderMode: 1,
+					debugLevel: 0,
+					imagePath: 'css/dynatree/chm/',
+					onClick: function(node, event){
+						HideKwPopup();
+						if (node.data && node.data.click)
+						{
+							var aRefList = null;
+							eval('aRefList=' + node.data.click);
+							if (ShowKwPopup(node.li, aRefList))
+							{
+								if ($("#tab-toc") && $("#tab-toc").dynatree && $("#tab-toc").dynatree("getTree") && $("#tab-toc").dynatree("getTree").activateKey)
+									$("#tab-toc").dynatree("getTree").activateKey(null);
+								if(node.data.href && node.data.href != '#'){
+									openTopic(node.data.href);
+								}
+							}
+						}
+					}
+				});
+				// Expand all nodes if required
+				
+					$("#tab-keywords").dynatree("getRoot").visit(function(node){
+						node.expand(true);
+					});
+				
+			}
+			
+			// Load search data
+			(function() {
+				var se = document.createElement('script'); se.type = 'text/javascript'; se.async = true;
+				se.src = '../js/hndsd.js';
+				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(se, s);
+			})();
+		});
+		
+		$('body').click(function() {
+			HideKwPopup();
+		});
+		
+		function SelectTocItem(sHelpId)
+		{
+			if ($("#tab-toc").length && $("#tab-toc").dynatree && $("#tab-toc").dynatree("getTree") && $("#tab-toc").dynatree("getTree").getNodeByKey) {
+				var aNode = $("#tab-toc").dynatree("getTree").getNodeByKey(sHelpId);
+				if (aNode) {
+					aNode.activateSilently();  
+				}
+			}
+			else {
+				sHelpIdToActivate = sHelpId;
+			}
+		}
+window.addEventListener('message', function(e) {
+	var d = e.data;
+	if (d && d.type === 'HND_SELECT' && d.id) {
+		SelectTocItem(d.id);
+	}
+});
+
+		
+		function HideKwPopup()
+		{
+			if($("#popupMenu")) $("#popupMenu").remove();
+		}
+		
+		function ShowKwPopup(oSender, aLinks)
+		{
+			HideKwPopup();
+			if (!aLinks || !aLinks.length || aLinks.length == 0) return false
+			else if (aLinks.length == 1) return true
+			else
+			{
+				var oParentDiv = document.createElement("DIV");
+				oParentDiv.id = "popupMenu";
+				var oLink = null;
+				// Close button
+				oLink = document.createElement("SPAN");
+				oLink.className = "close-button";
+				oLink.innerHTML = "X";
+				oLink.href = "#";
+				oLink.onclick = HideKwPopup;
+				oParentDiv.appendChild(oLink);
+				// Items
+				for (var nCnt=0; nCnt<aLinks.length; nCnt++)
+				{
+					oLink = document.createElement("A");
+					oLink.innerHTML = aLinks[nCnt][0];
+					oLink.href = '../' + HND_CURRENT_TUTORIAL + '/' + aLinks[nCnt][1];
+					oLink.target = "FrameMain";
+					oLink.onclick = HideKwPopup;
+					oParentDiv.appendChild(oLink);
+				}
+				document.body.appendChild(oParentDiv);
+				var pos = $(oSender).offset(); 
+				var height = $(oSender).height();
+				$(oParentDiv).css({
+					"left": (pos.left+20) + "px",
+					"top": (pos.top + height + 5) + "px"
+				});
+				$(oParentDiv).show();
+				return false;
+			}
+		}
+		
+		function PerformSearch()
+		{
+			if (!window.bSearchDataLoaded) {
+				$("#search_results").html("Search engine data hasn't been fully loaded yet or an error occurred while loading it. This usually happens when documentation is browsed locally.");
+				return;
+			}
+			sValue = $("#search_value").val();
+			$("#search_results").html('Searching...');
+			var oSearchEngine = new HndJsSe;
+			oSearchEngine.ParseInput(sValue);			
+			oSearchEngine.PerformSearch();
+			if (!oSearchEngine.aResults || !oSearchEngine.aResults.length)
+			{
+				$("#search_results").html('No results found.');
+			}
+			else
+			{
+				$("#search_results").html('<div id="search_results_content"></div>');
+				var oUl = $("#search_results_content").append("<ul id='lr'></ul>").find("ul");
+				for (var nCnt = 0; nCnt < oSearchEngine.aResults.length; nCnt++)
+				{
+					if (oSearchEngine.aResults[nCnt][0] < aTl.length)
+					{
+						oUl.append("<li><a href='" + aTl[oSearchEngine.aResults[nCnt][0]][0] + "?search=" + escape(sValue) + "' target='FrameMain'>" + unescape(aTl[oSearchEngine.aResults[nCnt][0]][1]) + "</a></li>");
+					}
+				}
+				// Tree
+				$("#search_results_content").dynatree({
+					clickFolderMode: 1,
+					debugLevel: 0,
+					imagePath: 'css/dynatree/chm/',
+					onActivate: function(node){
+						if ($("#search_results_content") && $("#search_results_content").dynatree && $("#search_results_content").dynatree("getTree") && $("#search_results_content").dynatree("getTree").activateKey)
+							$("#search_results_content").dynatree("getTree").activateKey(null);
+						if(node.data.href && node.data.href != '#'){
+							openTopic(node.data.href);
+						}
+					}
+				});
+			}
+		}
+	</script>
+</head>
+
+<body>
+
+	<div id="tabs">
+		<ul>
+			
+				<li><a href="#tab-toc">Contenido</a></li>
+			
+				<li><a href="#tab-keywords">Indice</a></li>
+			
+				<li><a href="#tab-search">B&uacute;squeda</a></li>
+			
+		</ul>
+		
+		<div id="tab-toc">
+			<ul id="toc" class="">
+
+				
+
+						<li class="folder" id="Introduccion" data="">
+							<a
+							href="../DFIGTutorial/Introduccion.html"
+							target="FrameMain">
+								Introducci&oacute;n
+							</a>
+
+				<ul>
+
+						<li class="" id="Acercadeestedocumento" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/Acercadeestedocumento.html"
+							target="FrameMain">
+								Acerca de este documento
+							</a>
+
+				</li>
+
+						<li class="" id="ConceptosbasicosdeAerogeneradore" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/ConceptosbasicosdeAerogeneradore.html"
+							target="FrameMain">
+								Conceptos basicos de Aerogeneradores
+							</a>
+
+				</li>
+
+						<li class="" id="Principalescomponentesdeunaeroge" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/Principalescomponentesdeunaeroge.html"
+							target="FrameMain">
+								Principales componentes de un aerogeneador
+							</a>
+
+				</li>
+
+						<li class="" id="Relacionentrelosaerogeneradoresy" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/Relacionentrelosaerogeneradoresy.html"
+							target="FrameMain">
+								Relaci&oacute;n entre los aerogeneradores y su lugar de emplazamiento
+							</a>
+
+				</li>
+
+						<li class="" id="PorqueAerogenVeloVariable" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/PorqueAerogenVeloVariable.html"
+							target="FrameMain">
+								Razones para el uso de Aerogeneradores de Velocidad Variable
+							</a>
+
+				</li>
+
+						<li class="folder" id="Implicacionesdelcomportamientode" data="">
+							<a
+							href="../DFIGTutorial/Implicacionesdelcomportamientode.html"
+							target="FrameMain">
+								Implicaciones del comportamiento deseado
+							</a>
+
+				<ul>
+
+						<li class="" id="ImplicacionesparaelTrendePotenci" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/ImplicacionesparaelTrendePotenci.html"
+							target="FrameMain">
+								Implicaciones para el Tren de Potencia
+							</a>
+
+				</li>
+
+						<li class="" id="ImplicacionesVeloVariableConvert" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/ImplicacionesVeloVariableConvert.html"
+							target="FrameMain">
+								Implicaciones para el Convertidor El&eacute;ctrico
+							</a>
+
+				</li>
+
+						<li class="" id="DescripcindelafuncinCpcoeficient" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/DescripcindelafuncinCpcoeficient.html"
+							target="FrameMain">
+								Descripci&oacute;n de la funci&oacute;n Cp (coeficiente aerodin&aacute;mico)
+							</a>
+
+				</li>
+
+						<li class="" id="AlgoritmodeSeguimientodelPuntode" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/AlgoritmodeSeguimientodelPuntode.html"
+							target="FrameMain">
+								Algoritmo de Seguimiento del Punto de M&aacute;xima Potencia (Maximum Power Point Tracking)
+							</a>
+
+				</li></ul></li>
+
+						<li class="" id="SubsistemasysenalesAerogenDFIG" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/SubsistemasysenalesAerogenDFIG.html"
+							target="FrameMain">
+								Subsistemas y se&ntilde;ales de un aerogenerador DFIG
+							</a>
+
+				</li></ul></li>
+
+						<li class="folder" id="Informacincomplementaria" data="">
+							<a
+							href="../DFIGTutorial/Informacincomplementaria.html"
+							target="FrameMain">
+								Informaci&oacute;n complementaria
+							</a>
+
+				<ul>
+
+						<li class="folder" id="Sobreelviento" data="">
+							<a
+							href="../DFIGTutorial/Sobreelviento.html"
+							target="FrameMain">
+								Sobre el viento
+							</a>
+
+				<ul>
+
+						<li class="" id="MedicionVientoAnemometro" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/MedicionVientoAnemometro.html"
+							target="FrameMain">
+								Medici&oacute;n del viento - descripci&oacute;n de un anem&oacute;metro.
+							</a>
+
+				</li>
+
+						<li class="" id="MedicindeladireccionDireccionVie" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/MedicindeladireccionDireccionVie.html"
+							target="FrameMain">
+								Medici&oacute;n de la direcci&oacute;n del viento - descripci&oacute;n de una veleta
+							</a>
+
+				</li></ul></li>
+
+						<li class="" id="Porqugiranlaspalas" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/Porqugiranlaspalas.html"
+							target="FrameMain">
+								&iquest;Por qu&eacute; giran las palas?
+							</a>
+
+				</li>
+
+						<li class="" id="Vistasconstructivasdemaquinaselc" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/Vistasconstructivasdemaquinaselc.html"
+							target="FrameMain">
+								Vistas constructivas de maquinas el&eacute;ctricas de inducci&oacute;n
+							</a>
+
+				</li>
+
+						<li class="folder" id="ConvertidoresBackToBack" data="">
+							<a
+							href="../DFIGTutorial/ConvertidoresBackToBack.html"
+							target="FrameMain">
+								Descripci&oacute;n de los Convertidores Back-to-Back
+							</a>
+
+				<ul>
+
+						<li class="" id="ConvertidoresBackToBackEstructur" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/ConvertidoresBackToBackEstructur.html"
+							target="FrameMain">
+								Estructura b&aacute;sica de los Convertidores Back-to-Back
+							</a>
+
+				</li>
+
+						<li class="" id="ConvertidoresBackToBackModosFunc" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/ConvertidoresBackToBackModosFunc.html"
+							target="FrameMain">
+								Modos de funcionamiento
+							</a>
+
+				</li>
+
+						<li class="folder" id="ConvertidoresBackToBackPrincipio" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/ConvertidoresBackToBackPrincipio.html"
+							target="FrameMain">
+								Principios de funcionamiento
+							</a>
+
+				<ul>
+
+						<li class="" id="IGBTs" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/IGBTs.html"
+							target="FrameMain">
+								IGBTs
+							</a>
+
+				</li></ul></li>
+
+						<li class="" id="ConvertidoresBackToBackRequerimi" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/ConvertidoresBackToBackRequerimi.html"
+							target="FrameMain">
+								Requerimientos de la Red
+							</a>
+
+				</li></ul></li>
+
+						<li class="folder" id="RedElectricaExigencias" data="">
+							<a
+							href="../DFIGTutorial/RedElectricaExigencias.html"
+							target="FrameMain">
+								Capacidades de tolerancia a fallos en la Red (Voltage-Fault-drive-through)
+							</a>
+
+				<ul>
+
+						<li class="" id="RedElectricaExigenciasAreaFuncio" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/RedElectricaExigenciasAreaFuncio.html"
+							target="FrameMain">
+								&Aacute;rea de funcionamiento tolerable de la Red
+							</a>
+
+				</li>
+
+						<li class="" id="RedElectricaExigenciasGridCodes" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/RedElectricaExigenciasGridCodes.html"
+							target="FrameMain">
+								Grid codes
+							</a>
+
+				</li>
+
+						<li class="" id="ConvertidoresCrobars" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/ConvertidoresCrobars.html"
+							target="FrameMain">
+								Circuitos auxiliares para el control de la respuesta a Grid Codes: Crowbars
+							</a>
+
+				</li></ul></li>
+
+						<li class="" id="CalidadSuminisElectricoPowerQual" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/CalidadSuminisElectricoPowerQual.html"
+							target="FrameMain">
+								Calidad del Suministro El&eacute;ctrico (Power Quality)
+							</a>
+
+				</li>
+
+						<li class="" id="Mecanismosdecambiodelangulodelas" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/Mecanismosdecambiodelangulodelas.html"
+							target="FrameMain">
+								Mecanismos de cambio del angulo de las Palas
+							</a>
+
+				</li></ul></li>
+
+						<li class="folder" id="DescripcindelSimuladordelAerogen" data="">
+							<a
+							href="../DFIGTutorial/DescripcindelSimuladordelAerogen.html"
+							target="FrameMain">
+								Descripci&oacute;n del Simulador del Aerogenerador DFIG
+							</a>
+
+				<ul>
+
+						<li class="folder" id="DFIGWTSinopticos" data="">
+							<a
+							href="../DFIGTutorial/DFIGWTSinopticos.html"
+							target="FrameMain">
+								Sin&oacute;pticos
+							</a>
+
+				<ul>
+
+						<li class="folder" id="TerminaldeControl" data="">
+							<a
+							href="../DFIGTutorial/TerminaldeControl.html"
+							target="FrameMain">
+								Terminal de Control
+							</a>
+
+				<ul>
+
+						<li class="folder" id="DFIGWTTCCurvasOperacionales" data="">
+							<a
+							href="../DFIGTutorial/DFIGWTTCCurvasOperacionales.html"
+							target="FrameMain">
+								Curvas operativas del Tren de Potencia
+							</a>
+
+				<ul>
+
+						<li class="" id="Expresionespuperunit" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/Expresionespuperunit.html"
+							target="FrameMain">
+								Expresiones pu (per unit)
+							</a>
+
+				</li>
+
+						<li class="" id="DFIGWTTCPanelPotenciaVSrpms" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/DFIGWTTCPanelPotenciaVSrpms.html"
+							target="FrameMain">
+								Potencias mec&aacute;nica y el&eacute;ctrica vs Velocidad de Rotor
+							</a>
+
+				</li>
+
+						<li class="" id="DFIGWTTCVeloTrenPotenciavsViento" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/DFIGWTTCVeloTrenPotenciavsViento.html"
+							target="FrameMain">
+								Velocidad del Tren de Potencia vs Viento
+							</a>
+
+				</li>
+
+						<li class="" id="DFIGWTTCPotenciaPitchvsViento" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/DFIGWTTCPotenciaPitchvsViento.html"
+							target="FrameMain">
+								Potencia y Pitch vs Viento
+							</a>
+
+				</li>
+
+						<li class="" id="CoeficienteaerodinmicofuncinCp" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/CoeficienteaerodinmicofuncinCp.html"
+							target="FrameMain">
+								Coeficiente aerodin&aacute;mico: funci&oacute;n Cp
+							</a>
+
+				</li></ul></li></ul></li>
+
+						<li class="folder" id="GeneradorDFIG" data="">
+							<a
+							href="../DFIGTutorial/GeneradorDFIG.html"
+							target="FrameMain">
+								Generador DFIG
+							</a>
+
+				<ul>
+
+						<li class="" id="Detalledelarepresentaciondeflujo" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/Detalledelarepresentaciondeflujo.html"
+							target="FrameMain">
+								Detalle de la representacion de flujos magn&eacute;ticos en el Generador
+							</a>
+
+				</li></ul></li>
+
+						<li class="folder" id="DFIGWTGondola" data="">
+							<a
+							href="../DFIGTutorial/DFIGWTGondola.html"
+							target="FrameMain">
+								Vistas de la G&oacute;ndola
+							</a>
+
+				<ul>
+
+						<li class="" id="DFIGWTGondolaVista3D" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/DFIGWTGondolaVista3D.html"
+							target="FrameMain">
+								Vista 3D del aerogenerador en el Parque E&oacute;lico
+							</a>
+
+				</li>
+
+						<li class="" id="DFIGWTGondolaVistaInterna" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/DFIGWTGondolaVistaInterna.html"
+							target="FrameMain">
+								Vista interna de la G&oacute;ndola
+							</a>
+
+				</li>
+
+						<li class="" id="DFIGWTGondolaFrenos" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/DFIGWTGondolaFrenos.html"
+							target="FrameMain">
+								Mecanismo de frenos
+							</a>
+
+				</li>
+
+						<li class="" id="ControldelPitch" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/ControldelPitch.html"
+							target="FrameMain">
+								Control del Pitch
+							</a>
+
+				</li>
+
+						<li class="" id="DFIGWTGondolaIndicadoresRPMs" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/DFIGWTGondolaIndicadoresRPMs.html"
+							target="FrameMain">
+								Indicadores de velocidades en el Tren de Potencia
+							</a>
+
+				</li>
+
+						<li class="" id="DFIGWTSensorVibracionesTorre" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/DFIGWTSensorVibracionesTorre.html"
+							target="FrameMain">
+								Vibraciones en la Torre
+							</a>
+
+				</li></ul></li>
+
+						<li class="" id="DFIGArmarioElectrico" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/DFIGArmarioElectrico.html"
+							target="FrameMain">
+								Armario el&eacute;ctrico
+							</a>
+
+				</li>
+
+						<li class="folder" id="Especificacindelvientoyvistaceni" data="">
+							<a
+							href="../DFIGTutorial/Especificacindelvientoyvistaceni.html"
+							target="FrameMain">
+								Especificaci&oacute;n del viento y vista cenital de la G&oacute;ndola
+							</a>
+
+				<ul>
+
+						<li class="folder" id="RfagasdevientoWindgusts" data="">
+							<a
+							href="../DFIGTutorial/RfagasdevientoWindgusts.html"
+							target="FrameMain">
+								R&aacute;fagas de viento (Wind gusts)
+							</a>
+
+				<ul>
+
+						<li class="" id="SinopticoVientoGondRafagasEjempl" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/SinopticoVientoGondRafagasEjempl.html"
+							target="FrameMain">
+								Ejemplos
+							</a>
+
+				</li>
+
+						<li class="" id="Creacindeperfilesdeviento" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/Creacindeperfilesdeviento.html"
+							target="FrameMain">
+								Creaci&oacute;n de perfiles de viento
+							</a>
+
+				</li></ul></li>
+
+						<li class="" id="Sobrevaloresespecficosdevientos" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/Sobrevaloresespecficosdevientos.html"
+							target="FrameMain">
+								Sobre valores espec&iacute;ficos de vientos
+							</a>
+
+				</li></ul></li>
+
+						<li class="folder" id="PanelespredefinidosparalosRegist" data="">
+							<a
+							href="../DFIGTutorial/PanelespredefinidosparalosRegist.html"
+							target="FrameMain">
+								Paneles predefinidos para los Registradores
+							</a>
+
+				<ul>
+
+						<li class="folder" id="PitchPotenciasFrenoRPMsViento" data="">
+							<a
+							href="../DFIGTutorial/PitchPotenciasFrenoRPMsViento.html"
+							target="FrameMain">
+								Pitch, Potencias, Freno, RPMs, Viento
+							</a>
+
+				<ul>
+
+						<li class="" id="Panel1Cutin" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/Panel1Cutin.html"
+							target="FrameMain">
+								Cutin
+							</a>
+
+				</li>
+
+						<li class="" id="Panel1Cutout" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/Panel1Cutout.html"
+							target="FrameMain">
+								Cutout
+							</a>
+
+				</li></ul></li>
+
+						<li class="folder" id="Panel2" data="">
+							<a
+							href="../DFIGTutorial/Panel2.html"
+							target="FrameMain">
+								Potencias, Corriente rotor, Angulos de fase
+							</a>
+
+				<ul>
+
+						<li class="" id="Panel2Cutin" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/Panel2Cutin.html"
+							target="FrameMain">
+								Cutin
+							</a>
+
+				</li>
+
+						<li class="" id="Panel2Cutout" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/Panel2Cutout.html"
+							target="FrameMain">
+								Cutout
+							</a>
+
+				</li></ul></li>
+
+						<li class="folder" id="Panel3" data="">
+							<a
+							href="../DFIGTutorial/Panel3.html"
+							target="FrameMain">
+								Potencias, Corrientes Rotor y Estator, Angulos fase, Tension Rotor, Frecuencia Rotor, RPMs, Viento
+							</a>
+
+				<ul>
+
+						<li class="" id="Panel3Cutin" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/Panel3Cutin.html"
+							target="FrameMain">
+								Cutin
+							</a>
+
+				</li>
+
+						<li class="" id="Panel3Cutout" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/Panel3Cutout.html"
+							target="FrameMain">
+								Cutout
+							</a>
+
+				</li></ul></li>
+
+						<li class="folder" id="Panel4" data="">
+							<a
+							href="../DFIGTutorial/Panel4.html"
+							target="FrameMain">
+								Pitch, Cp,Potencias, delta viento, RPMs, RPMs detalle, Viento, Frenos
+							</a>
+
+				<ul>
+
+						<li class="" id="Panel4Cutin" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/Panel4Cutin.html"
+							target="FrameMain">
+								Cutin
+							</a>
+
+				</li>
+
+						<li class="" id="Panel4Cutout" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/Panel4Cutout.html"
+							target="FrameMain">
+								Cutout
+							</a>
+
+				</li></ul></li>
+
+						<li class="" id="PanelOrientacion" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/PanelOrientacion.html"
+							target="FrameMain">
+								Orientacion
+							</a>
+
+				</li>
+
+						<li class="" id="PanelCircuitoHidraulico" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/PanelCircuitoHidraulico.html"
+							target="FrameMain">
+								Circuito hidr&aacute;ulico de frenos
+							</a>
+
+				</li>
+
+						<li class="folder" id="PanelRPMsControlador" data="">
+							<a
+							href="../DFIGTutorial/PanelRPMsControlador.html"
+							target="FrameMain">
+								RPMs, Pitch y Maquinas de Estado del Controlador
+							</a>
+
+				<ul>
+
+						<li class="" id="PanelRPMsControllerCutin" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/PanelRPMsControllerCutin.html"
+							target="FrameMain">
+								Cutin
+							</a>
+
+				</li>
+
+						<li class="" id="PanelRPMsControllerCutout" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/PanelRPMsControllerCutout.html"
+							target="FrameMain">
+								Cutout
+							</a>
+
+				</li></ul></li>
+
+						<li class="folder" id="PanelMaqEstControlador" data="">
+							<a
+							href="../DFIGTutorial/PanelMaqEstControlador.html"
+							target="FrameMain">
+								M&aacute;quinas de Estado del Controlador
+							</a>
+
+				<ul>
+
+						<li class="" id="PanelMaqEstControladorCutin" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/PanelMaqEstControladorCutin.html"
+							target="FrameMain">
+								Cutin
+							</a>
+
+				</li>
+
+						<li class="" id="PanelMaqEstControladorCutout" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/PanelMaqEstControladorCutout.html"
+							target="FrameMain">
+								Cutout
+							</a>
+
+				</li></ul></li></ul></li></ul></li>
+
+						<li class="" id="ListadodemensajesdeIncidencias" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/ListadodemensajesdeIncidencias.html"
+							target="FrameMain">
+								Listado de mensajes de Incidencias
+							</a>
+
+				</li></ul></li>
+
+						
+
+						
+
+						<li class="" id="Listadereferencias" data="icon: '16.png'">
+							<a
+							href="../DFIGTutorial/Listadereferencias.html"
+							target="FrameMain">
+								Lista de referencias
+							</a>
+
+				</li>
+				
+				</ul>
+		</div>
+		
+		
+		
+		<div id="tab-keywords">
+			<ul id="keywords"><li class="file" data="click:'[[\'Armario el&eacute;ctrico\',\'DFIGArmarioElectrico.html\']]'">
+							<a
+								href="../DFIGTutorial/DFIGArmarioElectrico.html"
+								target="FrameMain"
+								onClick="[['Armario el&eacute;ctrico','DFIGArmarioElectrico.html']]"
+								>
+								690V
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Mecanismos de cambio del angulo de las Palas\',\'Mecanismosdecambiodelangulodelas.html\']]'">
+							<a
+								href="../DFIGTutorial/Mecanismosdecambiodelangulodelas.html"
+								target="FrameMain"
+								onClick="[['Mecanismos de cambio del angulo de las Palas','Mecanismosdecambiodelangulodelas.html']]"
+								>
+								actuadores hidráulicos
+							</a>
+
+				</li>
+
+<li class="folder" data="click:'[[\'Razones para el uso de Aerogeneradores de Velocidad Variable\',\'PorqueAerogenVeloVariable.html\'],[\'Potencia y Pitch vs Viento\',\'DFIGWTTCPotenciaPitchvsViento.html\']]'">
+							<a
+								href="../DFIGTutorial/PorqueAerogenVeloVariable.html"
+								target="FrameMain"
+								onClick="[['Razones para el uso de Aerogeneradores de Velocidad Variable','PorqueAerogenVeloVariable.html'],['Potencia y Pitch vs Viento','DFIGWTTCPotenciaPitchvsViento.html']]"
+								>
+								Aerodinámica
+							</a>
+
+				<ul><li class="file" data="click:'[[\'Razones para el uso de Aerogeneradores de Velocidad Variable\',\'PorqueAerogenVeloVariable.html\']]'">
+							<a
+								href="../DFIGTutorial/PorqueAerogenVeloVariable.html"
+								target="FrameMain"
+								onClick="[['Razones para el uso de Aerogeneradores de Velocidad Variable','PorqueAerogenVeloVariable.html']]"
+								>
+								blade
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Razones para el uso de Aerogeneradores de Velocidad Variable\',\'PorqueAerogenVeloVariable.html\']]'">
+							<a
+								href="../DFIGTutorial/PorqueAerogenVeloVariable.html"
+								target="FrameMain"
+								onClick="[['Razones para el uso de Aerogeneradores de Velocidad Variable','PorqueAerogenVeloVariable.html']]"
+								>
+								Cd
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Razones para el uso de Aerogeneradores de Velocidad Variable\',\'PorqueAerogenVeloVariable.html\']]'">
+							<a
+								href="../DFIGTutorial/PorqueAerogenVeloVariable.html"
+								target="FrameMain"
+								onClick="[['Razones para el uso de Aerogeneradores de Velocidad Variable','PorqueAerogenVeloVariable.html']]"
+								>
+								CL
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Razones para el uso de Aerogeneradores de Velocidad Variable\',\'PorqueAerogenVeloVariable.html\'],[\'Coeficiente aerodin&aacute;mico: funci&oacute;n Cp\',\'CoeficienteaerodinmicofuncinCp.html\']]'">
+							<a
+								href=".html"
+								target="FrameMain"
+								onClick="[['Razones para el uso de Aerogeneradores de Velocidad Variable','PorqueAerogenVeloVariable.html'],['Coeficiente aerodin&aacute;mico: funci&oacute;n Cp','CoeficienteaerodinmicofuncinCp.html']]"
+								>
+								Cp
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Razones para el uso de Aerogeneradores de Velocidad Variable\',\'PorqueAerogenVeloVariable.html\']]'">
+							<a
+								href=".html"
+								target="FrameMain"
+								onClick="[['Razones para el uso de Aerogeneradores de Velocidad Variable','PorqueAerogenVeloVariable.html']]"
+								>
+								Cpmax
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Razones para el uso de Aerogeneradores de Velocidad Variable\',\'PorqueAerogenVeloVariable.html\'],[\'Coeficiente aerodin&aacute;mico: funci&oacute;n Cp\',\'CoeficienteaerodinmicofuncinCp.html\']]'">
+							<a
+								href="../DFIGTutorial/PorqueAerogenVeloVariable.html"
+								target="FrameMain"
+								onClick="[['Razones para el uso de Aerogeneradores de Velocidad Variable','PorqueAerogenVeloVariable.html'],['Coeficiente aerodin&aacute;mico: funci&oacute;n Cp','CoeficienteaerodinmicofuncinCp.html']]"
+								>
+								Lambda
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Razones para el uso de Aerogeneradores de Velocidad Variable\',\'PorqueAerogenVeloVariable.html\'],[\'Coeficiente aerodin&aacute;mico: funci&oacute;n Cp\',\'CoeficienteaerodinmicofuncinCp.html\'],[\'Potencia y Pitch vs Viento\',\'DFIGWTTCPotenciaPitchvsViento.html\']]'">
+							<a
+								href="../DFIGTutorial/PorqueAerogenVeloVariable.html"
+								target="FrameMain"
+								onClick="[['Razones para el uso de Aerogeneradores de Velocidad Variable','PorqueAerogenVeloVariable.html'],['Coeficiente aerodin&aacute;mico: funci&oacute;n Cp','CoeficienteaerodinmicofuncinCp.html'],['Potencia y Pitch vs Viento','DFIGWTTCPotenciaPitchvsViento.html']]"
+								>
+								pitch
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Razones para el uso de Aerogeneradores de Velocidad Variable\',\'PorqueAerogenVeloVariable.html\']]'">
+							<a
+								href="../DFIGTutorial/PorqueAerogenVeloVariable.html"
+								target="FrameMain"
+								onClick="[['Razones para el uso de Aerogeneradores de Velocidad Variable','PorqueAerogenVeloVariable.html']]"
+								>
+								pitch rate
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Razones para el uso de Aerogeneradores de Velocidad Variable\',\'PorqueAerogenVeloVariable.html\'],[\'Coeficiente aerodin&aacute;mico: funci&oacute;n Cp\',\'CoeficienteaerodinmicofuncinCp.html\']]'">
+							<a
+								href=".html"
+								target="FrameMain"
+								onClick="[['Razones para el uso de Aerogeneradores de Velocidad Variable','PorqueAerogenVeloVariable.html'],['Coeficiente aerodin&aacute;mico: funci&oacute;n Cp','CoeficienteaerodinmicofuncinCp.html']]"
+								>
+								Tip Speed Ratio
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Razones para el uso de Aerogeneradores de Velocidad Variable\',\'PorqueAerogenVeloVariable.html\']]'">
+							<a
+								href=".html"
+								target="FrameMain"
+								onClick="[['Razones para el uso de Aerogeneradores de Velocidad Variable','PorqueAerogenVeloVariable.html']]"
+								>
+								torque
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Razones para el uso de Aerogeneradores de Velocidad Variable\',\'PorqueAerogenVeloVariable.html\'],[\'Coeficiente aerodin&aacute;mico: funci&oacute;n Cp\',\'CoeficienteaerodinmicofuncinCp.html\']]'">
+							<a
+								href=".html"
+								target="FrameMain"
+								onClick="[['Razones para el uso de Aerogeneradores de Velocidad Variable','PorqueAerogenVeloVariable.html'],['Coeficiente aerodin&aacute;mico: funci&oacute;n Cp','CoeficienteaerodinmicofuncinCp.html']]"
+								>
+								TSR
+							</a>
+
+				</li></ul></li>
+
+<li class="folder" data="click:'[[\'Conceptos basicos de Aerogeneradores\',\'ConceptosbasicosdeAerogeneradore.html\']]'">
+							<a
+								href="../DFIGTutorial/ConceptosbasicosdeAerogeneradore.html"
+								target="FrameMain"
+								onClick="[['Conceptos basicos de Aerogeneradores','ConceptosbasicosdeAerogeneradore.html']]"
+								>
+								Aerogenerador
+							</a>
+
+				<ul><li class="folder" data="click:'[[\'Razones para el uso de Aerogeneradores de Velocidad Variable\',\'PorqueAerogenVeloVariable.html\']]'">
+							<a
+								href="../DFIGTutorial/PorqueAerogenVeloVariable.html"
+								target="FrameMain"
+								onClick="[['Razones para el uso de Aerogeneradores de Velocidad Variable','PorqueAerogenVeloVariable.html']]"
+								>
+								Tipos de aerogeneradores
+							</a>
+
+				<ul><li class="file" data="click:'[[\'Conceptos basicos de Aerogeneradores\',\'ConceptosbasicosdeAerogeneradore.html\']]'">
+							<a
+								href="../DFIGTutorial/ConceptosbasicosdeAerogeneradore.html"
+								target="FrameMain"
+								onClick="[['Conceptos basicos de Aerogeneradores','ConceptosbasicosdeAerogeneradore.html']]"
+								>
+								DFIG
+							</a>
+
+				</li></ul></li></ul></li>
+
+<li class="file" data="click:'[[\'Implicaciones del comportamiento deseado\',\'Implicacionesdelcomportamientode.html\']]'">
+							<a
+								href="../DFIGTutorial/Implicacionesdelcomportamientode.html"
+								target="FrameMain"
+								onClick="[['Implicaciones del comportamiento deseado','Implicacionesdelcomportamientode.html']]"
+								>
+								algoritmos
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Vistas constructivas de maquinas el&eacute;ctricas de inducci&oacute;n\',\'Vistasconstructivasdemaquinaselc.html\']]'">
+							<a
+								href="../DFIGTutorial/Vistasconstructivasdemaquinaselc.html"
+								target="FrameMain"
+								onClick="[['Vistas constructivas de maquinas el&eacute;ctricas de inducci&oacute;n','Vistasconstructivasdemaquinaselc.html']]"
+								>
+								anillos deslizantes
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Relaci&oacute;n entre los aerogeneradores y su lugar de emplazamiento\',\'Relacionentrelosaerogeneradoresy.html\']]'">
+							<a
+								href="../DFIGTutorial/Relacionentrelosaerogeneradoresy.html"
+								target="FrameMain"
+								onClick="[['Relaci&oacute;n entre los aerogeneradores y su lugar de emplazamiento','Relacionentrelosaerogeneradoresy.html']]"
+								>
+								área barrida por las palas
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Conceptos basicos de Aerogeneradores\',\'ConceptosbasicosdeAerogeneradore.html\']]'">
+							<a
+								href="../DFIGTutorial/ConceptosbasicosdeAerogeneradore.html"
+								target="FrameMain"
+								onClick="[['Conceptos basicos de Aerogeneradores','ConceptosbasicosdeAerogeneradore.html']]"
+								>
+								asíncrono
+							</a>
+
+				</li>
+
+<li class="folder" data="click:'[[\'Conceptos basicos de Aerogeneradores\',\'ConceptosbasicosdeAerogeneradore.html\']]'">
+							<a
+								href="../DFIGTutorial/ConceptosbasicosdeAerogeneradore.html"
+								target="FrameMain"
+								onClick="[['Conceptos basicos de Aerogeneradores','ConceptosbasicosdeAerogeneradore.html']]"
+								>
+								Back-to-Back
+							</a>
+
+				<ul><li class="file" data="click:'[[\'Implicaciones para el Convertidor El&eacute;ctrico\',\'ImplicacionesVeloVariableConvert.html\'],[\'Conceptos basicos de Aerogeneradores\',\'ConceptosbasicosdeAerogeneradore.html\'],[\'Generador DFIG\',\'GeneradorDFIG.html\']]'">
+							<a
+								href="../DFIGTutorial/ImplicacionesVeloVariableConvert.html"
+								target="FrameMain"
+								onClick="[['Implicaciones para el Convertidor El&eacute;ctrico','ImplicacionesVeloVariableConvert.html'],['Conceptos basicos de Aerogeneradores','ConceptosbasicosdeAerogeneradore.html'],['Generador DFIG','GeneradorDFIG.html']]"
+								>
+								DC Link
+							</a>
+
+				</li></ul></li>
+
+<li class="file" data="click:'[[\'Conceptos basicos de Aerogeneradores\',\'ConceptosbasicosdeAerogeneradore.html\']]'">
+							<a
+								href="../DFIGTutorial/ConceptosbasicosdeAerogeneradore.html"
+								target="FrameMain"
+								onClick="[['Conceptos basicos de Aerogeneradores','ConceptosbasicosdeAerogeneradore.html']]"
+								>
+								barlovento
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Relaci&oacute;n entre los aerogeneradores y su lugar de emplazamiento\',\'Relacionentrelosaerogeneradoresy.html\']]'">
+							<a
+								href="../DFIGTutorial/Relacionentrelosaerogeneradoresy.html"
+								target="FrameMain"
+								onClick="[['Relaci&oacute;n entre los aerogeneradores y su lugar de emplazamiento','Relacionentrelosaerogeneradoresy.html']]"
+								>
+								BladesSweptArea
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Mecanismo de frenos\',\'DFIGWTGondolaFrenos.html\']]'">
+							<a
+								href="../DFIGTutorial/DFIGWTGondolaFrenos.html"
+								target="FrameMain"
+								onClick="[['Mecanismo de frenos','DFIGWTGondolaFrenos.html']]"
+								>
+								bomba
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Calidad del Suministro El&eacute;ctrico (Power Quality)\',\'CalidadSuminisElectricoPowerQual.html\']]'">
+							<a
+								href="../DFIGTutorial/CalidadSuminisElectricoPowerQual.html"
+								target="FrameMain"
+								onClick="[['Calidad del Suministro El&eacute;ctrico (Power Quality)','CalidadSuminisElectricoPowerQual.html']]"
+								>
+								Calidad del Suministro Eléctrico
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Requerimientos de la Red\',\'ConvertidoresBackToBackRequerimi.html\']]'">
+							<a
+								href="../DFIGTutorial/ConvertidoresBackToBackRequerimi.html"
+								target="FrameMain"
+								onClick="[['Requerimientos de la Red','ConvertidoresBackToBackRequerimi.html']]"
+								>
+								codificador angular
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Requerimientos de la Red\',\'ConvertidoresBackToBackRequerimi.html\']]'">
+							<a
+								href="../DFIGTutorial/ConvertidoresBackToBackRequerimi.html"
+								target="FrameMain"
+								onClick="[['Requerimientos de la Red','ConvertidoresBackToBackRequerimi.html']]"
+								>
+								codificador rotatorio
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Relaci&oacute;n entre los aerogeneradores y su lugar de emplazamiento\',\'Relacionentrelosaerogeneradoresy.html\'],[\'Coeficiente aerodin&aacute;mico: funci&oacute;n Cp\',\'CoeficienteaerodinmicofuncinCp.html\']]'">
+							<a
+								href="../DFIGTutorial/Relacionentrelosaerogeneradoresy.html"
+								target="FrameMain"
+								onClick="[['Relaci&oacute;n entre los aerogeneradores y su lugar de emplazamiento','Relacionentrelosaerogeneradoresy.html'],['Coeficiente aerodin&aacute;mico: funci&oacute;n Cp','CoeficienteaerodinmicofuncinCp.html']]"
+								>
+								coeficiente aerodinámico
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Relaci&oacute;n entre los aerogeneradores y su lugar de emplazamiento\',\'Relacionentrelosaerogeneradoresy.html\'],[\'Coeficiente aerodin&aacute;mico: funci&oacute;n Cp\',\'CoeficienteaerodinmicofuncinCp.html\']]'">
+							<a
+								href="../DFIGTutorial/Relacionentrelosaerogeneradoresy.html"
+								target="FrameMain"
+								onClick="[['Relaci&oacute;n entre los aerogeneradores y su lugar de emplazamiento','Relacionentrelosaerogeneradoresy.html'],['Coeficiente aerodin&aacute;mico: funci&oacute;n Cp','CoeficienteaerodinmicofuncinCp.html']]"
+								>
+								coeficiente aerodinámico
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Razones para el uso de Aerogeneradores de Velocidad Variable\',\'PorqueAerogenVeloVariable.html\']]'">
+							<a
+								href="../DFIGTutorial/PorqueAerogenVeloVariable.html"
+								target="FrameMain"
+								onClick="[['Razones para el uso de Aerogeneradores de Velocidad Variable','PorqueAerogenVeloVariable.html']]"
+								>
+								controlabilidad
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Razones para el uso de Aerogeneradores de Velocidad Variable\',\'PorqueAerogenVeloVariable.html\']]'">
+							<a
+								href="../DFIGTutorial/PorqueAerogenVeloVariable.html"
+								target="FrameMain"
+								onClick="[['Razones para el uso de Aerogeneradores de Velocidad Variable','PorqueAerogenVeloVariable.html']]"
+								>
+								controlabilidad de la Red
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Relaci&oacute;n entre los aerogeneradores y su lugar de emplazamiento\',\'Relacionentrelosaerogeneradoresy.html\'],[\'Algoritmo de Seguimiento del Punto de M&aacute;xima Potencia (Maximum Power Point Tracking)\',\'AlgoritmodeSeguimientodelPuntode.html\'],[\'Implicaciones para el Tren de Potencia\',\'ImplicacionesparaelTrendePotenci.html\'],[\'Coeficiente aerodin&aacute;mico: funci&oacute;n Cp\',\'CoeficienteaerodinmicofuncinCp.html\']]'">
+							<a
+								href="../DFIGTutorial/Relacionentrelosaerogeneradoresy.html"
+								target="FrameMain"
+								onClick="[['Relaci&oacute;n entre los aerogeneradores y su lugar de emplazamiento','Relacionentrelosaerogeneradoresy.html'],['Algoritmo de Seguimiento del Punto de M&aacute;xima Potencia (Maximum Power Point Tracking)','AlgoritmodeSeguimientodelPuntode.html'],['Implicaciones para el Tren de Potencia','ImplicacionesparaelTrendePotenci.html'],['Coeficiente aerodin&aacute;mico: funci&oacute;n Cp','CoeficienteaerodinmicofuncinCp.html']]"
+								>
+								Cp
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Circuitos auxiliares para el control de la respuesta a Grid Codes: Crowbars\',\'ConvertidoresCrobars.html\']]'">
+							<a
+								href="../DFIGTutorial/ConvertidoresCrobars.html"
+								target="FrameMain"
+								onClick="[['Circuitos auxiliares para el control de la respuesta a Grid Codes: Crowbars','ConvertidoresCrobars.html']]"
+								>
+								CrowBar
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Curvas operativas del Tren de Potencia\',\'DFIGWTTCCurvasOperacionales.html\'],[\'Potencias mec&aacute;nica y el&eacute;ctrica vs Velocidad de Rotor\',\'DFIGWTTCPanelPotenciaVSrpms.html\']]'">
+							<a
+								href="../DFIGTutorial/DFIGWTTCCurvasOperacionales.html"
+								target="FrameMain"
+								onClick="[['Curvas operativas del Tren de Potencia','DFIGWTTCCurvasOperacionales.html'],['Potencias mec&aacute;nica y el&eacute;ctrica vs Velocidad de Rotor','DFIGWTTCPanelPotenciaVSrpms.html']]"
+								>
+								Curvas operacionales de Aerogeneradores de Velocidad Variable
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Razones para el uso de Aerogeneradores de Velocidad Variable\',\'PorqueAerogenVeloVariable.html\'],[\'Terminal de Control\',\'TerminaldeControl.html\'],[\'Potencias mec&aacute;nica y el&eacute;ctrica vs Velocidad de Rotor\',\'DFIGWTTCPanelPotenciaVSrpms.html\'],[\'Generador DFIG\',\'GeneradorDFIG.html\'],[\'Especificaci&oacute;n del viento y vista cenital de la G&oacute;ndola\',\'Especificacindelvientoyvistaceni.html\'],[\'Cutin\',\'Panel3Cutin.html\']]'">
+							<a
+								href="../DFIGTutorial/PorqueAerogenVeloVariable.html"
+								target="FrameMain"
+								onClick="[['Razones para el uso de Aerogeneradores de Velocidad Variable','PorqueAerogenVeloVariable.html'],['Terminal de Control','TerminaldeControl.html'],['Potencias mec&aacute;nica y el&eacute;ctrica vs Velocidad de Rotor','DFIGWTTCPanelPotenciaVSrpms.html'],['Generador DFIG','GeneradorDFIG.html'],['Especificaci&oacute;n del viento y vista cenital de la G&oacute;ndola','Especificacindelvientoyvistaceni.html'],['Cutin','Panel3Cutin.html']]"
+								>
+								cutin
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Razones para el uso de Aerogeneradores de Velocidad Variable\',\'PorqueAerogenVeloVariable.html\'],[\'Terminal de Control\',\'TerminaldeControl.html\'],[\'Potencias mec&aacute;nica y el&eacute;ctrica vs Velocidad de Rotor\',\'DFIGWTTCPanelPotenciaVSrpms.html\'],[\'Especificaci&oacute;n del viento y vista cenital de la G&oacute;ndola\',\'Especificacindelvientoyvistaceni.html\']]'">
+							<a
+								href="../DFIGTutorial/PorqueAerogenVeloVariable.html"
+								target="FrameMain"
+								onClick="[['Razones para el uso de Aerogeneradores de Velocidad Variable','PorqueAerogenVeloVariable.html'],['Terminal de Control','TerminaldeControl.html'],['Potencias mec&aacute;nica y el&eacute;ctrica vs Velocidad de Rotor','DFIGWTTCPanelPotenciaVSrpms.html'],['Especificaci&oacute;n del viento y vista cenital de la G&oacute;ndola','Especificacindelvientoyvistaceni.html']]"
+								>
+								cutout
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Relaci&oacute;n entre los aerogeneradores y su lugar de emplazamiento\',\'Relacionentrelosaerogeneradoresy.html\']]'">
+							<a
+								href="../DFIGTutorial/Relacionentrelosaerogeneradoresy.html"
+								target="FrameMain"
+								onClick="[['Relaci&oacute;n entre los aerogeneradores y su lugar de emplazamiento','Relacionentrelosaerogeneradoresy.html']]"
+								>
+								densidad del aire
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Implicaciones para el Convertidor El&eacute;ctrico\',\'ImplicacionesVeloVariableConvert.html\']]'">
+							<a
+								href="../DFIGTutorial/ImplicacionesVeloVariableConvert.html"
+								target="FrameMain"
+								onClick="[['Implicaciones para el Convertidor El&eacute;ctrico','ImplicacionesVeloVariableConvert.html']]"
+								>
+								deslizamiento
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Especificaci&oacute;n del viento y vista cenital de la G&oacute;ndola\',\'Especificacindelvientoyvistaceni.html\']]'">
+							<a
+								href="../DFIGTutorial/Especificacindelvientoyvistaceni.html"
+								target="FrameMain"
+								onClick="[['Especificaci&oacute;n del viento y vista cenital de la G&oacute;ndola','Especificacindelvientoyvistaceni.html']]"
+								>
+								desorientacion
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Mecanismo de frenos\',\'DFIGWTGondolaFrenos.html\']]'">
+							<a
+								href="../DFIGTutorial/DFIGWTGondolaFrenos.html"
+								target="FrameMain"
+								onClick="[['Mecanismo de frenos','DFIGWTGondolaFrenos.html']]"
+								>
+								disco
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Implicaciones del comportamiento deseado\',\'Implicacionesdelcomportamientode.html\'],[\'Conceptos basicos de Aerogeneradores\',\'ConceptosbasicosdeAerogeneradore.html\']]'">
+							<a
+								href="../DFIGTutorial/Implicacionesdelcomportamientode.html"
+								target="FrameMain"
+								onClick="[['Implicaciones del comportamiento deseado','Implicacionesdelcomportamientode.html'],['Conceptos basicos de Aerogeneradores','ConceptosbasicosdeAerogeneradore.html']]"
+								>
+								Doubly Fed Induction Generator
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Especificaci&oacute;n del viento y vista cenital de la G&oacute;ndola\',\'Especificacindelvientoyvistaceni.html\']]'">
+							<a
+								href="../DFIGTutorial/Especificacindelvientoyvistaceni.html"
+								target="FrameMain"
+								onClick="[['Especificaci&oacute;n del viento y vista cenital de la G&oacute;ndola','Especificacindelvientoyvistaceni.html']]"
+								>
+								duty cycle
+							</a>
+
+				</li>
+
+<li class="folder" data="click:'[[\'Razones para el uso de Aerogeneradores de Velocidad Variable\',\'PorqueAerogenVeloVariable.html\']]'">
+							<a
+								href="../DFIGTutorial/PorqueAerogenVeloVariable.html"
+								target="FrameMain"
+								onClick="[['Razones para el uso de Aerogeneradores de Velocidad Variable','PorqueAerogenVeloVariable.html']]"
+								>
+								Electrical
+							</a>
+
+				<ul><li class="file" data="click:'[[\'Razones para el uso de Aerogeneradores de Velocidad Variable\',\'PorqueAerogenVeloVariable.html\']]'">
+							<a
+								href="../DFIGTutorial/PorqueAerogenVeloVariable.html"
+								target="FrameMain"
+								onClick="[['Razones para el uso de Aerogeneradores de Velocidad Variable','PorqueAerogenVeloVariable.html']]"
+								>
+								FACTS
+							</a>
+
+				</li></ul></li>
+
+<li class="file" data="click:'[[\'Conceptos basicos de Aerogeneradores\',\'ConceptosbasicosdeAerogeneradore.html\']]'">
+							<a
+								href="../DFIGTutorial/ConceptosbasicosdeAerogeneradore.html"
+								target="FrameMain"
+								onClick="[['Conceptos basicos de Aerogeneradores','ConceptosbasicosdeAerogeneradore.html']]"
+								>
+								energía cinética
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Armario el&eacute;ctrico\',\'DFIGArmarioElectrico.html\']]'">
+							<a
+								href="../DFIGTutorial/DFIGArmarioElectrico.html"
+								target="FrameMain"
+								onClick="[['Armario el&eacute;ctrico','DFIGArmarioElectrico.html']]"
+								>
+								fallo de red
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'&iquest;Por qu&eacute; giran las palas?\',\'Porqugiranlaspalas.html\']]'">
+							<a
+								href="../DFIGTutorial/Porqugiranlaspalas.html"
+								target="FrameMain"
+								onClick="[['&iquest;Por qu&eacute; giran las palas?','Porqugiranlaspalas.html']]"
+								>
+								Fdragging
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'&iquest;Por qu&eacute; giran las palas?\',\'Porqugiranlaspalas.html\']]'">
+							<a
+								href="../DFIGTutorial/Porqugiranlaspalas.html"
+								target="FrameMain"
+								onClick="[['&iquest;Por qu&eacute; giran las palas?','Porqugiranlaspalas.html']]"
+								>
+								Flifting
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Implicaciones para el Convertidor El&eacute;ctrico\',\'ImplicacionesVeloVariableConvert.html\']]'">
+							<a
+								href="../DFIGTutorial/ImplicacionesVeloVariableConvert.html"
+								target="FrameMain"
+								onClick="[['Implicaciones para el Convertidor El&eacute;ctrico','ImplicacionesVeloVariableConvert.html']]"
+								>
+								frecuencias negativas
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Implicaciones para el Convertidor El&eacute;ctrico\',\'ImplicacionesVeloVariableConvert.html\']]'">
+							<a
+								href="../DFIGTutorial/ImplicacionesVeloVariableConvert.html"
+								target="FrameMain"
+								onClick="[['Implicaciones para el Convertidor El&eacute;ctrico','ImplicacionesVeloVariableConvert.html']]"
+								>
+								Full converter
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Conceptos basicos de Aerogeneradores\',\'ConceptosbasicosdeAerogeneradore.html\']]'">
+							<a
+								href="../DFIGTutorial/ConceptosbasicosdeAerogeneradore.html"
+								target="FrameMain"
+								onClick="[['Conceptos basicos de Aerogeneradores','ConceptosbasicosdeAerogeneradore.html']]"
+								>
+								full Converter solution
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Implicaciones del comportamiento deseado\',\'Implicacionesdelcomportamientode.html\']]'">
+							<a
+								href="../DFIGTutorial/Implicacionesdelcomportamientode.html"
+								target="FrameMain"
+								onClick="[['Implicaciones del comportamiento deseado','Implicacionesdelcomportamientode.html']]"
+								>
+								Generador eléctrico
+							</a>
+
+				</li>
+
+<li class="folder" data="click:'[[\'Implicaciones del comportamiento deseado\',\'Implicacionesdelcomportamientode.html\']]'">
+							<a
+								href="../DFIGTutorial/Implicacionesdelcomportamientode.html"
+								target="FrameMain"
+								onClick="[['Implicaciones del comportamiento deseado','Implicacionesdelcomportamientode.html']]"
+								>
+								Generador eléctrico
+							</a>
+
+				<ul><li class="file" data="click:'[[\'Implicaciones para el Convertidor El&eacute;ctrico\',\'ImplicacionesVeloVariableConvert.html\']]'">
+							<a
+								href="../DFIGTutorial/ImplicacionesVeloVariableConvert.html"
+								target="FrameMain"
+								onClick="[['Implicaciones para el Convertidor El&eacute;ctrico','ImplicacionesVeloVariableConvert.html']]"
+								>
+								Generador de Inducción Doblemente Alimentado
+							</a>
+
+				</li></ul></li>
+
+<li class="folder" data="click:'[[\'Razones para el uso de Aerogeneradores de Velocidad Variable\',\'PorqueAerogenVeloVariable.html\'],[\'Indicadores de velocidades en el Tren de Potencia\',\'DFIGWTGondolaIndicadoresRPMs.html\']]'">
+							<a
+								href="../DFIGTutorial/PorqueAerogenVeloVariable.html"
+								target="FrameMain"
+								onClick="[['Razones para el uso de Aerogeneradores de Velocidad Variable','PorqueAerogenVeloVariable.html'],['Indicadores de velocidades en el Tren de Potencia','DFIGWTGondolaIndicadoresRPMs.html']]"
+								>
+								Generator
+							</a>
+
+				<ul><li class="file" data="click:'[[\'Indicadores de velocidades en el Tren de Potencia\',\'DFIGWTGondolaIndicadoresRPMs.html\']]'">
+							<a
+								href="../DFIGTutorial/DFIGWTGondolaIndicadoresRPMs.html"
+								target="FrameMain"
+								onClick="[['Indicadores de velocidades en el Tren de Potencia','DFIGWTGondolaIndicadoresRPMs.html']]"
+								>
+								rpms
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Razones para el uso de Aerogeneradores de Velocidad Variable\',\'PorqueAerogenVeloVariable.html\']]'">
+							<a
+								href="../DFIGTutorial/PorqueAerogenVeloVariable.html"
+								target="FrameMain"
+								onClick="[['Razones para el uso de Aerogeneradores de Velocidad Variable','PorqueAerogenVeloVariable.html']]"
+								>
+								subsincrono
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Razones para el uso de Aerogeneradores de Velocidad Variable\',\'PorqueAerogenVeloVariable.html\']]'">
+							<a
+								href=".html"
+								target="FrameMain"
+								onClick="[['Razones para el uso de Aerogeneradores de Velocidad Variable','PorqueAerogenVeloVariable.html']]"
+								>
+								supersincrono
+							</a>
+
+				</li></ul></li>
+
+<li class="file" data="click:'[[\'Descripci&oacute;n del Simulador del Aerogenerador DFIG\',\'DescripcindelSimuladordelAerogen.html\']]'">
+							<a
+								href="../DFIGTutorial/DescripcindelSimuladordelAerogen.html"
+								target="FrameMain"
+								onClick="[['Descripci&oacute;n del Simulador del Aerogenerador DFIG','DescripcindelSimuladordelAerogen.html']]"
+								>
+								Gestor de Incidencias
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Conceptos basicos de Aerogeneradores\',\'ConceptosbasicosdeAerogeneradore.html\'],[\'Medici&oacute;n de la direcci&oacute;n del viento - descripci&oacute;n de una veleta\',\'MedicindeladireccionDireccionVie.html\']]'">
+							<a
+								href="../DFIGTutorial/ConceptosbasicosdeAerogeneradore.html"
+								target="FrameMain"
+								onClick="[['Conceptos basicos de Aerogeneradores','ConceptosbasicosdeAerogeneradore.html'],['Medici&oacute;n de la direcci&oacute;n del viento - descripci&oacute;n de una veleta','MedicindeladireccionDireccionVie.html']]"
+								>
+								Góndola
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[]'">
+							<a
+								href="#"
+								target="FrameMain"
+								onClick="[]"
+								>
+								Graficos
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Armario el&eacute;ctrico\',\'DFIGArmarioElectrico.html\'],[\'Descripci&oacute;n de los Convertidores Back-to-Back\',\'ConvertidoresBackToBack.html\']]'">
+							<a
+								href="../DFIGTutorial/DFIGArmarioElectrico.html"
+								target="FrameMain"
+								onClick="[['Armario el&eacute;ctrico','DFIGArmarioElectrico.html'],['Descripci&oacute;n de los Convertidores Back-to-Back','ConvertidoresBackToBack.html']]"
+								>
+								Grid Side Converter
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Armario el&eacute;ctrico\',\'DFIGArmarioElectrico.html\'],[\'Descripci&oacute;n de los Convertidores Back-to-Back\',\'ConvertidoresBackToBack.html\'],[\'Implicaciones para el Convertidor El&eacute;ctrico\',\'ImplicacionesVeloVariableConvert.html\']]'">
+							<a
+								href="../DFIGTutorial/DFIGArmarioElectrico.html"
+								target="FrameMain"
+								onClick="[['Armario el&eacute;ctrico','DFIGArmarioElectrico.html'],['Descripci&oacute;n de los Convertidores Back-to-Back','ConvertidoresBackToBack.html'],['Implicaciones para el Convertidor El&eacute;ctrico','ImplicacionesVeloVariableConvert.html']]"
+								>
+								GSC
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Conceptos basicos de Aerogeneradores\',\'ConceptosbasicosdeAerogeneradore.html\']]'">
+							<a
+								href="../DFIGTutorial/ConceptosbasicosdeAerogeneradore.html"
+								target="FrameMain"
+								onClick="[['Conceptos basicos de Aerogeneradores','ConceptosbasicosdeAerogeneradore.html']]"
+								>
+								HAWT
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Indicadores de velocidades en el Tren de Potencia\',\'DFIGWTGondolaIndicadoresRPMs.html\']]'">
+							<a
+								href="../DFIGTutorial/DFIGWTGondolaIndicadoresRPMs.html"
+								target="FrameMain"
+								onClick="[['Indicadores de velocidades en el Tren de Potencia','DFIGWTGondolaIndicadoresRPMs.html']]"
+								>
+								HCU
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Mecanismo de frenos\',\'DFIGWTGondolaFrenos.html\']]'">
+							<a
+								href="../DFIGTutorial/DFIGWTGondolaFrenos.html"
+								target="FrameMain"
+								onClick="[['Mecanismo de frenos','DFIGWTGondolaFrenos.html']]"
+								>
+								histéresis
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Conceptos basicos de Aerogeneradores\',\'ConceptosbasicosdeAerogeneradore.html\']]'">
+							<a
+								href="../DFIGTutorial/ConceptosbasicosdeAerogeneradore.html"
+								target="FrameMain"
+								onClick="[['Conceptos basicos de Aerogeneradores','ConceptosbasicosdeAerogeneradore.html']]"
+								>
+								Horizontal Axis Wind Turbine
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Terminal de Control\',\'TerminaldeControl.html\']]'">
+							<a
+								href="../DFIGTutorial/TerminaldeControl.html"
+								target="FrameMain"
+								onClick="[['Terminal de Control','TerminaldeControl.html']]"
+								>
+								Idle
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Descripci&oacute;n de los Convertidores Back-to-Back\',\'ConvertidoresBackToBack.html\']]'">
+							<a
+								href="../DFIGTutorial/ConvertidoresBackToBack.html"
+								target="FrameMain"
+								onClick="[['Descripci&oacute;n de los Convertidores Back-to-Back','ConvertidoresBackToBack.html']]"
+								>
+								IGBT
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Principios de funcionamiento\',\'ConvertidoresBackToBackPrincipio.html\']]'">
+							<a
+								href="../DFIGTutorial/ConvertidoresBackToBackPrincipio.html"
+								target="FrameMain"
+								onClick="[['Principios de funcionamiento','ConvertidoresBackToBackPrincipio.html']]"
+								>
+								IGBTs
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Conceptos basicos de Aerogeneradores\',\'ConceptosbasicosdeAerogeneradore.html\']]'">
+							<a
+								href="../DFIGTutorial/ConceptosbasicosdeAerogeneradore.html"
+								target="FrameMain"
+								onClick="[['Conceptos basicos de Aerogeneradores','ConceptosbasicosdeAerogeneradore.html']]"
+								>
+								imanes permanentes
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Armario el&eacute;ctrico\',\'DFIGArmarioElectrico.html\']]'">
+							<a
+								href="../DFIGTutorial/DFIGArmarioElectrico.html"
+								target="FrameMain"
+								onClick="[['Armario el&eacute;ctrico','DFIGArmarioElectrico.html']]"
+								>
+								Interruptor principal
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Vistas constructivas de maquinas el&eacute;ctricas de inducci&oacute;n\',\'Vistasconstructivasdemaquinaselc.html\']]'">
+							<a
+								href="../DFIGTutorial/Vistasconstructivasdemaquinaselc.html"
+								target="FrameMain"
+								onClick="[['Vistas constructivas de maquinas el&eacute;ctricas de inducci&oacute;n','Vistasconstructivasdemaquinaselc.html']]"
+								>
+								jaula de ardilla
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Circuitos auxiliares para el control de la respuesta a Grid Codes: Crowbars\',\'ConvertidoresCrobars.html\']]'">
+							<a
+								href="../DFIGTutorial/ConvertidoresCrobars.html"
+								target="FrameMain"
+								onClick="[['Circuitos auxiliares para el control de la respuesta a Grid Codes: Crowbars','ConvertidoresCrobars.html']]"
+								>
+								Low-Voltage-Fault-Ride-Through capability
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Implicaciones del comportamiento deseado\',\'Implicacionesdelcomportamientode.html\'],[\'Algoritmo de Seguimiento del Punto de M&aacute;xima Potencia (Maximum Power Point Tracking)\',\'AlgoritmodeSeguimientodelPuntode.html\']]'">
+							<a
+								href="../DFIGTutorial/Implicacionesdelcomportamientode.html"
+								target="FrameMain"
+								onClick="[['Implicaciones del comportamiento deseado','Implicacionesdelcomportamientode.html'],['Algoritmo de Seguimiento del Punto de M&aacute;xima Potencia (Maximum Power Point Tracking)','AlgoritmodeSeguimientodelPuntode.html']]"
+								>
+								Maximum Power Point Tracking
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Especificaci&oacute;n del viento y vista cenital de la G&oacute;ndola\',\'Especificacindelvientoyvistaceni.html\']]'">
+							<a
+								href="../DFIGTutorial/Especificacindelvientoyvistaceni.html"
+								target="FrameMain"
+								onClick="[['Especificaci&oacute;n del viento y vista cenital de la G&oacute;ndola','Especificacindelvientoyvistaceni.html']]"
+								>
+								mecanismo de orientación
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Armario el&eacute;ctrico\',\'DFIGArmarioElectrico.html\']]'">
+							<a
+								href="../DFIGTutorial/DFIGArmarioElectrico.html"
+								target="FrameMain"
+								onClick="[['Armario el&eacute;ctrico','DFIGArmarioElectrico.html']]"
+								>
+								Media Tensión
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Algoritmo de Seguimiento del Punto de M&aacute;xima Potencia (Maximum Power Point Tracking)\',\'AlgoritmodeSeguimientodelPuntode.html\'],[\'Implicaciones para el Tren de Potencia\',\'ImplicacionesparaelTrendePotenci.html\']]'">
+							<a
+								href="../DFIGTutorial/AlgoritmodeSeguimientodelPuntode.html"
+								target="FrameMain"
+								onClick="[['Algoritmo de Seguimiento del Punto de M&aacute;xima Potencia (Maximum Power Point Tracking)','AlgoritmodeSeguimientodelPuntode.html'],['Implicaciones para el Tren de Potencia','ImplicacionesparaelTrendePotenci.html']]"
+								>
+								MPPT
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Mecanismo de frenos\',\'DFIGWTGondolaFrenos.html\']]'">
+							<a
+								href="../DFIGTutorial/DFIGWTGondolaFrenos.html"
+								target="FrameMain"
+								onClick="[['Mecanismo de frenos','DFIGWTGondolaFrenos.html']]"
+								>
+								muelle
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Conceptos basicos de Aerogeneradores\',\'ConceptosbasicosdeAerogeneradore.html\']]'">
+							<a
+								href="../DFIGTutorial/ConceptosbasicosdeAerogeneradore.html"
+								target="FrameMain"
+								onClick="[['Conceptos basicos de Aerogeneradores','ConceptosbasicosdeAerogeneradore.html']]"
+								>
+								multiplicadora
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Vistas de la G&oacute;ndola\',\'DFIGWTGondola.html\'],[\'Vista interna de la G&oacute;ndola\',\'DFIGWTGondolaVistaInterna.html\'],[\'Conceptos basicos de Aerogeneradores\',\'ConceptosbasicosdeAerogeneradore.html\']]'">
+							<a
+								href="../DFIGTutorial/DFIGWTGondola.html"
+								target="FrameMain"
+								onClick="[['Vistas de la G&oacute;ndola','DFIGWTGondola.html'],['Vista interna de la G&oacute;ndola','DFIGWTGondolaVistaInterna.html'],['Conceptos basicos de Aerogeneradores','ConceptosbasicosdeAerogeneradore.html']]"
+								>
+								nacelle
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Implicaciones del comportamiento deseado\',\'Implicacionesdelcomportamientode.html\'],[\'Potencias mec&aacute;nica y el&eacute;ctrica vs Velocidad de Rotor\',\'DFIGWTTCPanelPotenciaVSrpms.html\']]'">
+							<a
+								href="../DFIGTutorial/Implicacionesdelcomportamientode.html"
+								target="FrameMain"
+								onClick="[['Implicaciones del comportamiento deseado','Implicacionesdelcomportamientode.html'],['Potencias mec&aacute;nica y el&eacute;ctrica vs Velocidad de Rotor','DFIGWTTCPanelPotenciaVSrpms.html']]"
+								>
+								Operational Working Curve of the DFIG
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Especificaci&oacute;n del viento y vista cenital de la G&oacute;ndola\',\'Especificacindelvientoyvistaceni.html\']]'">
+							<a
+								href="../DFIGTutorial/Especificacindelvientoyvistaceni.html"
+								target="FrameMain"
+								onClick="[['Especificaci&oacute;n del viento y vista cenital de la G&oacute;ndola','Especificacindelvientoyvistaceni.html']]"
+								>
+								orientacion de la Góndola
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Calidad del Suministro El&eacute;ctrico (Power Quality)\',\'CalidadSuminisElectricoPowerQual.html\']]'">
+							<a
+								href="../DFIGTutorial/CalidadSuminisElectricoPowerQual.html"
+								target="FrameMain"
+								onClick="[['Calidad del Suministro El&eacute;ctrico (Power Quality)','CalidadSuminisElectricoPowerQual.html']]"
+								>
+								parpadeo
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Armario el&eacute;ctrico\',\'DFIGArmarioElectrico.html\']]'">
+							<a
+								href="../DFIGTutorial/DFIGArmarioElectrico.html"
+								target="FrameMain"
+								onClick="[['Armario el&eacute;ctrico','DFIGArmarioElectrico.html']]"
+								>
+								PCC
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Implicaciones para el Tren de Potencia\',\'ImplicacionesparaelTrendePotenci.html\'],[\'Expresiones pu (per unit)\',\'Expresionespuperunit.html\']]'">
+							<a
+								href="../DFIGTutorial/ImplicacionesparaelTrendePotenci.html"
+								target="FrameMain"
+								onClick="[['Implicaciones para el Tren de Potencia','ImplicacionesparaelTrendePotenci.html'],['Expresiones pu (per unit)','Expresionespuperunit.html']]"
+								>
+								per unit
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Descripci&oacute;n de los Convertidores Back-to-Back\',\'ConvertidoresBackToBack.html\'],[\'Requerimientos de la Red\',\'ConvertidoresBackToBackRequerimi.html\']]'">
+							<a
+								href="../DFIGTutorial/ConvertidoresBackToBack.html"
+								target="FrameMain"
+								onClick="[['Descripci&oacute;n de los Convertidores Back-to-Back','ConvertidoresBackToBack.html'],['Requerimientos de la Red','ConvertidoresBackToBackRequerimi.html']]"
+								>
+								Phase Locked Loop
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Relaci&oacute;n entre los aerogeneradores y su lugar de emplazamiento\',\'Relacionentrelosaerogeneradoresy.html\'],[\'R&aacute;fagas de viento (Wind gusts)\',\'RfagasdevientoWindgusts.html\'],[\'Implicaciones para el Tren de Potencia\',\'ImplicacionesparaelTrendePotenci.html\']]'">
+							<a
+								href="../DFIGTutorial/Relacionentrelosaerogeneradoresy.html"
+								target="FrameMain"
+								onClick="[['Relaci&oacute;n entre los aerogeneradores y su lugar de emplazamiento','Relacionentrelosaerogeneradoresy.html'],['R&aacute;fagas de viento (Wind gusts)','RfagasdevientoWindgusts.html'],['Implicaciones para el Tren de Potencia','ImplicacionesparaelTrendePotenci.html']]"
+								>
+								pitch
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Conceptos basicos de Aerogeneradores\',\'ConceptosbasicosdeAerogeneradore.html\']]'">
+							<a
+								href="../DFIGTutorial/ConceptosbasicosdeAerogeneradore.html"
+								target="FrameMain"
+								onClick="[['Conceptos basicos de Aerogeneradores','ConceptosbasicosdeAerogeneradore.html']]"
+								>
+								planta
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Descripci&oacute;n de los Convertidores Back-to-Back\',\'ConvertidoresBackToBack.html\'],[\'Requerimientos de la Red\',\'ConvertidoresBackToBackRequerimi.html\']]'">
+							<a
+								href="../DFIGTutorial/ConvertidoresBackToBack.html"
+								target="FrameMain"
+								onClick="[['Descripci&oacute;n de los Convertidores Back-to-Back','ConvertidoresBackToBack.html'],['Requerimientos de la Red','ConvertidoresBackToBackRequerimi.html']]"
+								>
+								PLL
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Armario el&eacute;ctrico\',\'DFIGArmarioElectrico.html\']]'">
+							<a
+								href="../DFIGTutorial/DFIGArmarioElectrico.html"
+								target="FrameMain"
+								onClick="[['Armario el&eacute;ctrico','DFIGArmarioElectrico.html']]"
+								>
+								Point of Common Connection
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Potencia y Pitch vs Viento\',\'DFIGWTTCPotenciaPitchvsViento.html\']]'">
+							<a
+								href="../DFIGTutorial/DFIGWTTCPotenciaPitchvsViento.html"
+								target="FrameMain"
+								onClick="[['Potencia y Pitch vs Viento','DFIGWTTCPotenciaPitchvsViento.html']]"
+								>
+								Potencia
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Razones para el uso de Aerogeneradores de Velocidad Variable\',\'PorqueAerogenVeloVariable.html\']]'">
+							<a
+								href="../DFIGTutorial/PorqueAerogenVeloVariable.html"
+								target="FrameMain"
+								onClick="[['Razones para el uso de Aerogeneradores de Velocidad Variable','PorqueAerogenVeloVariable.html']]"
+								>
+								potencia activa
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Potencias mec&aacute;nica y el&eacute;ctrica vs Velocidad de Rotor\',\'DFIGWTTCPanelPotenciaVSrpms.html\']]'">
+							<a
+								href="../DFIGTutorial/DFIGWTTCPanelPotenciaVSrpms.html"
+								target="FrameMain"
+								onClick="[['Potencias mec&aacute;nica y el&eacute;ctrica vs Velocidad de Rotor','DFIGWTTCPanelPotenciaVSrpms.html']]"
+								>
+								potencia mecánica
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Relaci&oacute;n entre los aerogeneradores y su lugar de emplazamiento\',\'Relacionentrelosaerogeneradoresy.html\'],[\'Razones para el uso de Aerogeneradores de Velocidad Variable\',\'PorqueAerogenVeloVariable.html\']]'">
+							<a
+								href="../DFIGTutorial/Relacionentrelosaerogeneradoresy.html"
+								target="FrameMain"
+								onClick="[['Relaci&oacute;n entre los aerogeneradores y su lugar de emplazamiento','Relacionentrelosaerogeneradoresy.html'],['Razones para el uso de Aerogeneradores de Velocidad Variable','PorqueAerogenVeloVariable.html']]"
+								>
+								potencia nominal
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Relaci&oacute;n entre los aerogeneradores y su lugar de emplazamiento\',\'Relacionentrelosaerogeneradoresy.html\'],[\'Razones para el uso de Aerogeneradores de Velocidad Variable\',\'PorqueAerogenVeloVariable.html\']]'">
+							<a
+								href="../DFIGTutorial/Relacionentrelosaerogeneradoresy.html"
+								target="FrameMain"
+								onClick="[['Relaci&oacute;n entre los aerogeneradores y su lugar de emplazamiento','Relacionentrelosaerogeneradoresy.html'],['Razones para el uso de Aerogeneradores de Velocidad Variable','PorqueAerogenVeloVariable.html']]"
+								>
+								Potencia Nominal
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Razones para el uso de Aerogeneradores de Velocidad Variable\',\'PorqueAerogenVeloVariable.html\']]'">
+							<a
+								href="../DFIGTutorial/PorqueAerogenVeloVariable.html"
+								target="FrameMain"
+								onClick="[['Razones para el uso de Aerogeneradores de Velocidad Variable','PorqueAerogenVeloVariable.html']]"
+								>
+								potencia reactiva
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Mecanismo de frenos\',\'DFIGWTGondolaFrenos.html\']]'">
+							<a
+								href="../DFIGTutorial/DFIGWTGondolaFrenos.html"
+								target="FrameMain"
+								onClick="[['Mecanismo de frenos','DFIGWTGondolaFrenos.html']]"
+								>
+								presostato
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Generador DFIG\',\'GeneradorDFIG.html\']]'">
+							<a
+								href="../DFIGTutorial/GeneradorDFIG.html"
+								target="FrameMain"
+								onClick="[['Generador DFIG','GeneradorDFIG.html']]"
+								>
+								Puesta en Marcha
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Descripci&oacute;n de los Convertidores Back-to-Back\',\'ConvertidoresBackToBack.html\']]'">
+							<a
+								href="../DFIGTutorial/ConvertidoresBackToBack.html"
+								target="FrameMain"
+								onClick="[['Descripci&oacute;n de los Convertidores Back-to-Back','ConvertidoresBackToBack.html']]"
+								>
+								Pulse Width Modulation
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Mecanismo de frenos\',\'DFIGWTGondolaFrenos.html\']]'">
+							<a
+								href="../DFIGTutorial/DFIGWTGondolaFrenos.html"
+								target="FrameMain"
+								onClick="[['Mecanismo de frenos','DFIGWTGondolaFrenos.html']]"
+								>
+								pump
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Expresiones pu (per unit)\',\'Expresionespuperunit.html\']]'">
+							<a
+								href="../DFIGTutorial/Expresionespuperunit.html"
+								target="FrameMain"
+								onClick="[['Expresiones pu (per unit)','Expresionespuperunit.html']]"
+								>
+								pu's
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Descripci&oacute;n de los Convertidores Back-to-Back\',\'ConvertidoresBackToBack.html\']]'">
+							<a
+								href="../DFIGTutorial/ConvertidoresBackToBack.html"
+								target="FrameMain"
+								onClick="[['Descripci&oacute;n de los Convertidores Back-to-Back','ConvertidoresBackToBack.html']]"
+								>
+								PWM
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Relaci&oacute;n entre los aerogeneradores y su lugar de emplazamiento\',\'Relacionentrelosaerogeneradoresy.html\'],[\'Razones para el uso de Aerogeneradores de Velocidad Variable\',\'PorqueAerogenVeloVariable.html\'],[\'Potencias mec&aacute;nica y el&eacute;ctrica vs Velocidad de Rotor\',\'DFIGWTTCPanelPotenciaVSrpms.html\']]'">
+							<a
+								href="../DFIGTutorial/Relacionentrelosaerogeneradoresy.html"
+								target="FrameMain"
+								onClick="[['Relaci&oacute;n entre los aerogeneradores y su lugar de emplazamiento','Relacionentrelosaerogeneradoresy.html'],['Razones para el uso de Aerogeneradores de Velocidad Variable','PorqueAerogenVeloVariable.html'],['Potencias mec&aacute;nica y el&eacute;ctrica vs Velocidad de Rotor','DFIGWTTCPanelPotenciaVSrpms.html']]"
+								>
+								ráfagas de viento
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Estructura b&aacute;sica de los Convertidores Back-to-Back\',\'ConvertidoresBackToBackEstructur.html\']]'">
+							<a
+								href="../DFIGTutorial/ConvertidoresBackToBackEstructur.html"
+								target="FrameMain"
+								onClick="[['Estructura b&aacute;sica de los Convertidores Back-to-Back','ConvertidoresBackToBackEstructur.html']]"
+								>
+								rectificador controlado
+							</a>
+
+				</li>
+
+<li class="folder" data="click:'[[\'Capacidades de tolerancia a fallos en la Red (Voltage-Fault-drive-through)\',\'RedElectricaExigencias.html\']]'">
+							<a
+								href="../DFIGTutorial/RedElectricaExigencias.html"
+								target="FrameMain"
+								onClick="[['Capacidades de tolerancia a fallos en la Red (Voltage-Fault-drive-through)','RedElectricaExigencias.html']]"
+								>
+								Red Eléctrica
+							</a>
+
+				<ul><li class="file" data="click:'[[\'Grid codes\',\'RedElectricaExigenciasGridCodes.html\']]'">
+							<a
+								href="../DFIGTutorial/RedElectricaExigenciasGridCodes.html"
+								target="FrameMain"
+								onClick="[['Grid codes','RedElectricaExigenciasGridCodes.html']]"
+								>
+								Grid Codes
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Razones para el uso de Aerogeneradores de Velocidad Variable\',\'PorqueAerogenVeloVariable.html\']]'">
+							<a
+								href="../DFIGTutorial/PorqueAerogenVeloVariable.html"
+								target="FrameMain"
+								onClick="[['Razones para el uso de Aerogeneradores de Velocidad Variable','PorqueAerogenVeloVariable.html']]"
+								>
+								STATCOM
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Capacidades de tolerancia a fallos en la Red (Voltage-Fault-drive-through)\',\'RedElectricaExigencias.html\']]'">
+							<a
+								href="../DFIGTutorial/RedElectricaExigencias.html"
+								target="FrameMain"
+								onClick="[['Capacidades de tolerancia a fallos en la Red (Voltage-Fault-drive-through)','RedElectricaExigencias.html']]"
+								>
+								Transmission System Operator
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Capacidades de tolerancia a fallos en la Red (Voltage-Fault-drive-through)\',\'RedElectricaExigencias.html\']]'">
+							<a
+								href="../DFIGTutorial/RedElectricaExigencias.html"
+								target="FrameMain"
+								onClick="[['Capacidades de tolerancia a fallos en la Red (Voltage-Fault-drive-through)','RedElectricaExigencias.html']]"
+								>
+								TSO
+							</a>
+
+				</li></ul></li>
+
+<li class="file" data="click:'[[\'Relaci&oacute;n entre los aerogeneradores y su lugar de emplazamiento\',\'Relacionentrelosaerogeneradoresy.html\']]'">
+							<a
+								href="../DFIGTutorial/Relacionentrelosaerogeneradoresy.html"
+								target="FrameMain"
+								onClick="[['Relaci&oacute;n entre los aerogeneradores y su lugar de emplazamiento','Relacionentrelosaerogeneradoresy.html']]"
+								>
+								regímenes de vientos bajos
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Implicaciones del comportamiento deseado\',\'Implicacionesdelcomportamientode.html\'],[\'Potencias mec&aacute;nica y el&eacute;ctrica vs Velocidad de Rotor\',\'DFIGWTTCPanelPotenciaVSrpms.html\']]'">
+							<a
+								href="../DFIGTutorial/Implicacionesdelcomportamientode.html"
+								target="FrameMain"
+								onClick="[['Implicaciones del comportamiento deseado','Implicacionesdelcomportamientode.html'],['Potencias mec&aacute;nica y el&eacute;ctrica vs Velocidad de Rotor','DFIGWTTCPanelPotenciaVSrpms.html']]"
+								>
+								regiones de operación
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Descripci&oacute;n del Simulador del Aerogenerador DFIG\',\'DescripcindelSimuladordelAerogen.html\']]'">
+							<a
+								href="../DFIGTutorial/DescripcindelSimuladordelAerogen.html"
+								target="FrameMain"
+								onClick="[['Descripci&oacute;n del Simulador del Aerogenerador DFIG','DescripcindelSimuladordelAerogen.html']]"
+								>
+								Registradores
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Especificaci&oacute;n del viento y vista cenital de la G&oacute;ndola\',\'Especificacindelvientoyvistaceni.html\']]'">
+							<a
+								href="../DFIGTutorial/Especificacindelvientoyvistaceni.html"
+								target="FrameMain"
+								onClick="[['Especificaci&oacute;n del viento y vista cenital de la G&oacute;ndola','Especificacindelvientoyvistaceni.html']]"
+								>
+								relación de aspecto
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Mecanismo de frenos\',\'DFIGWTGondolaFrenos.html\']]'">
+							<a
+								href="../DFIGTutorial/DFIGWTGondolaFrenos.html"
+								target="FrameMain"
+								onClick="[['Mecanismo de frenos','DFIGWTGondolaFrenos.html']]"
+								>
+								reservoir
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Conceptos basicos de Aerogeneradores\',\'ConceptosbasicosdeAerogeneradore.html\']]'">
+							<a
+								href="../DFIGTutorial/ConceptosbasicosdeAerogeneradore.html"
+								target="FrameMain"
+								onClick="[['Conceptos basicos de Aerogeneradores','ConceptosbasicosdeAerogeneradore.html']]"
+								>
+								Resistencia de Rotor
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'&iquest;Por qu&eacute; giran las palas?\',\'Porqugiranlaspalas.html\']]'">
+							<a
+								href="../DFIGTutorial/Porqugiranlaspalas.html"
+								target="FrameMain"
+								onClick="[['&iquest;Por qu&eacute; giran las palas?','Porqugiranlaspalas.html']]"
+								>
+								Rotational wind
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Descripci&oacute;n del Simulador del Aerogenerador DFIG\',\'DescripcindelSimuladordelAerogen.html\']]'">
+							<a
+								href="../DFIGTutorial/DescripcindelSimuladordelAerogen.html"
+								target="FrameMain"
+								onClick="[['Descripci&oacute;n del Simulador del Aerogenerador DFIG','DescripcindelSimuladordelAerogen.html']]"
+								>
+								Rotor Bobinado
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Generador DFIG\',\'GeneradorDFIG.html\'],[\'Descripci&oacute;n de los Convertidores Back-to-Back\',\'ConvertidoresBackToBack.html\'],[\'Implicaciones para el Convertidor El&eacute;ctrico\',\'ImplicacionesVeloVariableConvert.html\']]'">
+							<a
+								href="../DFIGTutorial/GeneradorDFIG.html"
+								target="FrameMain"
+								onClick="[['Generador DFIG','GeneradorDFIG.html'],['Descripci&oacute;n de los Convertidores Back-to-Back','ConvertidoresBackToBack.html'],['Implicaciones para el Convertidor El&eacute;ctrico','ImplicacionesVeloVariableConvert.html']]"
+								>
+								Rotor Side Converter
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Implicaciones del comportamiento deseado\',\'Implicacionesdelcomportamientode.html\'],[\'Indicadores de velocidades en el Tren de Potencia\',\'DFIGWTGondolaIndicadoresRPMs.html\']]'">
+							<a
+								href="../DFIGTutorial/Implicacionesdelcomportamientode.html"
+								target="FrameMain"
+								onClick="[['Implicaciones del comportamiento deseado','Implicacionesdelcomportamientode.html'],['Indicadores de velocidades en el Tren de Potencia','DFIGWTGondolaIndicadoresRPMs.html']]"
+								>
+								rotor speed
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Generador DFIG\',\'GeneradorDFIG.html\'],[\'Descripci&oacute;n de los Convertidores Back-to-Back\',\'ConvertidoresBackToBack.html\'],[\'Implicaciones para el Convertidor El&eacute;ctrico\',\'ImplicacionesVeloVariableConvert.html\']]'">
+							<a
+								href="../DFIGTutorial/GeneradorDFIG.html"
+								target="FrameMain"
+								onClick="[['Generador DFIG','GeneradorDFIG.html'],['Descripci&oacute;n de los Convertidores Back-to-Back','ConvertidoresBackToBack.html'],['Implicaciones para el Convertidor El&eacute;ctrico','ImplicacionesVeloVariableConvert.html']]"
+								>
+								RSC
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Implicaciones para el Tren de Potencia\',\'ImplicacionesparaelTrendePotenci.html\']]'">
+							<a
+								href="../DFIGTutorial/ImplicacionesparaelTrendePotenci.html"
+								target="FrameMain"
+								onClick="[['Implicaciones para el Tren de Potencia','ImplicacionesparaelTrendePotenci.html']]"
+								>
+								Seguimiento de Punto de Maxima Potencia
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Implicaciones para el Tren de Potencia\',\'ImplicacionesparaelTrendePotenci.html\'],[\'Algoritmo de Seguimiento del Punto de M&aacute;xima Potencia (Maximum Power Point Tracking)\',\'AlgoritmodeSeguimientodelPuntode.html\']]'">
+							<a
+								href="../DFIGTutorial/ImplicacionesparaelTrendePotenci.html"
+								target="FrameMain"
+								onClick="[['Implicaciones para el Tren de Potencia','ImplicacionesparaelTrendePotenci.html'],['Algoritmo de Seguimiento del Punto de M&aacute;xima Potencia (Maximum Power Point Tracking)','AlgoritmodeSeguimientodelPuntode.html']]"
+								>
+								Seguimiento del Punto de Máxima Potencia
+							</a>
+
+				</li>
+
+<li class="folder" data="click:'[[\'Acerca de este documento\',\'Acercadeestedocumento.html\']]'">
+							<a
+								href="../DFIGTutorial/Acercadeestedocumento.html"
+								target="FrameMain"
+								onClick="[['Acerca de este documento','Acercadeestedocumento.html']]"
+								>
+								Simulador
+							</a>
+
+				<ul><li class="folder" data="click:'[]'">
+							<a
+								href="#"
+								target="FrameMain"
+								onClick="[]"
+								>
+								Sinopticos
+							</a>
+
+				<ul><li class="folder" data="click:'[[\'Terminal de Control\',\'TerminaldeControl.html\']]'">
+							<a
+								href="../DFIGTutorial/TerminaldeControl.html"
+								target="FrameMain"
+								onClick="[['Terminal de Control','TerminaldeControl.html']]"
+								>
+								Terminal de Control
+							</a>
+
+				<ul><li class="file" data="click:'[[\'Terminal de Control\',\'TerminaldeControl.html\'],[\'Armario el&eacute;ctrico\',\'DFIGArmarioElectrico.html\']]'">
+							<a
+								href="../DFIGTutorial/TerminaldeControl.html"
+								target="FrameMain"
+								onClick="[['Terminal de Control','TerminaldeControl.html'],['Armario el&eacute;ctrico','DFIGArmarioElectrico.html']]"
+								>
+								START
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Terminal de Control\',\'TerminaldeControl.html\']]'">
+							<a
+								href="../DFIGTutorial/TerminaldeControl.html"
+								target="FrameMain"
+								onClick="[['Terminal de Control','TerminaldeControl.html']]"
+								>
+								STOP
+							</a>
+
+				</li></ul></li>
+
+<li class="file" data="click:'[[\'Medici&oacute;n de la direcci&oacute;n del viento - descripci&oacute;n de una veleta\',\'MedicindeladireccionDireccionVie.html\']]'">
+							<a
+								href="../DFIGTutorial/MedicindeladireccionDireccionVie.html"
+								target="FrameMain"
+								onClick="[['Medici&oacute;n de la direcci&oacute;n del viento - descripci&oacute;n de una veleta','MedicindeladireccionDireccionVie.html']]"
+								>
+								WindNacelle
+							</a>
+
+				</li></ul></li></ul></li>
+
+<li class="file" data="click:'[[\'Conceptos basicos de Aerogeneradores\',\'ConceptosbasicosdeAerogeneradore.html\']]'">
+							<a
+								href="../DFIGTutorial/ConceptosbasicosdeAerogeneradore.html"
+								target="FrameMain"
+								onClick="[['Conceptos basicos de Aerogeneradores','ConceptosbasicosdeAerogeneradore.html']]"
+								>
+								Simulador de Aerogenerador Básico
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Armario el&eacute;ctrico\',\'DFIGArmarioElectrico.html\']]'">
+							<a
+								href="../DFIGTutorial/DFIGArmarioElectrico.html"
+								target="FrameMain"
+								onClick="[['Armario el&eacute;ctrico','DFIGArmarioElectrico.html']]"
+								>
+								Simulador fallo de fase
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Conceptos basicos de Aerogeneradores\',\'ConceptosbasicosdeAerogeneradore.html\']]'">
+							<a
+								href="../DFIGTutorial/ConceptosbasicosdeAerogeneradore.html"
+								target="FrameMain"
+								onClick="[['Conceptos basicos de Aerogeneradores','ConceptosbasicosdeAerogeneradore.html']]"
+								>
+								sincronismo
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Vistas de la G&oacute;ndola\',\'DFIGWTGondola.html\']]'">
+							<a
+								href="../DFIGTutorial/DFIGWTGondola.html"
+								target="FrameMain"
+								onClick="[['Vistas de la G&oacute;ndola','DFIGWTGondola.html']]"
+								>
+								Sinoptico Tren de Potencia
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Implicaciones para el Convertidor El&eacute;ctrico\',\'ImplicacionesVeloVariableConvert.html\']]'">
+							<a
+								href="../DFIGTutorial/ImplicacionesVeloVariableConvert.html"
+								target="FrameMain"
+								onClick="[['Implicaciones para el Convertidor El&eacute;ctrico','ImplicacionesVeloVariableConvert.html']]"
+								>
+								Slip
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Indicadores de velocidades en el Tren de Potencia\',\'DFIGWTGondolaIndicadoresRPMs.html\']]'">
+							<a
+								href="../DFIGTutorial/DFIGWTGondolaIndicadoresRPMs.html"
+								target="FrameMain"
+								onClick="[['Indicadores de velocidades en el Tren de Potencia','DFIGWTGondolaIndicadoresRPMs.html']]"
+								>
+								sobrevelocidad
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Conceptos basicos de Aerogeneradores\',\'ConceptosbasicosdeAerogeneradore.html\']]'">
+							<a
+								href="../DFIGTutorial/ConceptosbasicosdeAerogeneradore.html"
+								target="FrameMain"
+								onClick="[['Conceptos basicos de Aerogeneradores','ConceptosbasicosdeAerogeneradore.html']]"
+								>
+								sotavento
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Conceptos basicos de Aerogeneradores\',\'ConceptosbasicosdeAerogeneradore.html\']]'">
+							<a
+								href="../DFIGTutorial/ConceptosbasicosdeAerogeneradore.html"
+								target="FrameMain"
+								onClick="[['Conceptos basicos de Aerogeneradores','ConceptosbasicosdeAerogeneradore.html']]"
+								>
+								sotavento
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Armario el&eacute;ctrico\',\'DFIGArmarioElectrico.html\']]'">
+							<a
+								href="../DFIGTutorial/DFIGArmarioElectrico.html"
+								target="FrameMain"
+								onClick="[['Armario el&eacute;ctrico','DFIGArmarioElectrico.html']]"
+								>
+								step-up transformer
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Modos de funcionamiento\',\'ConvertidoresBackToBackModosFunc.html\']]'">
+							<a
+								href="../DFIGTutorial/ConvertidoresBackToBackModosFunc.html"
+								target="FrameMain"
+								onClick="[['Modos de funcionamiento','ConvertidoresBackToBackModosFunc.html']]"
+								>
+								subsincrono
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Descripci&oacute;n de los Convertidores Back-to-Back\',\'ConvertidoresBackToBack.html\']]'">
+							<a
+								href="../DFIGTutorial/ConvertidoresBackToBack.html"
+								target="FrameMain"
+								onClick="[['Descripci&oacute;n de los Convertidores Back-to-Back','ConvertidoresBackToBack.html']]"
+								>
+								subsynchronous
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Terminal de Control\',\'TerminaldeControl.html\']]'">
+							<a
+								href="../DFIGTutorial/TerminaldeControl.html"
+								target="FrameMain"
+								onClick="[['Terminal de Control','TerminaldeControl.html']]"
+								>
+								supersincrono
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Generador DFIG\',\'GeneradorDFIG.html\'],[\'Descripci&oacute;n de los Convertidores Back-to-Back\',\'ConvertidoresBackToBack.html\']]'">
+							<a
+								href="../DFIGTutorial/GeneradorDFIG.html"
+								target="FrameMain"
+								onClick="[['Generador DFIG','GeneradorDFIG.html'],['Descripci&oacute;n de los Convertidores Back-to-Back','ConvertidoresBackToBack.html']]"
+								>
+								supersynchronous
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Mecanismo de frenos\',\'DFIGWTGondolaFrenos.html\']]'">
+							<a
+								href="../DFIGTutorial/DFIGWTGondolaFrenos.html"
+								target="FrameMain"
+								onClick="[['Mecanismo de frenos','DFIGWTGondolaFrenos.html']]"
+								>
+								tanque
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Vista interna de la G&oacute;ndola\',\'DFIGWTGondolaVistaInterna.html\']]'">
+							<a
+								href="../DFIGTutorial/DFIGWTGondolaVistaInterna.html"
+								target="FrameMain"
+								onClick="[['Vista interna de la G&oacute;ndola','DFIGWTGondolaVistaInterna.html']]"
+								>
+								temperaturas
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Implicaciones del comportamiento deseado\',\'Implicacionesdelcomportamientode.html\'],[\'Descripci&oacute;n de la funci&oacute;n Cp (coeficiente aerodin&aacute;mico)\',\'DescripcindelafuncinCpcoeficient.html\']]'">
+							<a
+								href="../DFIGTutorial/Implicacionesdelcomportamientode.html"
+								target="FrameMain"
+								onClick="[['Implicaciones del comportamiento deseado','Implicacionesdelcomportamientode.html'],['Descripci&oacute;n de la funci&oacute;n Cp (coeficiente aerodin&aacute;mico)','DescripcindelafuncinCpcoeficient.html']]"
+								>
+								Tip Speed Ratio
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Vibraciones en la Torre\',\'DFIGWTSensorVibracionesTorre.html\']]'">
+							<a
+								href="../DFIGTutorial/DFIGWTSensorVibracionesTorre.html"
+								target="FrameMain"
+								onClick="[['Vibraciones en la Torre','DFIGWTSensorVibracionesTorre.html']]"
+								>
+								Torre
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Implicaciones del comportamiento deseado\',\'Implicacionesdelcomportamientode.html\'],[\'Algoritmo de Seguimiento del Punto de M&aacute;xima Potencia (Maximum Power Point Tracking)\',\'AlgoritmodeSeguimientodelPuntode.html\']]'">
+							<a
+								href="../DFIGTutorial/Implicacionesdelcomportamientode.html"
+								target="FrameMain"
+								onClick="[['Implicaciones del comportamiento deseado','Implicacionesdelcomportamientode.html'],['Algoritmo de Seguimiento del Punto de M&aacute;xima Potencia (Maximum Power Point Tracking)','AlgoritmodeSeguimientodelPuntode.html']]"
+								>
+								Tren de Potencia
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Conceptos basicos de Aerogeneradores\',\'ConceptosbasicosdeAerogeneradore.html\'],[\'Circuitos auxiliares para el control de la respuesta a Grid Codes: Crowbars\',\'ConvertidoresCrobars.html\']]'">
+							<a
+								href="../DFIGTutorial/ConceptosbasicosdeAerogeneradore.html"
+								target="FrameMain"
+								onClick="[['Conceptos basicos de Aerogeneradores','ConceptosbasicosdeAerogeneradore.html'],['Circuitos auxiliares para el control de la respuesta a Grid Codes: Crowbars','ConvertidoresCrobars.html']]"
+								>
+								Tren de Potencia
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Implicaciones del comportamiento deseado\',\'Implicacionesdelcomportamientode.html\'],[\'Descripci&oacute;n de la funci&oacute;n Cp (coeficiente aerodin&aacute;mico)\',\'DescripcindelafuncinCpcoeficient.html\'],[\'Algoritmo de Seguimiento del Punto de M&aacute;xima Potencia (Maximum Power Point Tracking)\',\'AlgoritmodeSeguimientodelPuntode.html\']]'">
+							<a
+								href="../DFIGTutorial/Implicacionesdelcomportamientode.html"
+								target="FrameMain"
+								onClick="[['Implicaciones del comportamiento deseado','Implicacionesdelcomportamientode.html'],['Descripci&oacute;n de la funci&oacute;n Cp (coeficiente aerodin&aacute;mico)','DescripcindelafuncinCpcoeficient.html'],['Algoritmo de Seguimiento del Punto de M&aacute;xima Potencia (Maximum Power Point Tracking)','AlgoritmodeSeguimientodelPuntode.html']]"
+								>
+								TSR
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Conceptos basicos de Aerogeneradores\',\'ConceptosbasicosdeAerogeneradore.html\']]'">
+							<a
+								href="../DFIGTutorial/ConceptosbasicosdeAerogeneradore.html"
+								target="FrameMain"
+								onClick="[['Conceptos basicos de Aerogeneradores','ConceptosbasicosdeAerogeneradore.html']]"
+								>
+								upwind
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Razones para el uso de Aerogeneradores de Velocidad Variable\',\'PorqueAerogenVeloVariable.html\']]'">
+							<a
+								href="../DFIGTutorial/PorqueAerogenVeloVariable.html"
+								target="FrameMain"
+								onClick="[['Razones para el uso de Aerogeneradores de Velocidad Variable','PorqueAerogenVeloVariable.html']]"
+								>
+								valores de consigna
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Mecanismo de frenos\',\'DFIGWTGondolaFrenos.html\']]'">
+							<a
+								href="../DFIGTutorial/DFIGWTGondolaFrenos.html"
+								target="FrameMain"
+								onClick="[['Mecanismo de frenos','DFIGWTGondolaFrenos.html']]"
+								>
+								Valve
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Mecanismo de frenos\',\'DFIGWTGondolaFrenos.html\']]'">
+							<a
+								href="../DFIGTutorial/DFIGWTGondolaFrenos.html"
+								target="FrameMain"
+								onClick="[['Mecanismo de frenos','DFIGWTGondolaFrenos.html']]"
+								>
+								válvula
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Indicadores de velocidades en el Tren de Potencia\',\'DFIGWTGondolaIndicadoresRPMs.html\']]'">
+							<a
+								href="../DFIGTutorial/DFIGWTGondolaIndicadoresRPMs.html"
+								target="FrameMain"
+								onClick="[['Indicadores de velocidades en el Tren de Potencia','DFIGWTGondolaIndicadoresRPMs.html']]"
+								>
+								VCU
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Especificaci&oacute;n del viento y vista cenital de la G&oacute;ndola\',\'Especificacindelvientoyvistaceni.html\']]'">
+							<a
+								href="../DFIGTutorial/Especificacindelvientoyvistaceni.html"
+								target="FrameMain"
+								onClick="[['Especificaci&oacute;n del viento y vista cenital de la G&oacute;ndola','Especificacindelvientoyvistaceni.html']]"
+								>
+								veleta
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Conceptos basicos de Aerogeneradores\',\'ConceptosbasicosdeAerogeneradore.html\'],[\'Implicaciones para el Convertidor El&eacute;ctrico\',\'ImplicacionesVeloVariableConvert.html\'],[\'Modos de funcionamiento\',\'ConvertidoresBackToBackModosFunc.html\']]'">
+							<a
+								href="../DFIGTutorial/ConceptosbasicosdeAerogeneradore.html"
+								target="FrameMain"
+								onClick="[['Conceptos basicos de Aerogeneradores','ConceptosbasicosdeAerogeneradore.html'],['Implicaciones para el Convertidor El&eacute;ctrico','ImplicacionesVeloVariableConvert.html'],['Modos de funcionamiento','ConvertidoresBackToBackModosFunc.html']]"
+								>
+								velocidad de sincronismo
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Acerca de este documento\',\'Acercadeestedocumento.html\']]'">
+							<a
+								href="../DFIGTutorial/Acercadeestedocumento.html"
+								target="FrameMain"
+								onClick="[['Acerca de este documento','Acercadeestedocumento.html']]"
+								>
+								Velocidad Variable
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Vibraciones en la Torre\',\'DFIGWTSensorVibracionesTorre.html\']]'">
+							<a
+								href="../DFIGTutorial/DFIGWTSensorVibracionesTorre.html"
+								target="FrameMain"
+								onClick="[['Vibraciones en la Torre','DFIGWTSensorVibracionesTorre.html']]"
+								>
+								Vibrations sensor
+							</a>
+
+				</li>
+
+<li class="folder" data="click:'[[\'Razones para el uso de Aerogeneradores de Velocidad Variable\',\'PorqueAerogenVeloVariable.html\']]'">
+							<a
+								href="../DFIGTutorial/PorqueAerogenVeloVariable.html"
+								target="FrameMain"
+								onClick="[['Razones para el uso de Aerogeneradores de Velocidad Variable','PorqueAerogenVeloVariable.html']]"
+								>
+								Viento
+							</a>
+
+				<ul><li class="file" data="click:'[[\'Especificaci&oacute;n del viento y vista cenital de la G&oacute;ndola\',\'Especificacindelvientoyvistaceni.html\']]'">
+							<a
+								href="../DFIGTutorial/Especificacindelvientoyvistaceni.html"
+								target="FrameMain"
+								onClick="[['Especificaci&oacute;n del viento y vista cenital de la G&oacute;ndola','Especificacindelvientoyvistaceni.html']]"
+								>
+								dirección
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Razones para el uso de Aerogeneradores de Velocidad Variable\',\'PorqueAerogenVeloVariable.html\']]'">
+							<a
+								href="../DFIGTutorial/PorqueAerogenVeloVariable.html"
+								target="FrameMain"
+								onClick="[['Razones para el uso de Aerogeneradores de Velocidad Variable','PorqueAerogenVeloVariable.html']]"
+								>
+								ráfagas
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Relaci&oacute;n entre los aerogeneradores y su lugar de emplazamiento\',\'Relacionentrelosaerogeneradoresy.html\'],[\'Razones para el uso de Aerogeneradores de Velocidad Variable\',\'PorqueAerogenVeloVariable.html\']]'">
+							<a
+								href="../DFIGTutorial/Relacionentrelosaerogeneradoresy.html"
+								target="FrameMain"
+								onClick="[['Relaci&oacute;n entre los aerogeneradores y su lugar de emplazamiento','Relacionentrelosaerogeneradoresy.html'],['Razones para el uso de Aerogeneradores de Velocidad Variable','PorqueAerogenVeloVariable.html']]"
+								>
+								ráfagas de viento
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Razones para el uso de Aerogeneradores de Velocidad Variable\',\'PorqueAerogenVeloVariable.html\']]'">
+							<a
+								href="../DFIGTutorial/PorqueAerogenVeloVariable.html"
+								target="FrameMain"
+								onClick="[['Razones para el uso de Aerogeneradores de Velocidad Variable','PorqueAerogenVeloVariable.html']]"
+								>
+								stochastic wind
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Potencias mec&aacute;nica y el&eacute;ctrica vs Velocidad de Rotor\',\'DFIGWTTCPanelPotenciaVSrpms.html\']]'">
+							<a
+								href="../DFIGTutorial/DFIGWTTCPanelPotenciaVSrpms.html"
+								target="FrameMain"
+								onClick="[['Potencias mec&aacute;nica y el&eacute;ctrica vs Velocidad de Rotor','DFIGWTTCPanelPotenciaVSrpms.html']]"
+								>
+								velocidad
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Razones para el uso de Aerogeneradores de Velocidad Variable\',\'PorqueAerogenVeloVariable.html\']]'">
+							<a
+								href="../DFIGTutorial/PorqueAerogenVeloVariable.html"
+								target="FrameMain"
+								onClick="[['Razones para el uso de Aerogeneradores de Velocidad Variable','PorqueAerogenVeloVariable.html']]"
+								>
+								wind shear
+							</a>
+
+				</li></ul></li>
+
+<li class="file" data="click:'[[\'Relaci&oacute;n entre los aerogeneradores y su lugar de emplazamiento\',\'Relacionentrelosaerogeneradoresy.html\']]'">
+							<a
+								href="../DFIGTutorial/Relacionentrelosaerogeneradoresy.html"
+								target="FrameMain"
+								onClick="[['Relaci&oacute;n entre los aerogeneradores y su lugar de emplazamiento','Relacionentrelosaerogeneradoresy.html']]"
+								>
+								viento más alto esperado
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Relaci&oacute;n entre los aerogeneradores y su lugar de emplazamiento\',\'Relacionentrelosaerogeneradoresy.html\'],[\'Razones para el uso de Aerogeneradores de Velocidad Variable\',\'PorqueAerogenVeloVariable.html\']]'">
+							<a
+								href="../DFIGTutorial/Relacionentrelosaerogeneradoresy.html"
+								target="FrameMain"
+								onClick="[['Relaci&oacute;n entre los aerogeneradores y su lugar de emplazamiento','Relacionentrelosaerogeneradoresy.html'],['Razones para el uso de Aerogeneradores de Velocidad Variable','PorqueAerogenVeloVariable.html']]"
+								>
+								viento nominal
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Relaci&oacute;n entre los aerogeneradores y su lugar de emplazamiento\',\'Relacionentrelosaerogeneradoresy.html\'],[\'Razones para el uso de Aerogeneradores de Velocidad Variable\',\'PorqueAerogenVeloVariable.html\']]'">
+							<a
+								href="../DFIGTutorial/Relacionentrelosaerogeneradoresy.html"
+								target="FrameMain"
+								onClick="[['Relaci&oacute;n entre los aerogeneradores y su lugar de emplazamiento','Relacionentrelosaerogeneradoresy.html'],['Razones para el uso de Aerogeneradores de Velocidad Variable','PorqueAerogenVeloVariable.html']]"
+								>
+								Viento Nominal
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Relaci&oacute;n entre los aerogeneradores y su lugar de emplazamiento\',\'Relacionentrelosaerogeneradoresy.html\']]'">
+							<a
+								href="../DFIGTutorial/Relacionentrelosaerogeneradoresy.html"
+								target="FrameMain"
+								onClick="[['Relaci&oacute;n entre los aerogeneradores y su lugar de emplazamiento','Relacionentrelosaerogeneradoresy.html']]"
+								>
+								viento promedio
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Vistas de la G&oacute;ndola\',\'DFIGWTGondola.html\']]'">
+							<a
+								href="../DFIGTutorial/DFIGWTGondola.html"
+								target="FrameMain"
+								onClick="[['Vistas de la G&oacute;ndola','DFIGWTGondola.html']]"
+								>
+								Vista 3D
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Armario el&eacute;ctrico\',\'DFIGArmarioElectrico.html\']]'">
+							<a
+								href="../DFIGTutorial/DFIGArmarioElectrico.html"
+								target="FrameMain"
+								onClick="[['Armario el&eacute;ctrico','DFIGArmarioElectrico.html']]"
+								>
+								Vista interna
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Vistas de la G&oacute;ndola\',\'DFIGWTGondola.html\']]'">
+							<a
+								href="../DFIGTutorial/DFIGWTGondola.html"
+								target="FrameMain"
+								onClick="[['Vistas de la G&oacute;ndola','DFIGWTGondola.html']]"
+								>
+								vista internal
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Razones para el uso de Aerogeneradores de Velocidad Variable\',\'PorqueAerogenVeloVariable.html\']]'">
+							<a
+								href="../DFIGTutorial/PorqueAerogenVeloVariable.html"
+								target="FrameMain"
+								onClick="[['Razones para el uso de Aerogeneradores de Velocidad Variable','PorqueAerogenVeloVariable.html']]"
+								>
+								Voltage-Fault-Ride-Through
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Relaci&oacute;n entre los aerogeneradores y su lugar de emplazamiento\',\'Relacionentrelosaerogeneradoresy.html\']]'">
+							<a
+								href="../DFIGTutorial/Relacionentrelosaerogeneradoresy.html"
+								target="FrameMain"
+								onClick="[['Relaci&oacute;n entre los aerogeneradores y su lugar de emplazamiento','Relacionentrelosaerogeneradoresy.html']]"
+								>
+								Weibull
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Razones para el uso de Aerogeneradores de Velocidad Variable\',\'PorqueAerogenVeloVariable.html\']]'">
+							<a
+								href="../DFIGTutorial/PorqueAerogenVeloVariable.html"
+								target="FrameMain"
+								onClick="[['Razones para el uso de Aerogeneradores de Velocidad Variable','PorqueAerogenVeloVariable.html']]"
+								>
+								wind shear
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Especificaci&oacute;n del viento y vista cenital de la G&oacute;ndola\',\'Especificacindelvientoyvistaceni.html\']]'">
+							<a
+								href="../DFIGTutorial/Especificacindelvientoyvistaceni.html"
+								target="FrameMain"
+								onClick="[['Especificaci&oacute;n del viento y vista cenital de la G&oacute;ndola','Especificacindelvientoyvistaceni.html']]"
+								>
+								wind vane
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Conceptos basicos de Aerogeneradores\',\'ConceptosbasicosdeAerogeneradore.html\']]'">
+							<a
+								href="../DFIGTutorial/ConceptosbasicosdeAerogeneradore.html"
+								target="FrameMain"
+								onClick="[['Conceptos basicos de Aerogeneradores','ConceptosbasicosdeAerogeneradore.html']]"
+								>
+								WT
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Especificaci&oacute;n del viento y vista cenital de la G&oacute;ndola\',\'Especificacindelvientoyvistaceni.html\']]'">
+							<a
+								href="../DFIGTutorial/Especificacindelvientoyvistaceni.html"
+								target="FrameMain"
+								onClick="[['Especificaci&oacute;n del viento y vista cenital de la G&oacute;ndola','Especificacindelvientoyvistaceni.html']]"
+								>
+								yawing
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Mecanismo de frenos\',\'DFIGWTGondolaFrenos.html\']]'">
+							<a
+								href="../DFIGTutorial/DFIGWTGondolaFrenos.html"
+								target="FrameMain"
+								onClick="[['Mecanismo de frenos','DFIGWTGondolaFrenos.html']]"
+								>
+								zapata
+							</a>
+
+				</li></ul>
+		</div>
+		
+		
+		
+		<div id="tab-search">
+			<form onsubmit="PerformSearch(); return false;">
+				<label for="search_value">B&uacute;squeda:</label>
+				<input id="search_value" name="search_value"></input>
+				<input type="submit" value="B&uacute;squeda"/>
+			</form>
+			<div id="search_results"></div>
+		</div>
+		
+		
+		
+	</div>
+    
+</body>
+
+</html>
+

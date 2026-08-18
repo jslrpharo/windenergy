@@ -1,0 +1,977 @@
+﻿
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+	<title>RotorResistorContolledWT- Table of Contents</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="HelpNDoc Professional Edition 5.9.0.711">
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/silver-theme/jquery-ui-1.8.12.custom.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/dynatree/chm/ui.dynatree.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+    <link type="text/css" rel="stylesheet" media="all" href="css/toc.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#tabs .ui-widget-header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/jquery-ui-1.8.17.custom.min.js"></script>
+    <script type="text/javascript" src="js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="js/jquery.dynatree.min.js"></script>
+	<script type="text/javascript" src="js/hndjsse.js"></script>
+	<script type="text/javascript">
+	
+		window.bSearchDataLoaded = false;
+		var sHelpIdToActivate = '';
+
+		var HND_CURRENT_TUTORIAL = "RRCTutorial";
+		var HND_TUTORIAL_ENTRIES = {"DSASTutorial":"DSASTutorial.html","DSASExercises":"DSASExercises.html","RRCTutorial":"RotorResistorContolledWT.html","RRCExercises":"RotorResistorContolledWT.html","DFIGTutorial":"DFIGWTSimulator.html","DFIGExercises":"DFIGWTSimulator.html","WFSSCADA":"SimuladorParqueEolico.html","Experiments":"Experiments.html"};
+		function openTopic(href) {
+		    if (!href || href == "#") return;
+		    if (href.indexOf("../") !== 0) { window.open(href, "FrameMain"); return; }
+		    var sRest = href.substring(3);
+		    var nSlash = sRest.indexOf("/");
+		    if (nSlash < 0) { window.open(href, "FrameMain"); return; }
+		    var sTutorial = sRest.substring(0, nSlash);
+		    var sFile = sRest.substring(nSlash + 1);
+		    if (sTutorial === HND_CURRENT_TUTORIAL) { window.open(href, "FrameMain"); return; }
+		    var sEntry = HND_TUTORIAL_ENTRIES[sTutorial];
+		    var nQ = sFile.indexOf("?");
+		    var sPath = (nQ >= 0) ? sFile.substring(0, nQ) : sFile;
+		    var sQuery = (nQ >= 0) ? sFile.substring(nQ) : "";
+		    if (sQuery.indexOf("?search=") === 0) sQuery = "";
+		    if (!sEntry) {
+		        window.open("../" + sTutorial + "/" + sPath + sQuery, "_blank");
+		    } else if (sPath === sEntry) {
+		        window.open("../" + sTutorial + "/" + sPath + sQuery, "_blank");
+		    } else {
+		        window.open("../" + sTutorial + "/" + sEntry + "?" + sPath + sQuery, "_blank");
+		    }
+		}
+
+	
+		$(document).ready(function()
+		{
+			var sAnchorName = '';
+			try { sAnchorName = top.location.href.substring(top.location.href.lastIndexOf("#") + 1, top.location.href.length); }
+			catch(err) { sAnchorName = ''; }
+			var nSelectedTab = 0;
+			if (sAnchorName == '_index') nSelectedTab = 1
+			else if (sAnchorName == '_search') nSelectedTab = 2;			
+			$("#tabs").tabs({
+				selected: nSelectedTab,
+				select: function(event, ui) { HideKwPopup(); }
+			});
+			
+			// Toc
+			if ($("#tab-toc").length) {
+				$("#tab-toc").dynatree({
+					clickFolderMode: 1,
+					debugLevel: 0,
+					imagePath: 'css/dynatree/chm/',
+					onActivate: function(node){
+						if ($("#tab-keywords").length && $("#tab-keywords").dynatree && $("#tab-keywords").dynatree("getTree") && $("#tab-keywords").dynatree("getTree").activateKey)
+							$("#tab-keywords").dynatree("getTree").activateKey(null);
+						if(node.data.href && node.data.href != '#'){
+							openTopic(node.data.href);
+						}
+					}
+				});
+				// Expand all nodes if required
+				
+					$("#tab-toc").dynatree("getRoot").visit(function(node){
+						node.expand(true);
+					});
+				
+				// Select the active help id
+				if (sHelpIdToActivate != '') $("#tab-toc").dynatree("getTree").activateKey(sHelpIdToActivate);
+			}
+			
+			// Keywords
+			
+			if ($("#tab-keywords").length) {
+				$("#tab-keywords").dynatree({
+					clickFolderMode: 1,
+					debugLevel: 0,
+					imagePath: 'css/dynatree/chm/',
+					onClick: function(node, event){
+						HideKwPopup();
+						if (node.data && node.data.click)
+						{
+							var aRefList = null;
+							eval('aRefList=' + node.data.click);
+							if (ShowKwPopup(node.li, aRefList))
+							{
+								if ($("#tab-toc") && $("#tab-toc").dynatree && $("#tab-toc").dynatree("getTree") && $("#tab-toc").dynatree("getTree").activateKey)
+									$("#tab-toc").dynatree("getTree").activateKey(null);
+								if(node.data.href && node.data.href != '#'){
+									openTopic(node.data.href);
+								}
+							}
+						}
+					}
+				});
+				// Expand all nodes if required
+				
+					$("#tab-keywords").dynatree("getRoot").visit(function(node){
+						node.expand(true);
+					});
+				
+			}
+			
+			// Load search data
+			(function() {
+				var se = document.createElement('script'); se.type = 'text/javascript'; se.async = true;
+				se.src = '../js/hndsd.js';
+				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(se, s);
+			})();
+		});
+		
+		$('body').click(function() {
+			HideKwPopup();
+		});
+		
+		function SelectTocItem(sHelpId)
+		{
+			if ($("#tab-toc").length && $("#tab-toc").dynatree && $("#tab-toc").dynatree("getTree") && $("#tab-toc").dynatree("getTree").getNodeByKey) {
+				var aNode = $("#tab-toc").dynatree("getTree").getNodeByKey(sHelpId);
+				if (aNode) {
+					aNode.activateSilently();  
+				}
+			}
+			else {
+				sHelpIdToActivate = sHelpId;
+			}
+		}
+window.addEventListener('message', function(e) {
+	var d = e.data;
+	if (d && d.type === 'HND_SELECT' && d.id) {
+		SelectTocItem(d.id);
+	}
+});
+
+		
+		function HideKwPopup()
+		{
+			if($("#popupMenu")) $("#popupMenu").remove();
+		}
+		
+		function ShowKwPopup(oSender, aLinks)
+		{
+			HideKwPopup();
+			if (!aLinks || !aLinks.length || aLinks.length == 0) return false
+			else if (aLinks.length == 1) return true
+			else
+			{
+				var oParentDiv = document.createElement("DIV");
+				oParentDiv.id = "popupMenu";
+				var oLink = null;
+				// Close button
+				oLink = document.createElement("SPAN");
+				oLink.className = "close-button";
+				oLink.innerHTML = "X";
+				oLink.href = "#";
+				oLink.onclick = HideKwPopup;
+				oParentDiv.appendChild(oLink);
+				// Items
+				for (var nCnt=0; nCnt<aLinks.length; nCnt++)
+				{
+					oLink = document.createElement("A");
+					oLink.innerHTML = aLinks[nCnt][0];
+					oLink.href = '../' + HND_CURRENT_TUTORIAL + '/' + aLinks[nCnt][1];
+					oLink.target = "FrameMain";
+					oLink.onclick = HideKwPopup;
+					oParentDiv.appendChild(oLink);
+				}
+				document.body.appendChild(oParentDiv);
+				var pos = $(oSender).offset(); 
+				var height = $(oSender).height();
+				$(oParentDiv).css({
+					"left": (pos.left+20) + "px",
+					"top": (pos.top + height + 5) + "px"
+				});
+				$(oParentDiv).show();
+				return false;
+			}
+		}
+		
+		function PerformSearch()
+		{
+			if (!window.bSearchDataLoaded) {
+				$("#search_results").html("Search engine data hasn't been fully loaded yet or an error occurred while loading it. This usually happens when documentation is browsed locally.");
+				return;
+			}
+			sValue = $("#search_value").val();
+			$("#search_results").html('Searching...');
+			var oSearchEngine = new HndJsSe;
+			oSearchEngine.ParseInput(sValue);			
+			oSearchEngine.PerformSearch();
+			if (!oSearchEngine.aResults || !oSearchEngine.aResults.length)
+			{
+				$("#search_results").html('No results found.');
+			}
+			else
+			{
+				$("#search_results").html('<div id="search_results_content"></div>');
+				var oUl = $("#search_results_content").append("<ul id='lr'></ul>").find("ul");
+				for (var nCnt = 0; nCnt < oSearchEngine.aResults.length; nCnt++)
+				{
+					if (oSearchEngine.aResults[nCnt][0] < aTl.length)
+					{
+						oUl.append("<li><a href='" + aTl[oSearchEngine.aResults[nCnt][0]][0] + "?search=" + escape(sValue) + "' target='FrameMain'>" + unescape(aTl[oSearchEngine.aResults[nCnt][0]][1]) + "</a></li>");
+					}
+				}
+				// Tree
+				$("#search_results_content").dynatree({
+					clickFolderMode: 1,
+					debugLevel: 0,
+					imagePath: 'css/dynatree/chm/',
+					onActivate: function(node){
+						if ($("#search_results_content") && $("#search_results_content").dynatree && $("#search_results_content").dynatree("getTree") && $("#search_results_content").dynatree("getTree").activateKey)
+							$("#search_results_content").dynatree("getTree").activateKey(null);
+						if(node.data.href && node.data.href != '#'){
+							openTopic(node.data.href);
+						}
+					}
+				});
+			}
+		}
+	</script>
+</head>
+
+<body>
+
+	<div id="tabs">
+		<ul>
+			
+				<li><a href="#tab-toc">Contents</a></li>
+			
+				<li><a href="#tab-keywords">Index</a></li>
+			
+				<li><a href="#tab-search">Search</a></li>
+			
+		</ul>
+		
+		<div id="tab-toc">
+			<ul id="toc" class="">
+
+				
+
+						<li class="folder" id="Introduccion" data="">
+							<a
+							href="../RRCTutorial/Introduccion.html"
+							target="FrameMain">
+								Introduccion
+							</a>
+
+				<ul>
+
+						<li class="folder" id="RazonesparaeldesarrollodelosAero" data="">
+							<a
+							href="../RRCTutorial/RazonesparaeldesarrollodelosAero.html"
+							target="FrameMain">
+								Razones para el desarrollo de los Aerogeneradores con control por Resistencia de Rotor
+							</a>
+
+				<ul>
+
+						<li class="" id="Coeficienteaerodinmicodelaspalas" data="icon: '16.png'">
+							<a
+							href="../RRCTutorial/Coeficienteaerodinmicodelaspalas.html"
+							target="FrameMain">
+								Coeficiente aerodin&aacute;mico de las palas
+							</a>
+
+				</li></ul></li>
+
+						<li class="" id="Otrascaractersticasdeestosaeroge" data="icon: '16.png'">
+							<a
+							href="../RRCTutorial/Otrascaractersticasdeestosaeroge.html"
+							target="FrameMain">
+								Otras caracter&iacute;sticas de estos aerogeneradores
+							</a>
+
+				</li></ul></li>
+
+						<li class="folder" id="GeneradoresdeinduccinconResisten" data="">
+							<a
+							href="../RRCTutorial/GeneradoresdeinduccinconResisten.html"
+							target="FrameMain">
+								Generadores de inducci&oacute;n con Resistencia de Rotor variable
+							</a>
+
+				<ul>
+
+						<li class="" id="OtrascaracteristicasdelGenerador" data="icon: '16.png'">
+							<a
+							href="../RRCTutorial/OtrascaracteristicasdelGenerador.html"
+							target="FrameMain">
+								Otras caracteristicas del Generador con Resistencia variable
+							</a>
+
+				</li></ul></li>
+
+						<li class="" id="AlgoritmodecontroldelaResistenci" data="icon: '16.png'">
+							<a
+							href="../RRCTutorial/AlgoritmodecontroldelaResistenci.html"
+							target="FrameMain">
+								Algoritmo de control de la Resistencia del Rotor
+							</a>
+
+				</li>
+
+						<li class="folder" id="Circuitoelectrnicodelcontrol" data="icon: '16.png'">
+							<a
+							href="../RRCTutorial/Circuitoelectrnicodelcontrol.html"
+							target="FrameMain">
+								Circuito electr&oacute;nico del control
+							</a>
+
+				<ul>
+
+						<li class="" id="Grficosdelassealesmssignificativ" data="icon: '16.png'">
+							<a
+							href="../RRCTutorial/Grficosdelassealesmssignificativ.html"
+							target="FrameMain">
+								Gr&aacute;ficos de las se&ntilde;ales m&aacute;s significativas
+							</a>
+
+				</li>
+
+						<li class="" id="IGBTs" data="icon: '16.png'">
+							<a
+							href="../RRCTutorial/IGBTs.html"
+							target="FrameMain">
+								IGBTs
+							</a>
+
+				</li></ul></li>
+
+						<li class="folder" id="ComponentesdelSimuladorRRCWT" data="">
+							<a
+							href="../RRCTutorial/ComponentesdelSimuladorRRCWT.html"
+							target="FrameMain">
+								Componentes del Simulador RRCWT
+							</a>
+
+				<ul>
+
+						<li class="folder" id="Sinpticos" data="">
+							<a
+							href="../RRCTutorial/Sinpticos.html"
+							target="FrameMain">
+								Sin&oacute;pticos
+							</a>
+
+				<ul>
+
+						<li class="folder" id="ControlTerminal" data="">
+							<a
+							href="../RRCTutorial/ControlTerminal.html"
+							target="FrameMain">
+								Control Terminal
+							</a>
+
+				<ul>
+
+						<li class="" id="PotenciavsDeslizamientodelRotor" data="icon: '16.png'">
+							<a
+							href="../RRCTutorial/PotenciavsDeslizamientodelRotor.html"
+							target="FrameMain">
+								Potencia vs Deslizamiento del Rotor
+							</a>
+
+				</li></ul></li>
+
+						<li class="folder" id="Panelelctrico" data="">
+							<a
+							href="../RRCTutorial/Panelelctrico.html"
+							target="FrameMain">
+								Panel el&eacute;ctrico
+							</a>
+
+				<ul>
+
+						<li class="" id="Esquemaelctrico" data="icon: '16.png'">
+							<a
+							href="../RRCTutorial/Esquemaelctrico.html"
+							target="FrameMain">
+								Esquema el&eacute;ctrico
+							</a>
+
+				</li></ul></li>
+
+						<li class="folder" id="SynopticWindNacelle" data="">
+							<a
+							href="../RRCTutorial/SynopticWindNacelle.html"
+							target="FrameMain">
+								SynopticWindNacelle
+							</a>
+
+				<ul>
+
+						<li class="folder" id="Opcionesdemenu" data="">
+							<a
+							href="../RRCTutorial/Opcionesdemenu.html"
+							target="FrameMain">
+								Opciones de men&uacute;
+							</a>
+
+				<ul>
+
+						<li class="" id="Vista" data="icon: '16.png'">
+							<a
+							href="../RRCTutorial/Vista.html"
+							target="FrameMain">
+								Vista
+							</a>
+
+				</li>
+
+						<li class="folder" id="Rfagasdeviento" data="">
+							<a
+							href="../RRCTutorial/Rfagasdeviento.html"
+							target="FrameMain">
+								R&aacute;fagas de viento
+							</a>
+
+				<ul>
+
+						<li class="" id="Cmodefinirrfagas" data="icon: '16.png'">
+							<a
+							href="../RRCTutorial/Cmodefinirrfagas.html"
+							target="FrameMain">
+								C&oacute;mo definir r&aacute;fagas
+							</a>
+
+				</li></ul></li></ul></li></ul></li>
+
+						<li class="" id="SynopticDriveTrain" data="icon: '16.png'">
+							<a
+							href="../RRCTutorial/SynopticDriveTrain.html"
+							target="FrameMain">
+								SynopticDriveTrain
+							</a>
+
+				</li></ul></li></ul></li>
+
+						
+				
+				</ul>
+		</div>
+		
+		
+		
+		<div id="tab-keywords">
+			<ul id="keywords"><li class="file" data="click:'[[\'SynopticWindNacelle\',\'SynopticWindNacelle.html\']]'">
+							<a
+								href="../RRCTutorial/SynopticWindNacelle.html"
+								target="FrameMain"
+								onClick="[['SynopticWindNacelle','SynopticWindNacelle.html']]"
+								>
+								angulo de la pala
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Panel el&eacute;ctrico\',\'Panelelctrico.html\']]'">
+							<a
+								href="../RRCTutorial/Panelelctrico.html"
+								target="FrameMain"
+								onClick="[['Panel el&eacute;ctrico','Panelelctrico.html']]"
+								>
+								banco de condensadores
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Esquema el&eacute;ctrico\',\'Esquemaelctrico.html\'],[\'Panel el&eacute;ctrico\',\'Panelelctrico.html\']]'">
+							<a
+								href="../RRCTutorial/Esquemaelctrico.html"
+								target="FrameMain"
+								onClick="[['Esquema el&eacute;ctrico','Esquemaelctrico.html'],['Panel el&eacute;ctrico','Panelelctrico.html']]"
+								>
+								Banco de condensadores
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Esquema el&eacute;ctrico\',\'Esquemaelctrico.html\']]'">
+							<a
+								href="../RRCTutorial/Esquemaelctrico.html"
+								target="FrameMain"
+								onClick="[['Esquema el&eacute;ctrico','Esquemaelctrico.html']]"
+								>
+								Bypass
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'SynopticWindNacelle\',\'SynopticWindNacelle.html\']]'">
+							<a
+								href="../RRCTutorial/SynopticWindNacelle.html"
+								target="FrameMain"
+								onClick="[['SynopticWindNacelle','SynopticWindNacelle.html']]"
+								>
+								cables de potencia
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Gr&aacute;ficos de las se&ntilde;ales m&aacute;s significativas\',\'Grficosdelassealesmssignificativ.html\']]'">
+							<a
+								href="../RRCTutorial/Grficosdelassealesmssignificativ.html"
+								target="FrameMain"
+								onClick="[['Gr&aacute;ficos de las se&ntilde;ales m&aacute;s significativas','Grficosdelassealesmssignificativ.html']]"
+								>
+								Ciclo de trabajo
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Razones para el desarrollo de los Aerogeneradores con control por Resistencia de Rotor\',\'RazonesparaeldesarrollodelosAero.html\']]'">
+							<a
+								href="../RRCTutorial/RazonesparaeldesarrollodelosAero.html"
+								target="FrameMain"
+								onClick="[['Razones para el desarrollo de los Aerogeneradores con control por Resistencia de Rotor','RazonesparaeldesarrollodelosAero.html']]"
+								>
+								Cp
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Generadores de inducci&oacute;n con Resistencia de Rotor variable\',\'GeneradoresdeinduccinconResisten.html\'],[\'Potencia vs Deslizamiento del Rotor\',\'PotenciavsDeslizamientodelRotor.html\']]'">
+							<a
+								href="../RRCTutorial/GeneradoresdeinduccinconResisten.html"
+								target="FrameMain"
+								onClick="[['Generadores de inducci&oacute;n con Resistencia de Rotor variable','GeneradoresdeinduccinconResisten.html'],['Potencia vs Deslizamiento del Rotor','PotenciavsDeslizamientodelRotor.html']]"
+								>
+								deslizamiento
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Vista\',\'Vista.html\']]'">
+							<a
+								href="../RRCTutorial/Vista.html"
+								target="FrameMain"
+								onClick="[['Vista','Vista.html']]"
+								>
+								dirección del viento
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Otras caracter&iacute;sticas de estos aerogeneradores\',\'Otrascaractersticasdeestosaeroge.html\'],[\'Algoritmo de control de la Resistencia del Rotor\',\'AlgoritmodecontroldelaResistenci.html\'],[\'SynopticDriveTrain\',\'SynopticDriveTrain.html\']]'">
+							<a
+								href="../RRCTutorial/Otrascaractersticasdeestosaeroge.html"
+								target="FrameMain"
+								onClick="[['Otras caracter&iacute;sticas de estos aerogeneradores','Otrascaractersticasdeestosaeroge.html'],['Algoritmo de control de la Resistencia del Rotor','AlgoritmodecontroldelaResistenci.html'],['SynopticDriveTrain','SynopticDriveTrain.html']]"
+								>
+								DriveTrain
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Gr&aacute;ficos de las se&ntilde;ales m&aacute;s significativas\',\'Grficosdelassealesmssignificativ.html\']]'">
+							<a
+								href="../RRCTutorial/Grficosdelassealesmssignificativ.html"
+								target="FrameMain"
+								onClick="[['Gr&aacute;ficos de las se&ntilde;ales m&aacute;s significativas','Grficosdelassealesmssignificativ.html']]"
+								>
+								DutyCycle
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'C&oacute;mo definir r&aacute;fagas\',\'Cmodefinirrfagas.html\']]'">
+							<a
+								href="../RRCTutorial/Cmodefinirrfagas.html"
+								target="FrameMain"
+								onClick="[['C&oacute;mo definir r&aacute;fagas','Cmodefinirrfagas.html']]"
+								>
+								Editar
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Esquema el&eacute;ctrico\',\'Esquemaelctrico.html\']]'">
+							<a
+								href="../RRCTutorial/Esquemaelctrico.html"
+								target="FrameMain"
+								onClick="[['Esquema el&eacute;ctrico','Esquemaelctrico.html']]"
+								>
+								Esquema de conexion de potencia
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Esquema el&eacute;ctrico\',\'Esquemaelctrico.html\']]'">
+							<a
+								href="../RRCTutorial/Esquemaelctrico.html"
+								target="FrameMain"
+								onClick="[['Esquema el&eacute;ctrico','Esquemaelctrico.html']]"
+								>
+								Esquema eléctrico
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'SynopticWindNacelle\',\'SynopticWindNacelle.html\']]'">
+							<a
+								href="../RRCTutorial/SynopticWindNacelle.html"
+								target="FrameMain"
+								onClick="[['SynopticWindNacelle','SynopticWindNacelle.html']]"
+								>
+								Expandida
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Otras caracteristicas del Generador con Resistencia variable\',\'OtrascaracteristicasdelGenerador.html\'],[\'Panel el&eacute;ctrico\',\'Panelelctrico.html\'],[\'Esquema el&eacute;ctrico\',\'Esquemaelctrico.html\']]'">
+							<a
+								href="../RRCTutorial/OtrascaracteristicasdelGenerador.html"
+								target="FrameMain"
+								onClick="[['Otras caracteristicas del Generador con Resistencia variable','OtrascaracteristicasdelGenerador.html'],['Panel el&eacute;ctrico','Panelelctrico.html'],['Esquema el&eacute;ctrico','Esquemaelctrico.html']]"
+								>
+								factor de potencia
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'C&oacute;mo definir r&aacute;fagas\',\'Cmodefinirrfagas.html\']]'">
+							<a
+								href="../RRCTutorial/Cmodefinirrfagas.html"
+								target="FrameMain"
+								onClick="[['C&oacute;mo definir r&aacute;fagas','Cmodefinirrfagas.html']]"
+								>
+								Forzar
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Vista\',\'Vista.html\']]'">
+							<a
+								href="../RRCTutorial/Vista.html"
+								target="FrameMain"
+								onClick="[['Vista','Vista.html']]"
+								>
+								Giro derech
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Vista\',\'Vista.html\']]'">
+							<a
+								href="../RRCTutorial/Vista.html"
+								target="FrameMain"
+								onClick="[['Vista','Vista.html']]"
+								>
+								Giro Izq
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Gr&aacute;ficos de las se&ntilde;ales m&aacute;s significativas\',\'Grficosdelassealesmssignificativ.html\'],[\'Circuito electr&oacute;nico del control\',\'Circuitoelectrnicodelcontrol.html\']]'">
+							<a
+								href="../RRCTutorial/Grficosdelassealesmssignificativ.html"
+								target="FrameMain"
+								onClick="[['Gr&aacute;ficos de las se&ntilde;ales m&aacute;s significativas','Grficosdelassealesmssignificativ.html'],['Circuito electr&oacute;nico del control','Circuitoelectrnicodelcontrol.html']]"
+								>
+								IGBT
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Panel el&eacute;ctrico\',\'Panelelctrico.html\'],[\'Esquema el&eacute;ctrico\',\'Esquemaelctrico.html\']]'">
+							<a
+								href="../RRCTutorial/Panelelctrico.html"
+								target="FrameMain"
+								onClick="[['Panel el&eacute;ctrico','Panelelctrico.html'],['Esquema el&eacute;ctrico','Esquemaelctrico.html']]"
+								>
+								Interruptor principal
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Panel el&eacute;ctrico\',\'Panelelctrico.html\'],[\'Esquema el&eacute;ctrico\',\'Esquemaelctrico.html\']]'">
+							<a
+								href="../RRCTutorial/Panelelctrico.html"
+								target="FrameMain"
+								onClick="[['Panel el&eacute;ctrico','Panelelctrico.html'],['Esquema el&eacute;ctrico','Esquemaelctrico.html']]"
+								>
+								Main switch
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Razones para el desarrollo de los Aerogeneradores con control por Resistencia de Rotor\',\'RazonesparaeldesarrollodelosAero.html\']]'">
+							<a
+								href="../RRCTutorial/RazonesparaeldesarrollodelosAero.html"
+								target="FrameMain"
+								onClick="[['Razones para el desarrollo de los Aerogeneradores con control por Resistencia de Rotor','RazonesparaeldesarrollodelosAero.html']]"
+								>
+								momento de inercia
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'SynopticWindNacelle\',\'SynopticWindNacelle.html\']]'">
+							<a
+								href="../RRCTutorial/SynopticWindNacelle.html"
+								target="FrameMain"
+								onClick="[['SynopticWindNacelle','SynopticWindNacelle.html']]"
+								>
+								motores de giro de la Góndola
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'SynopticWindNacelle\',\'SynopticWindNacelle.html\']]'">
+							<a
+								href="../RRCTutorial/SynopticWindNacelle.html"
+								target="FrameMain"
+								onClick="[['SynopticWindNacelle','SynopticWindNacelle.html']]"
+								>
+								número de vueltas de los cables de potencia
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'SynopticWindNacelle\',\'SynopticWindNacelle.html\']]'">
+							<a
+								href="../RRCTutorial/SynopticWindNacelle.html"
+								target="FrameMain"
+								onClick="[['SynopticWindNacelle','SynopticWindNacelle.html']]"
+								>
+								orientación de la Góndola
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Generadores de inducci&oacute;n con Resistencia de Rotor variable\',\'GeneradoresdeinduccinconResisten.html\']]'">
+							<a
+								href="../RRCTutorial/GeneradoresdeinduccinconResisten.html"
+								target="FrameMain"
+								onClick="[['Generadores de inducci&oacute;n con Resistencia de Rotor variable','GeneradoresdeinduccinconResisten.html']]"
+								>
+								Par mecánico
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Algoritmo de control de la Resistencia del Rotor\',\'AlgoritmodecontroldelaResistenci.html\']]'">
+							<a
+								href="../RRCTutorial/AlgoritmodecontroldelaResistenci.html"
+								target="FrameMain"
+								onClick="[['Algoritmo de control de la Resistencia del Rotor','AlgoritmodecontroldelaResistenci.html']]"
+								>
+								potencia deseada
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Potencia vs Deslizamiento del Rotor\',\'PotenciavsDeslizamientodelRotor.html\']]'">
+							<a
+								href="../RRCTutorial/PotenciavsDeslizamientodelRotor.html"
+								target="FrameMain"
+								onClick="[['Potencia vs Deslizamiento del Rotor','PotenciavsDeslizamientodelRotor.html']]"
+								>
+								potencia generada
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'SynopticWindNacelle\',\'SynopticWindNacelle.html\'],[\'Opciones de men&uacute;\',\'Opcionesdemenu.html\'],[\'R&aacute;fagas de viento\',\'Rfagasdeviento.html\']]'">
+							<a
+								href="../RRCTutorial/SynopticWindNacelle.html"
+								target="FrameMain"
+								onClick="[['SynopticWindNacelle','SynopticWindNacelle.html'],['Opciones de men&uacute;','Opcionesdemenu.html'],['R&aacute;fagas de viento','Rfagasdeviento.html']]"
+								>
+								ráfagas de viento
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'SynopticWindNacelle\',\'SynopticWindNacelle.html\']]'">
+							<a
+								href="../RRCTutorial/SynopticWindNacelle.html"
+								target="FrameMain"
+								onClick="[['SynopticWindNacelle','SynopticWindNacelle.html']]"
+								>
+								Reducida
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Gr&aacute;ficos de las se&ntilde;ales m&aacute;s significativas\',\'Grficosdelassealesmssignificativ.html\'],[\'Circuito electr&oacute;nico del control\',\'Circuitoelectrnicodelcontrol.html\'],[\'Otras caracteristicas del Generador con Resistencia variable\',\'OtrascaracteristicasdelGenerador.html\']]'">
+							<a
+								href="../RRCTutorial/Grficosdelassealesmssignificativ.html"
+								target="FrameMain"
+								onClick="[['Gr&aacute;ficos de las se&ntilde;ales m&aacute;s significativas','Grficosdelassealesmssignificativ.html'],['Circuito electr&oacute;nico del control','Circuitoelectrnicodelcontrol.html'],['Otras caracteristicas del Generador con Resistencia variable','OtrascaracteristicasdelGenerador.html']]"
+								>
+								slip
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Potencia vs Deslizamiento del Rotor\',\'PotenciavsDeslizamientodelRotor.html\']]'">
+							<a
+								href="../RRCTutorial/PotenciavsDeslizamientodelRotor.html"
+								target="FrameMain"
+								onClick="[['Potencia vs Deslizamiento del Rotor','PotenciavsDeslizamientodelRotor.html']]"
+								>
+								SlipTarget
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Esquema el&eacute;ctrico\',\'Esquemaelctrico.html\']]'">
+							<a
+								href="../RRCTutorial/Esquemaelctrico.html"
+								target="FrameMain"
+								onClick="[['Esquema el&eacute;ctrico','Esquemaelctrico.html']]"
+								>
+								Tiristores
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'SynopticWindNacelle\',\'SynopticWindNacelle.html\']]'">
+							<a
+								href="../RRCTutorial/SynopticWindNacelle.html"
+								target="FrameMain"
+								onClick="[['SynopticWindNacelle','SynopticWindNacelle.html']]"
+								>
+								total wind
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Panel el&eacute;ctrico\',\'Panelelctrico.html\']]'">
+							<a
+								href="../RRCTutorial/Panelelctrico.html"
+								target="FrameMain"
+								onClick="[['Panel el&eacute;ctrico','Panelelctrico.html']]"
+								>
+								UPS
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'SynopticWindNacelle\',\'SynopticWindNacelle.html\']]'">
+							<a
+								href="../RRCTutorial/SynopticWindNacelle.html"
+								target="FrameMain"
+								onClick="[['SynopticWindNacelle','SynopticWindNacelle.html']]"
+								>
+								veleta
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Generadores de inducci&oacute;n con Resistencia de Rotor variable\',\'GeneradoresdeinduccinconResisten.html\']]'">
+							<a
+								href="../RRCTutorial/GeneradoresdeinduccinconResisten.html"
+								target="FrameMain"
+								onClick="[['Generadores de inducci&oacute;n con Resistencia de Rotor variable','GeneradoresdeinduccinconResisten.html']]"
+								>
+								velocidad de sincronismo
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Vista\',\'Vista.html\']]'">
+							<a
+								href="../RRCTutorial/Vista.html"
+								target="FrameMain"
+								onClick="[['Vista','Vista.html']]"
+								>
+								velocidad del viento
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'SynopticWindNacelle\',\'SynopticWindNacelle.html\']]'">
+							<a
+								href="../RRCTutorial/SynopticWindNacelle.html"
+								target="FrameMain"
+								onClick="[['SynopticWindNacelle','SynopticWindNacelle.html']]"
+								>
+								viento
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'SynopticWindNacelle\',\'SynopticWindNacelle.html\']]'">
+							<a
+								href="../RRCTutorial/SynopticWindNacelle.html"
+								target="FrameMain"
+								onClick="[['SynopticWindNacelle','SynopticWindNacelle.html']]"
+								>
+								viento incidente
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Opciones de men&uacute;\',\'Opcionesdemenu.html\'],[\'SynopticWindNacelle\',\'SynopticWindNacelle.html\']]'">
+							<a
+								href="../RRCTutorial/Opcionesdemenu.html"
+								target="FrameMain"
+								onClick="[['Opciones de men&uacute;','Opcionesdemenu.html'],['SynopticWindNacelle','SynopticWindNacelle.html']]"
+								>
+								Vista
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'SynopticWindNacelle\',\'SynopticWindNacelle.html\']]'">
+							<a
+								href="../RRCTutorial/SynopticWindNacelle.html"
+								target="FrameMain"
+								onClick="[['SynopticWindNacelle','SynopticWindNacelle.html']]"
+								>
+								vista cenital de la Góndola
+							</a>
+
+				</li>
+
+<li class="file" data="click:'[[\'Panel el&eacute;ctrico\',\'Panelelctrico.html\']]'">
+							<a
+								href="../RRCTutorial/Panelelctrico.html"
+								target="FrameMain"
+								onClick="[['Panel el&eacute;ctrico','Panelelctrico.html']]"
+								>
+								Vista interna
+							</a>
+
+				</li></ul>
+		</div>
+		
+		
+		
+		<div id="tab-search">
+			<form onsubmit="PerformSearch(); return false;">
+				<label for="search_value">Search:</label>
+				<input id="search_value" name="search_value"></input>
+				<input type="submit" value="Search"/>
+			</form>
+			<div id="search_results"></div>
+		</div>
+		
+		
+		
+	</div>
+    
+</body>
+
+</html>
+

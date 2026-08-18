@@ -1,0 +1,498 @@
+﻿<!DOCTYPE html>
+
+<!-- saved from url=(0016)about:internet -->
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experimentos - Tabla de Contenidos</title>
+    <link rel="icon" type="image/png" href="favicon.ico">
+    <meta name="description" content="Índice de experimentos con aerogeneradores">
+    
+    <link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+    <link type="text/css" rel="stylesheet" media="all" href="css/silver-theme/jquery-ui-1.8.12.custom.css" />
+    <link type="text/css" rel="stylesheet" media="all" href="css/dynatree/chm/ui.dynatree.css" />
+    <link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+    <link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+    <link type="text/css" rel="stylesheet" media="all" href="css/toc.css" />
+    <!--[if lte IE 8]>
+        <link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+    <![endif]-->
+    
+    <style type="text/css">
+        #tabs .ui-widget-header {
+            background-color: #EFEFEF;
+        }
+        
+        body {
+            font-size: 16px;
+        }
+        
+        #tabs {
+            font-size: 16px;
+        }
+        
+        .ui-tabs-nav li {
+            font-size: 16px;
+        }
+        
+        #tab-toc, #tab-keywords, #tab-search {
+            font-size: 16px;
+        }
+        
+        /* Aumentar tamaño de fuente en los enlaces del árbol */
+        #tab-toc a, #tab-keywords a {
+            font-size: 16px !important;
+            white-space: normal !important;  /* Permitir que el texto continúe en la siguiente línea */
+            word-wrap: break-word !important;
+            line-height: 1.4 !important;
+        }
+        
+        /* Ajustar espaciado de los items del árbol */
+        .dynatree-container a {
+            padding: 4px 3px !important;
+            display: inline-block !important;
+            max-width: 95% !important;
+        }
+        
+        .dynatree-title {
+            white-space: normal !important;
+            word-wrap: break-word !important;
+        }
+        
+        ul.dynatree-container li {
+            margin-bottom: 3px !important;
+        }
+        
+        #search_value {
+            font-size: 16px;
+            padding: 6px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        input[type="submit"] {
+            font-size: 16px;
+            padding: 6px 12px;
+            margin-top: 5px;
+        }
+        
+        #search_results {
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        
+        #search_results a {
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        
+        label {
+            font-size: 16px;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+    </style>
+    
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery-ui-1.8.17.custom.min.js"></script>
+    <script type="text/javascript" src="js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="js/jquery.dynatree.min.js"></script>
+    <script type="text/javascript" src="js/hndjsse.js"></script>
+    <script type="text/javascript">
+    
+        window.bSearchDataLoaded = false;
+        var sHelpIdToActivate = '';
+
+		var HND_CURRENT_TUTORIAL = "Experiments";
+		var HND_TUTORIAL_ENTRIES = {"DSASTutorial":"DSASTutorial.html","DSASExercises":"DSASExercises.html","RRCTutorial":"RotorResistorContolledWT.html","RRCExercises":"RotorResistorContolledWT.html","DFIGTutorial":"DFIGWTSimulator.html","DFIGExercises":"DFIGWTSimulator.html","WFSSCADA":"SimuladorParqueEolico.html","Experiments":"Experiments.html"};
+		function openTopic(href) {
+		    if (!href || href == "#") return;
+		    if (href.indexOf("../") !== 0) { window.open(href, "FrameMain"); return; }
+		    var sRest = href.substring(3);
+		    var nSlash = sRest.indexOf("/");
+		    if (nSlash < 0) { window.open(href, "FrameMain"); return; }
+		    var sTutorial = sRest.substring(0, nSlash);
+		    var sFile = sRest.substring(nSlash + 1);
+		    if (sTutorial === HND_CURRENT_TUTORIAL) { window.open(href, "FrameMain"); return; }
+		    var sEntry = HND_TUTORIAL_ENTRIES[sTutorial];
+		    var nQ = sFile.indexOf("?");
+		    var sPath = (nQ >= 0) ? sFile.substring(0, nQ) : sFile;
+		    var sQuery = (nQ >= 0) ? sFile.substring(nQ) : "";
+		    if (sQuery.indexOf("?search=") === 0) sQuery = "";
+		    if (!sEntry) {
+		        window.open("../" + sTutorial + "/" + sPath + sQuery, "_blank");
+		    } else if (sPath === sEntry) {
+		        window.open("../" + sTutorial + "/" + sPath + sQuery, "_blank");
+		    } else {
+		        window.open("../" + sTutorial + "/" + sEntry + "?" + sPath + sQuery, "_blank");
+		    }
+		}
+
+    
+        $(document).ready(function()
+        {
+            var sAnchorName = '';
+            try { sAnchorName = top.location.href.substring(top.location.href.lastIndexOf("#") + 1, top.location.href.length); }
+            catch(err) { sAnchorName = ''; }
+            var nSelectedTab = 0;
+            if (sAnchorName == '_index') nSelectedTab = 1
+            else if (sAnchorName == '_search') nSelectedTab = 2;            
+            $("#tabs").tabs({
+                selected: nSelectedTab,
+                select: function(event, ui) { HideKwPopup(); }
+            });
+            
+            // Toc
+            if ($("#tab-toc").length) {
+                $("#tab-toc").dynatree({
+                    clickFolderMode: 1,
+                    debugLevel: 0,
+                    imagePath: 'css/dynatree/chm/',
+                    onActivate: function(node){
+                        if ($("#tab-keywords").length && $("#tab-keywords").dynatree && $("#tab-keywords").dynatree("getTree") && $("#tab-keywords").dynatree("getTree").activateKey)
+                            $("#tab-keywords").dynatree("getTree").activateKey(null);
+                        if(node.data.href && node.data.href != '#'){
+                            openTopic(node.data.href);
+                        }
+                    }
+                });
+                // Expand all nodes if required
+                $("#tab-toc").dynatree("getRoot").visit(function(node){
+                    node.expand(true);
+                });
+                // Select the active help id
+                if (sHelpIdToActivate != '') $("#tab-toc").dynatree("getTree").activateKey(sHelpIdToActivate);
+            }
+            
+            // Keywords
+            if ($("#tab-keywords").length) {
+                $("#tab-keywords").dynatree({
+                    clickFolderMode: 1,
+                    debugLevel: 0,
+                    imagePath: 'css/dynatree/chm/',
+                    onClick: function(node, event){
+                        HideKwPopup();
+                        if (node.data && node.data.click)
+                        {
+                            var aRefList = null;
+                            eval('aRefList=' + node.data.click);
+                            if (ShowKwPopup(node.li, aRefList))
+                            {
+                                if ($("#tab-toc") && $("#tab-toc").dynatree && $("#tab-toc").dynatree("getTree") && $("#tab-toc").dynatree("getTree").activateKey)
+                                    $("#tab-toc").dynatree("getTree").activateKey(null);
+                                if(node.data.href && node.data.href != '#'){
+                                    openTopic(node.data.href);
+                                }
+                            }
+                        }
+                    }
+                });
+                // Expand all nodes if required
+                $("#tab-keywords").dynatree("getRoot").visit(function(node){
+                    node.expand(true);
+                });
+            }
+            
+            // Load search data
+            (function() {
+                var se = document.createElement('script'); se.type = 'text/javascript'; se.async = true;
+                se.src = '../js/hndsd.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(se, s);
+            })();
+        });
+        
+        $('body').click(function() {
+            HideKwPopup();
+        });
+        
+        function SelectTocItem(sHelpId)
+        {
+            if ($("#tab-toc").length && $("#tab-toc").dynatree && $("#tab-toc").dynatree("getTree") && $("#tab-toc").dynatree("getTree").getNodeByKey) {
+                var aNode = $("#tab-toc").dynatree("getTree").getNodeByKey(sHelpId);
+                if (aNode) {
+                    aNode.activateSilently();  
+                }
+            }
+            else {
+                sHelpIdToActivate = sHelpId;
+            }
+        }
+window.addEventListener('message', function(e) {
+	var d = e.data;
+	if (d && d.type === 'HND_SELECT' && d.id) {
+		SelectTocItem(d.id);
+	}
+});
+
+        
+        function HideKwPopup()
+        {
+            if($("#popupMenu")) $("#popupMenu").remove();
+        }
+        
+        function ShowKwPopup(oSender, aLinks)
+        {
+            HideKwPopup();
+            if (!aLinks || !aLinks.length || aLinks.length == 0) return false
+            else if (aLinks.length == 1) return true
+            else
+            {
+                var oParentDiv = document.createElement("DIV");
+                oParentDiv.id = "popupMenu";
+                var oLink = null;
+                // Close button
+                oLink = document.createElement("SPAN");
+                oLink.className = "close-button";
+                oLink.innerHTML = "X";
+                oLink.href = "#";
+                oLink.onclick = HideKwPopup;
+                oParentDiv.appendChild(oLink);
+                // Items
+                for (var nCnt=0; nCnt<aLinks.length; nCnt++)
+                {
+                    oLink = document.createElement("A");
+                    oLink.innerHTML = aLinks[nCnt][0];
+                    oLink.href = '../' + HND_CURRENT_TUTORIAL + '/' + aLinks[nCnt][1];
+                    oLink.target = "FrameMain";
+                    oLink.onclick = HideKwPopup;
+                    oParentDiv.appendChild(oLink);
+                }
+                document.body.appendChild(oParentDiv);
+                var pos = $(oSender).offset(); 
+                var height = $(oSender).height();
+                $(oParentDiv).css({
+                    "left": (pos.left+20) + "px",
+                    "top": (pos.top + height + 5) + "px"
+                });
+                $(oParentDiv).show();
+                return false;
+            }
+        }
+        
+        function PerformSearch()
+        {
+            if (!window.bSearchDataLoaded) {
+                $("#search_results").html("Los datos del motor de búsqueda aún no se han cargado completamente o se produjo un error al cargarlos. Esto suele ocurrir cuando se navega por la documentación localmente.");
+                return;
+            }
+            sValue = $("#search_value").val();
+            $("#search_results").html('Buscando...');
+            var oSearchEngine = new HndJsSe;
+            oSearchEngine.ParseInput(sValue);            
+            oSearchEngine.PerformSearch();
+            if (!oSearchEngine.aResults || !oSearchEngine.aResults.length)
+            {
+                $("#search_results").html('No se encontraron resultados.');
+            }
+            else
+            {
+                $("#search_results").html('<div id="search_results_content"></div>');
+                var oUl = $("#search_results_content").append("<ul id='lr'></ul>").find("ul");
+                for (var nCnt = 0; nCnt < oSearchEngine.aResults.length; nCnt++)
+                {
+                    if (oSearchEngine.aResults[nCnt][0] < aTl.length)
+                    {
+                        oUl.append("<li><a href='" + aTl[oSearchEngine.aResults[nCnt][0]][0] + "?search=" + escape(sValue) + "' target='FrameMain'>" + unescape(aTl[oSearchEngine.aResults[nCnt][0]][1]) + "</a></li>");
+                    }
+                }
+                // Tree
+                $("#search_results_content").dynatree({
+                    clickFolderMode: 1,
+                    debugLevel: 0,
+                    imagePath: 'css/dynatree/chm/',
+                    onActivate: function(node){
+                        if ($("#search_results_content") && $("#search_results_content").dynatree && $("#search_results_content").dynatree("getTree") && $("#search_results_content").dynatree("getTree").activateKey)
+                            $("#search_results_content").dynatree("getTree").activateKey(null);
+                        if(node.data.href && node.data.href != '#'){
+                            openTopic(node.data.href);
+                        }
+                    }
+                });
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div id="tabs">
+        <ul>
+            <li><a href="#tab-toc">Contenidos</a></li>
+            <li><a href="#tab-keywords">Índice</a></li>
+            <li><a href="#tab-search">Búsqueda</a></li>
+        </ul>
+        
+        <div id="tab-toc">
+            <ul id="toc" class="">
+                <li class="" id="Introduction" data="icon: '16.png'">
+                    <a href="../Experiments/Introduction.html" target="FrameMain">Introducción</a>
+                </li>
+
+                <li class="" id="WhythebladesinaWindTurbineturn" data="icon: '16.png'">
+                    <a href="../Experiments/WhythebladesinaWindTurbineturn.html" target="FrameMain">
+                        ¿Por qué giran las palas de un aerogenerador?
+                    </a>
+                </li>
+
+                <li class="" id="ComparisonofcutinindifferentWind" data="icon: '16.png'">
+                    <a href="../Experiments/ComparisonofcutinindifferentWind.html" target="FrameMain">
+                        Comparación del arranque en diferentes familias de aerogeneradores
+                    </a>
+                </li>
+
+                <li class="" id="ComparisonofPowervsWindcurvesofW" data="icon: '16.png'">
+                    <a href="../Experiments/ComparisonofPowervsWindcurvesofW.html" target="FrameMain">
+                        Comparación de curvas Potencia vs Velocidad del Viento
+                    </a>
+                </li>
+
+                <li class="" id="ObservationoftheNacelleYawoperat" data="icon: '16.png'">
+                    <a href="../Experiments/ObservationoftheNacelleYawoperat.html" target="FrameMain">
+                        Observación de las operaciones de orientación de la góndola
+                    </a>
+                </li>
+
+                <li class="" id="CostofPowerCablesuntwisting" data="icon: '16.png'">
+                    <a href="../Experiments/CostofPowerCablesuntwisting.html" target="FrameMain">
+                        Coste del desenrollamiento de cables de potencia
+                    </a>
+                </li>
+
+                <li class="" id="Responsetowindgusts" data="icon: '16.png'">
+                    <a href="../Experiments/Responsetowindgusts.html" target="FrameMain">
+                        Respuesta a ráfagas de viento
+                    </a>
+                </li>
+
+                <li class="" id="DifferencesintheElectricGenerato" data="icon: '16.png'">
+                    <a href="../Experiments/DifferencesintheElectricGenerato.html" target="FrameMain">
+                        Diferencias en los generadores eléctricos utilizados en aerogeneradores
+                    </a>
+                </li>
+            </ul>
+        </div>
+        
+        <div id="tab-keywords">
+            <ul id="keywords">
+                <li class="file" data="click:'[[\'Observación de las operaciones de orientación de la góndola\',\'ObservationoftheNacelleYawoperat.html\']]'">
+                    <a href="../Experiments/ObservationoftheNacelleYawoperat.html" target="FrameMain">
+                        velocidad actual del viento
+                    </a>
+                </li>
+
+                <li class="file" data="click:'[[\'Comparación del arranque en diferentes familias de aerogeneradores\',\'ComparisonofcutinindifferentWind.html\']]'">
+                    <a href="../Experiments/ComparisonofcutinindifferentWind.html" target="FrameMain">
+                        arranque (cut-in)
+                    </a>
+                </li>
+
+                <li class="file" data="click:'[[\'Respuesta a ráfagas de viento\',\'Responsetowindgusts.html\']]'">
+                    <a href="../Experiments/Responsetowindgusts.html" target="FrameMain">
+                        flicker
+                    </a>
+                </li>
+
+                <li class="file" data="click:'[[\'Respuesta a ráfagas de viento\',\'Responsetowindgusts.html\']]'">
+                    <a href="../Experiments/Responsetowindgusts.html" target="FrameMain">
+                        momento de inercia
+                    </a>
+                </li>
+
+                <li class="file" data="click:'[[\'Observación de las operaciones de orientación de la góndola\',\'ObservationoftheNacelleYawoperat.html\']]'">
+                    <a href="../Experiments/ObservationoftheNacelleYawoperat.html" target="FrameMain">
+                        orientación de la góndola
+                    </a>
+                </li>
+
+                <li class="file" data="click:'[[\'Comparación de curvas Potencia vs Velocidad del Viento\',\'ComparisonofPowervsWindcurvesofW.html\']]'">
+                    <a href="../Experiments/ComparisonofPowervsWindcurvesofW.html" target="FrameMain">
+                        velocidad nominal del viento
+                    </a>
+                </li>
+
+                <li class="file" data="click:'[[\'Observación de las operaciones de orientación de la góndola\',\'ObservationoftheNacelleYawoperat.html\']]'">
+                    <a href="../Experiments/ObservationoftheNacelleYawoperat.html" target="FrameMain">
+                        Norte
+                    </a>
+                </li>
+
+                <li class="file" data="click:'[[\'Respuesta a ráfagas de viento\',\'Responsetowindgusts.html\']]'">
+                    <a href="../Experiments/Responsetowindgusts.html" target="FrameMain">
+                        Pitch
+                    </a>
+                </li>
+
+                <li class="file" data="click:'[[\'Comparación de curvas Potencia vs Velocidad del Viento\',\'ComparisonofPowervsWindcurvesofW.html\']]'">
+                    <a href="../Experiments/ComparisonofPowervsWindcurvesofW.html" target="FrameMain">
+                        curva Potencia versus Velocidad del Viento
+                    </a>
+                </li>
+
+                <li class="file" data="click:'[[\'Introducción\',\'Introduction.html\']]'">
+                    <a href="../Experiments/Introduction.html" target="FrameMain">
+                        bancos de trabajo virtuales
+                    </a>
+                </li>
+
+                <li class="file" data="click:'[[\'Respuesta a ráfagas de viento\',\'Responsetowindgusts.html\']]'">
+                    <a href="../Experiments/Responsetowindgusts.html" target="FrameMain">
+                        ráfagas de viento
+                    </a>
+                </li>
+
+                <li class="file" data="click:'[[\'¿Por qué giran las palas de un aerogenerador?\',\'WhythebladesinaWindTurbineturn.html\']]'">
+                    <a href="../Experiments/WhythebladesinaWindTurbineturn.html" target="FrameMain">
+                        sustentación
+                    </a>
+                </li>
+
+                <li class="file" data="click:'[[\'Coste del desenrollamiento de cables de potencia\',\'CostofPowerCablesuntwisting.html\']]'">
+                    <a href="../Experiments/CostofPowerCablesuntwisting.html" target="FrameMain">
+                        desenrollamiento de cables
+                    </a>
+                </li>
+
+                <li class="file" data="click:'[[\'Diferencias en los generadores eléctricos\',\'DifferencesintheElectricGenerato.html\']]'">
+                    <a href="../Experiments/DifferencesintheElectricGenerato.html" target="FrameMain">
+                        generadores de inducción
+                    </a>
+                </li>
+
+                <li class="file" data="click:'[[\'Diferencias en los generadores eléctricos\',\'DifferencesintheElectricGenerato.html\']]'">
+                    <a href="../Experiments/DifferencesintheElectricGenerato.html" target="FrameMain">
+                        DFIG
+                    </a>
+                </li>
+
+                <li class="file" data="click:'[[\'Comparación del arranque en diferentes familias\',\'ComparisonofcutinindifferentWind.html\']]'">
+                    <a href="../Experiments/ComparisonofcutinindifferentWind.html" target="FrameMain">
+                        DSAS
+                    </a>
+                </li>
+
+                <li class="file" data="click:'[[\'Comparación del arranque en diferentes familias\',\'ComparisonofcutinindifferentWind.html\']]'">
+                    <a href="../Experiments/ComparisonofcutinindifferentWind.html" target="FrameMain">
+                        RRC
+                    </a>
+                </li>
+
+                <li class="file" data="click:'[[\'Observación de las operaciones de orientación de la góndola\',\'ObservationoftheNacelleYawoperat.html\']]'">
+                    <a href="../Experiments/ObservationoftheNacelleYawoperat.html" target="FrameMain">
+                        yaw
+                    </a>
+                </li>
+            </ul>
+        </div>
+        
+        <div id="tab-search">
+            <form onsubmit="PerformSearch(); return false;">
+                <label for="search_value">Buscar:</label>
+                <input id="search_value" name="search_value"></input>
+                <input type="submit" value="Buscar"/>
+            </form>
+            <div id="search_results"></div>
+        </div>
+    </div>
+</body>
+</html>

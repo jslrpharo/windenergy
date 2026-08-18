@@ -1,0 +1,383 @@
+﻿<!DOCTYPE html>
+
+<!-- saved from url=(0016)about:internet -->
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Observación de las operaciones de orientación de la góndola (Yaw)</title>
+    <link rel="icon" type="image/png" href="favicon.ico">
+    <meta name="description" content="Estudio del sistema de orientación de la góndola y los factores que controlan el proceso de yaw">
+    <meta name="keywords" content="yaw, orientación, góndola, nacelle, aerogenerador, viento, control">
+    
+    <link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+    <link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+    <link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+    
+    <style type="text/css">
+        #topic_header {
+            background-color: #EFEFEF;
+        }
+        
+        body {
+            font-size: 15px;
+            line-height: 1.6;
+        }
+        
+        #topic_content {
+            /* Unificado en base.css */
+        }
+        
+        h1 {
+            font-size: 28px;
+            line-height: 1.3;
+        }
+        
+        h2 {
+            font-size: 23px;
+            line-height: 1.4;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        
+        h3 {
+            font-size: 20px;
+            line-height: 1.4;
+        }
+        
+        h4 {
+            font-size: 18px;
+            line-height: 1.4;
+            margin-top: 15px;
+        }
+        
+        p, li {
+            font-size: 16px;
+            margin-bottom: 12px;
+        }
+        
+        .learning-objective {
+            background-color: #fff9e6;
+            border-left: 4px solid #ffcc00;
+            padding: 18px;
+            margin: 18px 0;
+        }
+        
+        .didactic-box {
+            background-color: #f0f8ff;
+            border-left: 4px solid #0066cc;
+            padding: 18px;
+            margin: 18px 0;
+        }
+        
+        .procedure-box {
+            background-color: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 18px;
+            margin: 18px 0;
+        }
+        
+        .important-note {
+            background-color: #ffe6e6;
+            border-left: 4px solid #cc0000;
+            padding: 18px;
+            margin: 18px 0;
+        }
+        
+        .key-concept {
+            font-weight: bold;
+            color: #0066cc;
+        }
+        
+        .technical-detail {
+            background-color: #f5f5f5;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 3px solid #666;
+        }
+    </style>
+    
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/hnd.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            if (top.frames.length == 0) {
+                var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+                top.location.href = "Experiments.html?" + sTopicUrl;
+            } else {
+                (function notifyTOC(nTry)
+                {
+                    nTry = nTry || 0;
+                    try
+                    {
+                        if (top && top.frames && top.frames['FrameTOC'])
+                        {
+                            top.frames['FrameTOC'].postMessage({ type: 'HND_SELECT', id: "ObservationoftheNacelleYawoperat" }, '*');
+                        }
+                    }
+                    catch (e) {}
+                    if (nTry < 10) setTimeout(function() { notifyTOC(nTry + 1); }, 300);
+                })();
+            }
+        });
+    </script>
+<style>*{-webkit-user-select:none!important;-moz-user-select:none!important;user-select:none!important;-webkit-touch-callout:none!important;}img{pointer-events:none!important;}</style><style>@media print{html,body{display:none!important;}}</style></head>
+
+<body>
+    <div id="topic_header">
+        <div id="topic_header_content">
+            <h1 id="topic_header_text">Observación de las operaciones de orientación de la góndola</h1>
+        </div>
+        
+        <div id="topic_header_nav">
+            <a href="../Experiments/ComparisonofPowervsWindcurvesofW.html"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAARhJREFUeNqck19OwzAMxr/AQAMmVZrEv64t3QqDS/DME3fjCpyCG/FAN4Vt7dIloSGN1qqZ1HWrpSiO5e8X25LJx+cX9pja3qQp4WSfOAo9tFkTQE20+Pll2gmgxoGLp8cJFskGhb9tRdXaqs4uQIX+PaIoxG+SQUph/Pe3VyupeJexXl384N1hHPqgS1YFqRCgO798z5LKLwEqGN0i8F3MF2lr30JwC6A89xoj9wYzusIhJrgNABcS8YFiA9CzqQPIT0wVYxzDodOtggKySlKV539wnMHRMyiNpOtMQ3IMrvpHV1BBWMYN5PLizATWTGDDpZUUz5eNAAPRAgPpn5+W4voyWYvVa6iSCJkrTem8TAYi2/X4F2AASu5+SCpdydAAAAAASUVORK5CYII=" alt="Anterior"/></a>
+            <a href="../Experiments/CostofPowerCablesuntwisting.html"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAStJREFUeNqUk1tSgzAUhn86WEcX4APaDi3eNuGzT+7NLbgGHxyf3YiXWnXoRWwoaQ6SktALmhTafwZC/uR8c3LIcW7vHlAhuRidTRsaqFHgn5RBuwMuLs/RrYA0FgvlZ7lZdtoeIjbD2WkX6tsGcdXr5vpKT+4fn1YLykvELyYJ4ZsRgsCHlBLPbx+yXBMN6A+Ykdp/b0yEjt/SkJfe5wqiAUTCANi8YSTQbnka8vr+pSEFQFgAFk9pkPvH3hEymaHXD2UBSMkEWLylwjFBULquwS4ZKI1GESYsxvoIW9ZAKYoY4inH3yJumQGLORIuYPzGcPhjnjP39psuDg/29Hya34eZSI2+cDc0ivbyANl0HfD8QlGaWZvKreuFhBOKWHtH1jZTVbDSXIABACa5nociETrsAAAAAElFTkSuQmCC" alt="Siguiente"/></a>
+        </div>
+        
+        <div class="clear"></div>
+    </div>
+    
+    <div id="topic_content">
+        <div class="learning-objective">
+            <h3>🎯 Objetivos de aprendizaje</h3>
+            <p>Al completar este experimento serás capaz de:</p>
+            <ul>
+                <li>Comprender la función y la importancia del sistema de orientación (yaw) en aerogeneradores</li>
+                <li>Identificar los factores que el sistema de control monitoriza para decidir cuándo orientar la góndola</li>
+                <li>Conocer los diferentes métodos de medición de la desorientación respecto al viento</li>
+                <li>Analizar el proceso de orientación y sus limitaciones operativas</li>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+        </div>
+
+        <h2>Introducción: ¿Por qué es necesaria la orientación?</h2>
+        
+        <div class="didactic-box">
+            <h3>📖 Concepto fundamental: Orientación "upwind"</h3>
+            <p>En los aerogeneradores de tipo <span class="key-concept">"upwind"</span> (con el rotor situado delante de la torre, a barlovento), la góndola debe mantenerse orientada <strong>de cara al viento</strong> para maximizar la captación de energía del viento.</p>
+            <p>Si la góndola no está correctamente orientada:</p>
+            <ul>
+                <li>Se reduce la potencia capturada del viento</li>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+                <li>Disminuye la eficiencia global del aerogenerador</li>
+            </ul>
+        </div>
+
+        <h2>El sistema de orientación (Yaw System)</h2>
+        
+        <p>Para mantener la góndola orientada hacia el viento, los aerogeneradores incorporan un 
+            <a href="acmsl://viewertutorial%20-n%20-rDSASTutorial\Yawingsubsystem.html"><span class="key-concept"> subsistema de orientación (Yaw)</span></a>.</p>
+        <!--p>Para mantener la góndola orientada hacia el viento, los aerogeneradores incorporan un <a href="acmsl://viewertutorial%20-n%20-rDSASTutorial\Yawingsubsystem.html"><span class="key-concept">subsistema de orientación (Yaw)</span></a>.</p-->
+
+        <div class="technical-detail">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+            <ul>
+                <li><strong>Motores de orientación:</strong> Proporcionan la fuerza para girar la góndola</li>
+                <li><strong>Reductores (cajas de engranajes):</strong> Reducen la velocidad y aumentan el par motor</li>
+                <li><strong>Corona dentada:</strong> Montada en la parte superior de la torre</li>
+                <li><strong>Piñones de ataque:</strong> Engranan con la corona para transmitir el movimiento</li>
+                <li><strong>Frenos de orientación:</strong> Mantienen la góndola fija cuando no hay operación de yaw</li>
+                <li><strong>Sistemas de medición:</strong> Sensores que determinan la orientación y dirección del viento</li>
+            </ul>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+		<p>El <span class="key-concept">controlador del aerogenerador</span> monitoriza constantemente varios factores antes de decidir si debe orientar la góndola:</p>
+
+    <h3>1. Desorientación de la góndola respecto a la dirección del viento</h3>
+    
+    <div class="didactic-box">
+        <h3>📐 Métodos de medición de la desorientación</h3>
+        <p>Este valor puede obtenerse de dos formas diferentes:</p>
+        
+        <h4>Método A: Mediante veleta (Wind Vane)</h4>
+        <!--p>Utiliza una <a href="shellcommand%20%20'C:%5CACMSL%5CWindFarmSimulator%5CViewerTutorialsWFS.exe'%20-n%20%20'C:%5CACMSL%5CWindFarmSimulator%5CHelp%5CEnglish%5CDSASWTSimulator%5CWinddirectionwindvane.htmle'"><span class="key-concept">veleta</span></a> montada sobre la góndola:</p-->
+        <p>Utiliza una <a href="acmsl://viewertutorial%20-n%20-rDSASTutorial\MedicindeladireccionDireccionVie.html"><span class="key-concept">veleta</span></a> montada sobre la góndola:</p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+            <li>Mide <strong>directamente</strong> el ángulo de desorientación</li>
+            <li><strong>Ventaja:</strong> Medición directa y sencilla del error de orientación</li>
+            <li><strong>Desventaja:</strong> Puede verse afectada por turbulencias creadas por el propio rotor</li>
+        </ul>
+        
+        <h4>Método B: Mediante anemómetro avanzado + Medición absoluta de orientación</h4>
+        <p>Utiliza mediciones absolutas respecto al Norte geográfico:</p>
+        <ul>
+            <li>Un <strong>anemómetro avanzado</strong> proporciona la dirección del viento (respecto al Norte)</li>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+            <li><strong>Ventaja:</strong> Mayor precisión, menos afectado por turbulencias locales</li>
+            <li><strong>Desventaja:</strong> Requiere que tanto el mecanismo de medición de orientación como el anemómetro estén correctamente <strong>calibrados al Norte</strong></li>
+        </ul>
+    </div>
+
+    <div class="important-note">
+        <h3>⚠️ Importancia de la calibración</h3>
+        <p>Para el Método B es absolutamente crítico que tanto el sistema de medición de orientación de la góndola como el anemómetro estén <strong>debidamente calibrados y orientados al Norte geográfico</strong>.</p>
+        <p>Cualquier error en la calibración se traducirá en un error sistemático en la orientación del aerogenerador.</p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+    
+    <p>El sistema de orientación solo opera cuando la velocidad del viento se encuentra dentro de un rango apropiado, definido por dos límites:</p>
+
+    <div class="technical-detail">
+        <h3>🌬️ Límites de velocidad de viento para operaciones de orientación</h3>
+        <ul>
+            <li><strong>'Mínimo para orientación' (Min for orientation):</strong>
+                <ul>
+                    <li>Si el viento está por debajo de este valor, el sistema no ejecuta orientaciones</li>
+                    <li>Razón: Con vientos muy bajos, la operación consumiría más energía de la que se ganaría</li>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+            </li>
+            <li><strong>'Máximo para arranque' (Max for cutin):</strong>
+                <ul>
+                    <li>Si el viento supera este valor, el aerogenerador puede estar en proceso de parada de emergencia</li>
+                    <li>Las operaciones de orientación se suspenden por motivos de seguridad</li>
+                </ul>
+            </li>
+        </ul>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+ 
+    </div>
+
+    <h3>3. Número de vueltas acumuladas en los cables de potencia</h3>
+    
+    <div class="didactic-box">
+        <h3>🔌 Problemática del enrollamiento de cables</h3>
+        <p>Los <span class="key-concept">cables de potencia</span> transportan la electricidad generada desde el generador eléctrico (ubicado en la góndola, que es giratoria) hasta el punto de conexión a la red eléctrica (ubicado en la base de la torre, que es fija).</p>
+        
+        <p>A medida que la góndola gira siguiendo los cambios en la dirección del viento:</p>
+        <ul>
+            <li>Los cables se van <strong>enrollando sobre sí mismos</strong></li>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+        </ul>
+        
+        <p>Por esta razón, el controlador lleva un <strong>contador del número de vueltas acumuladas</strong> (positivas en un sentido, negativas en el otro). Cuando se alcanza un límite predefinido, el sistema debe ejecutar una <span class="key-concept">operación de desenrollamiento</span>.</p>
+        
+        <!--p>📚 Para más información sobre este proceso, consulta el <a href="shellcommand%20'C:%5CACMSL%5CWindFarmSimulator%5CViewerTutorialsWFS.exe'%20-n%20%20'C:%5CACMSL%5CWindFarmSimulator%5CHelp%5CEnglish%5CDSASWTSimulator%5CYawingofthenacelle.htmle'">tutorial sobre orientación de la góndola</a>.</p-->
+    <p>📚 Para más información sobre este proceso, consulta el <a href="acmsl://viewertutorial%20-n%20-r445341535475746F7269616C5C596177696E676F667468656E6163656C6C652E68746D6C65/">tutorial sobre orientación de la góndola</a>.</p>
+
+    </div>
+
+    <h3>4. Estado del aerogenerador</h3>
+    
+    <p>El comportamiento del sistema de orientación depende del estado operativo del aerogenerador:</p>
+
+    <div class="technical-detail">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+            <li><strong>En estado de Producción:</strong>
+                <ul>
+                    <li>El aerogenerador está generando electricidad</li>
+                    <li>La orientación es prioritaria para maximizar la captación de energía</li>
+                    <li>Los umbrales de desorientación suelen ser más estrictos</li>
+                </ul>
+            </li>
+            <li><strong>En estado Parado:</strong>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+                    <li>La orientación es menos crítica</li>
+                    <li>Puede tolerarse mayor desorientación</li>
+                    <li>Es el momento ideal para realizar desenrollamientos de cables</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <h2>Sesión técnica práctica recomendada</h2>
+    
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+        <p>Para observar en detalle el proceso completo de orientación en condiciones de viento cambiante, se recomienda encarecidamente seguir la sesión técnica:</p>
+        <p>📚 <a href="shellcommand%20'C:%5CACMSL%5CWindFarmSimulator%5CViewerTutorialsWFS.exe'%20-n%20%20'C:%5CACMSL%5CWindFarmSimulator%5CHelp%5CEnglish%5CDSASWTSimulator%5CChangingthewinddirection.htmle'"><strong>"Changing the wind direction"</strong></a> (Cambiando la dirección del viento)</p>
+        
+        <p>En esta sesión práctica podrás:</p>
+        <ul>
+            <li>Observar cómo responde el sistema ante cambios graduales de dirección del viento</li>
+            <li>Analizar los umbrales de actuación del controlador</li>
+            <li>Estudiar el comportamiento durante la acumulación de vueltas en los cables</li>
+            <li>Comprender la interacción entre todos los factores monitorizados</li>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+    </div>
+
+    <h2>Consideraciones operativas importantes</h2>
+    
+    <div class="important-note">
+        <h3>⚡ Aspectos clave de la operación</h3>
+        <ul>
+            <li><strong>Velocidad de orientación:</strong> Típicamente entre 0,3 y 0,5 grados por segundo (muy lenta comparada con la rotación del rotor)</li>
+            <li><strong>Consumo energético:</strong> Los motores de yaw consumen energía eléctrica; orientaciones innecesarias reducen la producción neta</li>
+            <li><strong>Desgaste mecánico:</strong> Cada operación de yaw genera desgaste en engranajes, rodamientos y componentes</li>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+                    <li>Mantener buena orientación (máxima captación de energía)</li>
+                    <li>Minimizar operaciones de yaw (reducir desgaste y consumo)</li>
+                    <li>Evitar alcanzar los límites de enrollamiento de cables</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <h2>Actividades de análisis</h2>
+    
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+        <ol>
+            <li><strong>Análisis de umbrales:</strong>
+                <ul>
+                    <li>¿Por qué crees que existe un umbral mínimo de desorientación antes de activar el sistema de yaw?</li>
+                    <li>¿Qué ocurriría si el sistema intentara mantener orientación perfecta (0° de error) constantemente?</li>
+                </ul>
+            </li>
+            <li><strong>Comparación de métodos de medición:</strong>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+                    <li>¿En qué situaciones sería preferible cada método?</li>
+                </ul>
+            </li>
+            <li><strong>Estrategias de desenrollamiento:</strong>
+                <ul>
+                    <li>¿Es mejor desenrollar los cables durante producción o durante parada?</li>
+                    <li>¿Qué factores influyen en esta decisión?</li>
+                </ul>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+                <ul>
+                    <li>Si un emplazamiento tiene vientos muy cambiantes en dirección, ¿cómo ajustarías los parámetros?</li>
+                    <li>Si el viento es muy estable en dirección, ¿qué modificaciones harías?</li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+
+    <h2>Conceptos clave para recordar</h2>
+    
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+        <ul>
+            <li>La orientación correcta de la góndola es esencial para maximizar la captación energética</li>
+            <li>El sistema de yaw es un compromiso entre rendimiento energético, desgaste mecánico y consumo</li>
+            <li>Múltiples factores (desorientación, velocidad de viento, enrollamiento de cables, estado del aerogenerador) deben considerarse antes de decidir orientar</li>
+            <li>Existen dos métodos principales de medición de la desorientación, cada uno con ventajas e inconvenientes</li>
+            <li>El enrollamiento de cables impone límites operativos importantes que requieren operaciones de desenrollamiento</li>
+            <li>La calibración correcta de los sistemas de medición es absolutamente crítica</li>
+            <li>El estado operativo del aerogenerador afecta significativamente a la estrategia de orientación</li>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+</div>
+
+<div id="topic_footer">
+    <div id="topic_footer_content">
+        Copyright &copy; 2017-2025 by AUTOMATED COMPUTING MACHINERY SL. All Rights Reserved.
+    </div>
+</div>
+<script>(function(){['copy','cut','contextmenu','dragstart'].forEach(function(ev){document.addEventListener(ev,function(e){e.preventDefault();},true);});document.onselectstart=function(){return false;};document.ondragstart=function(){return false;};document.addEventListener('keydown',function(e){var k=e.key;if(k==='F12'||k==='PrintScreen'){e.preventDefault();return;}if((e.ctrlKey||e.metaKey)&&e.shiftKey&&(k==='I'||k==='i'||k==='J'||k==='j'||k==='C')){e.preventDefault();return;}if((e.ctrlKey||e.metaKey)&&(k==='u'||k==='U'||k==='s'||k==='S'||k==='a'||k==='A'||k==='p'||k==='P'||k==='c'||k==='C'||k==='v'||k==='V')){e.preventDefault();}},true);})();</script><script>(function(){window.addEventListener("beforeprint",function(){document.documentElement.style.display="none";});window.addEventListener("afterprint",function(){document.documentElement.style.display="";});document.addEventListener("keydown",function(e){var k=(e.key||"").toLowerCase();if(k==="printscreen"||e.keyCode===44||e.which===44){document.documentElement.style.display="none";setTimeout(function(){document.documentElement.style.display="";},300);}},true);})();</script></body>
+</html>
+

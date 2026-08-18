@@ -1,0 +1,140 @@
+﻿
+
+
+<!-- saved from url=(0016)about:internet -->
+
+<!-- saved from url=(0016)about:internet -->
+
+<!-- saved from url=(0016)about:internet -->
+
+<!-- saved from url=(0016)about:internet -->
+<html>
+	
+<head>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+	<title>Algoritmos de control de la orientacion y de desenrolle de Cables de Potencia</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="HelpNDoc Professional Edition 10.7.0.400">
+	<meta name="description" content="" /> 
+	<meta name="keywords" content="operación de orientación, Parameter.ControllerYawing.MaxCableTwistBeforeCutin, , cutin, viento mínimo para proceder al desenrollado de los cables, numero máximo de vueltas de los cables de potencia antes de iniciar la conexión">
+	
+	
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "Introduccion.html?" + sTopicUrl;
+			}
+			else
+			{
+				(function notifyTOC(nTry)
+				{
+					nTry = nTry || 0;
+					try
+					{
+						if (top && top.frames && top.frames['FrameTOC'])
+						{
+							top.frames['FrameTOC'].postMessage({ type: 'HND_SELECT', id: "Yawingofthenacelle" }, '*');
+						}
+					}
+					catch (e) {}
+					if (nTry < 10) setTimeout(function() { notifyTOC(nTry + 1); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	
+<style>*{-webkit-user-select:none!important;-moz-user-select:none!important;user-select:none!important;-webkit-touch-callout:none!important;}img{pointer-events:none!important;}</style><style>@media print{html,body{display:none!important;}}</style></head>
+
+<body>
+
+
+
+	
+		<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Algoritmos de control de la orientacion y de desenrolle de Cables de Potencia</h1>
+				
+				
+				<div id="topic_breadcrumb">
+					<a href="../DSASTutorial/SimDSAS.html">Simulador de Aerogenerador con Active Stall y Dos Velocidades</a> ›› <a href="../DSASTutorial/Simulacion.html">Alcance de la Simulación</a> ›› <a href="../DSASTutorial/Controller.html">Controlador</a> ›› <a href="../DSASTutorial/Algorithms.html">Algoritmos utilizados</a> ›› 
+				</div>
+				
+			</div>
+			
+			<div id="topic_header_nav">
+				
+				
+				<a href="../DSASTutorial/Algorithms.html"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAARpJREFUeNqkkt1Og0AQhQ+mt6YmBn8o4Lb4d+GlD+or+BS+hJcajRdKEVFDCV3BVCFhZDdK2tLdhniSyW5mZ77MnoxxcXkFjej3NFQFG7pmj9kQMQdqqadqHtWNJ6fHzRiPfkirJlkFoKFr4ehwBJ5/y4S4U1XhKYhakGUAMWcfnscwzb+a5DQvZY6I4D+/LkDmAXRg72HIHKQfs9ZYaVnKNwEZh28N5A9A7mAXrmMh4Z9KVxNeyBoBCV7eJUQAyLZMDKwdTNIM6zQpCllbUYUwiklOUF9k9PubMM1tLSCOE9zdZwsmNoZwntFWDdGproHKRKlxEKGLlgEGOqqn2P11Un/h/IxpO69vfP0q3z74//oCZkU3D34EGABoQG6/jBs+/AAAAABJRU5ErkJggg==" alt="Parent"/></a>
+				
+				
+				
+				<a href="../DSASTutorial/Softstarter.html"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAARhJREFUeNqck19OwzAMxr/AQAMmVZrEv64t3QqDS/DME3fjCpyCG/FAN4Vt7dIloSGN1qqZ1HWrpSiO5e8X25LJx+cX9pja3qQp4WSfOAo9tFkTQE20+Pll2gmgxoGLp8cJFskGhb9tRdXaqs4uQIX+PaIoxG+SQUph/Pe3VyupeJexXl384N1hHPqgS1YFqRCgO798z5LKLwEqGN0i8F3MF2lr30JwC6A89xoj9wYzusIhJrgNABcS8YFiA9CzqQPIT0wVYxzDodOtggKySlKV539wnMHRMyiNpOtMQ3IMrvpHV1BBWMYN5PLizATWTGDDpZUUz5eNAAPRAgPpn5+W4voyWYvVa6iSCJkrTem8TAYi2/X4F2AASu5+SCpdydAAAAAASUVORK5CYII=" alt="Previous"/></a>
+				
+				
+				
+				<a href="../DSASTutorial/Modes.html"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAStJREFUeNqUk1tSgzAUhn86WEcX4APaDi3eNuGzT+7NLbgGHxyf3YiXWnXoRWwoaQ6SktALmhTafwZC/uR8c3LIcW7vHlAhuRidTRsaqFHgn5RBuwMuLs/RrYA0FgvlZ7lZdtoeIjbD2WkX6tsGcdXr5vpKT+4fn1YLykvELyYJ4ZsRgsCHlBLPbx+yXBMN6A+Ykdp/b0yEjt/SkJfe5wqiAUTCANi8YSTQbnka8vr+pSEFQFgAFk9pkPvH3hEymaHXD2UBSMkEWLylwjFBULquwS4ZKI1GESYsxvoIW9ZAKYoY4inH3yJumQGLORIuYPzGcPhjnjP39psuDg/29Hya34eZSI2+cDc0ivbyANl0HfD8QlGaWZvKreuFhBOKWHtH1jZTVbDSXIABACa5nociETrsAAAAAElFTkSuQmCC" alt="Next"/></a>
+				
+				
+			</div>
+			
+			<div class="clear"></div>
+		</div>
+	
+	
+	<div id="topic_content">
+		
+<p class="rvps4"><span class="rvts6">El Controlador contiene un proceso independiente, especifico para las funciones relativas a:</span></p>
+<p class="rvps4" style="text-indent: -24px; padding-left: 24px; margin-left: 0px;"><span style="font-size: 12pt; font-family: Symbola, 'Lucida Sans Unicode', 'Arial', 'Helvetica', sans-serif; color: #000000; display: inline-block; text-indent: 0px; min-width: 24px;">•</span><span class="rvts6">Orientación del la Góndola a la dirección del viento.</span></p>
+<p class="rvps4" style="text-indent: -24px; padding-left: 24px; margin-left: 0px;"><span style="font-size: 12pt; font-family: Symbola, 'Lucida Sans Unicode', 'Arial', 'Helvetica', sans-serif; color: #000000; display: inline-block; text-indent: 0px; min-width: 24px;">•</span><span class="rvts6">Desenrolle de los cables de potencia</span></p>
+<p class="rvps4"><span class="rvts6">El algoritmo implementado toma en cuenta los conceptos de:</span></p>
+<p class="rvps4" style="text-indent: -24px; padding-left: 24px; margin-left: 0px;"><span style="font-size: 12pt; font-family: Symbola, 'Lucida Sans Unicode', 'Arial', 'Helvetica', sans-serif; color: #000000; display: inline-block; text-indent: 0px; min-width: 24px;">•</span><span class="rvts17">'número máximo de vueltas de los cables de potencia antes de iniciar la conexión</span><span class="rvts6"> (cutin)' .</span></p>
+<p class="rvps4" style="text-indent: -24px; padding-left: 24px; margin-left: 0px;"><span style="font-size: 12pt; font-family: Symbola, 'Lucida Sans Unicode', 'Arial', 'Helvetica', sans-serif; color: #000000; display: inline-block; text-indent: 0px; min-width: 24px;">•</span><span class="rvts17">'número máximo de vueltas de los cables de potencia'</span><span class="rvts6">. Este valor no es igual que el valor del límite máximo fijado por el interruptor fin de carrera asociado a estos cables, que está controlado por el parámetro "</span><span class="rvts13">Parameter.NacelleYawing.MaxCableTwist</span><span class="rvts6">", con un valor inicial de 3.5 vueltas.</span></p>
+<p class="rvps4" style="text-indent: -24px; padding-left: 24px; margin-left: 0px;"><span style="font-size: 12pt; font-family: Symbola, 'Lucida Sans Unicode', 'Arial', 'Helvetica', sans-serif; color: #000000; display: inline-block; text-indent: 0px; min-width: 24px;">•</span><span class="rvts17">'viento mínimo para proceder al desenrollado de los cables'</span><span class="rvts6">.</span></p>
+<p class="rvps4"><span class="rvts6">Además, este proceso toma en cuenta el modo actual de funcionamiento: "Manual" y "Automático". Ver </span><a class="rvts18" href="../DSASTutorial/Modes.html">Modos.</a></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p class="rvps4"><span class="rvts6">El gráfico siguiente muestra la relación entre los parámetros mencionados y los estados.</span></p>
+<p class="rvps4"><img alt="" style="padding : 1px;" src="data:image/png;base64,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"></p>
+<p class="rvps4" style="text-indent: -24px; padding-left: 24px; margin-left: 0px;"><span style="font-size: 12pt; font-family: Symbola, 'Lucida Sans Unicode', 'Arial', 'Helvetica', sans-serif; color: #000000; display: inline-block; text-indent: 0px; min-width: 24px;">•</span><span class="rvts6">Si el aerogenerador está en fase de conexión a la Red (cutin) y el numero de vueltas es mayor que 1.5, entonces inicia previamente el proceso de desenrolle, antes de continuar.</span></p>
+<p class="rvps4" style="text-indent: -24px; padding-left: 24px; margin-left: 0px;"><span style="font-size: 12pt; font-family: Symbola, 'Lucida Sans Unicode', 'Arial', 'Helvetica', sans-serif; color: #000000; display: inline-block; text-indent: 0px; min-width: 24px;">•</span><span class="rvts6">Si el aerogenerador está en Producción y el numero de vueltas supera 2,5, el Controlador inicia un proceso de desconexión de la Red, seguido de desenrolle y conexión a Red.</span></p>
+<p class="rvps4" style="text-indent: -24px; padding-left: 24px; margin-left: 0px;"><span style="font-size: 12pt; font-family: Symbola, 'Lucida Sans Unicode', 'Arial', 'Helvetica', sans-serif; color: #000000; display: inline-block; text-indent: 0px; min-width: 24px;">•</span><span class="rvts6">En cualquier caso, por ejemplo, utilizando un control manual para la orientación de la Góndola, si el numero de vueltas llega a 3,5 el Controlador para el giro de la Góndola.</span></p>
+
+	</div>
+	
+	
+		<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright © &lt;2026&gt;, &lt;Automated Computing Machinery SL&gt; ACM SL
+			</div>
+		</div>
+	
+	
+
+	
+<script>(function(){['copy','cut','contextmenu','dragstart'].forEach(function(ev){document.addEventListener(ev,function(e){e.preventDefault();},true);});document.onselectstart=function(){return false;};document.ondragstart=function(){return false;};document.addEventListener('keydown',function(e){var k=e.key;if(k==='F12'||k==='PrintScreen'){e.preventDefault();return;}if((e.ctrlKey||e.metaKey)&&e.shiftKey&&(k==='I'||k==='i'||k==='J'||k==='j'||k==='C')){e.preventDefault();return;}if((e.ctrlKey||e.metaKey)&&(k==='u'||k==='U'||k==='s'||k==='S'||k==='a'||k==='A'||k==='p'||k==='P'||k==='c'||k==='C'||k==='v'||k==='V')){e.preventDefault();}},true);})();</script><script>(function(){window.addEventListener("beforeprint",function(){document.documentElement.style.display="none";});window.addEventListener("afterprint",function(){document.documentElement.style.display="";});document.addEventListener("keydown",function(e){var k=(e.key||"").toLowerCase();if(k==="printscreen"||e.keyCode===44||e.which===44){document.documentElement.style.display="none";setTimeout(function(){document.documentElement.style.display="";},300);}},true);})();</script></body>
+	
+</html>
+
+
+
+

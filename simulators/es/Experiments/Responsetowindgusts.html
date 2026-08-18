@@ -1,0 +1,583 @@
+﻿<!DOCTYPE html>
+
+<!-- saved from url=(0016)about:internet -->
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Respuesta a ráfagas de viento</title>
+    <link rel="icon" type="image/png" href="favicon.ico">
+    <meta name="description" content="Análisis del comportamiento de diferentes familias de aerogeneradores ante ráfagas de viento">
+    <meta name="keywords" content="ráfagas, wind gusts, pitch, turbulencia, momento inercia, flicker, DSAS, RRC, DFIG">
+    
+    <link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+    <link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+    <link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+    
+    <style type="text/css">
+        #topic_header {
+            background-color: #EFEFEF;
+        }
+        
+        body {
+            font-size: 15px;
+            line-height: 1.6;
+        }
+        
+        #topic_content {
+            /* Unificado en base.css */
+        }
+        
+        h1 {
+            font-size: 28px;
+            line-height: 1.3;
+        }
+        
+        h2 {
+            font-size: 23px;
+            line-height: 1.4;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        
+        h3 {
+            font-size: 20px;
+            line-height: 1.4;
+        }
+        
+        h4 {
+            font-size: 18px;
+            line-height: 1.4;
+            margin-top: 15px;
+        }
+        
+        p, li {
+            font-size: 16px;
+            margin-bottom: 12px;
+        }
+        
+        .learning-objective {
+            background-color: #fff9e6;
+            border-left: 4px solid #ffcc00;
+            padding: 18px;
+            margin: 18px 0;
+        }
+        
+        .didactic-box {
+            background-color: #f0f8ff;
+            border-left: 4px solid #0066cc;
+            padding: 18px;
+            margin: 18px 0;
+        }
+        
+        .technology-box {
+            background-color: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 18px;
+            margin: 18px 0;
+        }
+        
+        .important-note {
+            background-color: #ffe6e6;
+            border-left: 4px solid #cc0000;
+            padding: 18px;
+            margin: 18px 0;
+        }
+        
+        .key-concept {
+            font-weight: bold;
+            color: #0066cc;
+        }
+        
+        .technology-name {
+            font-weight: bold;
+            color: #4caf50;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+            margin: 15px 0;
+            display: block;
+        }
+    </style>
+    
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/hnd.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            if (top.frames.length == 0) {
+                var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+                top.location.href = "Experiments.html?" + sTopicUrl;
+            } else {
+                (function notifyTOC(nTry)
+                {
+                    nTry = nTry || 0;
+                    try
+                    {
+                        if (top && top.frames && top.frames['FrameTOC'])
+                        {
+                            top.frames['FrameTOC'].postMessage({ type: 'HND_SELECT', id: "Responsetowindgusts" }, '*');
+                        }
+                    }
+                    catch (e) {}
+                    if (nTry < 10) setTimeout(function() { notifyTOC(nTry + 1); }, 300);
+                })();
+            }
+        });
+    </script>
+<style>*{-webkit-user-select:none!important;-moz-user-select:none!important;user-select:none!important;-webkit-touch-callout:none!important;}img{pointer-events:none!important;}</style><style>@media print{html,body{display:none!important;}}</style></head>
+
+<body>
+    <div id="topic_header">
+        <div id="topic_header_content">
+            <h1 id="topic_header_text">Respuesta a ráfagas de viento</h1>
+        </div>
+        
+        <div id="topic_header_nav">
+            <a href="../Experiments/CostofPowerCablesuntwisting.html"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAARhJREFUeNqck19OwzAMxr/AQAMmVZrEv64t3QqDS/DME3fjCpyCG/FAN4Vt7dIloSGN1qqZ1HWrpSiO5e8X25LJx+cX9pja3qQp4WSfOAo9tFkTQE20+Pll2gmgxoGLp8cJFskGhb9tRdXaqs4uQIX+PaIoxG+SQUph/Pe3VyupeJexXl384N1hHPqgS1YFqRCgO798z5LKLwEqGN0i8F3MF2lr30JwC6A89xoj9wYzusIhJrgNABcS8YFiA9CzqQPIT0wVYxzDodOtggKySlKV539wnMHRMyiNpOtMQ3IMrvpHV1BBWMYN5PLizATWTGDDpZUUz5eNAAPRAgPpn5+W4voyWYvVa6iSCJkrTem8TAYi2/X4F2AASu5+SCpdydAAAAAASUVORK5CYII=" alt="Anterior"/></a>
+            <a href="../Experiments/DifferencesintheElectricGenerato.html"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAStJREFUeNqUk1tSgzAUhn86WEcX4APaDi3eNuGzT+7NLbgGHxyf3YiXWnXoRWwoaQ6SktALmhTafwZC/uR8c3LIcW7vHlAhuRidTRsaqFHgn5RBuwMuLs/RrYA0FgvlZ7lZdtoeIjbD2WkX6tsGcdXr5vpKT+4fn1YLykvELyYJ4ZsRgsCHlBLPbx+yXBMN6A+Ykdp/b0yEjt/SkJfe5wqiAUTCANi8YSTQbnka8vr+pSEFQFgAFk9pkPvH3hEymaHXD2UBSMkEWLylwjFBULquwS4ZKI1GESYsxvoIW9ZAKYoY4inH3yJumQGLORIuYPzGcPhjnjP39psuDg/29Hya34eZSI2+cDc0ivbyANl0HfD8QlGaWZvKreuFhBOKWHtH1jZTVbDSXIABACa5nociETrsAAAAAElFTkSuQmCC" alt="Siguiente"/></a>
+        </div>
+        
+        <div class="clear"></div>
+    </div>
+    
+    <div id="topic_content">
+        <div class="learning-objective">
+            <h3>🎯 Objetivos de aprendizaje</h3>
+            <p>Al completar este experimento serás capaz de:</p>
+            <ul>
+                <li>Comprender la naturaleza de las ráfagas de viento y su modelización</li>
+                <li>Identificar los desafíos que representan las ráfagas para el funcionamiento de un aerogenerador</li>
+                <li>Analizar las diferentes estrategias de respuesta según la tecnología del aerogenerador</li>
+                <li>Evaluar el papel del momento de inercia del rotor como almacenamiento de</li>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+        <h2>Introducción: El viento como fenómeno complejo</h2>
+    
+    <div class="didactic-box">
+        <h3>🌪️ Características del viento real</h3>
+        <p>El viento es un <span class="key-concept">fenómeno atmosférico complejo</span> y difícil de modelar con precisión. En la práctica, para el diseño y análisis de aerogeneradores, se consideran tres parámetros fundamentales:</p>
+        <ul>
+            <li><strong>Dirección:</strong> Hacia dónde sopla el viento (ej: Norte, Suroeste, etc.)</li>
+            <li><strong>Velocidad media:</strong> La velocidad promediada en un periodo de tiempo (típicamente 10 minutos)</li>
+            <li><strong>Turbulencia:</strong> Las variaciones rápidas e irregulares de velocidad y dirección superpuestas a la velocidad media</li>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+        
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+        <ul>
+            <li><span class="key-concept">Viento medio:</span> Condiciones relativamente estables</li>
+            <li><span class="key-concept">Ráfagas de viento:</span> Cambios bruscos y significativos de velocidad</li>
+        </ul>
+    </div>
+
+    <h2>Caracterización de las ráfagas de viento</h2>
+    
+    <p>Las <span class="key-concept">ráfagas de viento</span> se caracterizan por varios parámetros:</p>
+
+    <div class="didactic-box">
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+            <li><strong>Velocidad máxima:</strong> El pico de velocidad alcanzado durante la ráfaga</li>
+            <li><strong>Velocidad mínima:</strong> El valle de velocidad (puede ser inferior a la velocidad media previa)</li>
+            <li><strong>Amplitud:</strong> La diferencia entre velocidad máxima y mínima</li>
+            <li><strong>Tasa máxima de cambio:</strong> La rapidez con que cambia la velocidad del viento (m/s²)</li>
+            <li><strong>Duración:</strong> El tiempo que dura la ráfaga</li>
+        </ul>
+    </div>
+
+    <h3>Modelo estándar de ráfaga para comparaciones</h3>
+    
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+        <img alt="Modelo de ráfaga de viento para DFIG" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAEJAZ8DASIAAhEBAxEB/8QAGwABAQEBAQEBAQAAAAAAAAAAAAYHBQQDAgj/xAA+EAABAwQBAgMGBAQEBgIDAAABAAIDBAUGERITIQciMRQXQVaV0hU3dbMWIzJRM0JhsSQlNlKBtWJxkZPT/8QAGgEBAAMBAQEAAAAAAAAAAAAAAAMEBQIBBv/EADwRAQABAgMFBAcGBAcBAAAAAAABAgMEESEFMUFRcRITMmEigZGhscHRFCMzQoLhQ1Ki8AYVJTRicpKy/9oADAMBAAIRAxEAPwD+qUREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAUhiuWT37NMntjaaKO12xkApagOJfUPMlRFMSDriGy074wNd+Bdstc3VeorHPD+jxe9z1+P1dTDE+ipKCOlqqmoqo4YoZXucGh8p9WPDWfCMgkAhzmkPlbMputRebfLOKE2m5Xats8NMyF4ngfT+07ldKXlrw72R3kEbddQeY8DyulIW/D56W80sr7lFJaaK4VN0paYUxbOKio63U6kvMtdGPaZtNEbSPJtx4nl9bpfr5/FVVZrDaLbV+y0VPWSzVtyfTf4z5mNa1rYJN66BJJI/qHZBVIiICIiAiIgIiICIiAiIgIiICIiAi8F7vFusdA+su9ZDSUzd+eV2uR0TxaPVztA6aNk67BZrePGKOpqpaHCLLW36pbG5xlbG8Mb2bpwYGl7mgu0d8PTse+1Fcv27Xin6tDBbKxeO1sUTMc91MdZnKPe1lFk3454vfK1l/8A2t//ALrz1Od+IeP7qMkw2Gai6b3boXH+Xx0S572ukDWgb9QN+u+xUU4umNZiYjpK5GwL9c9m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">
+        <p style="font-style: italic; font-size: 14px;">Figura 1: Modelo típico de ráfaga de viento utilizado para ensayos comparativos</p>
+    </div>
+
+    <p>Este modelo representa una ráfaga idealizada con forma de rampa, caracterizada por:</p>
+    <ul>
+        <li>Una velocidad inicial estable</li>
+        <li>Un incremento lineal de velocidad (rampa ascendente)</li>
+        <li>Un periodo de velocidad máxima sostenida</li>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+    </ul>
+
+    <h2>El desafío de las ráfagas</h2>
+    
+    <div class="important-note">
+        <h3>⚠️ Problemáticas asociadas a las ráfagas</h3>
+        <p>Las ráfagas de viento plantean dos problemas principales que el aerogenerador debe resolver:</p>
+        
+        <h4>1. Estabilidad del tren de potencia (Drive Train)</h4>
+        <ul>
+            <li>Los cambios bruscos de velocidad del viento generan <strong>cargas dinámicas</strong> sobre todo el sistema mecánico</li>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+            <li>En casos extremos, pueden causar <strong>daños estructurales</strong></li>
+        </ul>
+        
+        <h4>2. Calidad de la potencia entregada a la red</h4>
+        <ul>
+            <li>Las variaciones de velocidad del rotor se traducen en <strong>fluctuaciones de potencia</strong></li>
+            <li>Estas fluctuaciones pueden causar <strong>variaciones de tensión</strong> en la red eléctrica</li>
+            <li>Problema del <span class="key-concept">"flicker"</span>: variaciones perceptibles en la intensidad luminosa de las lámparas conectadas a la red</li>
+            <li>Impacto en la <strong>calidad del servicio eléctrico</strong> para otros consumidores</li>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+
+    <h2>Estrategias generales de respuesta</h2>
+    
+    <div class="didactic-box">
+        <h3>🛠️ Mecanismos de compensación</h3>
+        <p>En general, la compensación de cambios en la velocidad del viento se realiza mediante el <span class="key-concept">ajuste del ángulo de pitch de las palas</span>. Sin embargo, cuando se trata de ráfagas:</p>
+        
+        <div class="important-note">
+            <p><strong>Limitación fundamental:</strong> El mecanismo de pitch puede <strong>no ser suficientemente rápido</strong> para compensar los cambios bruscos de velocidad característicos de las ráfagas.</p>
+        </div>
+        
+        <p>Por esta razón, diferentes familias de aerogeneradores han desarrollado <strong>mecanismos adicionales</strong> para gestionar las ráfagas, especialmente enfocados en:</p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+            <li>Garantizar la calidad de la potencia entregada a la red</li>
+        </ul>
+    </div>
+
+    <h2>Respuesta según la familia de aerogenerador</h2>
+    
+    <p>A continuación se describe cómo cada tecnología aborda el problema de las ráfagas:</p>
+
+    <div class="technology-box">
+        <h3>⚙️ Aerogeneradores de primera generación: Pitch fijo y pérdida aerodinámica</h3>
+        <p class="technology-name">Tecnología: Generador de jaula de ardilla + Pitch fijo + Stall pasivo</p>
+        
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+            <li>Palas con ángulo de pitch <strong>fijo</strong> (no ajustable)</li>
+            <li>Generador de <strong>jaula de ardilla</strong> conectado directamente a la red</li>
+            <li>Control pasivo por <strong>pérdida aerodinámica (stall)</strong></li>
+        </ul>
+        
+        <h4>Mecanismo de respuesta a ráfagas:</h4>
+        <p>La estabilidad del tren de potencia se logra mediante el <strong>diseño aerodinámico de las palas</strong>:</p>
+        <ul>
+            <li>Cuando la velocidad del viento supera la velocidad nominal, las palas entran en <strong>pérdida aerodinámica (stall)</strong></li>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+            <li>Actúa como un "limitador natural" de potencia</li>
+        </ul>
+        
+        <!--p>📚 Ver curva característica en: <a href="shellcommand%20'C:%5CACMSL%5CWindFarmSimulator%5CViewerTutorialsWFS.exe'%20-n%20%20'C:%5CACMSL%5CWindFarmSimulator%5CHelp%5CEnglish%5CDSASWTSimulator%5CPowerversuswindofficialcurve.htmle'">'Fixed-Pitch Power vs Wind Speed'</a></p-->
+        <p>📚 Ver curva característica en: <a href="acmsl://viewertutorial%20-n%20-rDSASTutorial\Powerversuswindofficialcurve.htmle">'Fixed-Pitch Power vs Wind Speed'</a></p>
+       
+        <h4>Control de velocidad de rotación:</h4>
+        <p>Las rpm del tren de potencia son controladas por las características del <strong>generador de jaula de ardilla</strong> conectado directamente a la red:</p>
+        <ul>
+            <li>La velocidad de rotación se mantiene muy cercana a la <strong>velocidad síncrona</strong> del generador</li>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+                y <a href="shellcommand%20'C:%5CACMSL%5CWindFarmSimulator%5CViewerTutorialsWFS.exe'%20-n%20%20'C:%5CACMSL%5CWindFarmSimulator%5CHelp%5CEnglish%5CDSASWTSimulator%5CGeneratorcharacteristics.htmle'">Características del generador</a></li-->
+            <li>📚 Más información: <a href="acmsl://viewertutorial%20-n%20-rDSASTutorial\IntoductiontotheInductionMachine.htmle">Introducción a máquinas de inducción</a> y 
+                <a href="acmsl://viewertutorial%20-n%20-rDSASTutorial\Generatorcharacteristics.htmle">Características del generador</a></li>
+
+        </ul>        
+        <div class="important-note">
+            <h4>⚠️ Limitaciones de esta tecnología:</h4>
+            <ul>
+                <li><strong>Potencia entregada variable:</strong> Por encima de velocidad nominal, la potencia <strong>disminuye</strong> en lugar de mantenerse constante</li>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+            </ul>
+        </div>
+    </div>
+
+    <div class="technology-box">
+        <h3>⚙️ Aerogeneradores con control activo de pitch</h3>
+        <p class="technology-name">Tecnología: Generador de jaula de ardilla + Pitch variable activo</p>
+        
+        <h4>Características:</h4>
+        <ul>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+            <li>Sistema hidráulico o eléctrico para ajustar el pitch</li>
+        </ul>
+        
+        <h4>Mecanismo de respuesta a ráfagas:</h4>
+        <p>Por encima de la velocidad nominal del viento:</p>
+        <ul>
+            <li>El sistema de control <strong>ajusta el ángulo de pitch</strong> de las palas</li>
+            <li>Las palas se orientan progresivamente <strong>"hacia banderas" (feathering)</strong></li>
+            <li>Esto permite que el <strong>exceso de viento pase a través</strong> sin ser capturado</li>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+        
+        <!--p>📚 Ver curva característica en: <a href="shellcommand%20%20'C:%5CACMSL%5CWindFarmSimulator%5CViewerTutorialsWFS.exe'%20-n%20%20'C:%5CACMSL%5CWindFarmSimulator%5CHelp%5CEnglish%5CDSASWTSimulator%5CPowerversuswindofficialcurve.htmle'">'Variable Pitch fixed-speed Power vs Wind Speed'</a></p-->
+        <p>📚 Ver curva característica en: <a href="acmsl://viewertutorial%20-n%20-rDSASTutorial\Powerversuswindofficialcurve.htmle">'Potencia en función del Viento en un aerogenerador de pitch variable y velocidad fija'</a></p>
+        
+        <h4>Control de velocidad de rotación:</h4>
+        <p>Similar a la generación anterior:</p>
+        <ul>
+            <li>Generador de jaula de ardilla conectado directamente a la red</li>
+            <li>Velocidad de rotación mantenida muy cercana a la velocidad síncrona</li>
+        </ul>
+        
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+            <ul>
+                <li><strong>Potencia constante:</strong> Mantiene potencia nominal por encima de velocidad nominal de viento</li>
+                <li><strong>Menores cargas en torre:</strong> El feathering reduce fuerzas horizontales comparado con el stall</li>
+                <li><strong>Mayor eficiencia:</strong> Mejor aprovechamiento del viento en todo el rango operativo</li>
+                <li><strong>Control de parada:</strong> Puede detener el rotor de forma controlada girando las palas 90°</li>
+            </ul>
+        </div>
+    </div>
+
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+        <p class="technology-name">Tecnología: RRC (Rotor Resistance Control) - Generador de rotor bobinado + Pitch variable</p>
+        
+        <h4>Características:</h4>
+        <ul>
+            <li>Palas con pitch variable hacia banderas (feathering)</li>
+            <li><strong>Generador de rotor bobinado</strong> (no jaula de ardilla)</li>
+            <li>Dispositivo electrónico que permite insertar <strong>resistencia variable</strong> en el circuito del rotor</li>
+            <li><span class="key-concept">Momento de inercia elevado</span> del rotor y tren de potencia</li>
+        </ul>
+        
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+        
+        <ol>
+            <li><strong>Durante una ráfaga ascendente:</strong>
+                <ul>
+                    <li>El sistema de pitch no puede responder lo suficientemente rápido</li>
+                    <li>Se captura <strong>más potencia</strong> del viento de la que se puede entregar a la red</li>
+                    <li>El exceso de energía se usa para <strong>acelerar el rotor</strong></li>
+                    <li>El rotor actúa como un <strong>volante de inercia</strong> almacenando energía cinética</li>
+                    <li>Esto requiere que el generador pueda operar a <strong>velocidades variables</strong></li>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+            <li><strong>Durante una ráfaga descendente:</strong>
+                <ul>
+                    <li>El viento aporta menos energía de la necesaria</li>
+                    <li>El rotor <strong>se desacelera</strong>, liberando energía cinética almacenada</li>
+                    <li>Esto ayuda a <strong>mantener la potencia entregada</strong> más constante</li>
+                </ul>
+            </li>
+        </ol>
+        
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+            <p>El <span class="key-concept">momento de inercia</span> del rotor es suficientemente alto para que actúe como un <strong>almacenamiento de energía a corto plazo</strong>.</p>
+            <p>La energía cinética almacenada en un rotor giratorio es:</p>
+            <p style="text-align: center; font-family: monospace; font-size: 18px;">E = ½ × I × ω²</p>
+            <p>Donde:</p>
+            <ul>
+                <li>E = Energía cinética (J)</li>
+                <li>I = Momento de inercia (kg·m²)</li>
+                <li>ω = Velocidad angular (rad/s)</li>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+        </div>
+        
+        <h4>Solución tecnológica: Generador de rotor bobinado</h4>
+        <p>Para que el rotor pueda cambiar su velocidad de rotación manteniendo la conexión a red:</p>
+        <ul>
+            <li>Se utiliza un <strong>generador de rotor bobinado</strong> (wound rotor)</li>
+            <li>No se puede usar un generador de jaula de ardilla (velocidad casi fija)</li>
+            <li>Se incorpora un <strong>dispositivo electrónico</strong> que permite insertar resistencia variable en el circuito del rotor</li>
+            <li>Esto permite controlar el <strong>deslizamiento</strong> del generador</li>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+        
+        </ul>
+        
+        <h4>Experimentos prácticos:</h4>
+        <p>Para explorar el comportamiento de estos aerogeneradores ante ráfagas:</p>
+        <ul>
+            <!--li><a href="shellcommand%20'C:%5CACMSL%5CWindFarmSimulator%5CViewerTutorialsWFS.exe'%20-n%20%20'C:%5CACMSL%5CWindFarmSimulator%5CHelp%5CEnglish%5CRRCWTSimulator%5CWindgustswithlowwind.htmle'">'Wind gusts with low wind'</a> - Ráfagas con viento bajo</li -->
+            <li><a href="acmsl://viewertutorial%20-n%20-5252435475746F7269616C5C57696E646775737473776974686C6F7777696E642E68746D6C65">'Wind gusts with low wind'</a> - Ráfagas con viento bajo</li>
+            
+            <!--li><a href="shellcommand%20'C:%5CACMSL%5CWindFarmSimulator%5CViewerTutorialsWFS.exe'%20-n%20%20'C:%5CACMSL%5CWindFarmSimulator%5CHelp%5CEnglish%5CRRCWTSimulator%5CWindgustswithhighwind.htmle'">'Wind gusts with high wind'</a> - Ráfagas con viento alto</li-->
+            <li><a href="acmsl://viewertutorial%20-n%20-rRRCTutorial\Windgustswithhighwind.htmle">'Wind gusts with high wind'</a> - Ráfagas con viento alto</li>
+        
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+
+    <div class="technology-box">
+        <h3>⚙️ Aerogeneradores con generador doblemente alimentado (DFIG)</h3>
+        <p class="technology-name">Tecnología: DFIG (Doubly Fed Induction Generator) - Pitch variable + Velocidad variable</p>
+        
+        <h4>Características:</h4>
+        <ul>
+            <li>Palas con pitch variable hacia banderas</li>
+            <li><strong>Generador de inducción doblemente alimentado (DFIG)</strong></li>
+            <li><strong>Convertidores back-to-back</strong> en el circuito del rotor</li>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+        </ul>
+        
+        <h4>Mecanismo de respuesta a ráfagas:</h4>
+        <p>Similar al RRC, utiliza la <strong>aceleración y desaceleración del rotor</strong> para absorber/liberar energía y compensar las diferencias entre la potencia captada del viento y la potencia entregada a la red.</p>
+        
+        <div class="didactic-box">
+            <h4>✅ Ventajas sobre RRC:</h4>
+            <ul>
+                <li><strong>Rango operativo mucho más amplio:</strong> Puede operar eficientemente en un rango de velocidades de viento muy superior</li>
+                <li><strong>Control más sofisticado:</strong> Los convertidores electrónicos permiten un control preciso y rápido</li>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+            </ul>
+            <!--p>📚 Ver comportamiento detallado: <a href="shellcommand%20'C:%5CACMSL%5CWindFarmSimulator%5CViewerTutorialsWFS.exe'%20-n%20%20'C:%5CACMSL%5CWindFarmSimulator%5CHelp%5CEnglish%5CDFIGWTSimulator%5CDFIGWTBehavior.htmle'">DFIG WT Behavior</a></p-->
+            <p>📚 Ver comportamiento detallado: <a href="acmsl://viewertutorial%20-n%20-h433A5C41434D534C5C57696E644661726D53696D756C61746F725C48656C705C456E676C6973685C44464947575453696D756C61746F725C4446494757544265686176696F722E68746D6C65/">DFIG WT Behavior</a></p>
+           
+            <!--p>📚 Sobre los convertidores: <a href="shellcommand%20'C:%5CACMSL%5CWindFarmSimulator%5CViewerTutorialsWFS.exe'%20-n%20%20'C:%5CACMSL%5CWindFarmSimulator%5CHelp%5CEnglish%5CDFIGWTSimulator%5CDFIGWTBackToBackConverters.htmle'">Back-to-Back converters</a></p-->
+            <p>📚 Sobre los convertidores: <a href="acmsl://viewertutorial%20-n%20-rDFIGTutorial\DFIGWTBackToBackConverters.htmle">Back-to-Back converters</a></p>
+ 
+        </div>
+        
+        <h4>Experimentos prácticos:</h4>
+        <p>Para explorar el comportamiento de DFIG ante ráfagas:</p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+            <li><a href="acmsl://viewertutorial%20-n%20-rDFIGTutorial\TCWindGustsLowWinds.htmle">'Wind gusts in low wind speeds'</a> - Ráfagas con viento bajo</li>
+            <!--li><a href="shellcommand%20'C:%5CACMSL%5CWindFarmSimulator%5CViewerTutorialsWFS.exe'%20-n%20%20'433A5C41434D534C5C57696E644661726D53696D756C61746F725C48656C705C456E676C6973685C44464947575453696D756C61746F725C544357696E644775737473696E4869676857696E64732E68746D6C65/">'Wind gusts in high wind speeds'</a> - Ráfagas con viento alto</li-->
+            <li><a href="acmsl://viewertutorial%20-n%20-rDFIGTutorial\TCWindGustsLowWinds.htmle">'Wind gusts in high wind speeds'</a> - Ráfagas con viento alto</li>
+        
+        </ul>
+    </div>
+
+    <h2>Cuadro comparativo de estrategias</h2>
+    
+    <div class="didactic-box">
+        <h3>📊 Comparación de respuestas a ráfagas</h3>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+                <th style="padding: 12px; border: 1px solid #999;">Tecnología</th>
+                <th style="padding: 12px; border: 1px solid #999;">Control de Potencia</th>
+                <th style="padding: 12px; border: 1px solid #999;">Control de Velocidad</th>
+                <th style="padding: 12px; border: 1px solid #999;">Respuesta a Ráfagas</th>
+            </tr>
+            <tr>
+                <td style="padding: 10px; border: 1px solid #999;"><strong>Pitch Fijo + Stall</strong></td>
+                <td style="padding: 10px; border: 1px solid #999;">Pérdida aerodinámica pasiva</td>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+            </tr>
+            <tr>
+                <td style="padding: 10px; border: 1px solid #999;"><strong>Pitch Variable + Fixed Speed</strong></td>
+                <td style="padding: 10px; border: 1px solid #999;">Control activo de pitch (feathering)</td>
+                <td style="padding: 10px; border: 1px solid #999;">Velocidad fija (~1% variación)</td>
+                <td style="padding: 10px; border: 1px solid #999;">Ajuste de pitch (limitado por velocidad del actuador)</td>
+            </tr>
+            <tr>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+                <td style="padding: 10px; border: 1px solid #999;">Velocidad limitadamente variable</td>
+                <td style="padding: 10px; border: 1px solid #999;">Pitch + Inercia del rotor como almacenamiento</td>
+            </tr>
+            <tr>
+                <td style="padding: 10px; border: 1px solid #999;"><strong>DFIG</strong></td>
+                <td style="padding: 10px; border: 1px solid #999;">Pitch + Convertidores</td>
+                <td style="padding: 10px; border: 1px solid #999;">Velocidad ampliamente variable</td>
+                <td style="padding: 10px; border: 1px solid #999;">Pitch + Inercia del rotor + Control electrónico sofisticado</td>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+    </div>
+
+    <h2>Actividades experimentales propuestas</h2>
+    
+    <div class="learning-objective">
+        <h3>🔬 Experimentos recomendados</h3>
+        <p>Para cada familia de aerogeneradores, realiza los siguientes ensayos:</p>
+        <ol>
+            <li><strong>Configurar ráfaga estándar:</strong>
+                <ul>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+                </ul>
+            </li>
+            <li><strong>Monitorizar variables clave:</strong>
+                <ul>
+                    <li>Velocidad del viento (entrada)</li>
+                    <li>Velocidad de rotación del rotor (rpm)</li>
+                    <li>Ángulo de pitch de las palas</li>
+                    <li>Potencia generada</li>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+            </li>
+            <li><strong>Observar y registrar:</strong>
+                <ul>
+                    <li>Tiempo de respuesta del sistema de pitch</li>
+                    <li>Variación de velocidad de rotación</li>
+                    <li>Fluctuaciones en la potencia entregada</li>
+                    <li>Picos de par mecánico</li>
+                </ul>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+                <ul>
+                    <li>Ráfagas con viento medio bajo (por debajo de velocidad nominal)</li>
+                    <li>Ráfagas con viento medio alto (por encima de velocidad nominal)</li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+
+    <h2>Análisis comparativo</h2>
+    
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+        <ol>
+            <li><strong>Sobre la estabilidad del tren de potencia:</strong>
+                <ul>
+                    <li>¿Qué tecnología muestra las menores variaciones de velocidad de rotación?</li>
+                    <li>¿Qué tecnología presenta los picos de par mecánico más suaves?</li>
+                    <li>¿Cómo afecta el momento de inercia del rotor a la respuesta?</li>
+                </ul>
+            </li>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+                    <li>¿Qué tecnología mantiene la potencia más constante durante una ráfaga?</li>
+                    <li>¿En qué casos se observarían problemas de flicker?</li>
+                    <li>¿Cómo mejora la calidad de potencia del DFIG respecto al RRC?</li>
+                </ul>
+            </li>
+            <li><strong>Sobre los mecanismos de control:</strong>
+                <ul>
+                    <li>¿Es el pitch suficiente para compensar ráfagas rápidas?</li>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+                </ul>
+            </li>
+            <li><strong>Sobre compromisos de diseño:</strong>
+                <ul>
+                    <li>¿Qué ventajas justifican la mayor complejidad del DFIG?</li>
+                    <li>¿En qué escenarios sería aceptable usar tecnologías más simples?</li>
+                    <li>¿Cómo influye la regulación eléctrica en la elección de tecnología?</li>
+				</ul>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+	</div>
+	<h2>Conceptos clave</h2>
+    
+    <div class="didactic-box">
+        <h3>📌 Resumen de conceptos fundamentales</h3>
+        <ul>
+            <li>Las ráfagas de viento son cambios bruscos de velocidad que desafían el control del aerogenerador</li>
+            <li>El sistema de pitch por sí solo puede ser insuficiente para compensar ráfagas rápidas</li>
+            <li>El <strong>momento de inercia del rotor</strong> puede usarse como almacenamiento de energía a corto plazo</li>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+            <li>La evolución tecnológica busca mejorar tanto la <strong>estabilidad mecánica</strong> como la <strong>calidad de potencia</strong></li>
+        </ul>
+    </div>
+</div>
+
+<div id="topic_footer">
+    <div id="topic_footer_content">
+        Copyright &copy; 2017-2025 by AUTOMATED COMPUTING MACHINERY SL. All Rights Reserved.
+    </div>
+</div>
+<script>(function(){['copy','cut','contextmenu','dragstart'].forEach(function(ev){document.addEventListener(ev,function(e){e.preventDefault();},true);});document.onselectstart=function(){return false;};document.ondragstart=function(){return false;};document.addEventListener('keydown',function(e){var k=e.key;if(k==='F12'||k==='PrintScreen'){e.preventDefault();return;}if((e.ctrlKey||e.metaKey)&&e.shiftKey&&(k==='I'||k==='i'||k==='J'||k==='j'||k==='C')){e.preventDefault();return;}if((e.ctrlKey||e.metaKey)&&(k==='u'||k==='U'||k==='s'||k==='S'||k==='a'||k==='A'||k==='p'||k==='P'||k==='c'||k==='C'||k==='v'||k==='V')){e.preventDefault();}},true);})();</script><script>(function(){window.addEventListener("beforeprint",function(){document.documentElement.style.display="none";});window.addEventListener("afterprint",function(){document.documentElement.style.display="";});document.addEventListener("keydown",function(e){var k=(e.key||"").toLowerCase();if(k==="printscreen"||e.keyCode===44||e.which===44){document.documentElement.style.display="none";setTimeout(function(){document.documentElement.style.display="";},300);}},true);})();</script></body>
+</html>

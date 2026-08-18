@@ -1,0 +1,143 @@
+﻿
+
+
+<!-- saved from url=(0016)about:internet -->
+
+<!-- saved from url=(0016)about:internet -->
+
+<!-- saved from url=(0016)about:internet -->
+
+<!-- saved from url=(0016)about:internet -->
+<html>
+	
+<head>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+	<title>Algoritmo de control de frenos y señales</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="HelpNDoc Professional Edition 10.7.0.400">
+	<meta name="description" content="" /> 
+	<meta name="keywords" content="parada, cutout, reposo, cutin, TSR, Freno liberado, Circuito hidraulico de frenos, Fail/Safe">
+	
+	
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "Introduccion.html?" + sTopicUrl;
+			}
+			else
+			{
+				(function notifyTOC(nTry)
+				{
+					nTry = nTry || 0;
+					try
+					{
+						if (top && top.frames && top.frames['FrameTOC'])
+						{
+							top.frames['FrameTOC'].postMessage({ type: 'HND_SELECT', id: "AlgoritmoFrenos" }, '*');
+						}
+					}
+					catch (e) {}
+					if (nTry < 10) setTimeout(function() { notifyTOC(nTry + 1); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	
+<style>*{-webkit-user-select:none!important;-moz-user-select:none!important;user-select:none!important;-webkit-touch-callout:none!important;}img{pointer-events:none!important;}</style><style>@media print{html,body{display:none!important;}}</style></head>
+
+<body>
+
+
+
+	
+		<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Algoritmo de control de frenos y señales</h1>
+				
+				
+				<div id="topic_breadcrumb">
+					<a href="../DSASTutorial/SimDSAS.html">Simulador de Aerogenerador con Active Stall y Dos Velocidades</a> ›› <a href="../DSASTutorial/Sinopticos.html">Sinópticos usados en este simulador</a> ›› <a href="../DSASTutorial/SinopticoTrenPotencia.html">Sinóptico del Tren de Potencia (SynopticDriveTrain)</a> ›› <a href="../DSASTutorial/IndicadoresGondola.html">Indicadores comunes</a> ›› <a href="../DSASTutorial/IndicadoresSistemaFreno.html">Sistema de frenos</a> ›› 
+				</div>
+				
+			</div>
+			
+			<div id="topic_header_nav">
+				
+				
+				<a href="../DSASTutorial/IndicadoresSistemaFreno.html"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAARpJREFUeNqkkt1Og0AQhQ+mt6YmBn8o4Lb4d+GlD+or+BS+hJcajRdKEVFDCV3BVCFhZDdK2tLdhniSyW5mZ77MnoxxcXkFjej3NFQFG7pmj9kQMQdqqadqHtWNJ6fHzRiPfkirJlkFoKFr4ehwBJ5/y4S4U1XhKYhakGUAMWcfnscwzb+a5DQvZY6I4D+/LkDmAXRg72HIHKQfs9ZYaVnKNwEZh28N5A9A7mAXrmMh4Z9KVxNeyBoBCV7eJUQAyLZMDKwdTNIM6zQpCllbUYUwiklOUF9k9PubMM1tLSCOE9zdZwsmNoZwntFWDdGproHKRKlxEKGLlgEGOqqn2P11Un/h/IxpO69vfP0q3z74//oCZkU3D34EGABoQG6/jBs+/AAAAABJRU5ErkJggg==" alt="Parent"/></a>
+				
+				
+				
+				<a href="../DSASTutorial/IndicadoresSistemaFreno.html"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAARhJREFUeNqck19OwzAMxr/AQAMmVZrEv64t3QqDS/DME3fjCpyCG/FAN4Vt7dIloSGN1qqZ1HWrpSiO5e8X25LJx+cX9pja3qQp4WSfOAo9tFkTQE20+Pll2gmgxoGLp8cJFskGhb9tRdXaqs4uQIX+PaIoxG+SQUph/Pe3VyupeJexXl384N1hHPqgS1YFqRCgO798z5LKLwEqGN0i8F3MF2lr30JwC6A89xoj9wYzusIhJrgNABcS8YFiA9CzqQPIT0wVYxzDodOtggKySlKV539wnMHRMyiNpOtMQ3IMrvpHV1BBWMYN5PLizATWTGDDpZUUz5eNAAPRAgPpn5+W4voyWYvVa6iSCJkrTem8TAYi2/X4F2AASu5+SCpdydAAAAAASUVORK5CYII=" alt="Previous"/></a>
+				
+				
+				
+				<a href="../DSASTutorial/Algoritmodecontroldefrenosyseale.html"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAStJREFUeNqUk1tSgzAUhn86WEcX4APaDi3eNuGzT+7NLbgGHxyf3YiXWnXoRWwoaQ6SktALmhTafwZC/uR8c3LIcW7vHlAhuRidTRsaqFHgn5RBuwMuLs/RrYA0FgvlZ7lZdtoeIjbD2WkX6tsGcdXr5vpKT+4fn1YLykvELyYJ4ZsRgsCHlBLPbx+yXBMN6A+Ykdp/b0yEjt/SkJfe5wqiAUTCANi8YSTQbnka8vr+pSEFQFgAFk9pkPvH3hEymaHXD2UBSMkEWLylwjFBULquwS4ZKI1GESYsxvoIW9ZAKYoY4inH3yJumQGLORIuYPzGcPhjnjP39psuDg/29Hya34eZSI2+cDc0ivbyANl0HfD8QlGaWZvKreuFhBOKWHtH1jZTVbDSXIABACa5nociETrsAAAAAElFTkSuQmCC" alt="Next"/></a>
+				
+				
+			</div>
+			
+			<div class="clear"></div>
+		</div>
+	
+	
+	<div id="topic_content">
+		
+<p class="rvps4"><span class="rvts6">El algoritmo de control que se usa en el sistema de frenos obedece a las siguientes ideas:</span></p>
+<p class="rvps4" style="text-indent: -24px; padding-left: 24px; margin-left: 0px;"><span style="font-size: 9pt; font-family: 'Arial', 'Helvetica', sans-serif; color: #000000; display: inline-block; text-indent: 0px; min-width: 24px;">1.</span><span class="rvts28">Principio de diseño "Fail/Safe"</span><span class="rvts6">: este principio establece que un dispositivo que control una parte importante de un sistema debe estar diseñado de forma tal que, si falla, deja al sistema en una posición "segura".</span></p>
+<p class="rvps4" style="text-indent: -24px; padding-left: 24px; margin-left: 0px;"><span style="font-size: 9pt; font-family: 'Arial', 'Helvetica', sans-serif; color: #000000; display: inline-block; text-indent: 0px; min-width: 24px;">2.</span><span class="rvts28">Permitir una parada rápida del Tren de Potencia</span><span class="rvts6">. Esta necesidad viene del uso secundario del mecanismo de frenos como "alternativa de seguridad", en caso de que el Tren de Potencia no pueda ser frenado por medios aerodinámicos.</span></p>
+<p class="rvps4" style="text-indent: -24px; padding-left: 24px; margin-left: 0px;"><span style="font-size: 9pt; font-family: 'Arial', 'Helvetica', sans-serif; color: #000000; display: inline-block; text-indent: 0px; min-width: 24px;">3.</span><span class="rvts28">Minimización del numero de sensores y actuadores</span><span class="rvts6">.</span></p>
+<p class="rvps4"><span class="rvts57">Este mecanismo de freno del tren de potencia NO es el mecanismo utilizado para operaciones de </span><span class="rvts63">parada</span><span class="rvts57"> (</span><span class="rvts63">cutout</span><span class="rvts6">): estas operaciones se realizan utilizando métodos aerodinámicos, es decir, utilizando las palas, cambiando su angulo de ataque, o, en algunos modelos antiguos que no tenían mecanismo de cambio de pitch, mediante un cambio en la forma. Ver siguiente figura.</span></p>
+<p class="rvps4"></p>
+<p class="rvps4"><span class="rvts6">Sin embargo, en condiciones excepcionales, por ejemplo, cuando falla el mecanismo de pitch, o se han sobrepasado determinadas rpms en el tren de potencia, o se necesita una parada muy rápida, el Controlador utiliza, también, el freno hidráulico.</span></p>
+<p class="rvps4"><span class="rvts6">En el diseño elegido la posición de "</span><span class="rvts17">reposo</span><span class="rvts6">" es con la zapata apretada contra el disco de freno por el muelle del cilindro. Esto sigue el principio de funcionamiento 'Fail/Save' (si algo va mal, el mecanismo queda en una posición </span><span class="rvts17">segura</span><span class="rvts6">), en este caso la posición segura es parada del tren de potencia.</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p class="rvps4"><span class="rvts6">Cuando se quiere frenar (zapata contra el disco) basta con reducir la presión hidráulica en la base del muelle. Esto se consigue abriendo la válvula. Habitualmente hay mas de una válvula, con diferentes caudales, de forma que se puede graduar (hasta cierto punto) la velocidad de la bajada de presión, y por tanto de la frenada.</span></p>
+<p class="rvps4"><span class="rvts6">Por último, en el diseño de este circuito, se utilizan un mínimo de elementos: una bomba, un calderín para el liquido, la(s) válvulas, el presostato (no indicado) y el sensor de separación de la zapata (no indicado).</span></p>
+<p class="rvps4"><span class="rvts6">El </span><span class="rvts17">estado</span><span class="rvts6"> de la zapata de freno no es medido mediante ningún sensor, sino que es </span><span class="rvts17">deducido</span><span class="rvts6"> por el Controlador durante la fase de arranque (</span><span class="rvts17">cutin</span><span class="rvts6">). El procedimiento consiste en aplicar un par mecánico importante al tren de potencia, mientras se mantiene el freno hidráulico activo (zapata contra el disco). Este par mecánico se consigue orientando la Góndola al viento y poniendo un valor de pitch que garantiza el máximo aprovechamiento del viento con valores de giro bajos (es decir, con </span><span class="rvts17">TSR</span><span class="rvts6"> prácticamente 0). En esas circunstancias se monitoriza la velocidad de giro del tren de potencia: si no es 0 (parado) es debido a algún problema relativo a la zapata, o al muelle del cilindro; en estas circunstancias se aborta la operación de cutin.</span></p>
+<p class="rvps4"><span class="rvts6">La bomba es usada para mantener la presión en la base del muelle a un valor que garantiza que, en producción, la zapata no roza el disco de freno. Para ello no se mide esta presión, sino que se utiliza un dispositivo más robusto, un presostato, calibrado alrededor de la presión deseada. De esta forma el Controlador solo recibe una señal digital (la salida del presostato) y tiene que controlar dos señales también digitales: el control de la bomba y el control de la(s) válvula(s). Existe también un contacto fin de carrera que se activa cuando la zapata esta ya separada del disco de freno. Esta señal corresponde a la señal asociada al botón 'Freno liberado'. El valor de la presión a la que, típicamente, se activa esta señal corresponde con la </span><span class="rvts28">marca </span><span class="rvts58">'amarilla'</span><span class="rvts6"> en el indicador circular de la presión del circuito hidráulico.</span></p>
+<p class="rvps4"><span class="rvts6">La evolución de las señales relacionadas con este circuito hidráulico se puede observar usando uno de los "Paneles de registradores predefinidos" (pulsando en el sinóptico de control de ejecución: </span><span class="rvts17">'Sinopticos'</span><span class="rvts6"> --&gt; </span><span class="rvts17">'Registradores'</span><span class="rvts6"> se presenta un formulario de registrador, y en </span><span class="rvts17">'Paneles definidos'</span><span class="rvts6">  seleccione </span><span class="rvts17">'Circuito hidraulico de frenos'</span><span class="rvts6">). Puede observar la variación de diversas señales del circuito hidráulico durante diferentes situaciones de funcionamiento y parada.</span></p>
+<p class="rvps4"><span class="rvts6">Los conceptos básicos de control están basados en la histéresis del presostato, cuya salida es utilizada por el Controlador para poner en marcha la bomba cuando su valor es 'Off', es decir, la presión está por debajo del limite inferior de calibración del presostato. Y parar la bomba cuando la presión supera el límite superior del presostato. Se asume que las válvulas están cerradas. La siguiente figura ejemplifica este método de control.</span></p>
+<p class="rvps4"><img alt="" style="padding : 1px;" src="data:image/png;base64,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zc3NOnHihJqbm1VfX6/W1taE9RoaGvTYY4/pgw8+UCgU0tmzZ7V27Vo+aQAZa2BgQE2DfmEHAExSwP3973+vt956S3/3d3+nlStXJiz7wQ9+oDlz5piP/+mf/km7du3STTfdpEsuuUR2u127du3Snj17zHXC4bDuuusuXX755crNzdXixYsT7gzHe+yxx/TUU0/p1ltv1aWXXqpbb71VTz75pB599NGE9X7yk5/o1ltvVV5env74j/9YTzzxhH75y1/ySQMAAEwToxpFIVYqkJubq2uuuUarVq1SXV1dwjp/+qd/mvD4zTfflNPplPSHGl7DMBJKGB544AE5HA7dcccduvHGG+V2u3X11VcnPYa3335bS5cuTXjulltu0b333pvw3J//+Z8nPL7qqqsoUQAAAJhG0upk9tlnn6mnp0ff+973dMkllySsk5ubm/A4Go3q2LFjOn36tM6cOaOzZ8/KMAydOXPGXOd73/ueOjo6VFxcrNbWVv3Zn/2ZnnjiifG9oRnMXQEAAEDAPQ9uuOEGvfTSSyOut2DBAm3YsEH79u3TG2+8oa1btyZd7/rrr9err76a8NzBgwc1b948PkUAAACc/4C7detW1dbW6plnntGJEyd06tQpdXR0JAzvVVZWJr/fr1OnTikajerll19WSUlJ0td76KGHtG7dOnV2dioajaqzs1MPPvigNm3axKcIYEpzuVxyuVw0BACM0nmbyexrX/uaWlpatHXrVj3wwAM6e/asnE6namtrzXXWrl2rhoYG/epXv1JeXp6WLFmSchSFyspKvf/++7rvvvv07rvv6tprr9XDDz+siooKPkUAU1pZWRmNAAATGXBTTbYwmnWWLl2qV155JeV25eXlKi8vH/Xr3n///br//vvTPo7RvAcAAABMDfTIAgAAwJSSQxNgorS1taVcVlFRIYfDQSMBAAACLrLHcHWCVqtVVquVRgIAAOcdJQoAAAAg4AIAAADnWyQSUSQSIeACwFTj8/nk8/loCADTTmtrq6677jpVV1fL5/ONOuwScAEgwwUCAQUCARoCwLQUjUbl8XhUXl4+6rBLwAWACyw/P19rqqpoCACYoLBrMZgFIeu4XC6VlpaqoKAg6XKbzaa///u/Nx+Hw2Ht3bs35euxPuuzfmavv3r1akmS2+2mfVif9Vl/Wq0vSffee++I2SgvL0933323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"></p>
+<p class="rvps4"><span class="rvts6"><br/></span></p>
+
+	</div>
+	
+	
+		<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright © &lt;2026&gt;, &lt;Automated Computing Machinery SL&gt; ACM SL
+			</div>
+		</div>
+	
+	
+
+	
+<script>(function(){['copy','cut','contextmenu','dragstart'].forEach(function(ev){document.addEventListener(ev,function(e){e.preventDefault();},true);});document.onselectstart=function(){return false;};document.ondragstart=function(){return false;};document.addEventListener('keydown',function(e){var k=e.key;if(k==='F12'||k==='PrintScreen'){e.preventDefault();return;}if((e.ctrlKey||e.metaKey)&&e.shiftKey&&(k==='I'||k==='i'||k==='J'||k==='j'||k==='C')){e.preventDefault();return;}if((e.ctrlKey||e.metaKey)&&(k==='u'||k==='U'||k==='s'||k==='S'||k==='a'||k==='A'||k==='p'||k==='P'||k==='c'||k==='C'||k==='v'||k==='V')){e.preventDefault();}},true);})();</script><script>(function(){window.addEventListener("beforeprint",function(){document.documentElement.style.display="none";});window.addEventListener("afterprint",function(){document.documentElement.style.display="";});document.addEventListener("keydown",function(e){var k=(e.key||"").toLowerCase();if(k==="printscreen"||e.keyCode===44||e.which===44){document.documentElement.style.display="none";setTimeout(function(){document.documentElement.style.display="";},300);}},true);})();</script></body>
+	
+</html>
+
+
+
+

@@ -1,0 +1,135 @@
+﻿
+
+<!-- saved from url=(0016)about:internet -->
+<html>
+	
+<head>
+	<title>Conceptos basicos de Aerogeneradores</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="HelpNDoc Professional Edition 10.3.0.232">
+	<meta name="description" content="Simulador para Aerogenerador con Generador de Inducci&oacute;n conectado a convertidores Back-to-Back" /> 
+	<meta name="keywords" content="Aerogenerador, WT, energ&iacute;a cin&eacute;tica, HAWT, Horizontal Axis Wind Turbine, DFIG, Doubly Fed Induction Generator, Simulador de Aerogenerador B&aacute;sico, planta, G&oacute;ndola, nacelle, barlovento, upwind, sotavento, sotavento, multiplicadora, velocidad de sincronismo, Resistencia de Rotor, Tren de Potencia, imanes permanentes, as&iacute;ncrono, sincronismo, DC Link, full Converter solution, Back-to-Back">
+	
+	
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "DFIGWTSimulator.html?" + sTopicUrl;
+			}
+			else
+			{
+				(function notifyTOC(nTry)
+				{
+					nTry = nTry || 0;
+					try
+					{
+						if (top && top.frames && top.frames['FrameTOC'])
+						{
+							top.frames['FrameTOC'].postMessage({ type: 'HND_SELECT', id: "ConceptosbasicosdeAerogeneradore" }, '*');
+						}
+					}
+					catch (e) {}
+					if (nTry < 10) setTimeout(function() { notifyTOC(nTry + 1); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	
+<style>*{-webkit-user-select:none!important;-moz-user-select:none!important;user-select:none!important;-webkit-touch-callout:none!important;}img{pointer-events:none!important;}</style><style>@media print{html,body{display:none!important;}}</style></head>
+
+<body>
+
+
+
+	
+		<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Conceptos basicos de Aerogeneradores</h1>
+				
+				
+				<div id="topic_breadcrumb">
+					<a href="../DFIGTutorial/Introduccion.html">Introducci&oacute;n</a> &rsaquo;&rsaquo; 
+				</div>
+				
+			</div>
+			
+			<div id="topic_header_nav">
+				
+				
+				<a href="../DFIGTutorial/Introduccion.html"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAARpJREFUeNqkkt1Og0AQhQ+mt6YmBn8o4Lb4d+GlD+or+BS+hJcajRdKEVFDCV3BVCFhZDdK2tLdhniSyW5mZ77MnoxxcXkFjej3NFQFG7pmj9kQMQdqqadqHtWNJ6fHzRiPfkirJlkFoKFr4ehwBJ5/y4S4U1XhKYhakGUAMWcfnscwzb+a5DQvZY6I4D+/LkDmAXRg72HIHKQfs9ZYaVnKNwEZh28N5A9A7mAXrmMh4Z9KVxNeyBoBCV7eJUQAyLZMDKwdTNIM6zQpCllbUYUwiklOUF9k9PubMM1tLSCOE9zdZwsmNoZwntFWDdGproHKRKlxEKGLlgEGOqqn2P11Un/h/IxpO69vfP0q3z74//oCZkU3D34EGABoQG6/jBs+/AAAAABJRU5ErkJggg==" alt="Parent"/></a>
+				
+				
+				
+				<a href="../DFIGTutorial/Acercadeestedocumento.html"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAARhJREFUeNqck19OwzAMxr/AQAMmVZrEv64t3QqDS/DME3fjCpyCG/FAN4Vt7dIloSGN1qqZ1HWrpSiO5e8X25LJx+cX9pja3qQp4WSfOAo9tFkTQE20+Pll2gmgxoGLp8cJFskGhb9tRdXaqs4uQIX+PaIoxG+SQUph/Pe3VyupeJexXl384N1hHPqgS1YFqRCgO798z5LKLwEqGN0i8F3MF2lr30JwC6A89xoj9wYzusIhJrgNABcS8YFiA9CzqQPIT0wVYxzDodOtggKySlKV539wnMHRMyiNpOtMQ3IMrvpHV1BBWMYN5PLizATWTGDDpZUUz5eNAAPRAgPpn5+W4voyWYvVa6iSCJkrTem8TAYi2/X4F2AASu5+SCpdydAAAAAASUVORK5CYII=" alt="Previous"/></a>
+				
+				
+				
+				<a href="../DFIGTutorial/Principalescomponentesdeunaeroge.html"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAStJREFUeNqUk1tSgzAUhn86WEcX4APaDi3eNuGzT+7NLbgGHxyf3YiXWnXoRWwoaQ6SktALmhTafwZC/uR8c3LIcW7vHlAhuRidTRsaqFHgn5RBuwMuLs/RrYA0FgvlZ7lZdtoeIjbD2WkX6tsGcdXr5vpKT+4fn1YLykvELyYJ4ZsRgsCHlBLPbx+yXBMN6A+Ykdp/b0yEjt/SkJfe5wqiAUTCANi8YSTQbnka8vr+pSEFQFgAFk9pkPvH3hEymaHXD2UBSMkEWLylwjFBULquwS4ZKI1GESYsxvoIW9ZAKYoY4inH3yJumQGLORIuYPzGcPhjnjP39psuDg/29Hya34eZSI2+cDc0ivbyANl0HfD8QlGaWZvKreuFhBOKWHtH1jZTVbDSXIABACa5nociETrsAAAAAElFTkSuQmCC" alt="Next"/></a>
+				
+				
+			</div>
+			
+			<div class="clear"></div>
+		</div>
+	
+	
+	<div id="topic_content">
+		
+<p class="rvps8"><span class="rvts15">En este documento se asume que el lector está familiarizado con la terminología básica, las funcionalidades y las capacidad de un Aerogenerador. Recomendamos la lectura del Tutorial "Simulador de Aerogenerador Básico".</span></p>
+<p class="rvps8"><span class="rvts15">En todo caso, aquí se hace una breve presentación de estos conceptos, a modo de recordatorio.</span></p>
+<p class="rvps8"><span class="rvts15">Un </span><span class="rvts21">Aerogenerador</span><span class="rvts15"> </span><span class="rvts21">industrial</span><span class="rvts15"> es una </span><span class="rvts21">planta de producción de energía eléctrica</span><span class="rvts15">, con capacidad a partir de 100 KW. Actualmente existen modelos comerciales in el rango de los 6 MW.</span></p>
+<p class="rvps8"><span class="rvts15">A alto nivel, un Aerogenerador se puede describirse como dos convertidores de potencia que trabajan conjuntamente: uno que transforma la energía cinética del viento que le incide en energía rotativa, y otro que transforma esta energía rotativa en energía eléctrica.</span></p>
+<p class="rvps8"><span class="rvts15">Los aerogeneradores puede ser clasificados atendiendo a estos dos convertidores. El más común, en el uso industrial, es el llamado </span><span class="rvts21">HAWT</span><span class="rvts15"> ( de Aergenerador de Eje Horizontal), en el que el viento incide perpendicularmente sobre el plano de giro de las palas, que están sujetas a un "tren de potencia". Este "tren de potencia" gira horizontalmente y está situado en una plataforma elevada, conocida como "</span><span class="rvts21">Góndola</span><span class="rvts15">" (</span><span class="rvts21">Nacelle</span><span class="rvts15"> en inglés).</span></p>
+<p class="rvps8"><span class="rvts15">El plano de giro de las palas ha de ser mantenido perpendicular al viento y para ello hay dos métodos según se quiera que las palas sean lo primero que el viento incidente toca (</span><span class="rvts24">barlovento</span><span class="rvts15"> o </span><span class="rvts24">upwind</span><span class="rvts15"> en inglés) o lo ultimo (</span><span class="rvts24">sotavento</span><span class="rvts15"> o </span><span class="rvts24">downwind</span><span class="rvts15"> en inglés). La ventaja teórica del método a sotavento es que es el propio viento el que se encarga de orientar la góndola (el mismo principio que las veletas comunes), sin embargo tiene el inconveniente de que se pierde viento, que choca contra la misma góndola y la torre antes de llegar a las palas. Por ello</span><span class="rvts23"> la gran mayoría de los aerogeneradores HAWT se orientan cara al viento</span><span class="rvts15">. Esto implica que tienen que tener un mecanismo para mantenerlos bien orientados "frente" al viento.</span></p>
+<p class="rvps8"><span class="rvts15">Generalmente tienen tres palas aunque existen modelos industriales con dos palas.</span></p>
+<p class="rvps8"><span class="rvts15">En cuanto a los convertidores eléctricos, todos utilizan algún tipo de generador eléctrico y, en algunos casos, equipos de Electrónica de Potencia.&nbsp;</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+ <li class="rvps8 noindent"><span class="rvts15">Generador de inducción asíncrono.</span></li>
+ <li class="rvps8 noindent"><span class="rvts15">Generador de inducción de imanes permanentes.&nbsp;</span></li>
+</ul>
+<p class="rvps8"><span class="rvts15">Cuando se usan generadores de inducción asíncronos, es necesario usar una </span><span class="rvts21">multiplicadora</span><span class="rvts15"> (</span><span class="rvts21">gearbox</span><span class="rvts15"> en inglés) ya que normalmente el tren de potencia, es decir, el subsistema mecánico conectado a las palas, gira con velocidades del orden de 15 a 40 rpms, mientras que los generadores de inducción asíncronos funcionan en el rango entre 1000 a 2000 rpms.</span></p>
+<p class="rvps8"><span class="rvts15">En los casos en los que se usan generadores de inducción de imanes permanentes, existen algunos diseños que permiten trabajar directamente a la velocidad de giro del tren de potencia, y por tanto no necesitan multiplicadora.</span></p>
+<p class="rvps8"><span class="rvts15">Otro aspecto importante se refiere a como se conecta el generador eléctrico a la red. En la forma más simple, esta conexión es directa, es decir, el estator del generador está directamente conectado a la Red. Esta solución fuerza a que el tren de potencia (las palas en definitiva) giren a una velocidad prácticamente fija, ya que los generadores de inducción tienen un rango muy estrecho de funcionamiento, típicamente menor del 1%, en la zona inmediatamente superior a su "velocidad de sincronismo". Esta solución es la común en las primeras generaciones de aerogeneradores, hasta potencias del orden de 700 KW a 800 KW.</span></p>
+<p class="rvps8"><span class="rvts15">Forzar al tren de potencia a trabajar a una velocidad fija no es el procedimiento más eficiente desde el punto de vista de "aprovechamiento" de la energía del viento, cuando éste varía en un &nbsp;amplio margen: </span><span class="rvts23">cada velocidad de viento requiere una velocidad determinada para una transferencia óptima</span><span class="rvts15">: ver </span><a class="rvts22" href="../DFIGTutorial/PorqueAerogenVeloVariable.html">Razones para el uso de Aerogeneradores de Velocidad Variable</a><span class="rvts15"> ). Para solventar el desacuerdo en los requerimientos del generador de inducción y el mecanismo eólico, se han adoptado varias soluciones: la primera fue dividir en dos el rango de vientos donde se quiere funcionar, y usar dos generadores eléctricos, uno para cada rango. Una variante de esta solución es la de utilizar un solo generador pero cambiando la forma de conexión de sus devanados, de forma que se pueden cambiar los polos magnéticos del mismo, típicamente entre 6 y 4 polos, y por tanto su velocidad de sincronismo. &nbsp;&nbsp;</span></p>
+<p class="rvps8"><span class="rvts15">Una segunda solución fue usar la característica de Par-Velocidad de los generadores de inducción, que es muy sensible a cambios en la resistencia del devanado del rotor. La gran ventaja de esta aproximación consiste en que la Electrónica de Potencia necesaria para cambiar la resistencia del rotor debe manejar una potencia que es una fracción muy pequeña de la Potencia Nominal del conjunto. En el caso del controlador llamado de "Resistencia de Rotor", controlando la resistencia externa que ve el rotor es posible aumentar el margen dinámico del generador a potencia nominal hasta un 10% por encima de su velocidad de sincronismo.</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia. Available only with license</span></p>
+<p class="rvps8"><span class="rvts15"></span><span class="rvts6"></span></p>
+
+	</div>
+	
+	
+		<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; &lt;2020&gt;, &lt;Automated Computing Machinery SL&gt;
+			</div>
+		</div>
+	
+	
+
+	
+<script>(function(){['copy','cut','contextmenu','dragstart'].forEach(function(ev){document.addEventListener(ev,function(e){e.preventDefault();},true);});document.onselectstart=function(){return false;};document.ondragstart=function(){return false;};document.addEventListener('keydown',function(e){var k=e.key;if(k==='F12'||k==='PrintScreen'){e.preventDefault();return;}if((e.ctrlKey||e.metaKey)&&e.shiftKey&&(k==='I'||k==='i'||k==='J'||k==='j'||k==='C')){e.preventDefault();return;}if((e.ctrlKey||e.metaKey)&&(k==='u'||k==='U'||k==='s'||k==='S'||k==='a'||k==='A'||k==='p'||k==='P'||k==='c'||k==='C'||k==='v'||k==='V')){e.preventDefault();}},true);})();</script><script>(function(){window.addEventListener("beforeprint",function(){document.documentElement.style.display="none";});window.addEventListener("afterprint",function(){document.documentElement.style.display="";});document.addEventListener("keydown",function(e){var k=(e.key||"").toLowerCase();if(k==="printscreen"||e.keyCode===44||e.which===44){document.documentElement.style.display="none";setTimeout(function(){document.documentElement.style.display="";},300);}},true);})();</script></body>
+	
+</html>
+

@@ -1,0 +1,2622 @@
+﻿
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+	<title>SimuladorParqueEolicoSCADA - Table of Contents</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="HelpNDoc Professional Edition 10.3.0.232">
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/silver-theme/jquery-ui-1.8.12.custom.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/dynatree/chm/ui.dynatree.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+    <link type="text/css" rel="stylesheet" media="all" href="css/toc.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#tabs .ui-widget-header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/jquery-ui-1.8.17.custom.min.js"></script>
+    <script type="text/javascript" src="js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="js/jquery.dynatree.min.js"></script>
+	<script type="text/javascript" src="js/hndjsse.js"></script>
+	<script type="text/javascript">
+	
+		window.bSearchDataLoaded = false;
+		var sHelpIdToActivate = '';
+
+		var HND_CURRENT_TUTORIAL = "WFSSCADA";
+		var HND_TUTORIAL_ENTRIES = {"DSASTutorial":"DSASTutorial.html","DSASExercises":"DSASExercises.html","RRCTutorial":"RotorResistorContolledWT.html","RRCExercises":"RotorResistorContolledWT.html","DFIGTutorial":"DFIGWTSimulator.html","DFIGExercises":"DFIGWTSimulator.html","WFSSCADA":"SimuladorParqueEolico.html","Experiments":"Experiments.html"};
+		function openTopic(href) {
+		    if (!href || href == "#") return;
+		    if (href.indexOf("../") !== 0) { window.open(href, "FrameMain"); return; }
+		    var sRest = href.substring(3);
+		    var nSlash = sRest.indexOf("/");
+		    if (nSlash < 0) { window.open(href, "FrameMain"); return; }
+		    var sTutorial = sRest.substring(0, nSlash);
+		    var sFile = sRest.substring(nSlash + 1);
+		    if (sTutorial === HND_CURRENT_TUTORIAL) { window.open(href, "FrameMain"); return; }
+		    var sEntry = HND_TUTORIAL_ENTRIES[sTutorial];
+		    var nQ = sFile.indexOf("?");
+		    var sPath = (nQ >= 0) ? sFile.substring(0, nQ) : sFile;
+		    var sQuery = (nQ >= 0) ? sFile.substring(nQ) : "";
+		    if (sQuery.indexOf("?search=") === 0) sQuery = "";
+		    if (!sEntry) {
+		        window.open("../" + sTutorial + "/" + sPath + sQuery, "_blank");
+		    } else if (sPath === sEntry) {
+		        window.open("../" + sTutorial + "/" + sPath + sQuery, "_blank");
+		    } else {
+		        window.open("../" + sTutorial + "/" + sEntry + "?" + sPath + sQuery, "_blank");
+		    }
+		}
+
+	
+		$(document).ready(function()
+		{
+			var sAnchorName = '';
+			try { sAnchorName = top.location.href.substring(top.location.href.lastIndexOf("#") + 1, top.location.href.length); }
+			catch(err) { sAnchorName = ''; }
+			var nSelectedTab = 0;
+			if (sAnchorName == '_index') nSelectedTab = 1
+			else if (sAnchorName == '_search') nSelectedTab = 2;			
+			$("#tabs").tabs({
+				selected: nSelectedTab,
+				select: function(event, ui) { HideKwPopup(); }
+			});
+			
+			// Toc
+			if ($("#tab-toc").length) {
+				$("#tab-toc").dynatree({
+					clickFolderMode: 1,
+					debugLevel: 0,
+					imagePath: 'css/dynatree/chm/',
+					onActivate: function(node){
+						if ($("#tab-keywords").length && $("#tab-keywords").dynatree && $("#tab-keywords").dynatree("getTree") && $("#tab-keywords").dynatree("getTree").activateKey)
+							$("#tab-keywords").dynatree("getTree").activateKey(null);
+						if(node.data.href && node.data.href != '#'){
+							openTopic(node.data.href);
+						}
+					}
+				});
+				// Expand all nodes if required
+				
+					$("#tab-toc").dynatree("getRoot").visit(function(node){
+						node.expand(true);
+					});
+					
+				// Select the active help id
+				if (sHelpIdToActivate != '') $("#tab-toc").dynatree("getTree").activateKey(sHelpIdToActivate);
+			}
+			
+			// Keywords
+			
+			if ($("#tab-keywords").length) {
+				$("#tab-keywords").dynatree({
+					clickFolderMode: 1,
+					debugLevel: 0,
+					imagePath: 'css/dynatree/chm/',
+					onClick: function(node, event){
+						HideKwPopup();
+						if (node.data && node.data.click)
+						{
+							var aRefList = null;
+							eval('aRefList=' + node.data.click);
+							if (ShowKwPopup(node.li, aRefList))
+							{
+								if ($("#tab-toc") && $("#tab-toc").dynatree && $("#tab-toc").dynatree("getTree") && $("#tab-toc").dynatree("getTree").activateKey)
+									$("#tab-toc").dynatree("getTree").activateKey(null);
+								if(node.data.href && node.data.href != '#'){
+									openTopic(node.data.href);
+								}
+							}
+						}
+					}
+				});
+				// Expand all nodes if required
+				
+					$("#tab-keywords").dynatree("getRoot").visit(function(node){
+						node.expand(true);
+					});
+				
+			}
+			
+			// Load search data
+			(function() {
+				var se = document.createElement('script'); se.type = 'text/javascript'; se.async = true;
+				se.src = '../js/hndsd.js';
+				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(se, s);
+			})();
+		});
+		
+		$('body').click(function() {
+			HideKwPopup();
+		});
+		
+		function SelectTocItem(sHelpId)
+		{
+			if ($("#tab-toc").length && $("#tab-toc").dynatree && $("#tab-toc").dynatree("getTree") && $("#tab-toc").dynatree("getTree").getNodeByKey) {
+				var aNode = $("#tab-toc").dynatree("getTree").getNodeByKey(sHelpId);
+				if (aNode) {
+					aNode.activateSilently();  
+				}
+			}
+			else {
+				sHelpIdToActivate = sHelpId;
+			}
+		}
+window.addEventListener('message', function(e) {
+	var d = e.data;
+	if (d && d.type === 'HND_SELECT' && d.id) {
+		SelectTocItem(d.id);
+	}
+});
+
+		
+		function HideKwPopup()
+		{
+			if($("#popupMenu")) $("#popupMenu").remove();
+		}
+		
+		function ShowKwPopup(oSender, aLinks)
+		{
+			HideKwPopup();
+			if (!aLinks || !aLinks.length || aLinks.length == 0) return false
+			else if (aLinks.length == 1) return true
+			else
+			{
+				var oParentDiv = document.createElement("DIV");
+				oParentDiv.id = "popupMenu";
+				var oLink = null;
+				// Close button
+				oLink = document.createElement("SPAN");
+				oLink.className = "close-button";
+				oLink.innerHTML = "X";
+				oLink.href = "#";
+				oLink.onclick = HideKwPopup;
+				oParentDiv.appendChild(oLink);
+				// Items
+				for (var nCnt=0; nCnt<aLinks.length; nCnt++)
+				{
+					oLink = document.createElement("A");
+					oLink.innerHTML = aLinks[nCnt][0];
+					oLink.href = '../' + HND_CURRENT_TUTORIAL + '/' + aLinks[nCnt][1];
+					oLink.target = "FrameMain";
+					oLink.onclick = HideKwPopup;
+					oParentDiv.appendChild(oLink);
+				}
+				document.body.appendChild(oParentDiv);
+				var pos = $(oSender).offset(); 
+				var height = $(oSender).height();
+				$(oParentDiv).css({
+					"left": (pos.left+20) + "px",
+					"top": (pos.top + height + 5) + "px"
+				});
+				$(oParentDiv).show();
+				return false;
+			}
+		}
+		
+		function PerformSearch()
+		{
+			if (!window.bSearchDataLoaded) {
+				$("#search_results").html("Search engine data hasn't been fully loaded yet or an error occurred while loading it. This usually happens when documentation is browsed locally.");
+				return;
+			}
+			sValue = $("#search_value").val();
+			$("#search_results").html('Searching...');
+			var oSearchEngine = new HndJsSe;
+			oSearchEngine.ParseInput(sValue);			
+			oSearchEngine.PerformSearch();
+			if (!oSearchEngine.aResults || !oSearchEngine.aResults.length)
+			{
+				$("#search_results").html('No results found.');
+			}
+			else
+			{
+				$("#search_results").html('<div id="search_results_content"></div>');
+				var oUl = $("#search_results_content").append("<ul id='lr'></ul>").find("ul");
+				for (var nCnt = 0; nCnt < oSearchEngine.aResults.length; nCnt++)
+				{
+					if (oSearchEngine.aResults[nCnt][0] < aTl.length)
+					{
+						oUl.append("<li><a href='" + aTl[oSearchEngine.aResults[nCnt][0]][0] + "?search=" + escape(sValue) + "' target='FrameMain'>" + unescape(aTl[oSearchEngine.aResults[nCnt][0]][1]) + "</a></li>");
+					}
+				}
+				// Tree
+				$("#search_results_content").dynatree({
+					clickFolderMode: 1,
+					debugLevel: 0,
+					imagePath: 'css/dynatree/chm/',
+					onActivate: function(node){
+						if ($("#search_results_content") && $("#search_results_content").dynatree && $("#search_results_content").dynatree("getTree") && $("#search_results_content").dynatree("getTree").activateKey)
+							$("#search_results_content").dynatree("getTree").activateKey(null);
+						if(node.data.href && node.data.href != '#'){
+							openTopic(node.data.href);
+						}
+					}
+				});
+			}
+		}
+	</script>
+</head>
+
+<body>
+
+	<div id="tabs">
+		<ul>
+			
+				<li><a href="#tab-toc">Contents</a></li>
+			
+				<li><a href="#tab-keywords">Index</a></li>
+			
+				<li><a href="#tab-search">Search</a></li>
+			
+		</ul>
+		
+		<div id="tab-toc">
+			<ul id="toc" class="">
+
+				
+
+						<li class="folder" id="Introduccion" data="">
+							<a
+							href="../WFSSCADA/Introduccion.html"
+							target="FrameMain">
+								Introducci&oacute;n
+							</a>
+
+				<ul>
+
+						<li class="" id="Noticeonthisversion" data="icon: '16.png'">
+							<a
+							href="../WFSSCADA/Noticeonthisversion.html"
+							target="FrameMain">
+								Nota de esta versi&oacute;n
+							</a>
+
+				</li>
+
+						<li class="folder" id="WhatisaWindFarm" data="">
+							<a
+							href="../WFSSCADA/WhatisaWindFarm.html"
+							target="FrameMain">
+								&iquest;Qu&eacute; es un Parque E&oacute;lico?
+							</a>
+
+				<ul>
+
+						<li class="" id="IntegrationofaWindFarmintheGrid" data="icon: '16.png'">
+							<a
+							href="../WFSSCADA/IntegrationofaWindFarmintheGrid.html"
+							target="FrameMain">
+								Integraci&oacute;n de un Parque E&oacute;lico en la Red El&eacute;ctrica
+							</a>
+
+				</li>
+
+						<li class="" id="IntegracindeunParqueElicoenlaRed" data="icon: '16.png'">
+							<a
+							href="../WFSSCADA/IntegracindeunParqueElicoenlaRed.html"
+							target="FrameMain">
+								Esquema simplificado de las Redes de Transmision y Distribucion
+							</a>
+
+				</li>
+
+						<li class="" id="TheControlRoom" data="icon: '16.png'">
+							<a
+							href="../WFSSCADA/TheControlRoom.html"
+							target="FrameMain">
+								La Sala de Control - SCADA
+							</a>
+
+				</li>
+
+						<li class="" id="ImportantcharacteristicsofWindT1" data="icon: '16.png'">
+							<a
+							href="../WFSSCADA/ImportantcharacteristicsofWindT1.html"
+							target="FrameMain">
+								Control de un Aerogenerador
+							</a>
+
+				</li>
+
+						<li class="folder" id="StrucutureandFunctionalitiesofaW" data="">
+							<a
+							href="../WFSSCADA/StrucutureandFunctionalitiesofaW.html"
+							target="FrameMain">
+								Estructura y Funcionalidades de un Parque E&oacute;lico
+							</a>
+
+				<ul>
+
+						<li class="" id="Landlayout" data="icon: '16.png'">
+							<a
+							href="../WFSSCADA/Landlayout.html"
+							target="FrameMain">
+								Despliegue territorial de un Parque E&oacute;lico
+							</a>
+
+				</li>
+
+						<li class="folder" id="UnifilarschematicoftheSubstation" data="">
+							<a
+							href="../WFSSCADA/UnifilarschematicoftheSubstation.html"
+							target="FrameMain">
+								Esquema el&eacute;ctrico unifilar
+							</a>
+
+				<ul>
+
+						<li class="" id="Legendofsymbols" data="icon: '16.png'">
+							<a
+							href="../WFSSCADA/Legendofsymbols.html"
+							target="FrameMain">
+								Leyenda de los simbolos en el esquema unifilar
+							</a>
+
+				</li></ul></li>
+
+						<li class="folder" id="Meteorologicalinstruments" data="icon: '16.png'">
+							<a
+							href="../WFSSCADA/Meteorologicalinstruments.html"
+							target="FrameMain">
+								Instrumentos meteorol&oacute;gicos
+							</a>
+
+				<ul>
+
+						<li class="" id="Windspeedanemometer" data="icon: '16.png'">
+							<a
+							href="../WFSSCADA/Windspeedanemometer.html"
+							target="FrameMain">
+								Medida del viento: anem&oacute;metro
+							</a>
+
+				</li>
+
+						<li class="" id="Winddirectionwindvane" data="icon: '16.png'">
+							<a
+							href="../WFSSCADA/Winddirectionwindvane.html"
+							target="FrameMain">
+								Direcci&oacute;n del veinto: veleta
+							</a>
+
+				</li>
+
+						<li class="" id="Ambienttemperature" data="icon: '16.png'">
+							<a
+							href="../WFSSCADA/Ambienttemperature.html"
+							target="FrameMain">
+								Temperatura ambiente
+							</a>
+
+				</li></ul></li>
+
+						<li class="" id="Controlofthegeneratedpower" data="icon: '16.png'">
+							<a
+							href="../WFSSCADA/Controlofthegeneratedpower.html"
+							target="FrameMain">
+								Sobre el control de la potencia generada
+							</a>
+
+				</li>
+
+						<li class="" id="IntegracionconlaRedElectrica" data="icon: '16.png'">
+							<a
+							href="../WFSSCADA/IntegracionconlaRedElectrica.html"
+							target="FrameMain">
+								Control de la Potencia Activa entregada
+							</a>
+
+				</li>
+
+						<li class="" id="Gridcodes" data="icon: '16.png'">
+							<a
+							href="../WFSSCADA/Gridcodes.html"
+							target="FrameMain">
+								&quot;Grid codes&quot;
+							</a>
+
+				</li></ul></li></ul></li>
+
+						<li class="folder" id="WhatisaWindTurbine" data="">
+							<a
+							href="../WFSSCADA/WhatisaWindTurbine.html"
+							target="FrameMain">
+								&iquest;Qu&eacute; es un Aerogenerador?
+							</a>
+
+				<ul>
+
+						<li class="" id="Curvasdepotenciaaerog" data="icon: '16.png'">
+							<a
+							href="../WFSSCADA/Curvasdepotenciaaerog.html"
+							target="FrameMain">
+								Curvas de potencia de aerogeneradores
+							</a>
+
+				</li>
+
+						<li class="" id="ControlofaWindTurbine" data="icon: '16.png'">
+							<a
+							href="../WFSSCADA/ControlofaWindTurbine.html"
+							target="FrameMain">
+								Modos de operaci&oacute;n
+							</a>
+
+				</li>
+
+						<li class="" id="StructureofaWindTurbine" data="icon: '16.png'">
+							<a
+							href="../WFSSCADA/StructureofaWindTurbine.html"
+							target="FrameMain">
+								Estructura operativa
+							</a>
+
+				</li>
+
+						<li class="" id="Electricalconnectiontothegrid" data="icon: '16.png'">
+							<a
+							href="../WFSSCADA/Electricalconnectiontothegrid.html"
+							target="FrameMain">
+								Conexi&oacute;n a la Red
+							</a>
+
+				</li></ul></li></ul></li>
+
+						<li class="folder" id="StructureoftheWindFarmSimulator" data="">
+							<a
+							href="../WFSSCADA/StructureoftheWindFarmSimulator.html"
+							target="FrameMain">
+								Descripci&oacute;n del Simulador de Parque Eolico
+							</a>
+
+				<ul>
+
+						<li class="folder" id="Description" data="">
+							<a
+							href="../WFSSCADA/Description.html"
+							target="FrameMain">
+								Componentes del Simulador
+							</a>
+
+				<ul>
+
+						<li class="folder" id="ComponentesdelSimulador" data="">
+							<a
+							href="../WFSSCADA/ComponentesdelSimulador.html"
+							target="FrameMain">
+								Control de la ejecuci&oacute;n y acceso a opciones
+							</a>
+
+				<ul>
+
+						<li class="" id="Parameters" data="icon: '16.png'">
+							<a
+							href="../WFSSCADA/Parameters.html"
+							target="FrameMain">
+								Par&aacute;metros
+							</a>
+
+				</li>
+
+						<li class="folder" id="PowerpergroupTotalproducedPowera" data="icon: '16.png'">
+							<a
+							href="../WFSSCADA/PowerpergroupTotalproducedPowera.html"
+							target="FrameMain">
+								Gr&aacute;ficos de evoluci&oacute;n de se&ntilde;ales
+							</a>
+
+				<ul>
+
+						<li class="" id="Grficosdeevolucindeseales" data="icon: '16.png'">
+							<a
+							href="../WFSSCADA/Grficosdeevolucindeseales.html"
+							target="FrameMain">
+								Obtenci&oacute;n de copias activas
+							</a>
+
+				</li></ul></li></ul></li>
+
+						<li class="folder" id="DescriptionoftheUserInterface" data="">
+							<a
+							href="../WFSSCADA/DescriptionoftheUserInterface.html"
+							target="FrameMain">
+								Sinoptico principal
+							</a>
+
+				<ul>
+
+						<li class="" id="IconicviewoftheWTsPCCandpowercab" data="icon: '16.png'">
+							<a
+							href="../WFSSCADA/IconicviewoftheWTsPCCandpowercab.html"
+							target="FrameMain">
+								Conexiones de los aerogeneradores al PCC
+							</a>
+
+				</li>
+
+						<li class="" id="SCADAview" data="icon: '16.png'">
+							<a
+							href="../WFSSCADA/SCADAview.html"
+							target="FrameMain">
+								Vista de la aplicaci&oacute;n SCADA
+							</a>
+
+				</li>
+
+						<li class="" id="Maintenanceview" data="icon: '16.png'">
+							<a
+							href="../WFSSCADA/Maintenanceview.html"
+							target="FrameMain">
+								Gesti&oacute;n del estado de un aerogenerador
+							</a>
+
+				</li>
+
+						<li class="" id="Externaldemandsetpoint" data="icon: '16.png'">
+							<a
+							href="../WFSSCADA/Externaldemandsetpoint.html"
+							target="FrameMain">
+								Demanda de la Red
+							</a>
+
+				</li>
+
+						<li class="" id="Productionindication" data="icon: '16.png'">
+							<a
+							href="../WFSSCADA/Productionindication.html"
+							target="FrameMain">
+								Indicaci&oacute;n de la Producci&oacute;n
+							</a>
+
+				</li>
+
+						<li class="" id="AutomaticDispatching" data="icon: '16.png'">
+							<a
+							href="../WFSSCADA/AutomaticDispatching.html"
+							target="FrameMain">
+								Gesti&oacute;n autom&aacute;tica
+							</a>
+
+				</li>
+
+						<li class="" id="Meteorologicalstation" data="icon: '16.png'">
+							<a
+							href="../WFSSCADA/Meteorologicalstation.html"
+							target="FrameMain">
+								Estaci&oacute;n meteorol&oacute;gica
+							</a>
+
+				</li></ul></li>
+
+						<li class="" id="3DView" data="icon: '16.png'">
+							<a
+							href="../WFSSCADA/3DView.html"
+							target="FrameMain">
+								Vista en 3D
+							</a>
+
+				</li></ul></li></ul></li>
+
+						<li class="folder" id="OperationsinaWindFarm" data="">
+							<a
+							href="../WFSSCADA/OperationsinaWindFarm.html"
+							target="FrameMain">
+								Operaciones en un Parque E&oacute;lico
+							</a>
+
+				<ul>
+
+						<li class="" id="Productioncontrol" data="icon: '16.png'">
+							<a
+							href="../WFSSCADA/Productioncontrol.html"
+							target="FrameMain">
+								Control de la Producci&oacute;n
+							</a>
+
+				</li>
+
+						<li class="folder" id="ControldelaProduccin" data="">
+							<a
+							href="../WFSSCADA/ControldelaProduccin.html"
+							target="FrameMain">
+								Gesti&oacute;n del Mantenimiento
+							</a>
+
+				<ul>
+
+						<li class="" id="Mantenimiento" data="icon: '16.png'">
+							<a
+							href="../WFSSCADA/Mantenimiento.html"
+							target="FrameMain">
+								Mantenimiento Planificado
+							</a>
+
+				</li>
+
+						<li class="" id="MantenimientoPlanificado" data="icon: '16.png'">
+							<a
+							href="../WFSSCADA/MantenimientoPlanificado.html"
+							target="FrameMain">
+								Mantenimiento Correctivo
+							</a>
+
+				</li>
+
+						<li class="" id="MantenimientoCorrectivo" data="icon: '16.png'">
+							<a
+							href="../WFSSCADA/MantenimientoCorrectivo.html"
+							target="FrameMain">
+								Mantenimiento Predictivo
+							</a>
+
+				</li></ul></li></ul></li>
+
+						<li class="folder" id="Teachingsessions" data="">
+							<a
+							href="../WFSSCADA/Teachingsessions.html"
+							target="FrameMain">
+								Clases pr&aacute;cticas
+							</a>
+
+				<ul>
+
+						<li class="" id="Cambiodelestadodeunaerogenerador" data="icon: '16.png'">
+							<a
+							href="../WFSSCADA/Cambiodelestadodeunaerogenerador.html"
+							target="FrameMain">
+								Presentaci&oacute;n de la vista 3D
+							</a>
+
+				</li>
+
+						<li class="" id="Clasesprcticas1" data="icon: '16.png'">
+							<a
+							href="../WFSSCADA/Clasesprcticas1.html"
+							target="FrameMain">
+								Cambio del estado de un aerogenerador
+							</a>
+
+				</li>
+
+						<li class="" id="Influenciadelascondicionesambie1" data="icon: '16.png'">
+							<a
+							href="../WFSSCADA/Influenciadelascondicionesambie1.html"
+							target="FrameMain">
+								Control manual de la producci&oacute;n
+							</a>
+
+				</li>
+
+						<li class="" id="Controlmanualdelaproduccin" data="icon: '16.png'">
+							<a
+							href="../WFSSCADA/Controlmanualdelaproduccin.html"
+							target="FrameMain">
+								Control autom&aacute;tico de la producci&oacute;n
+							</a>
+
+				</li>
+
+						<li class="" id="Influenceofweatherconditionsonth" data="icon: '16.png'">
+							<a
+							href="../WFSSCADA/Influenceofweatherconditionsonth.html"
+							target="FrameMain">
+								Influencia de las condiciones ambientales en la Produccion del Parque
+							</a>
+
+				</li>
+
+						<li class="" id="Influenciadelascondicionesambien" data="icon: '16.png'">
+							<a
+							href="../WFSSCADA/Influenciadelascondicionesambien.html"
+							target="FrameMain">
+								Cambio de la Demanda
+							</a>
+
+				</li>
+
+						<li class="" id="SimulationthataWTisOutofOrder" data="icon: '16.png'">
+							<a
+							href="../WFSSCADA/SimulationthataWTisOutofOrder.html"
+							target="FrameMain">
+								Simulaci&oacute;n de Puesta en &quot;No disponible&quot; de un Aerogenerador
+							</a>
+
+				</li>
+
+						<li class="" id="SimulacindePuestaenNodisponibled" data="icon: '16.png'">
+							<a
+							href="../WFSSCADA/SimulacindePuestaenNodisponibled.html"
+							target="FrameMain">
+								Visualizaci&oacute;n de la evoluci&oacute;n temporales de las se&ntilde;ales en el SCADA
+							</a>
+
+				</li></ul></li>
+
+						<li class="" id="Datalogging1" data="icon: '16.png'">
+							<a
+							href="../WFSSCADA/Datalogging1.html"
+							target="FrameMain">
+								Registro de datos
+							</a>
+
+				</li>
+				
+				</ul>
+		</div>
+		
+		
+		
+		<div id="tab-keywords">
+			<ul id="keywords">
+
+				
+
+						<li class="file" data="click:'[[\'Sinoptico principal\',\'DescriptionoftheUserInterface.html\'],[\'Vista en 3D\',\'3DView.html\'],[\'\',\'.html\']]'">
+							<a
+								href="../WFSSCADA/DescriptionoftheUserInterface.html"
+								target="FrameMain"
+								onClick="[['Sinoptico principal','DescriptionoftheUserInterface.html'],['Vista en 3D','3DView.html'],['','.html']]"
+								>
+								3DView
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Sobre el control de la potencia generada\',\'Controlofthegeneratedpower.html\']]'">
+							<a
+								href="../WFSSCADA/Controlofthegeneratedpower.html"
+								target="FrameMain"
+								onClick="[['Sobre el control de la potencia generada','Controlofthegeneratedpower.html']]"
+								>
+								activa
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'&quot;Grid codes&quot;\',\'Gridcodes.html\'],[\'&iquest;Qu&eacute; es un Aerogenerador?\',\'WhatisaWindTurbine.html\'],[\'\',\'.html\'],[\'Control de un Aerogenerador\',\'ImportantcharacteristicsofWindT1.html\'],[\'Estructura y Funcionalidades de un Parque E&oacute;lico\',\'StrucutureandFunctionalitiesofaW.html\'],[\'Instrumentos meteorol&oacute;gicos\',\'Meteorologicalinstruments.html\'],[\'Estructura operativa\',\'StructureofaWindTurbine.html\'],[\'Sinoptico principal\',\'DescriptionoftheUserInterface.html\'],[\'Conexiones de los aerogeneradores al PCC\',\'IconicviewoftheWTsPCCandpowercab.html\']]'">
+							<a
+								href="../WFSSCADA/Gridcodes.html"
+								target="FrameMain"
+								onClick="[['&quot;Grid codes&quot;','Gridcodes.html'],['&iquest;Qu&eacute; es un Aerogenerador?','WhatisaWindTurbine.html'],['','.html'],['Control de un Aerogenerador','ImportantcharacteristicsofWindT1.html'],['Estructura y Funcionalidades de un Parque E&oacute;lico','StrucutureandFunctionalitiesofaW.html'],['Instrumentos meteorol&oacute;gicos','Meteorologicalinstruments.html'],['Estructura operativa','StructureofaWindTurbine.html'],['Sinoptico principal','DescriptionoftheUserInterface.html'],['Conexiones de los aerogeneradores al PCC','IconicviewoftheWTsPCCandpowercab.html']]"
+								>
+								aerogenerador
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Par&aacute;metros\',\'Parameters.html\']]'">
+							<a
+								href="../WFSSCADA/Parameters.html"
+								target="FrameMain"
+								onClick="[['Par&aacute;metros','Parameters.html']]"
+								>
+								aleatorio
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'&iquest;Qu&eacute; es un Aerogenerador?\',\'WhatisaWindTurbine.html\'],[\'Medida del viento: anem&oacute;metro\',\'Windspeedanemometer.html\'],[\'Estructura operativa\',\'StructureofaWindTurbine.html\'],[\'Estructura y Funcionalidades de un Parque E&oacute;lico\',\'StrucutureandFunctionalitiesofaW.html\'],[\'Instrumentos meteorol&oacute;gicos\',\'Meteorologicalinstruments.html\'],[\'\',\'.html\'],[\'Componentes del Simulador\',\'Description.html\'],[\'Sinoptico principal\',\'DescriptionoftheUserInterface.html\']]'">
+							<a
+								href="../WFSSCADA/WhatisaWindTurbine.html"
+								target="FrameMain"
+								onClick="[['&iquest;Qu&eacute; es un Aerogenerador?','WhatisaWindTurbine.html'],['Medida del viento: anem&oacute;metro','Windspeedanemometer.html'],['Estructura operativa','StructureofaWindTurbine.html'],['Estructura y Funcionalidades de un Parque E&oacute;lico','StrucutureandFunctionalitiesofaW.html'],['Instrumentos meteorol&oacute;gicos','Meteorologicalinstruments.html'],['','.html'],['Componentes del Simulador','Description.html'],['Sinoptico principal','DescriptionoftheUserInterface.html']]"
+								>
+								anemometro
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Control de la Producci&oacute;n\',\'Productioncontrol.html\']]'">
+							<a
+								href="../WFSSCADA/Productioncontrol.html"
+								target="FrameMain"
+								onClick="[['Control de la Producci&oacute;n','Productioncontrol.html']]"
+								>
+								Automatic Dispatching
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Conexi&oacute;n a la Red\',\'Electricalconnectiontothegrid.html\']]'">
+							<a
+								href="../WFSSCADA/Electricalconnectiontothegrid.html"
+								target="FrameMain"
+								onClick="[['Conexi&oacute;n a la Red','Electricalconnectiontothegrid.html']]"
+								>
+								barras de conexión
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'\',\'.html\'],[\'Conexi&oacute;n a la Red\',\'Electricalconnectiontothegrid.html\']]'">
+							<a
+								href=".html"
+								target="FrameMain"
+								onClick="[['','.html'],['Conexi&oacute;n a la Red','Electricalconnectiontothegrid.html']]"
+								>
+								busbars
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'\',\'.html\'],[\'Estructura y Funcionalidades de un Parque E&oacute;lico\',\'StrucutureandFunctionalitiesofaW.html\'],[\'Despliegue territorial de un Parque E&oacute;lico\',\'Landlayout.html\'],[\'Esquema el&eacute;ctrico unifilar\',\'UnifilarschematicoftheSubstation.html\'],[\'Sinoptico principal\',\'DescriptionoftheUserInterface.html\'],[\'Conexiones de los aerogeneradores al PCC\',\'IconicviewoftheWTsPCCandpowercab.html\']]'">
+							<a
+								href=".html"
+								target="FrameMain"
+								onClick="[['','.html'],['Estructura y Funcionalidades de un Parque E&oacute;lico','StrucutureandFunctionalitiesofaW.html'],['Despliegue territorial de un Parque E&oacute;lico','Landlayout.html'],['Esquema el&eacute;ctrico unifilar','UnifilarschematicoftheSubstation.html'],['Sinoptico principal','DescriptionoftheUserInterface.html'],['Conexiones de los aerogeneradores al PCC','IconicviewoftheWTsPCCandpowercab.html']]"
+								>
+								cables de potencia
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'&quot;Grid codes&quot;\',\'Gridcodes.html\']]'">
+							<a
+								href="../WFSSCADA/Gridcodes.html"
+								target="FrameMain"
+								onClick="[['&quot;Grid codes&quot;','Gridcodes.html']]"
+								>
+								Códigos de Red
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Control de la Producci&oacute;n\',\'Productioncontrol.html\']]'">
+							<a
+								href="../WFSSCADA/Productioncontrol.html"
+								target="FrameMain"
+								onClick="[['Control de la Producci&oacute;n','Productioncontrol.html']]"
+								>
+								columna 'Uso'
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Vista de la aplicaci&oacute;n SCADA\',\'SCADAview.html\']]'">
+							<a
+								href="../WFSSCADA/SCADAview.html"
+								target="FrameMain"
+								onClick="[['Vista de la aplicaci&oacute;n SCADA','SCADAview.html']]"
+								>
+								comunicaciones
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Sobre el control de la potencia generada\',\'Controlofthegeneratedpower.html\'],[\'\',\'.html\'],[\'Estructura y Funcionalidades de un Parque E&oacute;lico\',\'StrucutureandFunctionalitiesofaW.html\'],[\'Componentes del Simulador\',\'Description.html\'],[\'Sinoptico principal\',\'DescriptionoftheUserInterface.html\'],[\'Demanda de la Red\',\'Externaldemandsetpoint.html\'],[\'Control de la Producci&oacute;n\',\'Productioncontrol.html\']]'">
+							<a
+								href="../WFSSCADA/Controlofthegeneratedpower.html"
+								target="FrameMain"
+								onClick="[['Sobre el control de la potencia generada','Controlofthegeneratedpower.html'],['','.html'],['Estructura y Funcionalidades de un Parque E&oacute;lico','StrucutureandFunctionalitiesofaW.html'],['Componentes del Simulador','Description.html'],['Sinoptico principal','DescriptionoftheUserInterface.html'],['Demanda de la Red','Externaldemandsetpoint.html'],['Control de la Producci&oacute;n','Productioncontrol.html']]"
+								>
+								consigna
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Control de la Potencia Activa entregada\',\'IntegracionconlaRedElectrica.html\']]'">
+							<a
+								href="../WFSSCADA/IntegracionconlaRedElectrica.html"
+								target="FrameMain"
+								onClick="[['Control de la Potencia Activa entregada','IntegracionconlaRedElectrica.html']]"
+								>
+								consigna de producción
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Conexi&oacute;n a la Red\',\'Electricalconnectiontothegrid.html\']]'">
+							<a
+								href="../WFSSCADA/Electricalconnectiontothegrid.html"
+								target="FrameMain"
+								onClick="[['Conexi&oacute;n a la Red','Electricalconnectiontothegrid.html']]"
+								>
+								contactores de Bypass
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Conexi&oacute;n a la Red\',\'Electricalconnectiontothegrid.html\']]'">
+							<a
+								href="../WFSSCADA/Electricalconnectiontothegrid.html"
+								target="FrameMain"
+								onClick="[['Conexi&oacute;n a la Red','Electricalconnectiontothegrid.html']]"
+								>
+								contactores de conexión con el generador
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Control de la ejecuci&oacute;n y acceso a opciones\',\'ComponentesdelSimulador.html\']]'">
+							<a
+								href="../WFSSCADA/ComponentesdelSimulador.html"
+								target="FrameMain"
+								onClick="[['Control de la ejecuci&oacute;n y acceso a opciones','ComponentesdelSimulador.html']]"
+								>
+								Continuar
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Control de la Producci&oacute;n\',\'Productioncontrol.html\']]'">
+							<a
+								href="../WFSSCADA/Productioncontrol.html"
+								target="FrameMain"
+								onClick="[['Control de la Producci&oacute;n','Productioncontrol.html']]"
+								>
+								Control automatico
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Cambio del estado de un aerogenerador\',\'Clasesprcticas1.html\'],[\'Gesti&oacute;n autom&aacute;tica\',\'AutomaticDispatching.html\']]'">
+							<a
+								href="../WFSSCADA/Clasesprcticas1.html"
+								target="FrameMain"
+								onClick="[['Cambio del estado de un aerogenerador','Clasesprcticas1.html'],['Gesti&oacute;n autom&aacute;tica','AutomaticDispatching.html']]"
+								>
+								Control automático
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Control de la ejecuci&oacute;n y acceso a opciones\',\'ComponentesdelSimulador.html\']]'">
+							<a
+								href="../WFSSCADA/ComponentesdelSimulador.html"
+								target="FrameMain"
+								onClick="[['Control de la ejecuci&oacute;n y acceso a opciones','ComponentesdelSimulador.html']]"
+								>
+								Control de Ejecución
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Operaciones en un Parque E&oacute;lico\',\'OperationsinaWindFarm.html\'],[\'Gesti&oacute;n autom&aacute;tica\',\'AutomaticDispatching.html\']]'">
+							<a
+								href="../WFSSCADA/OperationsinaWindFarm.html"
+								target="FrameMain"
+								onClick="[['Operaciones en un Parque E&oacute;lico','OperationsinaWindFarm.html'],['Gesti&oacute;n autom&aacute;tica','AutomaticDispatching.html']]"
+								>
+								control de la produccion
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Sobre el control de la potencia generada\',\'Controlofthegeneratedpower.html\']]'">
+							<a
+								href="../WFSSCADA/Controlofthegeneratedpower.html"
+								target="FrameMain"
+								onClick="[['Sobre el control de la potencia generada','Controlofthegeneratedpower.html']]"
+								>
+								control de la producción
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Conexi&oacute;n a la Red\',\'Electricalconnectiontothegrid.html\']]'">
+							<a
+								href="../WFSSCADA/Electricalconnectiontothegrid.html"
+								target="FrameMain"
+								onClick="[['Conexi&oacute;n a la Red','Electricalconnectiontothegrid.html']]"
+								>
+								Controlador
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'\',\'.html\'],[\'Estructura operativa\',\'StructureofaWindTurbine.html\'],[\'\',\'.html\']]'">
+							<a
+								href=".html"
+								target="FrameMain"
+								onClick="[['','.html'],['Estructura operativa','StructureofaWindTurbine.html'],['','.html']]"
+								>
+								Controller
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Gr&aacute;ficos de evoluci&oacute;n de se&ntilde;ales\',\'PowerpergroupTotalproducedPowera.html\']]'">
+							<a
+								href="../WFSSCADA/PowerpergroupTotalproducedPowera.html"
+								target="FrameMain"
+								onClick="[['Gr&aacute;ficos de evoluci&oacute;n de se&ntilde;ales','PowerpergroupTotalproducedPowera.html']]"
+								>
+								Copia
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Gr&aacute;ficos de evoluci&oacute;n de se&ntilde;ales\',\'PowerpergroupTotalproducedPowera.html\']]'">
+							<a
+								href="../WFSSCADA/PowerpergroupTotalproducedPowera.html"
+								target="FrameMain"
+								onClick="[['Gr&aacute;ficos de evoluci&oacute;n de se&ntilde;ales','PowerpergroupTotalproducedPowera.html']]"
+								>
+								copia activa
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'\',\'.html\'],[\'\',\'.html\'],[\'Curvas de potencia de aerogeneradores\',\'Curvasdepotenciaaerog.html\']]'">
+							<a
+								href=".html"
+								target="FrameMain"
+								onClick="[['','.html'],['','.html'],['Curvas de potencia de aerogeneradores','Curvasdepotenciaaerog.html']]"
+								>
+								curva de potencia
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Curvas de potencia de aerogeneradores\',\'Curvasdepotenciaaerog.html\']]'">
+							<a
+								href="../WFSSCADA/Curvasdepotenciaaerog.html"
+								target="FrameMain"
+								onClick="[['Curvas de potencia de aerogeneradores','Curvasdepotenciaaerog.html']]"
+								>
+								curva de producción
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Curvas de potencia de aerogeneradores\',\'Curvasdepotenciaaerog.html\']]'">
+							<a
+								href="../WFSSCADA/Curvasdepotenciaaerog.html"
+								target="FrameMain"
+								onClick="[['Curvas de potencia de aerogeneradores','Curvasdepotenciaaerog.html']]"
+								>
+								cutin
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'\',\'.html\'],[\'Estructura y Funcionalidades de un Parque E&oacute;lico\',\'StrucutureandFunctionalitiesofaW.html\'],[\'Instrumentos meteorol&oacute;gicos\',\'Meteorologicalinstruments.html\'],[\'Descripci&oacute;n del Simulador de Parque Eolico\',\'StructureoftheWindFarmSimulator.html\'],[\'Gr&aacute;ficos de evoluci&oacute;n de se&ntilde;ales\',\'PowerpergroupTotalproducedPowera.html\'],[\'Control de la Producci&oacute;n\',\'Productioncontrol.html\'],[\'\',\'.html\'],[\'\',\'.html\'],[\'\',\'.html\']]'">
+							<a
+								href=".html"
+								target="FrameMain"
+								onClick="[['','.html'],['Estructura y Funcionalidades de un Parque E&oacute;lico','StrucutureandFunctionalitiesofaW.html'],['Instrumentos meteorol&oacute;gicos','Meteorologicalinstruments.html'],['Descripci&oacute;n del Simulador de Parque Eolico','StructureoftheWindFarmSimulator.html'],['Gr&aacute;ficos de evoluci&oacute;n de se&ntilde;ales','PowerpergroupTotalproducedPowera.html'],['Control de la Producci&oacute;n','Productioncontrol.html'],['','.html'],['','.html'],['','.html']]"
+								>
+								datalogger
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'\',\'.html\'],[\'\',\'.html\'],[\'Estructura y Funcionalidades de un Parque E&oacute;lico\',\'StrucutureandFunctionalitiesofaW.html\'],[\'Instrumentos meteorol&oacute;gicos\',\'Meteorologicalinstruments.html\'],[\'Descripci&oacute;n del Simulador de Parque Eolico\',\'StructureoftheWindFarmSimulator.html\'],[\'Gr&aacute;ficos de evoluci&oacute;n de se&ntilde;ales\',\'PowerpergroupTotalproducedPowera.html\'],[\'Control de la Producci&oacute;n\',\'Productioncontrol.html\'],[\'\',\'.html\'],[\'\',\'.html\'],[\'\',\'.html\']]'">
+							<a
+								href=".html"
+								target="FrameMain"
+								onClick="[['','.html'],['','.html'],['Estructura y Funcionalidades de un Parque E&oacute;lico','StrucutureandFunctionalitiesofaW.html'],['Instrumentos meteorol&oacute;gicos','Meteorologicalinstruments.html'],['Descripci&oacute;n del Simulador de Parque Eolico','StructureoftheWindFarmSimulator.html'],['Gr&aacute;ficos de evoluci&oacute;n de se&ntilde;ales','PowerpergroupTotalproducedPowera.html'],['Control de la Producci&oacute;n','Productioncontrol.html'],['','.html'],['','.html'],['','.html']]"
+								>
+								datalogging
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Par&aacute;metros\',\'Parameters.html\'],[\'Control de la Producci&oacute;n\',\'Productioncontrol.html\'],[\'Demanda de la Red\',\'Externaldemandsetpoint.html\']]'">
+							<a
+								href="../WFSSCADA/Parameters.html"
+								target="FrameMain"
+								onClick="[['Par&aacute;metros','Parameters.html'],['Control de la Producci&oacute;n','Productioncontrol.html'],['Demanda de la Red','Externaldemandsetpoint.html']]"
+								>
+								demanda
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Curvas de potencia de aerogeneradores\',\'Curvasdepotenciaaerog.html\'],[\'Estructura y Funcionalidades de un Parque E&oacute;lico\',\'StrucutureandFunctionalitiesofaW.html\'],[\'Sinoptico principal\',\'DescriptionoftheUserInterface.html\'],[\'Estaci&oacute;n meteorol&oacute;gica\',\'Meteorologicalstation.html\']]'">
+							<a
+								href="../WFSSCADA/Curvasdepotenciaaerog.html"
+								target="FrameMain"
+								onClick="[['Curvas de potencia de aerogeneradores','Curvasdepotenciaaerog.html'],['Estructura y Funcionalidades de un Parque E&oacute;lico','StrucutureandFunctionalitiesofaW.html'],['Sinoptico principal','DescriptionoftheUserInterface.html'],['Estaci&oacute;n meteorol&oacute;gica','Meteorologicalstation.html']]"
+								>
+								densidad del aire
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Influencia de las condiciones ambientales en la Produccion del Parque\',\'Influenceofweatherconditionsonth.html\']]'">
+							<a
+								href="../WFSSCADA/Influenceofweatherconditionsonth.html"
+								target="FrameMain"
+								onClick="[['Influencia de las condiciones ambientales en la Produccion del Parque','Influenceofweatherconditionsonth.html']]"
+								>
+								densidad del aire
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Control de la Producci&oacute;n\',\'Productioncontrol.html\']]'">
+							<a
+								href="../WFSSCADA/Productioncontrol.html"
+								target="FrameMain"
+								onClick="[['Control de la Producci&oacute;n','Productioncontrol.html']]"
+								>
+								DFIG
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Esquema el&eacute;ctrico unifilar\',\'UnifilarschematicoftheSubstation.html\']]'">
+							<a
+								href="../WFSSCADA/UnifilarschematicoftheSubstation.html"
+								target="FrameMain"
+								onClick="[['Esquema el&eacute;ctrico unifilar','UnifilarschematicoftheSubstation.html']]"
+								>
+								diagrama unifilar
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Estaci&oacute;n meteorol&oacute;gica\',\'Meteorologicalstation.html\']]'">
+							<a
+								href="../WFSSCADA/Meteorologicalstation.html"
+								target="FrameMain"
+								onClick="[['Estaci&oacute;n meteorol&oacute;gica','Meteorologicalstation.html']]"
+								>
+								direccion del viento
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'\',\'.html\'],[\'Control de un Aerogenerador\',\'ImportantcharacteristicsofWindT1.html\'],[\'Estructura y Funcionalidades de un Parque E&oacute;lico\',\'StrucutureandFunctionalitiesofaW.html\'],[\'Instrumentos meteorol&oacute;gicos\',\'Meteorologicalinstruments.html\'],[\'&iquest;Qu&eacute; es un Aerogenerador?\',\'WhatisaWindTurbine.html\'],[\'Direcci&oacute;n del veinto: veleta\',\'Winddirectionwindvane.html\'],[\'Componentes del Simulador\',\'Description.html\'],[\'Sinoptico principal\',\'DescriptionoftheUserInterface.html\'],[\'Estaci&oacute;n meteorol&oacute;gica\',\'Meteorologicalstation.html\'],[\'Influencia de las condiciones ambientales en la Produccion del Parque\',\'Influenceofweatherconditionsonth.html\']]'">
+							<a
+								href=".html"
+								target="FrameMain"
+								onClick="[['','.html'],['Control de un Aerogenerador','ImportantcharacteristicsofWindT1.html'],['Estructura y Funcionalidades de un Parque E&oacute;lico','StrucutureandFunctionalitiesofaW.html'],['Instrumentos meteorol&oacute;gicos','Meteorologicalinstruments.html'],['&iquest;Qu&eacute; es un Aerogenerador?','WhatisaWindTurbine.html'],['Direcci&oacute;n del veinto: veleta','Winddirectionwindvane.html'],['Componentes del Simulador','Description.html'],['Sinoptico principal','DescriptionoftheUserInterface.html'],['Estaci&oacute;n meteorol&oacute;gica','Meteorologicalstation.html'],['Influencia de las condiciones ambientales en la Produccion del Parque','Influenceofweatherconditionsonth.html']]"
+								>
+								direccion viento
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'\',\'.html\'],[\'&iquest;Qu&eacute; es un Aerogenerador?\',\'WhatisaWindTurbine.html\'],[\'\',\'.html\']]'">
+							<a
+								href=".html"
+								target="FrameMain"
+								onClick="[['','.html'],['&iquest;Qu&eacute; es un Aerogenerador?','WhatisaWindTurbine.html'],['','.html']]"
+								>
+								disco de freno
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'\',\'.html\'],[\'Sinoptico principal\',\'DescriptionoftheUserInterface.html\'],[\'Gesti&oacute;n autom&aacute;tica\',\'AutomaticDispatching.html\'],[\'Par&aacute;metros\',\'Parameters.html\'],[\'Simulaci&oacute;n de Puesta en &quot;No disponible&quot; de un Aerogenerador\',\'SimulationthataWTisOutofOrder.html\'],[\'\',\'.html\']]'">
+							<a
+								href=".html"
+								target="FrameMain"
+								onClick="[['','.html'],['Sinoptico principal','DescriptionoftheUserInterface.html'],['Gesti&oacute;n autom&aacute;tica','AutomaticDispatching.html'],['Par&aacute;metros','Parameters.html'],['Simulaci&oacute;n de Puesta en &quot;No disponible&quot; de un Aerogenerador','SimulationthataWTisOutofOrder.html'],['','.html']]"
+								>
+								dispatching
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Integraci&oacute;n de un Parque E&oacute;lico en la Red El&eacute;ctrica\',\'IntegrationofaWindFarmintheGrid.html\']]'">
+							<a
+								href="../WFSSCADA/IntegrationofaWindFarmintheGrid.html"
+								target="FrameMain"
+								onClick="[['Integraci&oacute;n de un Parque E&oacute;lico en la Red El&eacute;ctrica','IntegrationofaWindFarmintheGrid.html']]"
+								>
+								Distribution Grid
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'&iquest;Qu&eacute; es un Aerogenerador?\',\'WhatisaWindTurbine.html\']]'">
+							<a
+								href="../WFSSCADA/WhatisaWindTurbine.html"
+								target="FrameMain"
+								onClick="[['&iquest;Qu&eacute; es un Aerogenerador?','WhatisaWindTurbine.html']]"
+								>
+								DriveTrain
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Control de la ejecuci&oacute;n y acceso a opciones\',\'ComponentesdelSimulador.html\']]'">
+							<a
+								href="../WFSSCADA/ComponentesdelSimulador.html"
+								target="FrameMain"
+								onClick="[['Control de la ejecuci&oacute;n y acceso a opciones','ComponentesdelSimulador.html']]"
+								>
+								Ejecutar
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Estructura operativa\',\'StructureofaWindTurbine.html\'],[\'Conexi&oacute;n a la Red\',\'Electricalconnectiontothegrid.html\']]'">
+							<a
+								href="../WFSSCADA/StructureofaWindTurbine.html"
+								target="FrameMain"
+								onClick="[['Estructura operativa','StructureofaWindTurbine.html'],['Conexi&oacute;n a la Red','Electricalconnectiontothegrid.html']]"
+								>
+								electric diagram
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Esquema el&eacute;ctrico unifilar\',\'UnifilarschematicoftheSubstation.html\'],[\'Conexi&oacute;n a la Red\',\'Electricalconnectiontothegrid.html\']]'">
+							<a
+								href="../WFSSCADA/UnifilarschematicoftheSubstation.html"
+								target="FrameMain"
+								onClick="[['Esquema el&eacute;ctrico unifilar','UnifilarschematicoftheSubstation.html'],['Conexi&oacute;n a la Red','Electricalconnectiontothegrid.html']]"
+								>
+								electrical measurement units
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'&iquest;Qu&eacute; es un Aerogenerador?\',\'WhatisaWindTurbine.html\']]'">
+							<a
+								href="../WFSSCADA/WhatisaWindTurbine.html"
+								target="FrameMain"
+								onClick="[['&iquest;Qu&eacute; es un Aerogenerador?','WhatisaWindTurbine.html']]"
+								>
+								electrónica de potencia
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Descripci&oacute;n del Simulador de Parque Eolico\',\'StructureoftheWindFarmSimulator.html\']]'">
+							<a
+								href="../WFSSCADA/StructureoftheWindFarmSimulator.html"
+								target="FrameMain"
+								onClick="[['Descripci&oacute;n del Simulador de Parque Eolico','StructureoftheWindFarmSimulator.html']]"
+								>
+								En Producción
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Leyenda de los simbolos en el esquema unifilar\',\'Legendofsymbols.html\']]'">
+							<a
+								href="../WFSSCADA/Legendofsymbols.html"
+								target="FrameMain"
+								onClick="[['Leyenda de los simbolos en el esquema unifilar','Legendofsymbols.html']]"
+								>
+								enclavamiento
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'\',\'.html\'],[\'Control de la Producci&oacute;n\',\'Productioncontrol.html\']]'">
+							<a
+								href=".html"
+								target="FrameMain"
+								onClick="[['','.html'],['Control de la Producci&oacute;n','Productioncontrol.html']]"
+								>
+								energy
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Control de la ejecuci&oacute;n y acceso a opciones\',\'ComponentesdelSimulador.html\']]'">
+							<a
+								href="../WFSSCADA/ComponentesdelSimulador.html"
+								target="FrameMain"
+								onClick="[['Control de la ejecuci&oacute;n y acceso a opciones','ComponentesdelSimulador.html']]"
+								>
+								esconder
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'&quot;Grid codes&quot;\',\'Gridcodes.html\']]'">
+							<a
+								href="../WFSSCADA/Gridcodes.html"
+								target="FrameMain"
+								onClick="[['&quot;Grid codes&quot;','Gridcodes.html']]"
+								>
+								estabilidad
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Influencia de las condiciones ambientales en la Produccion del Parque\',\'Influenceofweatherconditionsonth.html\'],[\'Estaci&oacute;n meteorol&oacute;gica\',\'Meteorologicalstation.html\']]'">
+							<a
+								href="../WFSSCADA/Influenceofweatherconditionsonth.html"
+								target="FrameMain"
+								onClick="[['Influencia de las condiciones ambientales en la Produccion del Parque','Influenceofweatherconditionsonth.html'],['Estaci&oacute;n meteorol&oacute;gica','Meteorologicalstation.html']]"
+								>
+								Estación meteorológica
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Descripci&oacute;n del Simulador de Parque Eolico\',\'StructureoftheWindFarmSimulator.html\']]'">
+							<a
+								href="../WFSSCADA/StructureoftheWindFarmSimulator.html"
+								target="FrameMain"
+								onClick="[['Descripci&oacute;n del Simulador de Parque Eolico','StructureoftheWindFarmSimulator.html']]"
+								>
+								estado operativo
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'\',\'.html\'],[\'\',\'.html\'],[\'Curvas de potencia de aerogeneradores\',\'Curvasdepotenciaaerog.html\']]'">
+							<a
+								href=".html"
+								target="FrameMain"
+								onClick="[['','.html'],['','.html'],['Curvas de potencia de aerogeneradores','Curvasdepotenciaaerog.html']]"
+								>
+								factor de potencia
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Conexi&oacute;n a la Red\',\'Electricalconnectiontothegrid.html\']]'">
+							<a
+								href="../WFSSCADA/Electricalconnectiontothegrid.html"
+								target="FrameMain"
+								onClick="[['Conexi&oacute;n a la Red','Electricalconnectiontothegrid.html']]"
+								>
+								factor de potencia
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'\',\'.html\'],[\'Descripci&oacute;n del Simulador de Parque Eolico\',\'StructureoftheWindFarmSimulator.html\']]'">
+							<a
+								href=".html"
+								target="FrameMain"
+								onClick="[['','.html'],['Descripci&oacute;n del Simulador de Parque Eolico','StructureoftheWindFarmSimulator.html']]"
+								>
+								framework
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'\',\'.html\'],[\'Sinoptico principal\',\'DescriptionoftheUserInterface.html\']]'">
+							<a
+								href=".html"
+								target="FrameMain"
+								onClick="[['','.html'],['Sinoptico principal','DescriptionoftheUserInterface.html']]"
+								>
+								frecuencia de muestreo
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'&iquest;Qu&eacute; es un Aerogenerador?\',\'WhatisaWindTurbine.html\']]'">
+							<a
+								href="../WFSSCADA/WhatisaWindTurbine.html"
+								target="FrameMain"
+								onClick="[['&iquest;Qu&eacute; es un Aerogenerador?','WhatisaWindTurbine.html']]"
+								>
+								Freno
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Control de la Producci&oacute;n\',\'Productioncontrol.html\']]'">
+							<a
+								href="../WFSSCADA/Productioncontrol.html"
+								target="FrameMain"
+								onClick="[['Control de la Producci&oacute;n','Productioncontrol.html']]"
+								>
+								Full Converter
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'&iquest;Qu&eacute; es un Aerogenerador?\',\'WhatisaWindTurbine.html\']]'">
+							<a
+								href="../WFSSCADA/WhatisaWindTurbine.html"
+								target="FrameMain"
+								onClick="[['&iquest;Qu&eacute; es un Aerogenerador?','WhatisaWindTurbine.html']]"
+								>
+								gearbox
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'&iquest;Qu&eacute; es un Aerogenerador?\',\'WhatisaWindTurbine.html\']]'">
+							<a
+								href="../WFSSCADA/WhatisaWindTurbine.html"
+								target="FrameMain"
+								onClick="[['&iquest;Qu&eacute; es un Aerogenerador?','WhatisaWindTurbine.html']]"
+								>
+								generador eléctrico
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Estructura operativa\',\'StructureofaWindTurbine.html\'],[\'\',\'.html\'],[\'\',\'.html\'],[\'Conexi&oacute;n a la Red\',\'Electricalconnectiontothegrid.html\'],[\'\',\'.html\'],[\'\',\'.html\']]'">
+							<a
+								href="../WFSSCADA/StructureofaWindTurbine.html"
+								target="FrameMain"
+								onClick="[['Estructura operativa','StructureofaWindTurbine.html'],['','.html'],['','.html'],['Conexi&oacute;n a la Red','Electricalconnectiontothegrid.html'],['','.html'],['','.html']]"
+								>
+								generator
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'\',\'.html\']]'">
+							<a
+								href=".html"
+								target="FrameMain"
+								onClick="[['','.html']]"
+								>
+								generator rpms
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'&iquest;Qu&eacute; es un Aerogenerador?\',\'WhatisaWindTurbine.html\']]'">
+							<a
+								href="../WFSSCADA/WhatisaWindTurbine.html"
+								target="FrameMain"
+								onClick="[['&iquest;Qu&eacute; es un Aerogenerador?','WhatisaWindTurbine.html']]"
+								>
+								Góndola
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Integraci&oacute;n de un Parque E&oacute;lico en la Red El&eacute;ctrica\',\'IntegrationofaWindFarmintheGrid.html\'],[\'Estructura operativa\',\'StructureofaWindTurbine.html\'],[\'&quot;Grid codes&quot;\',\'Gridcodes.html\'],[\'Conexi&oacute;n a la Red\',\'Electricalconnectiontothegrid.html\']]'">
+							<a
+								href="../WFSSCADA/IntegrationofaWindFarmintheGrid.html"
+								target="FrameMain"
+								onClick="[['Integraci&oacute;n de un Parque E&oacute;lico en la Red El&eacute;ctrica','IntegrationofaWindFarmintheGrid.html'],['Estructura operativa','StructureofaWindTurbine.html'],['&quot;Grid codes&quot;','Gridcodes.html'],['Conexi&oacute;n a la Red','Electricalconnectiontothegrid.html']]"
+								>
+								grid
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'&quot;Grid codes&quot;\',\'Gridcodes.html\']]'">
+							<a
+								href="../WFSSCADA/Gridcodes.html"
+								target="FrameMain"
+								onClick="[['&quot;Grid codes&quot;','Gridcodes.html']]"
+								>
+								grid code
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'&quot;Grid codes&quot;\',\'Gridcodes.html\']]'">
+							<a
+								href="../WFSSCADA/Gridcodes.html"
+								target="FrameMain"
+								onClick="[['&quot;Grid codes&quot;','Gridcodes.html']]"
+								>
+								Grid Codes
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'\',\'.html\'],[\'\',\'.html\'],[\'Gr&aacute;ficos de evoluci&oacute;n de se&ntilde;ales\',\'PowerpergroupTotalproducedPowera.html\']]'">
+							<a
+								href=".html"
+								target="FrameMain"
+								onClick="[['','.html'],['','.html'],['Gr&aacute;ficos de evoluci&oacute;n de se&ntilde;ales','PowerpergroupTotalproducedPowera.html']]"
+								>
+								hardcopy
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Vista de la aplicaci&oacute;n SCADA\',\'SCADAview.html\']]'">
+							<a
+								href="../WFSSCADA/SCADAview.html"
+								target="FrameMain"
+								onClick="[['Vista de la aplicaci&oacute;n SCADA','SCADAview.html']]"
+								>
+								horas de producción
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'&iquest;Qu&eacute; es un Aerogenerador?\',\'WhatisaWindTurbine.html\']]'">
+							<a
+								href="../WFSSCADA/WhatisaWindTurbine.html"
+								target="FrameMain"
+								onClick="[['&iquest;Qu&eacute; es un Aerogenerador?','WhatisaWindTurbine.html']]"
+								>
+								hub
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Influencia de las condiciones ambientales en la Produccion del Parque\',\'Influenceofweatherconditionsonth.html\'],[\'Estaci&oacute;n meteorol&oacute;gica\',\'Meteorologicalstation.html\']]'">
+							<a
+								href="../WFSSCADA/Influenceofweatherconditionsonth.html"
+								target="FrameMain"
+								onClick="[['Influencia de las condiciones ambientales en la Produccion del Parque','Influenceofweatherconditionsonth.html'],['Estaci&oacute;n meteorol&oacute;gica','Meteorologicalstation.html']]"
+								>
+								humedad ambiente
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Componentes del Simulador\',\'Description.html\'],[\'Sinoptico principal\',\'DescriptionoftheUserInterface.html\'],[\'Estaci&oacute;n meteorol&oacute;gica\',\'Meteorologicalstation.html\']]'">
+							<a
+								href="../WFSSCADA/Description.html"
+								target="FrameMain"
+								onClick="[['Componentes del Simulador','Description.html'],['Sinoptico principal','DescriptionoftheUserInterface.html'],['Estaci&oacute;n meteorol&oacute;gica','Meteorologicalstation.html']]"
+								>
+								humidity
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'\',\'.html\'],[\'\',\'.html\']]'">
+							<a
+								href=".html"
+								target="FrameMain"
+								onClick="[['','.html'],['','.html']]"
+								>
+								informe
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Leyenda de los simbolos en el esquema unifilar\',\'Legendofsymbols.html\']]'">
+							<a
+								href="../WFSSCADA/Legendofsymbols.html"
+								target="FrameMain"
+								onClick="[['Leyenda de los simbolos en el esquema unifilar','Legendofsymbols.html']]"
+								>
+								interruptor
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Conexi&oacute;n a la Red\',\'Electricalconnectiontothegrid.html\']]'">
+							<a
+								href="../WFSSCADA/Electricalconnectiontothegrid.html"
+								target="FrameMain"
+								onClick="[['Conexi&oacute;n a la Red','Electricalconnectiontothegrid.html']]"
+								>
+								Interruptor Principal
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Despliegue territorial de un Parque E&oacute;lico\',\'Landlayout.html\']]'">
+							<a
+								href="../WFSSCADA/Landlayout.html"
+								target="FrameMain"
+								onClick="[['Despliegue territorial de un Parque E&oacute;lico','Landlayout.html']]"
+								>
+								layout
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Descripci&oacute;n del Simulador de Parque Eolico\',\'StructureoftheWindFarmSimulator.html\'],[\'\',\'.html\'],[\'Gr&aacute;ficos de evoluci&oacute;n de se&ntilde;ales\',\'PowerpergroupTotalproducedPowera.html\'],[\'Componentes del Simulador\',\'Description.html\']]'">
+							<a
+								href="../WFSSCADA/StructureoftheWindFarmSimulator.html"
+								target="FrameMain"
+								onClick="[['Descripci&oacute;n del Simulador de Parque Eolico','StructureoftheWindFarmSimulator.html'],['','.html'],['Gr&aacute;ficos de evoluci&oacute;n de se&ntilde;ales','PowerpergroupTotalproducedPowera.html'],['Componentes del Simulador','Description.html']]"
+								>
+								LdP
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'&iquest;Qu&eacute; es un Aerogenerador?\',\'WhatisaWindTurbine.html\']]'">
+							<a
+								href="../WFSSCADA/WhatisaWindTurbine.html"
+								target="FrameMain"
+								onClick="[['&iquest;Qu&eacute; es un Aerogenerador?','WhatisaWindTurbine.html']]"
+								>
+								lightning rod
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Esquema el&eacute;ctrico unifilar\',\'UnifilarschematicoftheSubstation.html\']]'">
+							<a
+								href="../WFSSCADA/UnifilarschematicoftheSubstation.html"
+								target="FrameMain"
+								onClick="[['Esquema el&eacute;ctrico unifilar','UnifilarschematicoftheSubstation.html']]"
+								>
+								linea trifásica
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'&quot;Grid codes&quot;\',\'Gridcodes.html\']]'">
+							<a
+								href="../WFSSCADA/Gridcodes.html"
+								target="FrameMain"
+								onClick="[['&quot;Grid codes&quot;','Gridcodes.html']]"
+								>
+								Low Voltage Ride Through capability
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Simulaci&oacute;n de Puesta en &quot;No disponible&quot; de un Aerogenerador\',\'SimulationthataWTisOutofOrder.html\']]'">
+							<a
+								href="../WFSSCADA/SimulationthataWTisOutofOrder.html"
+								target="FrameMain"
+								onClick="[['Simulaci&oacute;n de Puesta en &quot;No disponible&quot; de un Aerogenerador','SimulationthataWTisOutofOrder.html']]"
+								>
+								maintenance
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Gesti&oacute;n del Mantenimiento\',\'ControldelaProduccin.html\']]'">
+							<a
+								href="../WFSSCADA/ControldelaProduccin.html"
+								target="FrameMain"
+								onClick="[['Gesti&oacute;n del Mantenimiento','ControldelaProduccin.html']]"
+								>
+								Mantenimiento Correctivo
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Gesti&oacute;n del Mantenimiento\',\'ControldelaProduccin.html\']]'">
+							<a
+								href="../WFSSCADA/ControldelaProduccin.html"
+								target="FrameMain"
+								onClick="[['Gesti&oacute;n del Mantenimiento','ControldelaProduccin.html']]"
+								>
+								Mantenimiento Planificado
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Gesti&oacute;n del Mantenimiento\',\'ControldelaProduccin.html\']]'">
+							<a
+								href="../WFSSCADA/ControldelaProduccin.html"
+								target="FrameMain"
+								onClick="[['Gesti&oacute;n del Mantenimiento','ControldelaProduccin.html']]"
+								>
+								Mantenimiento Predictivo
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Control de la Producci&oacute;n\',\'Productioncontrol.html\']]'">
+							<a
+								href="../WFSSCADA/Productioncontrol.html"
+								target="FrameMain"
+								onClick="[['Control de la Producci&oacute;n','Productioncontrol.html']]"
+								>
+								mecanismo automatizado de control
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'&iquest;Qu&eacute; es un Aerogenerador?\',\'WhatisaWindTurbine.html\']]'">
+							<a
+								href="../WFSSCADA/WhatisaWindTurbine.html"
+								target="FrameMain"
+								onClick="[['&iquest;Qu&eacute; es un Aerogenerador?','WhatisaWindTurbine.html']]"
+								>
+								mecanismo de orientación
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Instrumentos meteorol&oacute;gicos\',\'Meteorologicalinstruments.html\'],[\'\',\'.html\'],[\'\',\'.html\'],[\'Estructura y Funcionalidades de un Parque E&oacute;lico\',\'StrucutureandFunctionalitiesofaW.html\'],[\'Estructura operativa\',\'StructureofaWindTurbine.html\'],[\'\',\'.html\'],[\'Medida del viento: anem&oacute;metro\',\'Windspeedanemometer.html\'],[\'Direcci&oacute;n del veinto: veleta\',\'Winddirectionwindvane.html\'],[\'Temperatura ambiente\',\'Ambienttemperature.html\'],[\'Influencia de las condiciones ambientales en la Produccion del Parque\',\'Influenceofweatherconditionsonth.html\']]'">
+							<a
+								href="../WFSSCADA/Meteorologicalinstruments.html"
+								target="FrameMain"
+								onClick="[['Instrumentos meteorol&oacute;gicos','Meteorologicalinstruments.html'],['','.html'],['','.html'],['Estructura y Funcionalidades de un Parque E&oacute;lico','StrucutureandFunctionalitiesofaW.html'],['Estructura operativa','StructureofaWindTurbine.html'],['','.html'],['Medida del viento: anem&oacute;metro','Windspeedanemometer.html'],['Direcci&oacute;n del veinto: veleta','Winddirectionwindvane.html'],['Temperatura ambiente','Ambienttemperature.html'],['Influencia de las condiciones ambientales en la Produccion del Parque','Influenceofweatherconditionsonth.html']]"
+								>
+								meteorological station
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Control de la Producci&oacute;n\',\'Productioncontrol.html\']]'">
+							<a
+								href="../WFSSCADA/Productioncontrol.html"
+								target="FrameMain"
+								onClick="[['Control de la Producci&oacute;n','Productioncontrol.html']]"
+								>
+								modo manual
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'&iquest;Qu&eacute; es un Aerogenerador?\',\'WhatisaWindTurbine.html\']]'">
+							<a
+								href="../WFSSCADA/WhatisaWindTurbine.html"
+								target="FrameMain"
+								onClick="[['&iquest;Qu&eacute; es un Aerogenerador?','WhatisaWindTurbine.html']]"
+								>
+								multiplicadora
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'&iquest;Qu&eacute; es un Aerogenerador?\',\'WhatisaWindTurbine.html\']]'">
+							<a
+								href="../WFSSCADA/WhatisaWindTurbine.html"
+								target="FrameMain"
+								onClick="[['&iquest;Qu&eacute; es un Aerogenerador?','WhatisaWindTurbine.html']]"
+								>
+								Nacelle
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'\',\'.html\'],[\'Estructura operativa\',\'StructureofaWindTurbine.html\']]'">
+							<a
+								href=".html"
+								target="FrameMain"
+								onClick="[['','.html'],['Estructura operativa','StructureofaWindTurbine.html']]"
+								>
+								nacelle orientation
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Descripci&oacute;n del Simulador de Parque Eolico\',\'StructureoftheWindFarmSimulator.html\']]'">
+							<a
+								href="../WFSSCADA/StructureoftheWindFarmSimulator.html"
+								target="FrameMain"
+								onClick="[['Descripci&oacute;n del Simulador de Parque Eolico','StructureoftheWindFarmSimulator.html']]"
+								>
+								No disponible
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Esquema el&eacute;ctrico unifilar\',\'UnifilarschematicoftheSubstation.html\']]'">
+							<a
+								href="../WFSSCADA/UnifilarschematicoftheSubstation.html"
+								target="FrameMain"
+								onClick="[['Esquema el&eacute;ctrico unifilar','UnifilarschematicoftheSubstation.html']]"
+								>
+								operaciones de mantenimiento
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Gesti&oacute;n del estado de un aerogenerador\',\'Maintenanceview.html\'],[\'\',\'.html\']]'">
+							<a
+								href="../WFSSCADA/Maintenanceview.html"
+								target="FrameMain"
+								onClick="[['Gesti&oacute;n del estado de un aerogenerador','Maintenanceview.html'],['','.html']]"
+								>
+								operational status
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Estructura operativa\',\'StructureofaWindTurbine.html\']]'">
+							<a
+								href="../WFSSCADA/StructureofaWindTurbine.html"
+								target="FrameMain"
+								onClick="[['Estructura operativa','StructureofaWindTurbine.html']]"
+								>
+								operator terminal
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'&iquest;Qu&eacute; es un Aerogenerador?\',\'WhatisaWindTurbine.html\'],[\'\',\'.html\'],[\'Estructura operativa\',\'StructureofaWindTurbine.html\'],[\'\',\'.html\'],[\'\',\'.html\'],[\'\',\'.html\'],[\'Vista en 3D\',\'3DView.html\']]'">
+							<a
+								href="../WFSSCADA/WhatisaWindTurbine.html"
+								target="FrameMain"
+								onClick="[['&iquest;Qu&eacute; es un Aerogenerador?','WhatisaWindTurbine.html'],['','.html'],['Estructura operativa','StructureofaWindTurbine.html'],['','.html'],['','.html'],['','.html'],['Vista en 3D','3DView.html']]"
+								>
+								orientacion gondola
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'&quot;Grid codes&quot;\',\'Gridcodes.html\'],[\'\',\'.html\'],[\'\',\'.html\'],[\'\',\'.html\']]'">
+							<a
+								href="../WFSSCADA/Gridcodes.html"
+								target="FrameMain"
+								onClick="[['&quot;Grid codes&quot;','Gridcodes.html'],['','.html'],['','.html'],['','.html']]"
+								>
+								pala
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'&iquest;Qu&eacute; es un Aerogenerador?\',\'WhatisaWindTurbine.html\']]'">
+							<a
+								href="../WFSSCADA/WhatisaWindTurbine.html"
+								target="FrameMain"
+								onClick="[['&iquest;Qu&eacute; es un Aerogenerador?','WhatisaWindTurbine.html']]"
+								>
+								palas
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Gr&aacute;ficos de evoluci&oacute;n de se&ntilde;ales\',\'PowerpergroupTotalproducedPowera.html\']]'">
+							<a
+								href="../WFSSCADA/PowerpergroupTotalproducedPowera.html"
+								target="FrameMain"
+								onClick="[['Gr&aacute;ficos de evoluci&oacute;n de se&ntilde;ales','PowerpergroupTotalproducedPowera.html']]"
+								>
+								Paneles predefinidos
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Descripci&oacute;n del Simulador de Parque Eolico\',\'StructureoftheWindFarmSimulator.html\']]'">
+							<a
+								href="../WFSSCADA/StructureoftheWindFarmSimulator.html"
+								target="FrameMain"
+								onClick="[['Descripci&oacute;n del Simulador de Parque Eolico','StructureoftheWindFarmSimulator.html']]"
+								>
+								Parado
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'\',\'.html\'],[\'Par&aacute;metros\',\'Parameters.html\']]'">
+							<a
+								href=".html"
+								target="FrameMain"
+								onClick="[['','.html'],['Par&aacute;metros','Parameters.html']]"
+								>
+								parameter
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Par&aacute;metros\',\'Parameters.html\']]'">
+							<a
+								href="../WFSSCADA/Parameters.html"
+								target="FrameMain"
+								onClick="[['Par&aacute;metros','Parameters.html']]"
+								>
+								Parámetros
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Control de la ejecuci&oacute;n y acceso a opciones\',\'ComponentesdelSimulador.html\']]'">
+							<a
+								href="../WFSSCADA/ComponentesdelSimulador.html"
+								target="FrameMain"
+								onClick="[['Control de la ejecuci&oacute;n y acceso a opciones','ComponentesdelSimulador.html']]"
+								>
+								Parar
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'&quot;Grid codes&quot;\',\'Gridcodes.html\'],[\'Esquema el&eacute;ctrico unifilar\',\'UnifilarschematicoftheSubstation.html\'],[\'&iquest;Qu&eacute; es un Parque E&oacute;lico?\',\'WhatisaWindFarm.html\'],[\'Estructura y Funcionalidades de un Parque E&oacute;lico\',\'StrucutureandFunctionalitiesofaW.html\'],[\'Despliegue territorial de un Parque E&oacute;lico\',\'Landlayout.html\'],[\'\',\'.html\'],[\'Control de un Aerogenerador\',\'ImportantcharacteristicsofWindT1.html\'],[\'Sinoptico principal\',\'DescriptionoftheUserInterface.html\'],[\'Vista en 3D\',\'3DView.html\']]'">
+							<a
+								href="../WFSSCADA/Gridcodes.html"
+								target="FrameMain"
+								onClick="[['&quot;Grid codes&quot;','Gridcodes.html'],['Esquema el&eacute;ctrico unifilar','UnifilarschematicoftheSubstation.html'],['&iquest;Qu&eacute; es un Parque E&oacute;lico?','WhatisaWindFarm.html'],['Estructura y Funcionalidades de un Parque E&oacute;lico','StrucutureandFunctionalitiesofaW.html'],['Despliegue territorial de un Parque E&oacute;lico','Landlayout.html'],['','.html'],['Control de un Aerogenerador','ImportantcharacteristicsofWindT1.html'],['Sinoptico principal','DescriptionoftheUserInterface.html'],['Vista en 3D','3DView.html']]"
+								>
+								parque eolico
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Componentes del Simulador\',\'Description.html\'],[\'Estructura y Funcionalidades de un Parque E&oacute;lico\',\'StrucutureandFunctionalitiesofaW.html\'],[\'Conexi&oacute;n a la Red\',\'Electricalconnectiontothegrid.html\'],[\'Sinoptico principal\',\'DescriptionoftheUserInterface.html\'],[\'&iquest;Qu&eacute; es un Parque E&oacute;lico?\',\'WhatisaWindFarm.html\']]'">
+							<a
+								href="../WFSSCADA/Description.html"
+								target="FrameMain"
+								onClick="[['Componentes del Simulador','Description.html'],['Estructura y Funcionalidades de un Parque E&oacute;lico','StrucutureandFunctionalitiesofaW.html'],['Conexi&oacute;n a la Red','Electricalconnectiontothegrid.html'],['Sinoptico principal','DescriptionoftheUserInterface.html'],['&iquest;Qu&eacute; es un Parque E&oacute;lico?','WhatisaWindFarm.html']]"
+								>
+								PCC
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'&quot;Grid codes&quot;\',\'Gridcodes.html\'],[\'\',\'.html\'],[\'\',\'.html\'],[\'Estructura operativa\',\'StructureofaWindTurbine.html\']]'">
+							<a
+								href="../WFSSCADA/Gridcodes.html"
+								target="FrameMain"
+								onClick="[['&quot;Grid codes&quot;','Gridcodes.html'],['','.html'],['','.html'],['Estructura operativa','StructureofaWindTurbine.html']]"
+								>
+								pitch
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Operaciones en un Parque E&oacute;lico\',\'OperationsinaWindFarm.html\']]'">
+							<a
+								href="../WFSSCADA/OperationsinaWindFarm.html"
+								target="FrameMain"
+								onClick="[['Operaciones en un Parque E&oacute;lico','OperationsinaWindFarm.html']]"
+								>
+								planned demand
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Estructura operativa\',\'StructureofaWindTurbine.html\']]'">
+							<a
+								href="../WFSSCADA/StructureofaWindTurbine.html"
+								target="FrameMain"
+								onClick="[['Estructura operativa','StructureofaWindTurbine.html']]"
+								>
+								PLC
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Integraci&oacute;n de un Parque E&oacute;lico en la Red El&eacute;ctrica\',\'IntegrationofaWindFarmintheGrid.html\'],[\'Estructura y Funcionalidades de un Parque E&oacute;lico\',\'StrucutureandFunctionalitiesofaW.html\'],[\'Esquema el&eacute;ctrico unifilar\',\'UnifilarschematicoftheSubstation.html\'],[\'Estructura operativa\',\'StructureofaWindTurbine.html\'],[\'Conexi&oacute;n a la Red\',\'Electricalconnectiontothegrid.html\'],[\'Componentes del Simulador\',\'Description.html\'],[\'Sinoptico principal\',\'DescriptionoftheUserInterface.html\']]'">
+							<a
+								href="../WFSSCADA/IntegrationofaWindFarmintheGrid.html"
+								target="FrameMain"
+								onClick="[['Integraci&oacute;n de un Parque E&oacute;lico en la Red El&eacute;ctrica','IntegrationofaWindFarmintheGrid.html'],['Estructura y Funcionalidades de un Parque E&oacute;lico','StrucutureandFunctionalitiesofaW.html'],['Esquema el&eacute;ctrico unifilar','UnifilarschematicoftheSubstation.html'],['Estructura operativa','StructureofaWindTurbine.html'],['Conexi&oacute;n a la Red','Electricalconnectiontothegrid.html'],['Componentes del Simulador','Description.html'],['Sinoptico principal','DescriptionoftheUserInterface.html']]"
+								>
+								Point of Common Connection
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'&iquest;Qu&eacute; es un Aerogenerador?\',\'WhatisaWindTurbine.html\']]'">
+							<a
+								href="../WFSSCADA/WhatisaWindTurbine.html"
+								target="FrameMain"
+								onClick="[['&iquest;Qu&eacute; es un Aerogenerador?','WhatisaWindTurbine.html']]"
+								>
+								pole
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Modos de operaci&oacute;n\',\'ControlofaWindTurbine.html\']]'">
+							<a
+								href="../WFSSCADA/ControlofaWindTurbine.html"
+								target="FrameMain"
+								onClick="[['Modos de operaci&oacute;n','ControlofaWindTurbine.html']]"
+								>
+								potencia activa
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Sobre el control de la potencia generada\',\'Controlofthegeneratedpower.html\'],[\'Estructura y Funcionalidades de un Parque E&oacute;lico\',\'StrucutureandFunctionalitiesofaW.html\'],[\'Componentes del Simulador\',\'Description.html\'],[\'Sinoptico principal\',\'DescriptionoftheUserInterface.html\'],[\'Indicaci&oacute;n de la Producci&oacute;n\',\'Productionindication.html\'],[\'Demanda de la Red\',\'Externaldemandsetpoint.html\'],[\'Control de la Producci&oacute;n\',\'Productioncontrol.html\']]'">
+							<a
+								href="../WFSSCADA/Controlofthegeneratedpower.html"
+								target="FrameMain"
+								onClick="[['Sobre el control de la potencia generada','Controlofthegeneratedpower.html'],['Estructura y Funcionalidades de un Parque E&oacute;lico','StrucutureandFunctionalitiesofaW.html'],['Componentes del Simulador','Description.html'],['Sinoptico principal','DescriptionoftheUserInterface.html'],['Indicaci&oacute;n de la Producci&oacute;n','Productionindication.html'],['Demanda de la Red','Externaldemandsetpoint.html'],['Control de la Producci&oacute;n','Productioncontrol.html']]"
+								>
+								Potencia activa
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Control de un Aerogenerador\',\'ImportantcharacteristicsofWindT1.html\']]'">
+							<a
+								href="../WFSSCADA/ImportantcharacteristicsofWindT1.html"
+								target="FrameMain"
+								onClick="[['Control de un Aerogenerador','ImportantcharacteristicsofWindT1.html']]"
+								>
+								potencia activa máxima
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Modos de operaci&oacute;n\',\'ControlofaWindTurbine.html\']]'">
+							<a
+								href="../WFSSCADA/ControlofaWindTurbine.html"
+								target="FrameMain"
+								onClick="[['Modos de operaci&oacute;n','ControlofaWindTurbine.html']]"
+								>
+								potencia reactiva
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Esquema el&eacute;ctrico unifilar\',\'UnifilarschematicoftheSubstation.html\'],[\'&iquest;Qu&eacute; es un Parque E&oacute;lico?\',\'WhatisaWindFarm.html\'],[\'Sobre el control de la potencia generada\',\'Controlofthegeneratedpower.html\'],[\'Estructura y Funcionalidades de un Parque E&oacute;lico\',\'StrucutureandFunctionalitiesofaW.html\'],[\'Curvas de potencia de aerogeneradores\',\'Curvasdepotenciaaerog.html\']]'">
+							<a
+								href="../WFSSCADA/UnifilarschematicoftheSubstation.html"
+								target="FrameMain"
+								onClick="[['Esquema el&eacute;ctrico unifilar','UnifilarschematicoftheSubstation.html'],['&iquest;Qu&eacute; es un Parque E&oacute;lico?','WhatisaWindFarm.html'],['Sobre el control de la potencia generada','Controlofthegeneratedpower.html'],['Estructura y Funcionalidades de un Parque E&oacute;lico','StrucutureandFunctionalitiesofaW.html'],['Curvas de potencia de aerogeneradores','Curvasdepotenciaaerog.html']]"
+								>
+								Potencia reactiva
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Control manual de la producci&oacute;n\',\'Influenciadelascondicionesambie1.html\']]'">
+							<a
+								href="../WFSSCADA/Influenciadelascondicionesambie1.html"
+								target="FrameMain"
+								onClick="[['Control manual de la producci&oacute;n','Influenciadelascondicionesambie1.html']]"
+								>
+								Potencia Total
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Indicaci&oacute;n de la Producci&oacute;n\',\'Productionindication.html\']]'">
+							<a
+								href="../WFSSCADA/Productionindication.html"
+								target="FrameMain"
+								onClick="[['Indicaci&oacute;n de la Producci&oacute;n','Productionindication.html']]"
+								>
+								Potencia total disponible
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Indicaci&oacute;n de la Producci&oacute;n\',\'Productionindication.html\']]'">
+							<a
+								href="../WFSSCADA/Productionindication.html"
+								target="FrameMain"
+								onClick="[['Indicaci&oacute;n de la Producci&oacute;n','Productionindication.html']]"
+								>
+								Potencial Total
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'La Sala de Control - SCADA\',\'TheControlRoom.html\']]'">
+							<a
+								href="../WFSSCADA/TheControlRoom.html"
+								target="FrameMain"
+								onClick="[['La Sala de Control - SCADA','TheControlRoom.html']]"
+								>
+								PPC
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Control de la ejecuci&oacute;n y acceso a opciones\',\'ComponentesdelSimulador.html\']]'">
+							<a
+								href="../WFSSCADA/ComponentesdelSimulador.html"
+								target="FrameMain"
+								onClick="[['Control de la ejecuci&oacute;n y acceso a opciones','ComponentesdelSimulador.html']]"
+								>
+								presentar
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'\',\'.html\'],[\'Componentes del Simulador\',\'Description.html\'],[\'Sinoptico principal\',\'DescriptionoftheUserInterface.html\'],[\'Estaci&oacute;n meteorol&oacute;gica\',\'Meteorologicalstation.html\']]'">
+							<a
+								href=".html"
+								target="FrameMain"
+								onClick="[['','.html'],['Componentes del Simulador','Description.html'],['Sinoptico principal','DescriptionoftheUserInterface.html'],['Estaci&oacute;n meteorol&oacute;gica','Meteorologicalstation.html']]"
+								>
+								presion
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Influencia de las condiciones ambientales en la Produccion del Parque\',\'Influenceofweatherconditionsonth.html\'],[\'Estaci&oacute;n meteorol&oacute;gica\',\'Meteorologicalstation.html\']]'">
+							<a
+								href="../WFSSCADA/Influenceofweatherconditionsonth.html"
+								target="FrameMain"
+								onClick="[['Influencia de las condiciones ambientales en la Produccion del Parque','Influenceofweatherconditionsonth.html'],['Estaci&oacute;n meteorol&oacute;gica','Meteorologicalstation.html']]"
+								>
+								presión atmosférica
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Control de la Producci&oacute;n\',\'Productioncontrol.html\']]'">
+							<a
+								href="../WFSSCADA/Productioncontrol.html"
+								target="FrameMain"
+								onClick="[['Control de la Producci&oacute;n','Productioncontrol.html']]"
+								>
+								prevision del viento
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Sobre el control de la potencia generada\',\'Controlofthegeneratedpower.html\'],[\'Curvas de potencia de aerogeneradores\',\'Curvasdepotenciaaerog.html\'],[\'Indicaci&oacute;n de la Producci&oacute;n\',\'Productionindication.html\'],[\'Control de la Producci&oacute;n\',\'Productioncontrol.html\'],[\'\',\'.html\'],[\'Influencia de las condiciones ambientales en la Produccion del Parque\',\'Influenceofweatherconditionsonth.html\']]'">
+							<a
+								href="../WFSSCADA/Controlofthegeneratedpower.html"
+								target="FrameMain"
+								onClick="[['Sobre el control de la potencia generada','Controlofthegeneratedpower.html'],['Curvas de potencia de aerogeneradores','Curvasdepotenciaaerog.html'],['Indicaci&oacute;n de la Producci&oacute;n','Productionindication.html'],['Control de la Producci&oacute;n','Productioncontrol.html'],['','.html'],['Influencia de las condiciones ambientales en la Produccion del Parque','Influenceofweatherconditionsonth.html']]"
+								>
+								produccion
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Control autom&aacute;tico de la producci&oacute;n\',\'Controlmanualdelaproduccin.html\']]'">
+							<a
+								href="../WFSSCADA/Controlmanualdelaproduccin.html"
+								target="FrameMain"
+								onClick="[['Control autom&aacute;tico de la producci&oacute;n','Controlmanualdelaproduccin.html']]"
+								>
+								Producción Total
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Temperatura ambiente\',\'Ambienttemperature.html\']]'">
+							<a
+								href="../WFSSCADA/Ambienttemperature.html"
+								target="FrameMain"
+								onClick="[['Temperatura ambiente','Ambienttemperature.html']]"
+								>
+								Pt100
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Conexi&oacute;n a la Red\',\'Electricalconnectiontothegrid.html\']]'">
+							<a
+								href="../WFSSCADA/Electricalconnectiontothegrid.html"
+								target="FrameMain"
+								onClick="[['Conexi&oacute;n a la Red','Electricalconnectiontothegrid.html']]"
+								>
+								Punto de Conexión Común
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'&quot;Grid codes&quot;\',\'Gridcodes.html\'],[\'Control de un Aerogenerador\',\'ImportantcharacteristicsofWindT1.html\'],[\'Instrumentos meteorol&oacute;gicos\',\'Meteorologicalinstruments.html\']]'">
+							<a
+								href="../WFSSCADA/Gridcodes.html"
+								target="FrameMain"
+								onClick="[['&quot;Grid codes&quot;','Gridcodes.html'],['Control de un Aerogenerador','ImportantcharacteristicsofWindT1.html'],['Instrumentos meteorol&oacute;gicos','Meteorologicalinstruments.html']]"
+								>
+								rafaga de viento
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Indicaci&oacute;n de la Producci&oacute;n\',\'Productionindication.html\'],[\'Gesti&oacute;n autom&aacute;tica\',\'AutomaticDispatching.html\'],[\'Control manual de la producci&oacute;n\',\'Influenciadelascondicionesambie1.html\'],[\'Control autom&aacute;tico de la producci&oacute;n\',\'Controlmanualdelaproduccin.html\']]'">
+							<a
+								href="../WFSSCADA/Productionindication.html"
+								target="FrameMain"
+								onClick="[['Indicaci&oacute;n de la Producci&oacute;n','Productionindication.html'],['Gesti&oacute;n autom&aacute;tica','AutomaticDispatching.html'],['Control manual de la producci&oacute;n','Influenciadelascondicionesambie1.html'],['Control autom&aacute;tico de la producci&oacute;n','Controlmanualdelaproduccin.html']]"
+								>
+								rango de potencia permitido
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Sobre el control de la potencia generada\',\'Controlofthegeneratedpower.html\']]'">
+							<a
+								href="../WFSSCADA/Controlofthegeneratedpower.html"
+								target="FrameMain"
+								onClick="[['Sobre el control de la potencia generada','Controlofthegeneratedpower.html']]"
+								>
+								reactiva
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'\',\'.html\'],[\'&iquest;Qu&eacute; es un Parque E&oacute;lico?\',\'WhatisaWindFarm.html\'],[\'\',\'.html\'],[\'\',\'.html\']]'">
+							<a
+								href=".html"
+								target="FrameMain"
+								onClick="[['','.html'],['&iquest;Qu&eacute; es un Parque E&oacute;lico?','WhatisaWindFarm.html'],['','.html'],['','.html']]"
+								>
+								resgistrador
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'&iquest;Qu&eacute; es un Aerogenerador?\',\'WhatisaWindTurbine.html\']]'">
+							<a
+								href="../WFSSCADA/WhatisaWindTurbine.html"
+								target="FrameMain"
+								onClick="[['&iquest;Qu&eacute; es un Aerogenerador?','WhatisaWindTurbine.html']]"
+								>
+								rotor
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Control de la Producci&oacute;n\',\'Productioncontrol.html\']]'">
+							<a
+								href="../WFSSCADA/Productioncontrol.html"
+								target="FrameMain"
+								onClick="[['Control de la Producci&oacute;n','Productioncontrol.html']]"
+								>
+								Rotor Resistance Controlled
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Integraci&oacute;n de un Parque E&oacute;lico en la Red El&eacute;ctrica\',\'IntegrationofaWindFarmintheGrid.html\'],[\'Estructura y Funcionalidades de un Parque E&oacute;lico\',\'StrucutureandFunctionalitiesofaW.html\']]'">
+							<a
+								href="../WFSSCADA/IntegrationofaWindFarmintheGrid.html"
+								target="FrameMain"
+								onClick="[['Integraci&oacute;n de un Parque E&oacute;lico en la Red El&eacute;ctrica','IntegrationofaWindFarmintheGrid.html'],['Estructura y Funcionalidades de un Parque E&oacute;lico','StrucutureandFunctionalitiesofaW.html']]"
+								>
+								Sala de Control
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'\',\'.html\'],[\'Integraci&oacute;n de un Parque E&oacute;lico en la Red El&eacute;ctrica\',\'IntegrationofaWindFarmintheGrid.html\'],[\'&iquest;Qu&eacute; es un Parque E&oacute;lico?\',\'WhatisaWindFarm.html\'],[\'Estructura operativa\',\'StructureofaWindTurbine.html\'],[\'\',\'.html\'],[\'La Sala de Control - SCADA\',\'TheControlRoom.html\'],[\'Estructura y Funcionalidades de un Parque E&oacute;lico\',\'StrucutureandFunctionalitiesofaW.html\'],[\'\',\'.html\'],[\'Componentes del Simulador\',\'Description.html\'],[\'Sinoptico principal\',\'DescriptionoftheUserInterface.html\'],[\'Vista de la aplicaci&oacute;n SCADA\',\'SCADAview.html\']]'">
+							<a
+								href=".html"
+								target="FrameMain"
+								onClick="[['','.html'],['Integraci&oacute;n de un Parque E&oacute;lico en la Red El&eacute;ctrica','IntegrationofaWindFarmintheGrid.html'],['&iquest;Qu&eacute; es un Parque E&oacute;lico?','WhatisaWindFarm.html'],['Estructura operativa','StructureofaWindTurbine.html'],['','.html'],['La Sala de Control - SCADA','TheControlRoom.html'],['Estructura y Funcionalidades de un Parque E&oacute;lico','StrucutureandFunctionalitiesofaW.html'],['','.html'],['Componentes del Simulador','Description.html'],['Sinoptico principal','DescriptionoftheUserInterface.html'],['Vista de la aplicaci&oacute;n SCADA','SCADAview.html']]"
+								>
+								SCADA
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'\',\'.html\'],[\'\',\'.html\'],[\'Instrumentos meteorol&oacute;gicos\',\'Meteorologicalinstruments.html\'],[\'Descripci&oacute;n del Simulador de Parque Eolico\',\'StructureoftheWindFarmSimulator.html\'],[\'\',\'.html\'],[\'Componentes del Simulador\',\'Description.html\'],[\'\',\'.html\']]'">
+							<a
+								href=".html"
+								target="FrameMain"
+								onClick="[['','.html'],['','.html'],['Instrumentos meteorol&oacute;gicos','Meteorologicalinstruments.html'],['Descripci&oacute;n del Simulador de Parque Eolico','StructureoftheWindFarmSimulator.html'],['','.html'],['Componentes del Simulador','Description.html'],['','.html']]"
+								>
+								señal
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Control de la ejecuci&oacute;n y acceso a opciones\',\'ComponentesdelSimulador.html\']]'">
+							<a
+								href="../WFSSCADA/ComponentesdelSimulador.html"
+								target="FrameMain"
+								onClick="[['Control de la ejecuci&oacute;n y acceso a opciones','ComponentesdelSimulador.html']]"
+								>
+								Señales y Conexiones
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Leyenda de los simbolos en el esquema unifilar\',\'Legendofsymbols.html\'],[\'Descripci&oacute;n del Simulador de Parque Eolico\',\'StructureoftheWindFarmSimulator.html\'],[\'Conexiones de los aerogeneradores al PCC\',\'IconicviewoftheWTsPCCandpowercab.html\']]'">
+							<a
+								href="../WFSSCADA/Legendofsymbols.html"
+								target="FrameMain"
+								onClick="[['Leyenda de los simbolos en el esquema unifilar','Legendofsymbols.html'],['Descripci&oacute;n del Simulador de Parque Eolico','StructureoftheWindFarmSimulator.html'],['Conexiones de los aerogeneradores al PCC','IconicviewoftheWTsPCCandpowercab.html']]"
+								>
+								simbolos
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'\',\'.html\'],[\'Componentes del Simulador\',\'Description.html\'],[\'Sinoptico principal\',\'DescriptionoftheUserInterface.html\']]'">
+							<a
+								href=".html"
+								target="FrameMain"
+								onClick="[['','.html'],['Componentes del Simulador','Description.html'],['Sinoptico principal','DescriptionoftheUserInterface.html']]"
+								>
+								simulator
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'\',\'.html\'],[\'\',\'.html\'],[\'Estructura y Funcionalidades de un Parque E&oacute;lico\',\'StrucutureandFunctionalitiesofaW.html\'],[\'Leyenda de los simbolos en el esquema unifilar\',\'Legendofsymbols.html\'],[\'Descripci&oacute;n del Simulador de Parque Eolico\',\'StructureoftheWindFarmSimulator.html\'],[\'Sinoptico principal\',\'DescriptionoftheUserInterface.html\'],[\'Conexiones de los aerogeneradores al PCC\',\'IconicviewoftheWTsPCCandpowercab.html\']]'">
+							<a
+								href=".html"
+								target="FrameMain"
+								onClick="[['','.html'],['','.html'],['Estructura y Funcionalidades de un Parque E&oacute;lico','StrucutureandFunctionalitiesofaW.html'],['Leyenda de los simbolos en el esquema unifilar','Legendofsymbols.html'],['Descripci&oacute;n del Simulador de Parque Eolico','StructureoftheWindFarmSimulator.html'],['Sinoptico principal','DescriptionoftheUserInterface.html'],['Conexiones de los aerogeneradores al PCC','IconicviewoftheWTsPCCandpowercab.html']]"
+								>
+								sinoptico
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Control de la ejecuci&oacute;n y acceso a opciones\',\'ComponentesdelSimulador.html\']]'">
+							<a
+								href="../WFSSCADA/ComponentesdelSimulador.html"
+								target="FrameMain"
+								onClick="[['Control de la ejecuci&oacute;n y acceso a opciones','ComponentesdelSimulador.html']]"
+								>
+								Sinópticos
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'&iquest;Qu&eacute; es un Aerogenerador?\',\'WhatisaWindTurbine.html\']]'">
+							<a
+								href="../WFSSCADA/WhatisaWindTurbine.html"
+								target="FrameMain"
+								onClick="[['&iquest;Qu&eacute; es un Aerogenerador?','WhatisaWindTurbine.html']]"
+								>
+								sistema de frenos
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Conexi&oacute;n a la Red\',\'Electricalconnectiontothegrid.html\']]'">
+							<a
+								href="../WFSSCADA/Electricalconnectiontothegrid.html"
+								target="FrameMain"
+								onClick="[['Conexi&oacute;n a la Red','Electricalconnectiontothegrid.html']]"
+								>
+								Softstarter
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'\',\'.html\'],[\'\',\'.html\'],[\'La Sala de Control - SCADA\',\'TheControlRoom.html\'],[\'Instrumentos meteorol&oacute;gicos\',\'Meteorologicalinstruments.html\'],[\'Descripci&oacute;n del Simulador de Parque Eolico\',\'StructureoftheWindFarmSimulator.html\'],[\'Componentes del Simulador\',\'Description.html\']]'">
+							<a
+								href=".html"
+								target="FrameMain"
+								onClick="[['','.html'],['','.html'],['La Sala de Control - SCADA','TheControlRoom.html'],['Instrumentos meteorol&oacute;gicos','Meteorologicalinstruments.html'],['Descripci&oacute;n del Simulador de Parque Eolico','StructureoftheWindFarmSimulator.html'],['Componentes del Simulador','Description.html']]"
+								>
+								striprecorder
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Esquema el&eacute;ctrico unifilar\',\'UnifilarschematicoftheSubstation.html\'],[\'Leyenda de los simbolos en el esquema unifilar\',\'Legendofsymbols.html\'],[\'Componentes del Simulador\',\'Description.html\']]'">
+							<a
+								href="../WFSSCADA/UnifilarschematicoftheSubstation.html"
+								target="FrameMain"
+								onClick="[['Esquema el&eacute;ctrico unifilar','UnifilarschematicoftheSubstation.html'],['Leyenda de los simbolos en el esquema unifilar','Legendofsymbols.html'],['Componentes del Simulador','Description.html']]"
+								>
+								substation
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Estructura y Funcionalidades de un Parque E&oacute;lico\',\'StrucutureandFunctionalitiesofaW.html\'],[\'Componentes del Simulador\',\'Description.html\'],[\'Sinoptico principal\',\'DescriptionoftheUserInterface.html\'],[\'Vista de la aplicaci&oacute;n SCADA\',\'SCADAview.html\']]'">
+							<a
+								href="../WFSSCADA/StrucutureandFunctionalitiesofaW.html"
+								target="FrameMain"
+								onClick="[['Estructura y Funcionalidades de un Parque E&oacute;lico','StrucutureandFunctionalitiesofaW.html'],['Componentes del Simulador','Description.html'],['Sinoptico principal','DescriptionoftheUserInterface.html'],['Vista de la aplicaci&oacute;n SCADA','SCADAview.html']]"
+								>
+								Supervisory Control And Data Adquisition
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Estaci&oacute;n meteorol&oacute;gica\',\'Meteorologicalstation.html\']]'">
+							<a
+								href="../WFSSCADA/Meteorologicalstation.html"
+								target="FrameMain"
+								onClick="[['Estaci&oacute;n meteorol&oacute;gica','Meteorologicalstation.html']]"
+								>
+								Temp
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Instrumentos meteorol&oacute;gicos\',\'Meteorologicalinstruments.html\'],[\'\',\'.html\'],[\'Temperatura ambiente\',\'Ambienttemperature.html\'],[\'Componentes del Simulador\',\'Description.html\'],[\'Sinoptico principal\',\'DescriptionoftheUserInterface.html\'],[\'Estaci&oacute;n meteorol&oacute;gica\',\'Meteorologicalstation.html\']]'">
+							<a
+								href="../WFSSCADA/Meteorologicalinstruments.html"
+								target="FrameMain"
+								onClick="[['Instrumentos meteorol&oacute;gicos','Meteorologicalinstruments.html'],['','.html'],['Temperatura ambiente','Ambienttemperature.html'],['Componentes del Simulador','Description.html'],['Sinoptico principal','DescriptionoftheUserInterface.html'],['Estaci&oacute;n meteorol&oacute;gica','Meteorologicalstation.html']]"
+								>
+								temperatura
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Influencia de las condiciones ambientales en la Produccion del Parque\',\'Influenceofweatherconditionsonth.html\'],[\'Estaci&oacute;n meteorol&oacute;gica\',\'Meteorologicalstation.html\']]'">
+							<a
+								href="../WFSSCADA/Influenceofweatherconditionsonth.html"
+								target="FrameMain"
+								onClick="[['Influencia de las condiciones ambientales en la Produccion del Parque','Influenceofweatherconditionsonth.html'],['Estaci&oacute;n meteorol&oacute;gica','Meteorologicalstation.html']]"
+								>
+								temperatura ambiente
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Modos de operaci&oacute;n\',\'ControlofaWindTurbine.html\'],[\'Estructura operativa\',\'StructureofaWindTurbine.html\'],[\'\',\'.html\']]'">
+							<a
+								href="../WFSSCADA/ControlofaWindTurbine.html"
+								target="FrameMain"
+								onClick="[['Modos de operaci&oacute;n','ControlofaWindTurbine.html'],['Estructura operativa','StructureofaWindTurbine.html'],['','.html']]"
+								>
+								Terminal de Control
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Modos de operaci&oacute;n\',\'ControlofaWindTurbine.html\']]'">
+							<a
+								href="../WFSSCADA/ControlofaWindTurbine.html"
+								target="FrameMain"
+								onClick="[['Modos de operaci&oacute;n','ControlofaWindTurbine.html']]"
+								>
+								Terminal de Control
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'&quot;Grid codes&quot;\',\'Gridcodes.html\']]'">
+							<a
+								href="../WFSSCADA/Gridcodes.html"
+								target="FrameMain"
+								onClick="[['&quot;Grid codes&quot;','Gridcodes.html']]"
+								>
+								territorio extenso
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Gesti&oacute;n autom&aacute;tica\',\'AutomaticDispatching.html\']]'">
+							<a
+								href="../WFSSCADA/AutomaticDispatching.html"
+								target="FrameMain"
+								onClick="[['Gesti&oacute;n autom&aacute;tica','AutomaticDispatching.html']]"
+								>
+								TiempoParaCancelarPropuesta
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Conexi&oacute;n a la Red\',\'Electricalconnectiontothegrid.html\']]'">
+							<a
+								href="../WFSSCADA/Electricalconnectiontothegrid.html"
+								target="FrameMain"
+								onClick="[['Conexi&oacute;n a la Red','Electricalconnectiontothegrid.html']]"
+								>
+								Tiristores
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Conexi&oacute;n a la Red\',\'Electricalconnectiontothegrid.html\']]'">
+							<a
+								href="../WFSSCADA/Electricalconnectiontothegrid.html"
+								target="FrameMain"
+								onClick="[['Conexi&oacute;n a la Red','Electricalconnectiontothegrid.html']]"
+								>
+								transformadores de medida de corrientes
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'&iquest;Qu&eacute; es un Aerogenerador?\',\'WhatisaWindTurbine.html\']]'">
+							<a
+								href="../WFSSCADA/WhatisaWindTurbine.html"
+								target="FrameMain"
+								onClick="[['&iquest;Qu&eacute; es un Aerogenerador?','WhatisaWindTurbine.html']]"
+								>
+								Tren de Potencia
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'\',\'.html\'],[\'Integraci&oacute;n de un Parque E&oacute;lico en la Red El&eacute;ctrica\',\'IntegrationofaWindFarmintheGrid.html\'],[\'&quot;Grid codes&quot;\',\'Gridcodes.html\']]'">
+							<a
+								href=".html"
+								target="FrameMain"
+								onClick="[['','.html'],['Integraci&oacute;n de un Parque E&oacute;lico en la Red El&eacute;ctrica','IntegrationofaWindFarmintheGrid.html'],['&quot;Grid codes&quot;','Gridcodes.html']]"
+								>
+								TSO
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Esquema el&eacute;ctrico unifilar\',\'UnifilarschematicoftheSubstation.html\'],[\'La Sala de Control - SCADA\',\'TheControlRoom.html\'],[\'Leyenda de los simbolos en el esquema unifilar\',\'Legendofsymbols.html\']]'">
+							<a
+								href="../WFSSCADA/UnifilarschematicoftheSubstation.html"
+								target="FrameMain"
+								onClick="[['Esquema el&eacute;ctrico unifilar','UnifilarschematicoftheSubstation.html'],['La Sala de Control - SCADA','TheControlRoom.html'],['Leyenda de los simbolos en el esquema unifilar','Legendofsymbols.html']]"
+								>
+								unifilar
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Direcci&oacute;n del veinto: veleta\',\'Winddirectionwindvane.html\'],[\'&iquest;Qu&eacute; es un Aerogenerador?\',\'WhatisaWindTurbine.html\']]'">
+							<a
+								href="../WFSSCADA/Winddirectionwindvane.html"
+								target="FrameMain"
+								onClick="[['Direcci&oacute;n del veinto: veleta','Winddirectionwindvane.html'],['&iquest;Qu&eacute; es un Aerogenerador?','WhatisaWindTurbine.html']]"
+								>
+								veleta
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'\',\'.html\'],[\'&iquest;Qu&eacute; es un Aerogenerador?\',\'WhatisaWindTurbine.html\'],[\'Estructura operativa\',\'StructureofaWindTurbine.html\'],[\'Direcci&oacute;n del veinto: veleta\',\'Winddirectionwindvane.html\']]'">
+							<a
+								href=".html"
+								target="FrameMain"
+								onClick="[['','.html'],['&iquest;Qu&eacute; es un Aerogenerador?','WhatisaWindTurbine.html'],['Estructura operativa','StructureofaWindTurbine.html'],['Direcci&oacute;n del veinto: veleta','Winddirectionwindvane.html']]"
+								>
+								veleta
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'\',\'.html\'],[\'Control de un Aerogenerador\',\'ImportantcharacteristicsofWindT1.html\'],[\'Estructura y Funcionalidades de un Parque E&oacute;lico\',\'StrucutureandFunctionalitiesofaW.html\'],[\'Instrumentos meteorol&oacute;gicos\',\'Meteorologicalinstruments.html\'],[\'Medida del viento: anem&oacute;metro\',\'Windspeedanemometer.html\'],[\'Componentes del Simulador\',\'Description.html\'],[\'Sinoptico principal\',\'DescriptionoftheUserInterface.html\'],[\'Estaci&oacute;n meteorol&oacute;gica\',\'Meteorologicalstation.html\'],[\'Control de la Producci&oacute;n\',\'Productioncontrol.html\'],[\'Influencia de las condiciones ambientales en la Produccion del Parque\',\'Influenceofweatherconditionsonth.html\']]'">
+							<a
+								href=".html"
+								target="FrameMain"
+								onClick="[['','.html'],['Control de un Aerogenerador','ImportantcharacteristicsofWindT1.html'],['Estructura y Funcionalidades de un Parque E&oacute;lico','StrucutureandFunctionalitiesofaW.html'],['Instrumentos meteorol&oacute;gicos','Meteorologicalinstruments.html'],['Medida del viento: anem&oacute;metro','Windspeedanemometer.html'],['Componentes del Simulador','Description.html'],['Sinoptico principal','DescriptionoftheUserInterface.html'],['Estaci&oacute;n meteorol&oacute;gica','Meteorologicalstation.html'],['Control de la Producci&oacute;n','Productioncontrol.html'],['Influencia de las condiciones ambientales en la Produccion del Parque','Influenceofweatherconditionsonth.html']]"
+								>
+								velocidad viento
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'&quot;Grid codes&quot;\',\'Gridcodes.html\'],[\'\',\'.html\'],[\'\',\'.html\'],[\'\',\'.html\'],[\'Control de un Aerogenerador\',\'ImportantcharacteristicsofWindT1.html\'],[\'Estructura y Funcionalidades de un Parque E&oacute;lico\',\'StrucutureandFunctionalitiesofaW.html\'],[\'&iquest;Qu&eacute; es un Aerogenerador?\',\'WhatisaWindTurbine.html\'],[\'Componentes del Simulador\',\'Description.html\'],[\'Estaci&oacute;n meteorol&oacute;gica\',\'Meteorologicalstation.html\']]'">
+							<a
+								href="../WFSSCADA/Gridcodes.html"
+								target="FrameMain"
+								onClick="[['&quot;Grid codes&quot;','Gridcodes.html'],['','.html'],['','.html'],['','.html'],['Control de un Aerogenerador','ImportantcharacteristicsofWindT1.html'],['Estructura y Funcionalidades de un Parque E&oacute;lico','StrucutureandFunctionalitiesofaW.html'],['&iquest;Qu&eacute; es un Aerogenerador?','WhatisaWindTurbine.html'],['Componentes del Simulador','Description.html'],['Estaci&oacute;n meteorol&oacute;gica','Meteorologicalstation.html']]"
+								>
+								viento
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Instrumentos meteorol&oacute;gicos\',\'Meteorologicalinstruments.html\']]'">
+							<a
+								href="../WFSSCADA/Meteorologicalinstruments.html"
+								target="FrameMain"
+								onClick="[['Instrumentos meteorol&oacute;gicos','Meteorologicalinstruments.html']]"
+								>
+								viento medido
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Curvas de potencia de aerogeneradores\',\'Curvasdepotenciaaerog.html\']]'">
+							<a
+								href="../WFSSCADA/Curvasdepotenciaaerog.html"
+								target="FrameMain"
+								onClick="[['Curvas de potencia de aerogeneradores','Curvasdepotenciaaerog.html']]"
+								>
+								Viento Nominal
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Vista en 3D\',\'3DView.html\']]'">
+							<a
+								href="../WFSSCADA/3DView.html"
+								target="FrameMain"
+								onClick="[['Vista en 3D','3DView.html']]"
+								>
+								Vista 3D del Parque
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'Vista de la aplicaci&oacute;n SCADA\',\'SCADAview.html\'],[\'Vista en 3D\',\'3DView.html\']]'">
+							<a
+								href="../WFSSCADA/SCADAview.html"
+								target="FrameMain"
+								onClick="[['Vista de la aplicaci&oacute;n SCADA','SCADAview.html'],['Vista en 3D','3DView.html']]"
+								>
+								Vista en 3D
+							</a>
+
+				</li>
+
+						<li class="file" data="click:'[[\'&iquest;Qu&eacute; es un Aerogenerador?\',\'WhatisaWindTurbine.html\'],[\'Vista en 3D\',\'3DView.html\']]'">
+							<a
+								href="../WFSSCADA/WhatisaWindTurbine.html"
+								target="FrameMain"
+								onClick="[['&iquest;Qu&eacute; es un Aerogenerador?','WhatisaWindTurbine.html'],['Vista en 3D','3DView.html']]"
+								>
+								yaw
+							</a>
+
+				</li>
+				
+			</ul>
+		</div>
+		
+		
+		
+		<div id="tab-search">
+			<form onsubmit="PerformSearch(); return false;">
+				<label for="search_value">Search:</label>
+				<input id="search_value" name="search_value"></input>
+				<input type="submit" value="Search"/>
+			</form>
+			<div id="search_results"></div>
+		</div>
+		
+		
+		
+	</div>
+    
+</body>
+
+</html>
+
