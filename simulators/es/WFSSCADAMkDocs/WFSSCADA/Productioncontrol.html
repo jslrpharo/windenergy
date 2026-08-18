@@ -1,0 +1,2870 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Tutorial del Simulador de Parque Eólico (SCADA)">
+      
+      
+      
+      
+        <link rel="prev" href="OperationsinaWindFarm.html">
+      
+      
+        <link rel="next" href="ControldelaProduccin.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="data:image/png;base64,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">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Control de la Producción - Simulador Parque Eólico SCADA</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+        <script src="../javascripts/compat.js"></script>
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#control-de-la-produccion" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../index.html" title="Simulador Parque Eólico SCADA" class="md-header__button md-logo" aria-label="Simulador Parque Eólico SCADA" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Simulador Parque Eólico SCADA
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Control de la Producción
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue"  aria-label="Cambiar a modo oscuro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Cambiar a modo oscuro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="blue"  aria-label="Cambiar a modo claro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Cambiar a modo claro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Pestañas" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../index.html" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Inicio
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="Introduccion.html" class="md-tabs__link">
+          
+  
+  
+  Introducción
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="StructureoftheWindFarmSimulator.html" class="md-tabs__link">
+          
+  
+  
+  Descripción del Simulador de Parque Eolico
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="OperationsinaWindFarm.html" class="md-tabs__link">
+          
+  
+  
+  Operaciones en un Parque Eólico
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="Teachingsessions.html" class="md-tabs__link">
+          
+  
+  
+  Clases prácticas
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="Datalogging1.html" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Registro de datos
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="Simulador Parque Eólico SCADA" class="md-nav__button md-logo" aria-label="Simulador Parque Eólico SCADA" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Simulador Parque Eólico SCADA
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introducción
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Introducción
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Introduccion.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introducción
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Noticeonthisversion.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nota de esta versión
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ¿Qué es un Parque Eólico?
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    ¿Qué es un Parque Eólico?
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="WhatisaWindFarm.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ¿Qué es un Parque Eólico?
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="IntegrationofaWindFarmintheGrid.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Integración de un Parque Eólico en la Red Eléctrica
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="IntegracindeunParqueElicoenlaRed.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Esquema simplificado de las Redes de Transmision y Distribucion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="TheControlRoom.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    La Sala de Control - SCADA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ImportantcharacteristicsofWindT1.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Control de un Aerogenerador
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3_6" id="__nav_2_3_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estructura y Funcionalidades de un Parque Eólico
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Estructura y Funcionalidades de un Parque Eólico
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="StrucutureandFunctionalitiesofaW.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estructura y Funcionalidades de un Parque Eólico
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Landlayout.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Despliegue territorial de un Parque Eólico
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3_6_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3_6_3" id="__nav_2_3_6_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Esquema eléctrico unifilar
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_3_6_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3_6_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Esquema eléctrico unifilar
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="UnifilarschematicoftheSubstation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Esquema eléctrico unifilar
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Legendofsymbols.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Leyenda de los simbolos en el esquema unifilar
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3_6_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3_6_4" id="__nav_2_3_6_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Instrumentos meteorológicos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_3_6_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3_6_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Instrumentos meteorológicos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Meteorologicalinstruments.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Instrumentos meteorológicos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Windspeedanemometer.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Medida del viento: anemómetro
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Winddirectionwindvane.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dirección del veinto: veleta
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ambienttemperature.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Temperatura ambiente
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Controlofthegeneratedpower.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sobre el control de la potencia generada
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="IntegracionconlaRedElectrica.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Control de la Potencia Activa entregada
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Gridcodes.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    "Grid codes"
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ¿Qué es un Aerogenerador?
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    ¿Qué es un Aerogenerador?
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="WhatisaWindTurbine.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ¿Qué es un Aerogenerador?
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Curvasdepotenciaaerog.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Curvas de potencia de aerogeneradores
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ControlofaWindTurbine.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modos de operación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="StructureofaWindTurbine.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estructura operativa
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Electricalconnectiontothegrid.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Conexión a la Red
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Descripción del Simulador de Parque Eolico
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Descripción del Simulador de Parque Eolico
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="StructureoftheWindFarmSimulator.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Descripción del Simulador de Parque Eolico
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Componentes del Simulador
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Componentes del Simulador
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Description.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Componentes del Simulador
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2_2" id="__nav_3_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Control de la ejecución y acceso a opciones
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Control de la ejecución y acceso a opciones
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ComponentesdelSimulador.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Control de la ejecución y acceso a opciones
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Parameters.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Parámetros
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2_2_3" id="__nav_3_2_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gráficos de evolución de señales
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_2_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Gráficos de evolución de señales
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="PowerpergroupTotalproducedPowera.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gráficos de evolución de señales
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Grficosdeevolucindeseales.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Obtención de copias activas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2_3" id="__nav_3_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sinoptico principal
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Sinoptico principal
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="DescriptionoftheUserInterface.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sinoptico principal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="IconicviewoftheWTsPCCandpowercab.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Conexiones de los aerogeneradores al PCC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="SCADAview.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Vista de la aplicación SCADA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Maintenanceview.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gestión del estado de un aerogenerador
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Externaldemandsetpoint.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Demanda de la Red
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Productionindication.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Indicación de la Producción
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="AutomaticDispatching.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gestión automática
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Meteorologicalstation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estación meteorológica
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="3DView.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Vista en 3D
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operaciones en un Parque Eólico
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Operaciones en un Parque Eólico
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="OperationsinaWindFarm.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operaciones en un Parque Eólico
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="Productioncontrol.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Control de la Producción
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_3" id="__nav_4_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gestión del Mantenimiento
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Gestión del Mantenimiento
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ControldelaProduccin.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gestión del Mantenimiento
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Mantenimiento.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mantenimiento Planificado
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="MantenimientoPlanificado.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mantenimiento Correctivo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="MantenimientoCorrectivo.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mantenimiento Predictivo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Clases prácticas
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Clases prácticas
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Teachingsessions.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Clases prácticas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Cambiodelestadodeunaerogenerador.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Presentación de la vista 3D
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Clasesprcticas1.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cambio del estado de un aerogenerador
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Influenciadelascondicionesambie1.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Control manual de la producción
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Controlmanualdelaproduccin.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Control automático de la producción
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Influenceofweatherconditionsonth.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Influencia de las condiciones ambientales en la Produccion del Parque
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Influenciadelascondicionesambien.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cambio de la Demanda
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="SimulationthataWTisOutofOrder.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simulación de Puesta en "No disponible" de un Aerogenerador
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="SimulacindePuestaenNodisponibled.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visualización de la evolución temporales de las señales en el SCADA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Datalogging1.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Registro de datos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="control-de-la-produccion">Control de la Producción<a class="headerlink" href="#control-de-la-produccion" title="Permanent link">&para;</a></h1>
+<p>De acuerdo con lo descrito en <a href="IntegrationofaWindFarmintheGrid.html">Integración de un Parque Eólico en la Red Eléctrica</a> y en <a href="TheControlRoom.html">La Sala de Control - SCADA</a> , la funcionalidad básica del Parque es entregar en todo momento la potencia demandada, que le llega como consigna, la cual depende básicamente  de la previsión del viento y condiciones atmosféricas. Y esto debe hacerse respetando las necesidades impuestas por el mantenimiento de los aerogeneradores y demás equipos del parque en su optimo estado.</p>
+<p>El operador del parque debe velar porque esta condición se cumpla. Para ello dispone del control de la puesta en marcha o pasada a paro de cada uno de los aerogeneradores.</p>
+<p>Por ello en la sala de control de un Parque eólico se dispone de un representación gráfica como la que se muestra en la figura siguienta:</p>
+<p><img alt="" src="data:image/png;base64,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" /></p>
+<p><em>Leyenda</em>:</p>
+<ul>
+<li>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia</span></p>
+<li>
+<p><strong>Wind Forecast</strong> (m/s): evolución de la previsión de la velocidad del viento.</p>
+</li>
+<li>
+<p><strong>MeanWind</strong> (m/s) : velocidad promedio del viento que ha existido.</p>
+</li>
+<li>
+<p><strong>ExternalSetPoint</strong> (MW): valor de la consigna de potencia a generar, en megawatios.</p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia</span></p>
+<p><span style="background-color: #FFF3B0;">Texto disponible con la licencia</span></p>
+<p><strong>PowertOutput</strong> (MW): valor real de la potencia producida, en megawatios.</p>
+</li>
+</ul>
+<p>La figura anterior muestra el gráfico con la evolución del viento medio y de la potencia generada a fecha 15:57:00, junto con la previsión de viento y la generación esperada la fecha 16:02:00.</p>
+<p>El control de la potencia generada en cada momento se realiza desde el SCADA con un procedimiento que depende del tipo de aerogeneradores en el Parque: si son generadores de jaula de ardilla conectados directamente a la red, el único método de control de potencia es parar o arrancar aerogeneradores. Es el caso de la figura anterior. Como resultado, la potencia promedio generada sigue con bastante resolución la evolución de la consigna, pero con divergencias. Estas divergencias deben estar dentro de la tolerancia de la consigna. Si los generadores permiten consigna de la potencia activa, como es el caso de los aerogeneradores con control por resistencia de rotor, o los doblemente alimentados, este control de potencia tiene mucha mejor resolución (sigue más fielmente la consigna).</p>
+<p>La puesta en marcha o parada de los aerogeneradores, y/o el cambio de las consignas a cada aerogenerador (según sea el caso) puede hacerse de "modo manual" o mediante un "mecanismo automatizado de control" (ver <a href="AutomaticDispatching.html">Gestión automática</a> )</p>
+<p>En el modo manual, el usuario puede "parar" y "arrancar" cada aerogenerador, desde el SCADA, usando una funcionalidad similar la descrita en "<a href="SCADAview.html">Acción posible</a>".</p>
+<p>Los criterios para la Gestión automática tienen en cuenta consideraciones relativas al envejecimiento de los aerogeneradores, estado de las palas, de las multiplicadores, del generador, del mantenimiento planificado, etc. En general, el operador dispone también de procedimientos de uso fácil para evitar la aplicación de estos criterios a determinados aerogeneradores, en determinadas situaciones: esta funcionalidad se muestra en la columna "Use" en <a href="SCADAview.html">Vista de la aplicación SCADA</a>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "search.highlight", "search.suggest"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
