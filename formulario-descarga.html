@@ -10,7 +10,26 @@
     <meta id="pageDescription" name="description" content="Formulario de solicitud de descarga de Automated Computing Machinery SL." />
     <link rel="icon" type="image/png" href="img/ACM_LOGO.png" />
     <link rel="shortcut icon" type="image/png" href="img/ACM_LOGO.png" />
-    <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+    <script>
+      // Idioma de la página, calculado ya en el <head> para que esté
+      // disponible en cuanto hCaptcha termine de cargar (ver onHcaptchaLoad
+      // más abajo): así el widget se renderiza en el idioma correcto en vez
+      // de depender del idioma del navegador.
+      window.__pageLang = (function () {
+        var supported = ['es', 'en', 'fr', 'it', 'de', 'pt'];
+        var urlLang = new URLSearchParams(window.location.search).get('lang');
+        if (supported.indexOf(urlLang) !== -1) return urlLang;
+        var browserLang = (navigator.language || navigator.userLanguage || 'en').split('-')[0].toLowerCase();
+        return supported.indexOf(browserLang) !== -1 ? browserLang : 'en';
+      })();
+      function onHcaptchaLoad() {
+        window.__hcaptchaWidgetId = hcaptcha.render('hcaptchaContainer', {
+          sitekey: '28beebb8-0dfc-4a36-95ae-9af6e668d9ca',
+          hl: window.__pageLang
+        });
+      }
+    </script>
+    <script src="https://js.hcaptcha.com/1/api.js?onload=onHcaptchaLoad&render=explicit" async defer></script>
     <style>
       :root {
         --primary: #006699;
@@ -319,7 +338,7 @@
           </div>
 
           <div class="captcha-wrap">
-            <div class="h-captcha" data-sitekey="28beebb8-0dfc-4a36-95ae-9af6e668d9ca"></div>
+            <div id="hcaptchaContainer"></div>
           </div>
 
           <button type="submit" class="btn-submit" id="submitBtn">
@@ -346,13 +365,8 @@
       const WORKER_URL = 'https://sweet-wood-42f6.josesanleandro.workers.dev';
 
       /* ── Language detection ─────────────────────────────────── */
-      const supportedLangs = ['es', 'en', 'fr', 'it', 'de', 'pt'];
       const params = new URLSearchParams(window.location.search);
-      const pageLang = params.get('lang');
-      const browserLang = (navigator.language || navigator.userLanguage || 'en').split('-')[0].toLowerCase();
-      const lang = supportedLangs.includes(pageLang)
-        ? pageLang
-        : (supportedLangs.includes(browserLang) ? browserLang : 'en');
+      const lang = window.__pageLang;
 
       /* ── Download params ─────────────────────────────────────── */
       const dlPkg    = params.get('pkg') || '';
@@ -650,7 +664,7 @@
           pais:      g('pais'),
           mensaje:   mensajeVal,
           website:   g('website'),
-          hcaptchaToken: hcaptcha.getResponse(),
+          hcaptchaToken: hcaptcha.getResponse(window.__hcaptchaWidgetId),
           elapsedMs: Date.now() - formStartedAt,
           dlpkg:     dlPkg  || undefined,
           dlurl:     dlAbsUrl || undefined,
@@ -689,7 +703,7 @@
           return;
         }
 
-        const captchaToken = hcaptcha.getResponse();
+        const captchaToken = hcaptcha.getResponse(window.__hcaptchaWidgetId);
         if (!captchaToken) {
           msgErr.textContent = t.captchaMessage;
           msgErr.className = 'msg error';
@@ -703,7 +717,7 @@
         try {
           await sendMail();
           form.reset();
-          hcaptcha.reset();
+          hcaptcha.reset(window.__hcaptchaWidgetId);
 
           // Show success message
           setText('successText', t.successText);
