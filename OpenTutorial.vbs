@@ -17,8 +17,31 @@ Set objFSO   = CreateObject("Scripting.FileSystemObject")
 If WScript.Arguments.Count < 1 Then WScript.Quit 1
 Dim url : url = WScript.Arguments(0)
 
-' --- Perfil Edge aislado para los tutoriales ---
-Dim profileDir : profileDir = objShell.ExpandEnvironmentStrings("%TEMP%") & "\ACMSLTutorial"
+' --- Detectar si la URL es local (servida por nuestro propio servidor) ---
+' o externa (un sitio web real, p.ej. https://www.acm-sl.com/...).
+Dim isExternal : isExternal = False
+Dim hostPart : hostPart = ""
+If LCase(Left(url, 7)) = "http://" Or LCase(Left(url, 8)) = "https://" Then
+    Dim hostStart : hostStart = InStr(url, "://") + 3
+    Dim hostEnd : hostEnd = InStr(hostStart, url, "/")
+    If hostEnd = 0 Then hostEnd = Len(url) + 1
+    hostPart = Mid(url, hostStart, hostEnd - hostStart)
+    ' Quitar el puerto, si lo hay, para comparar solo el host
+    Dim hostNoPort : hostNoPort = hostPart
+    If InStr(hostNoPort, ":") > 0 Then hostNoPort = Left(hostNoPort, InStr(hostNoPort, ":") - 1)
+    If LCase(hostNoPort) <> "localhost" And hostNoPort <> "127.0.0.1" Then isExternal = True
+End If
+
+' --- Perfil Edge: aislado para tutoriales locales, otro distinto por cada
+' dominio externo (asi cada sitio externo abre su propia ventana en vez de
+' fusionarse con la instancia --app ya abierta, que no admite pestanas) ---
+Dim profileDir
+If isExternal Then
+    profileDir = objShell.ExpandEnvironmentStrings("%TEMP%") & "\ACMSLExternal_" & _
+                 Replace(Replace(hostPart, ":", "_"), ".", "_")
+Else
+    profileDir = objShell.ExpandEnvironmentStrings("%TEMP%") & "\ACMSLTutorial"
+End If
 If Not objFSO.FolderExists(profileDir) Then objFSO.CreateFolder profileDir
 ' Crear "First Run" para que Edge no muestre el asistente de bienvenida
 Dim firstRunFile : firstRunFile = profileDir & "\First Run"
@@ -31,9 +54,10 @@ End If
 ' Se usa file:// para carga instantanea desde disco (sin pasar por el servidor).
 ' El hash #from=launcher es detectado por tutorial-standalone.js para ocultar
 ' la navegacion interior (el query string ?... no funciona en URLs file://).
+' Las URLs externas (isExternal=True) se dejan tal cual: son sitios web reales.
 Dim baseDir : baseDir = objFSO.GetParentFolderName(WScript.ScriptFullName)
 Dim targetUrl : targetUrl = url
-If LCase(Left(url, 7)) = "http://" Or LCase(Left(url, 8)) = "https://" Then
+If Not isExternal And (LCase(Left(url, 7)) = "http://" Or LCase(Left(url, 8)) = "https://") Then
     Dim slashPos : slashPos = InStr(8, url, "/")
     Dim urlPath : urlPath = "/"
     If slashPos > 0 Then
