@@ -1865,13 +1865,24 @@ function setActionButton(btnId, fn, i18nPathKeys) {
 
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+// Vincula (o revincula) las acciones de los botones de navegación con las
+// rutas del idioma actualmente activo. Se llama al cargar la página y de
+// nuevo cada vez que el usuario cambia de idioma (ver setLang()), para que
+// los botones no se queden fijados al idioma que estaba activo cuando
+// se cargó la página por primera vez.
+function bindActionButtons() {
   // Obtener idioma actual
   let lang = (localStorage.getItem('lang') || (navigator.language||'en').split('-')[0] || 'en').toLowerCase();
   if (!['es','en','fr','it','de','pt'].includes(lang)) lang = 'en';
 
-  // Función para obtener la traducción de una clave i18n
+  // Función para obtener la traducción de una clave i18n.
+  // Usa las traducciones cargadas dinámicamente (__translations, pobladas por
+  // loadTranslations() para los 6 idiomas) y solo recurre a los bloques
+  // estáticos inline (limitados a en/es) como último recurso.
   function t(key) {
+    if (typeof __translations !== 'undefined' && Object.prototype.hasOwnProperty.call(__translations, key)) {
+      return __translations[key];
+    }
     let dict = {};
     try {
       const script = document.getElementById('i18n-' + lang);
@@ -1885,16 +1896,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
   setActionButton('btnMindMap', 'runAwebpageExternal', 'mindmap.windenergy.path');
 
-  setActionButton('btnTutorialWFSCADA', 'runAviewer', t('tutorial.wfscada.path'));
+  setActionButton('btnTutorialWFSCADA', 'runAviewer', 'tutorial.wfscada.path');
   setActionButton('btnWFSCADA_Tutorial', 'runAviewer', 'tutorial.wfscada.path');
-  setActionButton('btnTutorialDSAS', 'runAviewer', t('tutorial.dsaswt.path'));
-  setActionButton('btnExercisesDSAS', 'runAwebpage', t('tutorial.dsasexercises.path'));
-  setActionButton('btnTutorialRRC', 'runAviewer', t('tutorial.rrcwt.path'));
-  setActionButton('btnTutorialDFIG', 'runAviewer', t('tutorial.dfigwt.path'));
+  setActionButton('btnTutorialDSAS', 'runAviewer', 'tutorial.dsaswt.path');
+  setActionButton('btnExercisesDSAS', 'runAwebpage', 'tutorial.dsasexercises.path');
+  setActionButton('btnTutorialRRC', 'runAviewer', 'tutorial.rrcwt.path');
+  setActionButton('btnTutorialDFIG', 'runAviewer', 'tutorial.dfigwt.path');
 
   // Botones de la nueva sección de Ejercicios Prácticos
   setActionButton('btnPracticasDSAS', 'runAviewer', 'practicas.dsas.path');
-  setActionButton('btnPracticasDSAS_Tutorial', 'runAviewer', t('tutorial.dsaswt.path'));
+  setActionButton('btnPracticasDSAS_Tutorial', 'runAviewer', 'tutorial.dsaswt.path');
   setActionButton('btnPracticasDSAS_Sim', 'runAldp', ['dsasr12.conf', 'languagename']);
   setActionButton('btnPracticasRRC', 'runAviewer', 'practicas.rrc.path');
   setActionButton('btnPracticasRRC_Tutorial', 'runAviewer', 'tutorial.rrcwt.path');
@@ -1986,14 +1997,36 @@ document.addEventListener('DOMContentLoaded', function() {
     };
   }
 
-  setActionButton('btnTutorialLdP', 'runAviewer', t('tutorial.ldpframework.path'));
-});
+  setActionButton('btnTutorialLdP', 'runAviewer', 'tutorial.ldpframework.path');
+}
       
     </script>
     <script>
       <!-- Navigation between "pages" (sections) -->
       let _navStack = [];
       let _currentSection = "landing";
+      let _allowWindowClose = false;
+      let _allowWindowCloseResetTimer = null;
+
+      function navigateAwayFromLauncher(url) {
+        _allowWindowClose = true;
+        if (_allowWindowCloseResetTimer) {
+          clearTimeout(_allowWindowCloseResetTimer);
+        }
+        _allowWindowCloseResetTimer = setTimeout(() => {
+          _allowWindowClose = false;
+          _allowWindowCloseResetTimer = null;
+        }, 1500);
+        window.location.href = url;
+      }
+
+      window.addEventListener('beforeunload', function (event) {
+        if (_allowWindowClose) {
+          return;
+        }
+        event.preventDefault();
+        event.returnValue = ' '; 
+      });
 
       function showSection(id, pushHistory = true) {
 
@@ -2139,19 +2172,19 @@ document.addEventListener('DOMContentLoaded', function() {
       function runAldp(param1, param2) {
         const comando = "acmsl://ldp%20-c%20" + _acmslEnc(param1) + "%20-l%20" + _acmslEnc(param2);
         alert("Executing command:\n" + comando);
-        window.location.href = comando;
+        navigateAwayFromLauncher(comando);
       }
 
       function runAopercurv(param1) {
         //const comando = "acmsl://operationalcurvevswt%20-v%20-name%20" + param1;
         const comando = "acmsl://operationalcurvevswt?-v&name=" + param1;
-        window.location.href = comando;
+        navigateAwayFromLauncher(comando);
       }
 
       function runAdfig(nombreDeLaInstancia, fichConfiguracion) {
         const comando = "acmsl://dfigb2b?conf=" + fichConfiguracion + "&instancia=" + nombreDeLaInstancia;
         alert ("Executing command:\n" + comando);
-        window.location.href = comando;
+        navigateAwayFromLauncher(comando);
       }
 
       async function runAviewer(param1) {
@@ -2171,11 +2204,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const comandoHex = _toHex(param1);
         const comando = "acmsl://viewertutorial%20-n%20-h" + comandoHex;
         
-        window.location.href = comando;
+        navigateAwayFromLauncher(comando);
       }
 
       function runAwebpage(url) {
-        window.location.href = url;
+        navigateAwayFromLauncher(url);
       }
 
       function openGuiaSCADA() {
@@ -2212,7 +2245,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
       function runAldpdataloggerviewer() {
         const comando = "acmsl://ldpdataloggerviewer";
-        window.location.href = comando;
+        navigateAwayFromLauncher(comando);
       }
 
       function runAfile(param1) {
@@ -2220,10 +2253,10 @@ document.addEventListener('DOMContentLoaded', function() {
         //const comando = "acmsl://file%20-h" + comandoHex;
         const comando = "acmsl://file%20" + "\"" +param1 +"\"";
         alert("Executing file param1:\n" + param1 + "\n\nFull command:\n" + comando);
-        window.location.href = comando;
+        navigateAwayFromLauncher(comando);
       }
 
-      function abrirGuiaSCADA() { window.location.href = 'Guia_Simulator_WFS_SCADA_Parque_Eolico/index.html'; }
+      function abrirGuiaSCADA() { navigateAwayFromLauncher('Guia_Simulator_WFS_SCADA_Parque_Eolico/index.html'); }
       function abrirVideoEnVentana() { const urlVideo = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'; window.open(urlVideo, '_blank', 'noopener'); }
 
       let _videosLoaded = false;
@@ -2713,6 +2746,9 @@ document.addEventListener('DOMContentLoaded', function() {
       function setLang(lang){
         localStorage.setItem('lang', lang);
         loadTranslations(lang).then(() => {
+          // Revincular los botones de navegación (tutoriales, simuladores,
+          // ejercicios...) con las rutas del nuevo idioma.
+          if (typeof bindActionButtons === 'function') bindActionButtons();
           // Si hay configuración cl cargada, volver a sobrescribir el header
           const cl = getUrlClParam();
           if (cl) {
@@ -2810,6 +2846,12 @@ document.addEventListener('DOMContentLoaded', function() {
         // 3) Cargar traducciones para el idioma elegido
         await loadTranslations(langToUse);
         localStorage.setItem('lang', langToUse);
+
+        // Vincular los botones de navegación ahora que las traducciones del
+        // idioma correcto ya están cargadas (antes quedaban fijados al
+        // idioma detectado por el primer DOMContentLoaded, que se disparaba
+        // antes de que loadTranslations() terminara).
+        if (typeof bindActionButtons === 'function') bindActionButtons();
 
         // 4) Aplicar config: botones, selector de idioma y header personalizado
         if (clConfig) {
